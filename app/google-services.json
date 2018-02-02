@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "65073414185",
+    "firebase_url": "https://getjob-cab2e.firebaseio.com",
+    "project_id": "getjob-cab2e",
+    "storage_bucket": "getjob-cab2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65073414185:android:bce5edcd273d1000",
+        "android_client_info": {
+          "package_name": "com.example.harun.getjob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65073414185-ktbq7hbm0n1mivl2ive29ip2k249ff5v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.harun.getjob",
+            "certificate_hash": "e56bb3f1dcaf2b9d961cff219025bd4972f9f8da"
+          }
+        },
+        {
+          "client_id": "65073414185-ajtb49lm178u4nram61f46tb3f7vqrjl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.harun.getjob",
+            "certificate_hash": "113091263ac80962462bda8086b9d69f73f1d1d9"
+          }
+        },
+        {
+          "client_id": "65073414185-dn2uc6pt5m8iipoc14opsmqhhthkes57.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEf8QNnqFNFsCz_uHOacvTVuCFNwk03sU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65073414185-dn2uc6pt5m8iipoc14opsmqhhthkes57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

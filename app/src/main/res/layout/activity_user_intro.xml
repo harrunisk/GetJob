@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backround"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+        <Button
+            android:id="@+id/isIlanlarim"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="37dp"
+            android:background="@drawable/transparan_siyah"
+            android:text="Başvurularım"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/ilanVer"
+            android:layout_width="130dp"
+            android:layout_height="120dp"
+            android:layout_alignStart="@+id/isIlanlarim"
+            android:layout_below="@+id/isIlanlarim"
+            android:layout_marginTop="17dp"
+            android:background="@drawable/roundedbutton"
+            android:text="İş Ara"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:textAllCaps="false"
+
+            />
+
+        <Button
+            android:id="@+id/calisanAra"
+            android:layout_width="130dp"
+            android:layout_height="120dp"
+            android:layout_alignEnd="@+id/isIlanlarim"
+            android:layout_alignTop="@+id/ilanVer"
+            android:background="@drawable/roundedbutton"
+            android:text="Cv"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/haber"
+            android:layout_width="130dp"
+            android:layout_height="120dp"
+            android:layout_alignStart="@+id/ilanVer"
+            android:layout_below="@+id/ilanVer"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/roundedbutton"
+            android:text="Şirketler"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/ayarlar"
+            android:layout_width="130dp"
+            android:layout_height="120dp"
+            android:layout_alignStart="@+id/calisanAra"
+            android:layout_below="@+id/calisanAra"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/roundedbutton"
+            android:text="Ayarlar"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            tools:textAllCaps="false" />
+
+    </RelativeLayout>
+
+

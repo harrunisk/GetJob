@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/WhiteSmoke"
+    android:fitsSystemWindows="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="56dp"
+        android:textAlignment="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:gravity="center">
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/kayittv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:fontFamily="serif"
+            android:text="@string/register"
+            android:textAlignment="center"
+            android:textColor="@color/DarkSlateGray"
+            android:textColorHighlight="@color/DarkSlateGray"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ad Soyad"
+            android:inputType="textPersonName"
+            android:paddingLeft="5dp"
+            android:textColor="@color/DarkSlateGray"
+            android:textColorHint="@color/DarkSlateGray"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/input_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Kullanıcı Adı"
+            android:paddingLeft="5dp"
+            android:textColor="@color/DarkSlateGray"
+            android:textColorHint="@color/DarkSlateGray"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/input_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+
+            android:paddingLeft="5dp"
+            android:textColor="@color/DarkSlateGray"
+            android:textColorHint="@color/DarkSlateGray"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/input_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Parola"
+            android:inputType="textPassword"
+            android:paddingLeft="5dp"
+            android:textColor="@color/DarkSlateGray"
+            android:textColorHint="@color/DarkSlateGray"
+            android:textStyle="italic" />
+
+        <EditText
+            android:id="@+id/input_reEnterPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Parola Tekrar"
+            android:inputType="textPassword"
+            android:paddingLeft="5dp"
+            android:textColor="@color/DarkSlateGray"
+            android:textColorHint="@color/DarkSlateGray"
+            android:textStyle="italic" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <RadioButton
+                android:id="@+id/kullanici"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="1"
+                android:paddingLeft="5dp"
+                android:text="Çalışan"
+                android:textColor="@color/DarkSlateGray"
+                android:textColorHint="@color/DarkSlateGray"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+
+            <RadioButton
+                android:id="@+id/sirket"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="0"
+                android:paddingLeft="5dp"
+                android:text="Şirket"
+                android:textColor="@color/DarkSlateGray"
+                android:textColorHint="@color/DarkSlateGray"
+                android:textSize="18sp"
+                android:textStyle="italic" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_signup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/buttonback"
+            android:padding="12dp"
+            android:text="Hesap Oluştur"
+            android:textColor="@color/SeaGreen"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/link_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center"
+            android:text="Zaten Üyemisiniz? Giriş Yapın "
+            android:textColor="@color/SeaGreen"
+            android:textSize="16dip"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+</ScrollView>
