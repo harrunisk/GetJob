@@ -11,6 +11,6 @@ public class UserIntro extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_intro);
+        setContentView(R.layout.activity_user);
     }
 }

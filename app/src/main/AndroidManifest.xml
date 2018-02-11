@@ -18,7 +18,11 @@
 
 
         <activity android:name=".SignupActivity"></activity>
-        <activity android:name=".UserIntro"></activity>
+
+        <activity android:name=".UserIntro"
+            android:theme="@style/AppTheme2">
+
+        </activity>
         <activity android:name=".MapsActivityCurrentPlace">
 
 

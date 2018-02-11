@@ -37,6 +37,14 @@
         <item name="android:paddingBottom">5dp</item>
     </style>
 
+<style name="TransparanToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
+
+    <item name="android:windowActionBarOverlay">true</item>
+    <item name="windowActionBarOverlay">true</item>
+
+</style>
+
 
     <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
 
