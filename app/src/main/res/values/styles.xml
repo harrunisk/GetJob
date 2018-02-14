@@ -12,13 +12,38 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/red</item>
         <item name="colorPrimaryDark">@color/DarkSlateGray2</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/OrangeRed</item>
+        <item name="colorControlActivated">@color/SeaGreen</item>
+    </style>
+
+    <style name="personal_collapsed_title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+
+    <style name="personal_expanded_title">
+        <item name="android:textSize">0sp</item>
+        <item name="android:text"> </item>
+        <item name="android:textColor">@color/Brown</item>
+    </style>
+
 
     <style name="ButtonStyle" parent="Base.Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/OrangeRed</item>
     </style>
 
+    <style name="TransparanToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
 
+
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+
+    </style>
     <style name="My_AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
@@ -37,13 +62,7 @@
         <item name="android:paddingBottom">5dp</item>
     </style>
 
-<style name="TransparanToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
 
-
-    <item name="android:windowActionBarOverlay">true</item>
-    <item name="windowActionBarOverlay">true</item>
-
-</style>
 
 
     <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.harun.getjob.Profile.profilPage;
+
 /**
  * Created by Harun on 10-Jan-18.
  */
