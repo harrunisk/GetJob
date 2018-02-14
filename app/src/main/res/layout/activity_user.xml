@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:orientation="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -35,19 +36,19 @@
                             android:id="@+id/back"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
+                            android:gravity="left"
                             android:src="@drawable/arrow"
-                            android:tint="#FFFFFF"
-                            android:gravity="left"/>
+                            android:tint="#FFFFFF" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-light"
                             android:layout_gravity="center"
+                            android:fontFamily="sans-serif-light"
                             android:text="G E T J O B"
                             android:textColor="#FFFFFF"
-                            android:textStyle="bold"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
 
                     </android.support.v7.widget.Toolbar>
@@ -89,19 +90,16 @@
                             android:layout_marginRight="5dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            app:cardCornerRadius="10dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="5dp">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackground">
 
-                                android:layout_height="match_parent">
-
-                                <Button
-                                    android:id="@+id/isArabuton"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                                 <ImageView
                                     android:id="@+id/searchJobImage"
@@ -133,18 +131,15 @@
                             android:layout_marginLeft="10dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            app:cardCornerRadius="10dp"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="5dp">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <Button
-                                    android:id="@+id/basvuruButon"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackground">
 
                                 <ImageView
                                     android:id="@+id/basvurular"
@@ -182,19 +177,22 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginRight="5dp"
-                            app:cardCornerRadius="10dp"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="5dp">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackground">
 
                                 <Button
                                     android:id="@+id/profileButon"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:onClick="profilPage"
-                                    android:background="@android:color/transparent" />
+                                    android:background="@android:color/transparent"
+                                    android:onClick="profilPage" />
 
                                 <ImageView
                                     android:id="@+id/myProfile"
@@ -224,40 +222,39 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
-                            app:cardCornerRadius="10dp"
-
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="5dp">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackground">
 
-                                android:layout_height="match_parent">
-
-                                <Button
-                                    android:id="@+id/cvButon"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                                 <ImageView
                                     android:id="@+id/ozgecmis"
                                     android:layout_width="50dp"
                                     android:layout_height="35dp"
                                     android:layout_centerInParent="true"
+                                    android:layout_marginTop="15dp"
                                     android:src="@drawable/curriculum" />
 
+
                                 <TextView
+                                    android:id="@+id/ozgecmisText"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/ozgecmis"
                                     android:layout_centerHorizontal="true"
-                                    android:layout_marginBottom="10dp"
                                     android:layout_marginTop="10dp"
                                     android:text="ÖZGEÇMİŞİM"
                                     android:textAlignment="center"
                                     android:textColor="@color/black"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
+
 
                             </RelativeLayout>
                         </android.support.v7.widget.CardView>
@@ -275,18 +272,18 @@
                         <android.support.v7.widget.CardView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            app:cardCornerRadius="10dp"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="5dp">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentTop="true"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackground">
 
-                                <Button
-                                    android:id="@+id/mesajButon"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
 
                                 <ImageView
                                     android:id="@+id/mesaj"
@@ -316,19 +313,17 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
-                            app:cardCornerRadius="10dp"
-
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            app:cardCornerRadius="6dp"
+                            app:cardElevation="5dp">
 
                             <RelativeLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <Button
-                                    android:id="@+id/ayarBtn"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent" />
+                                android:layout_height="match_parent"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:clickable="true"
+                                android:foreground="?android:attr/selectableItemBackground">
 
                                 <ImageView
                                     android:id="@+id/ayarlar"
