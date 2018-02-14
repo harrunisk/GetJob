@@ -25,5 +25,9 @@
     <string name="pick_place">Bir yer seç </string>
     <string name="candidateCriteria">Aday Kriterleri</string>
 
+    <string name="spinnerPrompt">Baslangıc Yılı</string>
+    <string name="spinnerPrompt2">Bitis Yılı</string>
+
+
 
 </resources>

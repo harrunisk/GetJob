@@ -19,12 +19,10 @@
         <activity android:name=".SignupActivity" />
         <activity
             android:name=".UserIntro"
-            android:theme="@style/AppTheme2"></activity>
-        <activity android:name=".MapsActivityCurrentPlace"></activity>
-        <activity android:name=".AdvertCompany"></activity>
-        <activity android:name=".Login">
-
-        </activity>
+            android:theme="@style/AppTheme2" />
+        <activity android:name=".MapsActivityCurrentPlace" />
+        <activity android:name=".AdvertCompany" />
+        <activity android:name=".Login"></activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -33,15 +31,19 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".Profile.profilPage" android:theme="@style/AppTheme2">
+        <activity
+            android:name=".Profile.profilPage"
+            android:theme="@style/AppTheme2">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Profile.EditProfile"
+            android:theme="@style/AppTheme2">
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
-           </activity>
+        </activity>
     </application>
 
 </manifest>

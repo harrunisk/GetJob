@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     tools:listheader="Baslangıc Yılı"
                     android:spinnerMode="dropdown"
-                    android:prompt="Baslangıc Yılı"
+                    android:prompt="@string/spinnerPrompt"
                     android:scrollbars="horizontal"
                     android:layout_weight="1">
 
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     tools:listheader="Bitis Yılı"
                    android:spinnerMode="dropdown"
-                    android:prompt="Bitis Yılı"
+                    android:prompt="@string/spinnerPrompt2"
                     android:scrollbars="horizontal"
                     android:layout_weight="1">
 
