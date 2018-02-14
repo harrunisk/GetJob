@@ -16,13 +16,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignupActivity" />
         <activity
             android:name=".UserIntro"
+
             android:theme="@style/AppTheme2" />
         <activity android:name=".MapsActivityCurrentPlace" />
         <activity android:name=".AdvertCompany" />
-        <activity android:name=".Login"></activity>
+
+
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -32,13 +42,9 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Profile.profilPage"
-            android:theme="@style/AppTheme2">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:name=".Profile.profilPage"  android:theme="@style/AppTheme2">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity android:name=".Profile.EditProfile"
             android:theme="@style/AppTheme2">
