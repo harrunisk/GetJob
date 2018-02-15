@@ -25,9 +25,16 @@
     <string name="pick_place">Bir yer seç </string>
     <string name="candidateCriteria">Aday Kriterleri</string>
 
+
+    <string name="spinnerPrompt">Baslangıc Yılı</string>
+    <string name="spinnerPrompt2">Bitis Yılı</string>
+
+
+
     <string name="facebook_application_id" translatable="false">150345259107898</string>
     <!--<string name="fb_login_protocol_scheme">fb150345259107898</string>-->
     <string name="twitter_consumer_key" translatable="false">Ws8uStxg4hOiTfAjjB7FdyPoq</string>
     <string name="twitter_consumer_secret" translatable="false">mjD86fuxnn11HbJdaTtOmoWDTg5iTygx1bkW99Qf6tJocAvOA4</string>
+
 
 </resources>

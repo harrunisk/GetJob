@@ -45,7 +45,7 @@ public class profilPage extends AppCompatActivity {
 
     public void editProfile(View view) {
 
-        Intent intent=new Intent(getApplicationContext(),profilPage.class);
+        Intent intent=new Intent(getApplicationContext(),EditProfile.class);
         startActivity(intent);
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
