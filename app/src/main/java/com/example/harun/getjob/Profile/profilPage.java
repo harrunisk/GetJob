@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.harun.getjob.R;
 
@@ -16,11 +17,13 @@ public class profilPage extends AppCompatActivity {
     Toolbar toolbar;
     CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton editProfileFab;
+    TextView aboutContentText;
+
 
     public void init(){
         collapsingToolbarLayout=findViewById(R.id.collapsing_toolbar);
         editProfileFab=findViewById(R.id.editProfileFab);
-
+        aboutContentText=findViewById(R.id.about_content);
         // collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.personal_collapsed_title);
         // collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.personal_expanded_title);
 

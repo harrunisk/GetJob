@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="5dp"
@@ -20,6 +19,7 @@
             android:clickable="true"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="editAbout"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -29,7 +29,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="30dp"
-                   android:layout_alignParentEnd="true"
+                    android:layout_alignParentEnd="true"
                     android:src="@drawable/compose"
                     android:tint="@color/black" />
 
@@ -45,17 +45,17 @@
 
 
             <TextView
-                android:id="@+id/about_content"
+                android:id="@+id/editAbout_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:lineSpacingExtra="4dp"
-                android:text="Kısaca Kendinizden Bahsediniz "
-                android:textColor="#8c8c8c"
-                android:layout_marginBottom="10dp"
-                android:textSize="14sp" />
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="17sp" />
 
 
         </LinearLayout>
@@ -72,10 +72,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
-
             android:orientation="vertical">
 
             <RelativeLayout
@@ -84,10 +81,15 @@
 
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:id="@+id/addDeneyim"
+                    android:layout_width="25dp"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/compose"
+                    android:onClick="addDeneyim"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/square_add_button"
                     android:tint="@color/black" />
 
                 <TextView
@@ -101,10 +103,10 @@
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:padding="10dp"
                 android:id="@+id/deneyimList"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
 
 
             </android.support.v7.widget.RecyclerView>
