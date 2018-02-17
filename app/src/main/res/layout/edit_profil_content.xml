@@ -27,17 +27,19 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/compose"
-                    android:tint="@color/black" />
+
+                    android:layout_marginEnd="2dp"
+                    android:layout_marginTop="2dp"
+                    android:src="@drawable/ic_add_black_24dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="12dp"
-                    android:text="HAKKIMDA"
+                    android:text="Hakkımda"
                     android:textColor="@color/cardview_dark_background"
                     android:textSize="20sp"
                     android:textStyle="bold|italic" />
@@ -82,15 +84,17 @@
 
                 <ImageView
                     android:id="@+id/addDeneyim"
-                    android:layout_width="25dp"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_alignParentEnd="true"
-                    android:onClick="addDeneyim"
                     android:layout_alignParentTop="true"
-                    android:src="@drawable/square_add_button"
-                    android:tint="@color/black" />
+                    android:clickable="true"
+                    android:elevation="3dp"
+                    android:focusable="true"
+                    android:onClick="addDeneyim"
+                    android:src="@drawable/ic_add_black_24dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -138,10 +142,15 @@
 
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:id="@+id/editEgitim_id"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginTop="2dp"
+
+                    android:layout_marginEnd="2dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/compose"
+                    android:onClick="editEgitim"
+                    android:src="@drawable/ic_add_black_24dp"
                     android:tint="@color/black" />
 
                 <TextView
@@ -193,10 +202,12 @@
 
 
                 <ImageView
-                    android:layout_width="40dp"
+                    android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="2dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/compose"
+                    android:src="@drawable/add"
                     android:tint="@color/black" />
 
                 <TextView

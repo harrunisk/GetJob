@@ -46,7 +46,7 @@
 
 
     <style name="ButtonStyle" parent="Base.Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/OrangeRed</item>
+        <item name="colorButtonNormal">@color/SkyBlue</item>
     </style>
 
     <style name="TransparanToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
