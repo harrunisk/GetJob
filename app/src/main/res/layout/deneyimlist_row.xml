@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/eklenecekDeneyimList"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="@drawable/roundedbutton2"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="6dp"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/ayText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="2ay"
+        android:textColor="@color/Peru"
+        android:textSize="15dp">
+
+    </TextView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="10dp"
+        android:layout_height="70dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/ayText"
+        android:backgroundTint="@color/green"
+        android:background="@drawable/line"
+
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/view"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvPozisyon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:text="Android Developer"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/pencil"
+
+                />
+
+        </RelativeLayout>
+            <TextView
+                android:id="@+id/tvKurum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="OptiiM"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+
+            <TextView
+                android:id="@+id/tvLokasyon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+
+                android:text="İstanbul"
+                android:textSize="13dp"
+                android:textStyle="italic" />
+
+
+        </LinearLayout>
+
+
+
+</RelativeLayout>
+

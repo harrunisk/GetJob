@@ -29,7 +29,12 @@
     <string name="spinnerPrompt">Baslangıc Yılı</string>
     <string name="spinnerPrompt2">Bitis Yılı</string>
 
+    <string-array name="yillar">
+    <item>1900</item>
+    <item>1800</item>
+    <item>1700</item>
 
+</string-array>
 
     <string name="facebook_application_id" translatable="false">150345259107898</string>
     <!--<string name="fb_login_protocol_scheme">fb150345259107898</string>-->
