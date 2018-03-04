@@ -2,12 +2,15 @@ package com.example.harun.getjob.Profile;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -33,6 +36,7 @@ public class editEgitimFragment extends DialogFragment implements View.OnClickLi
     contentFragment mcontentFragment;
     egitimListModel megitimListModel;
     String bsyil, btsyil;
+
     private final static String TAG = "editEgitimFragment";
     String[] yillarim = new String[]{
             "1900",
@@ -46,6 +50,10 @@ public class editEgitimFragment extends DialogFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.edit_egitim, container, false);
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
         egitimOkul = v.findViewById(R.id.egitimOkul);
         egitimBolum = v.findViewById(R.id.egitimBolum);
         egitimlisans = v.findViewById(R.id.egitimlisans);
@@ -54,8 +62,8 @@ public class editEgitimFragment extends DialogFragment implements View.OnClickLi
         egitimCancel = v.findViewById(R.id.egitimCancel);
         egitimSave = v.findViewById(R.id.egitimSave);
 
-        bs_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
-        bts_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
+       // bs_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
+      //  bts_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
 
         final List<String> yilList = new ArrayList<>(Arrays.asList(yillarim));
 
@@ -91,7 +99,7 @@ public class editEgitimFragment extends DialogFragment implements View.OnClickLi
 
                 break;
             case R.id.egitimSave:
-                Log.d(TAG, "egitimCance oncLick");
+                Log.d(TAG, "egitimsave oncLick");
                 mcontentFragment.getEgitimContent(egitimOkul.getText().toString(), egitimBolum.getText().toString(),egitimlisans.getText().toString(),bsyil,btsyil);
                 getDialog().dismiss();
                 break;
@@ -127,11 +135,13 @@ public class editEgitimFragment extends DialogFragment implements View.OnClickLi
         switch (adapterView.getId()) {
 
             case R.id.bs_spinner:
-                Log.d(TAG, "Spinner oncLick");
+                Log.d(TAG, "Spinner oncLick Basln. yili ");
                 bsyil = adapterView.getItemAtPosition(position).toString();
 
                 break;
             case R.id.bts_spinner:
+                Log.d(TAG, "Spinner oncLick : Bitis Yili");
+
                 btsyil=adapterView.getItemAtPosition(position).toString();
                 break;
         }

@@ -55,6 +55,16 @@ public class deneyimListAdapter extends RecyclerView.Adapter<deneyimListAdapter.
 
     @Override
     public int getItemCount() {
+
+      /*  if(mList.size()==0){
+
+
+
+        }else{
+
+
+        }*/
+
         return mList.size();
     }
 

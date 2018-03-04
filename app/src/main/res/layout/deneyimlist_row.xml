@@ -6,13 +6,13 @@
     android:background="@drawable/roundedbutton2"
     android:orientation="horizontal"
     android:paddingBottom="10dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="6dp"
+    android:paddingEnd="6dp"
+    android:paddingStart="10dp"
     android:paddingTop="10dp">
 
     <TextView
         android:id="@+id/ayText"
-        android:layout_width="wrap_content"
+        android:layout_width="25dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:text="2ay"
@@ -27,8 +27,8 @@
         android:layout_height="70dp"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/ayText"
-        android:backgroundTint="@color/green"
         android:background="@drawable/line"
+        android:backgroundTint="@color/green"
 
         />
 
@@ -46,10 +46,12 @@
                 android:id="@+id/tvPozisyon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:text="Android Developer"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
 
             <ImageView
                 android:layout_width="20dp"
@@ -60,29 +62,28 @@
                 />
 
         </RelativeLayout>
-            <TextView
-                android:id="@+id/tvKurum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:text="OptiiM"
-                android:textColor="@color/black"
-                android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/tvKurum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textSize="14dp"
+            android:text="OptiiM" />
 
 
-            <TextView
-                android:id="@+id/tvLokasyon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+        <TextView
+            android:id="@+id/tvLokasyon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:text="İstanbul"
+            android:textSize="12dp"
+            android:textStyle="italic" />
 
-                android:text="İstanbul"
-                android:textSize="13dp"
-                android:textStyle="italic" />
 
-
-        </LinearLayout>
-
+    </LinearLayout>
 
 
 </RelativeLayout>

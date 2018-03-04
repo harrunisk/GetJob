@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="6"
+    android:background="@drawable/roundedbutton2"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingEnd="6dp"
+    android:paddingStart="10dp"
+    android:paddingTop="10dp">
+
+    <TextView
+        android:id="@+id/yetenek"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="7dp"
+        android:layout_weight="2"
+        android:text="YETENEKİSMİ"
+        android:textSize="15dp" />
+
+
+    <RatingBar
+        android:id="@+id/yetenekRating"
+        style="?android:attr/ratingBarStyleIndicator"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3.5"
+        android:gravity="center_vertical"
+        android:layout_gravity="center_vertical"
+        android:clickable="false"
+        android:isIndicator="true"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        android:numStars="5"
+        android:theme="@style/RatingBar"
+
+        />
+
+    <ImageView
+        android:id="@+id/editYetenekrow"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="0.5"
+        android:src="@drawable/pencil"
+        android:tint="@color/SlateBlue"
+
+        />
+
+
+</LinearLayout>
