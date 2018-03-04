@@ -54,7 +54,7 @@
                         android:layout_marginTop="2dp"
                         android:onClick="addGenel"
                         android:src="@drawable/ic_add_black_24dp"
-                        android:tint="@color/primary" />
+                        android:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/genelBilgiTitle"
@@ -136,7 +136,7 @@
                         android:layout_marginEnd="2dp"
                         android:layout_marginTop="2dp"
                         android:src="@drawable/ic_add_black_24dp"
-                        android:tint="@color/MediumVioletRed" />
+                        android:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/hkkmdaTitle"
@@ -225,15 +225,15 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginEnd="2dp"
                         android:layout_marginTop="2dp"
                         android:clickable="true"
                         android:elevation="3dp"
                         android:focusable="true"
                         android:onClick="addDeneyim"
-                        android:tint="@color/green"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ic_add_black_24dp" />
+                        android:src="@drawable/ic_add_black_24dp"
+                        android:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/deneyimTitle"
@@ -329,13 +329,13 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
-android:layout_centerVertical="true"
+                        android:layout_centerVertical="true"
 
                         android:layout_marginEnd="2dp"
                         android:layout_marginTop="2dp"
                         android:onClick="editEgitim"
                         android:src="@drawable/ic_add_black_24dp"
-                        android:tint="@color/blue" />
+                        android:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/egitimTitle"
@@ -431,7 +431,7 @@ android:layout_centerVertical="true"
                         android:layout_marginTop="2dp"
                         android:onClick="addYetenek"
                         android:src="@drawable/ic_add_black_24dp"
-                        android:tint="@color/SlateBlue" />
+                        android:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/yetenekTitle"
