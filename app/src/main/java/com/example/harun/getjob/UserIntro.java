@@ -32,7 +32,7 @@ public class UserIntro extends AppCompatActivity {
 
 
         //profile = (Button) findViewById(R.id.profileButon);
-        profileLayout = findViewById(R.id.profileLayout);
+profileLayout=findViewById(R.id.profileLayout);
     }
 
     public void profilPage(View view) {

@@ -12,5 +12,7 @@ public interface contentFragment {
     void getEgitimContent(String okul, String bolum, String ogrenimTuru, String bsYılı, String btsYılı);
 
     void getYetenekContent(String name, int rate);
+
     void getGenelContent(String tel, String mail,String tarih,String ehliyet,String askerlik);
+
 }

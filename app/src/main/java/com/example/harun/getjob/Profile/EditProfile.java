@@ -31,7 +31,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     private static final String TAG = "EditProfile";
     RecyclerView recyclerView;
 
-    ImageView userProfile_image;
+    ImageView userProfile_image, saveAll;
     deneyimListAdapter mdeneyimListAdapter;
 
     RecyclerView recyclerViewEgitim;
@@ -58,11 +58,12 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
         //   if (Permissions.checkPermissionArray(this,Permissions.PERMISSIONS)) {
 
-        gatherViews(); // Tanimlamalar bu fonksiyonda toplanacak
-        initImageLoader();
+        gatherViews();      // Tanimlamalar bu fonksiyonda toplanacak
+        initImageLoader(); //GaleryFragment ve PhotoFragment tan Gelen fotoğrafların handle işlemleri
 
-
+        //OnclickHandler..
         changePhoto.setOnClickListener(this);
+        saveAll.setOnClickListener(this);
 
 
         /*else if (Permissions.requestPermission(this,Permissions.PERMISSIONS)){
@@ -91,7 +92,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
             newPhotoUrl = intent.getStringExtra("newUserImagefromGalery");
             //newPhotoUri = Uri.fromFile(new File(newPhotoUrl));//Burada fotografın dosya yolunuda alıyorum
-            Log.d(TAG, "initImageLoader: newUserImagefromGalery" +"\t"+ newPhotoUrl);
+            Log.d(TAG, "initImageLoader: newUserImagefromGalery" + "\t" + newPhotoUrl);
             UniversalImageLoader.setImage(newPhotoUrl, userProfile_image, null, "file:/");
 
         } else if (intent.hasExtra("newUserImagefromGaleryUri")) {
@@ -127,6 +128,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         empty_message = findViewById(R.id.empty_message);
         empty_message1 = findViewById(R.id.empty_message1);
         empty_message2 = findViewById(R.id.empty_message2);
+        saveAll = findViewById(R.id.saveAll);
 
     }
 
@@ -195,7 +197,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     /**
      * Genel Bilgiler Düzenleme
      *
-     * @param view
+     * @param view XML View
      */
     public void addGenel(View view) {
         Log.d(TAG, "addGEnel Dialog Open");
@@ -327,11 +329,28 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.changePhoto) {
 
-            Intent intent = new Intent(this, PhotoActivity.class);
-            startActivity(intent);
+        switch (view.getId()) {
+            case R.id.changePhoto:
+
+                Intent intent = new Intent(this, PhotoActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.saveAll:
+
+                saveAllchangesProfile();
+
         }
+
+
+    }
+
+    private void saveAllchangesProfile() {
+        Log.d(TAG, "saveAllchangesProfile: @@@@DEĞİŞİKLER KAYIT EDİLİYOR ");
+
+
+
 
     }
 
