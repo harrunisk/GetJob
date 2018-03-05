@@ -27,7 +27,6 @@ private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
 
 
         // youtube video
@@ -51,7 +50,6 @@ private FirebaseAuth auth;
                             new AuthUI.IdpConfig.GoogleBuilder().build())).build(), RC_SIGN_IN);
 
         }
-        findViewById(R.id.log_out_button).setOnClickListener(this);
 
 
 
