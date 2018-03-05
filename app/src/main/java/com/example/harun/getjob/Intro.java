@@ -241,7 +241,7 @@ public class Intro extends AwesomeSplash {
     public void animationsFinished() {
         Intent Login= new Intent(this,MainActivity.class);
         startActivity(Login);
-
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         //transit to another activity here
         //or do whatever you want
     }

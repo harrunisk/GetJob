@@ -18,10 +18,8 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-private static final int RC_SIGN_IN=0;
-private FirebaseAuth auth;
-
-
+    private static final int RC_SIGN_IN = 0;
+    private FirebaseAuth auth;
 
 
     @Override
@@ -32,14 +30,19 @@ private FirebaseAuth auth;
         // youtube video
 
 
-         auth = FirebaseAuth.getInstance();
-        if(auth.getCurrentUser()!=null){
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
             //logcate yazar bizde bakarız oradan
-            Log.d("AUTH",auth.getCurrentUser().getEmail());
+            Log.d("AUTH", auth.getCurrentUser().getEmail());
+
+            Intent intent = new Intent(getApplicationContext(), UserIntro.class);
+            startActivity(intent);
+            finish();
+            // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
 
-        }
-        else {
+        } else {
             startActivityForResult(AuthUI.getInstance()
                     .createSignInIntentBuilder()
                     .setAvailableProviders(Arrays.asList(
@@ -52,18 +55,24 @@ private FirebaseAuth auth;
         }
 
 
-
-
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==RC_SIGN_IN){
-            if(resultCode==RESULT_OK){
+        if (requestCode == RC_SIGN_IN) {
+            if (resultCode == RESULT_OK) {
                 //user logged in
                 //Log.d("AUTH",auth.getCurrentUser().getEmail());
-            }
-            else{
+
+                Intent intent = new Intent(getApplicationContext(), UserIntro.class);
+                startActivity(intent);
+                finish();
+               // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+
+            } else {
                 //User not authenticated
                 //Log.d("AUTH","NOT AUTHENTICATED");
 
@@ -75,20 +84,18 @@ private FirebaseAuth auth;
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.log_out_button){
+        if (v.getId() == R.id.log_out_button) {
             AuthUI.getInstance()
                     .signOut(this)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Log.d("AUTH","USER LOGGED OUT!");
+                            Log.d("AUTH", "USER LOGGED OUT!");
                         }
                     });
 
 
-
         }
-
 
 
     }
