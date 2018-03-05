@@ -2,12 +2,15 @@ package com.example.harun.getjob.Profile;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -45,6 +48,11 @@ public class editExperienceFragment extends DialogFragment implements View.OnCli
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.edit_deneyim, container);
+
+
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         deneyimPoz = v.findViewById(R.id.deneyimPozisyon);
         deneyimLokasyon = v.findViewById(R.id.deneyimLokasyon);
         deneyimAy = v.findViewById(R.id.deneyimAy);

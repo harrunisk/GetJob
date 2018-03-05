@@ -19,7 +19,7 @@
             android:layout_alignParentTop="true"
             android:text="1964"
             android:textColor="@color/blue"
-            android:textSize="10dp"
+            android:textSize="15dp"
 
             />
 
@@ -30,14 +30,14 @@
             android:layout_alignParentBottom="true"
             android:text="1978"
             android:textColor="@color/blue"
-            android:textSize="10dp"
+            android:textSize="15dp"
 
             />
 
         <View
             android:layout_width="10dp"
             android:layout_height="70dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/bsYil"
             android:background="@drawable/line"
             android:backgroundTint="@color/blue"
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_toRightOf="@id/sol"
-        android:paddingRight="10dp"
+        android:paddingEnd="6dp"
         android:paddingTop="10dp">
 
         <LinearLayout
@@ -73,6 +73,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/nameOkul"
                     android:text="Sakarya Üniversitesi"
+                    android:textAllCaps="true"
+                    android:textSize="15dp"
                     android:textColor="@color/black" />
 
 
@@ -91,13 +93,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvBolum"
+                android:textSize="14dp"
                 android:text="Bilgisayar Mühendisliği" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvTur"
+                android:layout_marginTop="2dp"
                 android:text="Yüksek Lisans"
+                android:textSize="12dp"
                 android:textStyle="italic" />
 
         </LinearLayout>

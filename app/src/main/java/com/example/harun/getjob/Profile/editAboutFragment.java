@@ -2,12 +2,15 @@ package com.example.harun.getjob.Profile;
 
 import android.app.DialogFragment;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -35,6 +38,9 @@ public class editAboutFragment extends DialogFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.edit_about, container);
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         aboutText = view.findViewById(R.id.about_text);
         cancelButon = view.findViewById(R.id.aboutCancel);
         saveButon = view.findViewById(R.id.aboutSave);

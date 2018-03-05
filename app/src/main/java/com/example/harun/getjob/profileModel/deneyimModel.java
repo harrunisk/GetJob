@@ -53,7 +53,7 @@ public class deneyimModel {
     }
 
     public String getAy() {
-        return ay;
+        return ay+" Ay";
     }
 
     public void setAy(String ay) {

@@ -15,7 +15,7 @@
                 </shape>
             </item>
             <item>
-                <bitmap android:gravity="bottom|right" android:src="@drawable/recycling" />
+                <bitmap android:gravity="bottom|right" android:src="@drawable/home" />
             </item>
         </layer-list>
     </item>

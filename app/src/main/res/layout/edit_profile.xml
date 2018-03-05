@@ -3,9 +3,9 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:layout_height="match_parent">
+    android:focusableInTouchMode="true">
 
     <!-- Toolbar -->
     <RelativeLayout
@@ -32,7 +32,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginStart="10dp"
-                        android:src="@drawable/arrow" />
+                        android:src="@drawable/ic_arrow_back_black_24dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -61,105 +61,118 @@
         </android.support.design.widget.AppBarLayout>
 
     </RelativeLayout>
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_below="@id/edit_appbar"
-    android:layout_height="wrap_content">
 
-    <!--Content kısmı -->
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/textview_back">
+        android:layout_below="@id/edit_appbar">
 
-        <!-- PHOTO KISMI -->
-        <RelativeLayout
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:id="@+id/edit_profileFoto"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:src="@drawable/man"
-                    app:civ_border_color="@color/Orange"
-                    app:civ_border_width="3dp">
-
-                </com.mikhaellopez.circularimageview.CircularImageView>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:text="Fotoğrafı Değiştir."
-                    android:textColor="@color/OrangeRed">
-
-                </TextView>
-            </LinearLayout>
-
-
-            <!--İSİM SOYİSİM -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_toEndOf="@id/edit_profileFoto"
-                android:orientation="vertical">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/edit_profi"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/black"
-                    android:hint="İsim Giriniz" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:drawableLeft="@drawable/jobsearch"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/black"
-                    android:hint="Meslek" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:drawableLeft="@android:drawable/ic_menu_mapmode"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/black"
-                    android:hint="İstanbul(Avr)" />
-
-
-            </LinearLayout>
-
-        </RelativeLayout>
+        <!--Content kısmı -->
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/content">
+            android:background="@drawable/textview_back">
 
-            <include layout="@layout/edit_profil_content">
+            <!-- PHOTO KISMI -->
+            <RelativeLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/edit_profileFoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:layout_width="120dp"
+                        android:id="@+id/userProfile_image"
+                        android:layout_height="120dp"
+                        android:src="@drawable/man"
+                        app:civ_border_color="@color/SeaGreen"
+                        app:civ_border_width="3dp">
+
+                    </com.mikhaellopez.circularimageview.CircularImageView>
+
+                    <TextView
+                        android:id="@+id/changePhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_gravity="center_horizontal"
+                        android:textAlignment="center"
+                        android:textSize="15sp"
+                        android:text="Fotoğrafı Değiştir."
+                        android:textColor="@color/OrangeRed">
+
+                    </TextView>
+                </LinearLayout>
 
 
+                <!--İSİM SOYİSİM -->
 
-            </include>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/edit_profileFoto"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/userName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/username"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/black"
+                        android:hint="İsim Giriniz"
+                        android:padding="10dp"
+                        android:theme="@style/FullWidthEditText" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:drawableLeft="@drawable/id_card"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/black"
+                        android:hint="Meslek"
+                        android:padding="10dp"
+                        android:theme="@style/FullWidthEditText" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:drawableLeft="@drawable/placeholder"
+                        android:drawablePadding="10dp"
+                        android:drawableTint="@color/black"
+                        android:hint="İstanbul(Avr)"
+                        android:padding="10dp"
+                        android:theme="@style/FullWidthEditText" />
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/content">
+
+                <include layout="@layout/edit_profil_content">
+
+
+                </include>
+            </RelativeLayout>
         </RelativeLayout>
-    </RelativeLayout>
 
-</ScrollView>
+    </ScrollView>
 </RelativeLayout>

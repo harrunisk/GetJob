@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <include layout="@layout/galery_toolbar"></include>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/imageArea"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/toolbar"
+        android:background="@drawable/headpic"
+       >
+
+        <!--
+        <com.theartofdev.edmodo.cropper.CropImageView
+            android:id="@+id/cropImageView"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cropBackgroundColor="#88AA66CC"
+            app:cropBorderCornerColor="@android:color/holo_blue_bright"
+            app:cropBorderCornerOffset="0dp"
+            app:cropBorderCornerThickness="5dp"
+            app:cropBorderLineColor="@android:color/holo_green_light"
+            app:cropBorderLineThickness="1dp"
+            app:cropGuidelines="on"
+            app:cropGuidelinesColor="@android:color/holo_red_dark"
+            app:cropInitialCropWindowPaddingRatio="0"
+            app:cropSnapRadius="0dp"/>
+
+-->
+
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/userImage"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="50dp"
+            app:civ_border="true"
+            app:civ_border_width="2dp" />
+
+        <ProgressBar
+            android:id="@+id/image_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imageArea">
+
+        <GridView
+            android:id="@+id/galeryphoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="1dp"
+            android:gravity="center"
+            android:horizontalSpacing="1dp"
+            android:numColumns="5"
+            android:stretchMode="none"
+            android:verticalSpacing="1dp">
+
+
+        </GridView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

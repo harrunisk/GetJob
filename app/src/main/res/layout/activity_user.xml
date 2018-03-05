@@ -1,363 +1,383 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:orientation="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true">
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!--TOP-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
+            android:background="@drawable/headpic"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="?android:attr/actionBarSize"
+                app:theme="@style/TransparanToolbar">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:background="@drawable/headpic"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:src="@drawable/ic_arrow_back_black_24dp"
+                    android:tint="#FFFFFF" />
 
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="?android:attr/actionBarSize"
-                        android:layout_marginTop="-20dp"
-                        app:theme="@style/TransparanToolbar">
-
-                        <ImageView
-                            android:id="@+id/back"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="left"
-                            android:src="@drawable/arrow"
-                            android:tint="#FFFFFF" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:fontFamily="sans-serif-light"
-                            android:text="G E T J O B"
-                            android:textColor="#FFFFFF"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-
-                    </android.support.v7.widget.Toolbar>
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="50dp"
-                        android:src="@drawable/man" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Burası Head Kısmı Düzenlenecek.. belki Bir slider olabilir
-                        ÖNE CIKAN İLANLAR FİLAN "
-                        android:textColor="@color/white"
-                        android:textSize="14dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="185dp"
-                    android:background="@android:color/transparent"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="5dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackground">
+                    android:layout_gravity="center"
+                    android:fontFamily="sans-serif-light"
+                    android:text="G E T J O B"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
 
-                                <ImageView
-                                    android:id="@+id/searchJobImage"
-                                    android:layout_width="50dp"
-                                    android:layout_height="35dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/jobsearch" />
+            </android.support.v7.widget.Toolbar>
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/searchJobImage"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginBottom="10dp"
-                                    android:layout_marginTop="5dp"
-                                    android:text="İŞ ARA"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold" />
-
-                            </RelativeLayout>
-
-                        </android.support.v7.widget.CardView>
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="5dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackground">
-
-                                <ImageView
-                                    android:id="@+id/basvurular"
-                                    android:layout_width="50dp"
-                                    android:layout_height="35dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/basvuru" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/basvurular"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginBottom="10dp"
-                                    android:layout_marginTop="5dp"
-                                    android:text="BAŞVURULARIM"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold" />
-
-                            </RelativeLayout>
-                        </android.support.v7.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
 
-                    </LinearLayout>
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/man" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:layout_marginBottom="10dp"
-                        android:orientation="horizontal">
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginRight="5dp"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="5dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackground">
-
-                                <Button
-                                    android:id="@+id/profileButon"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@android:color/transparent"
-                                    android:onClick="profilPage" />
-
-                                <ImageView
-                                    android:id="@+id/myProfile"
-                                    android:layout_width="50dp"
-                                    android:layout_height="35dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/user" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/myProfile"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginBottom="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:text="PROFİLİM"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold" />
-
-                            </RelativeLayout>
-
-                        </android.support.v7.widget.CardView>
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="5dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackground">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:text="BURAYA ÖNE CIKAN İLANLAR GELİCEK  "
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
 
-                                <ImageView
-                                    android:id="@+id/ozgecmis"
-                                    android:layout_width="50dp"
-                                    android:layout_height="35dp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginTop="15dp"
-                                    android:src="@drawable/curriculum" />
+            </LinearLayout>
 
-
-                                <TextView
-                                    android:id="@+id/ozgecmisText"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/ozgecmis"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="10dp"
-                                    android:text="ÖZGEÇMİŞİM"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold" />
-
-
-                            </RelativeLayout>
-                        </android.support.v7.widget.CardView>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="110dp"
-                        android:orientation="horizontal"
-
-                        >
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="5dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentEnd="true"
-                                android:layout_alignParentTop="true"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackground">
-
-
-                                <ImageView
-                                    android:id="@+id/mesaj"
-                                    android:layout_width="50dp"
-                                    android:layout_height="35dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/message" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/mesaj"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginBottom="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:text="MESAJLAR"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold" />
-
-                            </RelativeLayout>
-
-                        </android.support.v7.widget.CardView>
-
-                        <android.support.v7.widget.CardView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
-                            app:cardCornerRadius="6dp"
-                            app:cardElevation="5dp">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentTop="true"
-                                android:clickable="true"
-                                android:foreground="?android:attr/selectableItemBackground">
-
-                                <ImageView
-                                    android:id="@+id/ayarlar"
-                                    android:layout_width="50dp"
-                                    android:layout_height="35dp"
-                                    android:layout_centerInParent="true"
-                                    android:src="@drawable/settings" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/ayarlar"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginBottom="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:text="AYARLAR"
-                                    android:textAlignment="center"
-                                    android:textColor="@color/black"
-                                    android:textSize="15sp"
-                                    android:textStyle="bold" />
-
-                            </RelativeLayout>
-                        </android.support.v7.widget.CardView>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-            </RelativeLayout>
 
         </LinearLayout>
 
 
-    </ScrollView>
+        <!--Alt Bölüm -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="275dp"
+            android:orientation="vertical"
+            android:weightSum="3">
+
+            <!--Her bir Bölüm -->
+
+            <LinearLayout
+                android:id="@+id/bolum1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="5dp"
+                    app:cardUseCompatPadding="true"
+
+                    app:cardElevation="@dimen/cardview_elevation"
+
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <ImageView
+                            android:id="@+id/searchJobImage"
+                            android:layout_width="50dp"
+                            android:layout_height="45dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/jobsearch" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/searchJobImage"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="İŞ ARA"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
 
-</RelativeLayout>
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    app:cardUseCompatPadding="true"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="@dimen/cardview_elevation">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                       >
+
+                        <ImageView
+                            android:id="@+id/basvurular"
+                            android:layout_width="50dp"
+                            android:layout_height="45dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/basvuru" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/basvurular"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="BAŞVURULARIM"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bolum2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bolum1"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="5dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardElevation="@dimen/cardview_elevation">
+
+                    <RelativeLayout
+                        android:id="@+id/profileLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:onClick="profilPage">
+
+                        <ImageView
+                            android:id="@+id/myProfile2"
+                            android:layout_width="50dp"
+                            android:layout_height="45dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/user" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/myProfile2"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="PROFİLİM"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    app:cardUseCompatPadding="true"
+
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="@dimen/cardview_elevation">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true">
+
+
+                        <ImageView
+                            android:id="@+id/ozgecmis"
+                            android:layout_width="50dp"
+                            android:layout_height="45dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/curriculum" />
+
+
+                        <TextView
+                            android:id="@+id/ozgecmisText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ozgecmis"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="ÖZGEÇMİŞİM"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bolum2"
+                android:orientation="horizontal"
+                android:weightSum="2"
+
+                >
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="5dp"
+                    app:cardUseCompatPadding="true"
+
+                    app:cardElevation="@dimen/cardview_elevation">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        >
+
+
+                        <ImageView
+                            android:id="@+id/mesaj"
+                            android:layout_width="50dp"
+                            android:layout_height="45dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:src="@drawable/chat" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/mesaj"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="MESAJLAR"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="5dp"
+                    app:cardUseCompatPadding="true"
+                    app:cardElevation="@dimen/cardview_elevation">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:clickable="true"
+                        android:focusable="true"
+                        >
+
+                        <ImageView
+                            android:id="@+id/ayarlar"
+                            android:layout_width="50dp"
+                            android:layout_height="45dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:tint="@color/SlateBlue"
+                            android:src="@drawable/ic_settings_black_24dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ayarlar"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginTop="15dp"
+                            android:text="AYARLAR"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+</ScrollView>

@@ -28,8 +28,9 @@
 
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/OrangeRed</item>
-        <item name="colorControlActivated">@color/SeaGreen</item>
+        <item name="colorControlNormal">@color/DarkGray</item>
+        <item name="colorControlActivated">@color/SlateBlue</item>
+
     </style>
 
     <style name="personal_collapsed_title">
@@ -46,7 +47,8 @@
 
 
     <style name="ButtonStyle" parent="Base.Widget.AppCompat.Button.Colored">
-        <item name="colorButtonNormal">@color/SkyBlue</item>
+        <item name="colorButtonNormal">@color/wallet_bright_foreground_disabled_holo_light</item>
+
     </style>
 
     <style name="TransparanToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
