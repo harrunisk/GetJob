@@ -219,10 +219,10 @@ public class Intro extends AwesomeSplash {
         configSplash.setPathSplash(DROID_LOGO); //set path String
         configSplash.setOriginalHeight(400); //in relation to your svg (path) resource
         configSplash.setOriginalWidth(400); //in relation to your svg (path) resource
-        configSplash.setAnimPathStrokeDrawingDuration(3000);
+        configSplash.setAnimPathStrokeDrawingDuration(1500);
         configSplash.setPathSplashStrokeSize(4); //I advise value be <5
         configSplash.setPathSplashStrokeColor(R.color.accent); //any color you want form colors.xml
-        configSplash.setAnimPathFillingDuration(3000);
+
         configSplash.setPathSplashFillColor(R.color.com_facebook_blue); //path object filling color
 
 
@@ -230,7 +230,7 @@ public class Intro extends AwesomeSplash {
         configSplash.setTitleSplash("");
         configSplash.setTitleTextColor(R.color.Wheat);
         configSplash.setTitleTextSize(30f); //float value
-        configSplash.setAnimTitleDuration(3000);
+        configSplash.setAnimTitleDuration(0);
         configSplash.setAnimTitleTechnique(Techniques.FlipInX);
         configSplash.setTitleFont("fonts/volatire.ttf"); //provide string to your font located in assets/fonts/
 
@@ -239,7 +239,7 @@ public class Intro extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        Intent Login= new Intent(this,MainActivity.class);
+        Intent Login= new Intent(this,LoginAfter.class);
         startActivity(Login);
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         //transit to another activity here

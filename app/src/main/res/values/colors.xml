@@ -184,4 +184,9 @@
     <color name="opak3">#80FFFFFF</color>
     <color name="transparan">#7FC0C0C0</color>
     <color name="asd">#7F004B</color>
+    <color name="mb_gray">#ffdedede</color>
+    <color name="mb_blue">#ff0099cc</color>
+    <color name="mb_blue_dark">#ff00719b</color>
+    <color name="transparent">#CCFF0000</color>
+    <dimen name="mb_corner_radius_2">2dp</dimen>
 </resources>
