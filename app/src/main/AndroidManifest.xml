@@ -55,7 +55,9 @@
 
         <activity
             android:name=".Profile.EditProfile"
-            android:theme="@style/AppTheme2"></activity>
+            android:theme="@style/AppTheme2">
+
+        </activity>
 
         <activity android:name=".Profile.PhotoActivity" />
         <activity

@@ -12,13 +12,13 @@ import com.theartofdev.edmodo.cropper.CropImageView;
  * Created by mayne on 3.03.2018.
  */
 
-public class myCropImage {
+public class MyCropImage {
 
     private static final String TAG = "CropImage";
     Context context;
     Fragment fm;
 
-    public myCropImage(Context context,Fragment fm) {
+    public MyCropImage(Context context, Fragment fm) {
         this.context = context;
         this.fm=fm;
     }

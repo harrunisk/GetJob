@@ -5,6 +5,7 @@ package com.example.harun.getjob.Profile;
  */
 
 public interface contentFragment {
+    
     void getExperienceContent(String pz, String loc, String ay, String krm);
 
     void sendAboutContent(String input);

@@ -17,23 +17,27 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-
+    private static final String TAG = "MainActivityLogin";
     private static final int RC_SIGN_IN = 0;
     private FirebaseAuth auth;
 
+    //Bu ıd bana heryerde lazım olacak oyuzden static yaptım .
+    public static String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        // youtube video
-
+        // auth.getCurrentUser().getUid();
 
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
             //logcate yazar bizde bakarız oradan
-            Log.d("AUTH", auth.getCurrentUser().getEmail());
+            Log.d(TAG, "Kullanici ADİ @@ \t" + auth.getCurrentUser().getEmail());
+
+            userID = auth.getCurrentUser().getUid();
+
+            Log.d(TAG, "onCreate: USERID @@\t" + userID);
 
             Intent intent = new Intent(getApplicationContext(), UserIntro.class);
             startActivity(intent);
@@ -63,12 +67,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (requestCode == RC_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 //user logged in
-                //Log.d("AUTH",auth.getCurrentUser().getEmail());
 
+
+                Log.d("AUTH",auth.getCurrentUser().getEmail());
+                Log.d(TAG, "onActivityResult:"+auth.getCurrentUser().getPhoneNumber());
                 Intent intent = new Intent(getApplicationContext(), UserIntro.class);
                 startActivity(intent);
                 finish();
-               // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
 

@@ -21,9 +21,9 @@ import com.example.harun.getjob.R;
  * Created by mayne on 15.02.2018.
  */
 
-public class editAboutFragment extends DialogFragment implements View.OnClickListener {
+public class EditAboutFragment extends DialogFragment implements View.OnClickListener {
 
-    private final static String TAG = "editAboutFragment";
+    private final static String TAG = "EditAboutFragment";
 
 
     EditText aboutText;

@@ -2,7 +2,6 @@ package com.example.harun.getjob.Profile;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,8 +17,6 @@ import android.widget.Toast;
 import com.example.harun.getjob.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
-
-import java.io.File;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -128,7 +125,7 @@ public class cameraFragment extends Fragment {
             //paremetreden gelen data değeri bitmap olarak aldım
             bitmap = (Bitmap) data.getExtras().get("data");
             //Uri outputFileUri = Uri.fromFile(new File(context.getExternalCacheDir().getPath(), "getjob.jpeg"));
-            uri = filePaths.getImageFile(getActivity(), bitmap);
+          //  uri = filePaths.getImageFile(getActivity(), bitmap);
             cropImageActivity();
 
 
@@ -138,14 +135,19 @@ public class cameraFragment extends Fragment {
                 croppingImageresult = CropImage.getActivityResult(data);
                 Log.d(TAG, "onActivityResult:CAMERA CROPactivty" + croppingImageresult.getUri());
 
-                //Crop Edilen Fotoğrafı bitmap olarak alıp kayıt etmek için
 
-                getCroppingImageUri(croppingImageresult.getUri());
+                //Crop Edilen Fotoğrafı bitmap olarak alıp kayıt etmek için
+                cropped=filePaths.getCroppedBitmap(croppingImageresult.getUri());//Crop edilen image urisi gönderiliyor.
+                outputUri = filePaths.getImageFile(getActivity(), cropped); //Kesilen fotograf burada kaydedilip kayıt edilen yerin uri'si return edilir
+
+
+
+                //getCroppingImageUri(croppingImageresult.getUri());
 
 
                 try {
 
-                    Log.d(TAG, "onActivityResult: Cameradan Gelen Bitmap" + bitmap);
+                    Log.d(TAG, "onActivityResult: Cameradan Gelen Bitmap" + cropped);
                     Intent i = new Intent(getActivity(), EditProfile.class);
                     i.putExtra("imageFromCam", outputUri);
                     //Resimin pathini çekildikten sonra kayıt edildiği pathi gönderiyorum edit profile universal image ile yüklencek
@@ -166,7 +168,7 @@ public class cameraFragment extends Fragment {
 
     }
 
-    private void getCroppingImageUri(Uri uri) {
+   /* private void getCroppingImageUri(Uri uri) {
 
         Log.d(TAG, "getCroppingImageUri: "+uri);
         File resultFile=new File(uri.getPath());
@@ -178,6 +180,6 @@ public class cameraFragment extends Fragment {
         Log.d(TAG, "getCroppingImageUri:CAMERA  OUTPUT URİ"+outputUri);
 
     }
-
+*/
 
 }

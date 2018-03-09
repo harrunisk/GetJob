@@ -74,11 +74,17 @@ public class Permissions {
     }
 
 
-    public static void showAlertdilaog(Activity activity, String permission) {
+    public static void showAlertdilaog(Activity activity, String permission,String aciklama,long duration) {
 
         Log.d(TAG, "showAlertdilaog: CREATED");
-        Alerter.create(activity).setTitle(permission).setText("İzin Verde İşimize Bakalım ")
-                .setIcon(R.drawable.padlock).setBackgroundColorRes(R.color.SlateBlue).show();
+        Alerter.create(activity).setTitle(permission).setText(aciklama)
+                .setIcon(R.drawable.ic_notifications_active_black_24dp)
+                 .enableSwipeToDismiss()
+                .enableProgress(true).
+                 setDuration(duration).
+            //    disableOutsideTouch().
+                setProgressColorRes(R.color.Tomato).
+                setBackgroundColorRes(R.color.SlateBlue).show();
 
     }
 
