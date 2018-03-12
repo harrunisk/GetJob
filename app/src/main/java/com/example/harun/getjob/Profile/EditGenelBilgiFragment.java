@@ -28,9 +28,9 @@ import java.util.Locale;
  * Created by mayne on 25.02.2018.
  */
 
-public class editGenelBilgiFragment extends DialogFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class EditGenelBilgiFragment extends DialogFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    public static final String TAG = "editGenelBilgiFragment";
+    public static final String TAG = "EditGenelBilgiFragment";
     Button genelCancel, genelSave;
     EditText editTel, editMail, editDogumTarih;
     Spinner spinAskerlik, spinEhliyet;

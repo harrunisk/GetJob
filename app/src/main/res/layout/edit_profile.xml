@@ -126,7 +126,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/userName"
+                        android:id="@+id/edituserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/username"
@@ -137,6 +137,7 @@
                         android:theme="@style/FullWidthEditText" />
 
                     <EditText
+                        android:id="@+id/editJob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
@@ -148,6 +149,7 @@
                         android:theme="@style/FullWidthEditText" />
 
                     <EditText
+                        android:id="@+id/editLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"

@@ -13,19 +13,12 @@ public class egitimListModel {
     private String ogrenimTuru;
     private String bsYılı;
     private String btsYılı;
+
+
    // private ArrayList<String[]> SpinnerListe;
   //  private String[] yil={"2018","2017","2016","2015","2014","2013","2012"};
 
 
- /*   public ArrayList<String[]> getSpinnerListe() {
-        SpinnerListe = new ArrayList<String[]>();
-        SpinnerListe.add(yil);
-
-        return SpinnerListe;
-    }
-
-
-*/
     public egitimListModel(String okul, String bolum, String ogrenimTuru, String bsYılı, String btsYılı) {
         Log.d("egitimListMMODEL","Egitim Model Listesi Dolduruluyor ");
 
@@ -76,5 +69,14 @@ public class egitimListModel {
         this.btsYılı = btsYılı;
     }
 
-
+    @Override
+    public String toString() {
+        return "egitimListModel{" +
+                "okul='" + okul + '\'' +
+                ", bolum='" + bolum + '\'' +
+                ", ogrenimTuru='" + ogrenimTuru + '\'' +
+                ", bsYılı='" + bsYılı + '\'' +
+                ", btsYılı='" + btsYılı + '\'' +
+                '}';
+    }
 }

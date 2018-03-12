@@ -28,7 +28,7 @@ import java.util.List;
  * Created by mayne on 17.02.2018.
  */
 
-public class editEgitimFragment extends DialogFragment implements View.OnClickListener,AdapterView.OnItemSelectedListener {
+public class EditEgitimFragment extends DialogFragment implements View.OnClickListener,AdapterView.OnItemSelectedListener {
 
     EditText egitimOkul, egitimBolum, egitimlisans;
     Spinner bs_spinner, bts_spinner;
@@ -37,7 +37,7 @@ public class editEgitimFragment extends DialogFragment implements View.OnClickLi
     egitimListModel megitimListModel;
     String bsyil, btsyil;
 
-    private final static String TAG = "editEgitimFragment";
+    private final static String TAG = "EditEgitimFragment";
     String[] yillarim = new String[]{
             "1900",
             "1800",

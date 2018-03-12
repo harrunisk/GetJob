@@ -22,9 +22,9 @@ import com.example.harun.getjob.R;
  * Created by mayne on 23.02.2018.
  */
 
-public class addYetenekFragment extends DialogFragment implements View.OnClickListener {
+public class EditYetenekFragment extends DialogFragment implements View.OnClickListener {
 
-    private static final String TAG = "addYetenekFragment";
+    private static final String TAG = "EditYetenekFragment";
 
     //LayoutInflater layoutInflater;
     ImageView closeDialog;

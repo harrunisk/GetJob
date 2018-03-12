@@ -20,7 +20,7 @@ import com.example.harun.getjob.R;
  * Created by mayne on 16.02.2018.
  */
 
-public class editExperienceFragment extends DialogFragment implements View.OnClickListener {
+public class EditExperienceFragment extends DialogFragment implements View.OnClickListener {
 
     private final static String TAG = "Deneyim Dialog Fragment";
     EditText deneyimPoz, deneyimKurum, deneyimAy, deneyimLokasyon;

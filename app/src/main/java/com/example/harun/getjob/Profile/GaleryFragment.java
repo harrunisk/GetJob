@@ -3,7 +3,6 @@ package com.example.harun.getjob.Profile;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,7 +50,7 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
     ArrayList<PhotoModel> imagepath;
     Activity activity;
     private String mAppend = "file:/";
-    myCropImage mcropImageClass;
+    MyCropImage mcropImageClass;
     String selectedImage = "";
     Bitmap cropped;
     FilePaths mfilePaths;
@@ -80,20 +79,20 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
 
         // Permissions.requestPermission(getActivity(), Permissions.READ_STORAGE_PERMISSION);
 
-         if (Permissions.checkPermision(getActivity(), Permissions.READ_STORAGE_PERMISSION[0])) {
+        if (Permissions.checkPermision(getActivity(), Permissions.READ_STORAGE_PERMISSION[0])) {
 
-             init();
+            init();
 
-          } else {
-             Permissions.showAlertdilaog(getActivity(), "İzinler Verilmemiş");
+        } else {
+            Permissions.showAlertdilaog(getActivity(), "İzinler Verilmemiş", "İzinleri verde işimize bakalım",2000);
 
-             Intent i=new Intent(getActivity(),PhotoActivity.class);
-             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-             startActivity(i);
-             getActivity().finish();
+            Intent i = new Intent(getActivity(), PhotoActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            getActivity().finish();
 
 
-         }
+        }
 
 
         return v;
@@ -204,8 +203,8 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
                 selectedImage = imagePathString.get(position);
                 selectedImageuri = Uri.fromFile(new File(selectedImage));
 
-                //mcropImageClass=new myCropImage(getContext(),);
-               // mcropImageClass.editPhoto(selectedImageuri);
+                //mcropImageClass=new MyCropImage(getContext(),);
+                // mcropImageClass.editPhoto(selectedImageuri);
                 CropImage();
 
             }
@@ -269,9 +268,11 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
                 //outputUri=mfilePaths.getImageUri(getContext(),croppingImageresult.getOriginalBitmap());
                 Log.d(TAG, "onActivityResult: Croopping Image REsult " + croppingImageresult.getUri());
 
-                getImageUri(croppingImageresult.getUri());//Crop edilen image urisi gönderiliyor.
+                cropped=mfilePaths.getCroppedBitmap(croppingImageresult.getUri());//Crop edilen image urisi gönderiliyor.Bitmap olarak alınıyor
+                outputUri = mfilePaths.getImageFile(getActivity(), cropped); //Kesilen fotograf burada kaydedilip kayıt edilen yerin uri'si return edilir
 
-                user_image.setImageURI(croppingImageresult.getUri());
+                user_image.setImageURI(outputUri);
+
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Log.d(TAG, "onActivityResult: Hata Oluştu");
@@ -280,19 +281,19 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private void getImageUri(Uri uri) {
+  /*  private void getImageUri(Uri uri) {
         File resultFile = new File(uri.getPath());
         Log.d(TAG, "getIMAGEURİ: Cropping RESULT FİLE " + resultFile.toString());
         BitmapFactory.Options bitmapOpts = new BitmapFactory.Options();
         bitmapOpts.inMutable = true;
         cropped = BitmapFactory.decodeFile(resultFile.getPath(), bitmapOpts);
-        outputUri = mfilePaths.getImageFile(getActivity(), cropped);
+        outputUri = mfilePaths.getImageFile(getActivity(), cropped); //Kesilen fotograf burada kaydedilip kayıt edilen yerin uri'si return edilir
 
         Log.d(TAG, "getIMAGEURİ: Croopping Image REsult BİTMAP " + cropped + "\t" + outputUri);
         // return outputUri;
 
     }
-
+*/
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.harun.getjob.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by mayne on 17.02.2018.
@@ -23,11 +24,13 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
     LayoutInflater inflater;
     egitimListModel egitimListModel;
 
+    public HashMap<String, ArrayList<egitimListModel>> egitimHash = new HashMap<>();
+    public ArrayList<egitimListModel> egitimHashList = new ArrayList<>();
+
+
     public egitimListAdapter(Context context, ArrayList<egitimListModel> egitimList) {
         this.egitimList = egitimList;
         this.inflater = LayoutInflater.from(context);
-
-
 
 
     }
@@ -36,13 +39,16 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = inflater.inflate(R.layout.egitimlist_row, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
-        Log.d(TAG,"EgitimListOnCreateViewHolder");
+        Log.d(TAG, "EgitimListOnCreateViewHolder");
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        egitimListModel=egitimList.get(position);
+        egitimListModel = egitimList.get(position);
+
+
+        setEgitimHashMap(String.valueOf(position), egitimListModel);
 
         holder.bsYil.setText(egitimListModel.getBsYılı());
         holder.btsYil.setText(egitimListModel.getBtsYılı());
@@ -51,7 +57,31 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
         holder.tvTur.setText(egitimListModel.getOgrenimTuru());
 
 
+    }
 
+    private void setEgitimHashMap(String s, egitimListModel egitimListModel) {
+        Log.d(TAG, "setEgitimHashMap: " + "s" + "\t" + egitimListModel.getBolum());
+        egitimHashList.add(egitimListModel);
+        egitimHash.put(s, egitimHashList);
+
+    }
+
+
+    public HashMap<String, ArrayList<egitimListModel>> getEgitimHashMap() {
+        Log.d(TAG, "getEgitimHashMap: ");
+
+//        if (this.egitimHash.isEmpty()) {
+//
+//            egitimHashList.add(egitimListModel);
+//            Log.d(TAG, "getEgitimHashMap: EGitimHASH EMPTY eN AZINDAN NULL DONMEZ HATA VERMEZ ZATEN KAYIT EDİLMEYCEK ");
+//            egitimHash.put("0", egitimHashList);
+//            return this.egitimHash;
+//
+//        } else {
+//
+//        }
+
+        return this.egitimHash;
     }
 
     @Override
@@ -62,16 +92,15 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
 
     // Bir satırda bulunan elemanları tanımlayacagımız sınıf
     public class ViewHolder extends RecyclerView.ViewHolder {
-       TextView bsYil,btsYil,nameOkul,tvBolum,tvTur;
+        TextView bsYil, btsYil, nameOkul, tvBolum, tvTur;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            bsYil=itemView.findViewById(R.id.bsYil);
-            btsYil=itemView.findViewById(R.id.btsYil);
-            nameOkul=itemView.findViewById(R.id.nameOkul);
-            tvBolum=itemView.findViewById(R.id.tvBolum);
-            tvTur=itemView.findViewById(R.id.tvTur);
-
+            bsYil = itemView.findViewById(R.id.bsYil);
+            btsYil = itemView.findViewById(R.id.btsYil);
+            nameOkul = itemView.findViewById(R.id.nameOkul);
+            tvBolum = itemView.findViewById(R.id.tvBolum);
+            tvTur = itemView.findViewById(R.id.tvTur);
 
 
         }

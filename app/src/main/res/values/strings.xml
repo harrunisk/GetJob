@@ -16,6 +16,7 @@
     <string name="languages">Diller</string>
 
     <string name="text_1"></string>
+
     <string name="save">SAVE</string>
 
     <string name="title_activity_maps">Current Place Details</string>
@@ -26,6 +27,13 @@
     <string name="candidateCriteria">Aday Kriterleri</string>
 
 
+    <!--Firebase String-->>
+
+    <string name="users_images">users_images</string>
+
+
+
+
     <string name="spinnerPrompt">Baslangıc Yılı</string>
     <string name="spinnerPrompt2">Bitis Yılı</string>
 
@@ -33,9 +41,10 @@
         <item>Yapildi</item>
         <item>Tecilli</item>
         <item>Muaf</item>
-        <item></item>
+        <item>Yok</item>
 
     </string-array>
+
     <string-array name="Ehliyet">
         <item>A</item>
         <item>B</item>
