@@ -67,13 +67,25 @@
                         android:id="@+id/userProfileImage"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"
                         android:layout_marginTop="43dp"
                         android:src="@drawable/man"
                         app:civ_border_color="@color/mycolor2"
                         app:civ_border_width="5dp" />
+
+                    <ProgressBar
+                        android:id="@+id/profilimageProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="68dp"
+                        android:visibility="visible"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
+
+
+                        />
 
                     <!--
                     <RelativeLayout
@@ -113,7 +125,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:hint="Bilgisayar Mühendisi"
+                            android:hint="Meslek"
                             android:maxLines="1"
                             android:padding="4dp"
                             android:textColor="#bbbbbb"
@@ -125,7 +137,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:hint="İstanbul"
+                            android:hint="Lokasyon"
                             android:maxLines="1"
                             android:padding="4dp"
                             android:textColor="#ffffff"
@@ -204,10 +216,10 @@
 
         <ProgressBar
             android:id="@+id/profileProgress"
-            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="visible"
 
 
             />

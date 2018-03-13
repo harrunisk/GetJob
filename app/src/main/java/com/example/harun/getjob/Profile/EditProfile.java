@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.harun.getjob.FirebaseMethods.FirebaseMethods;
 import com.example.harun.getjob.FirebaseMethods.firebaseContent;
@@ -486,10 +487,15 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
                     allChanges.execute();
                     //saveAllchangesProfile();
                     break;
+                }else{
+
+
+                    Toast.makeText(this, "İsim Meslek Lokasyon Boş Olamaz", Toast.LENGTH_SHORT).show();
+                    break;
                 }
 
-            case R.id.changePhotoImage:
 
+            case R.id.changePhotoImage:
 
                 Intent intent2 = new Intent(this, PhotoActivity.class);
                 startActivity(intent2);

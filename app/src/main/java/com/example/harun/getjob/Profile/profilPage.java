@@ -48,7 +48,8 @@ public class profilPage extends AppCompatActivity {
     RecyclerView recyclerEgitim;
     RecyclerView recyclerDeneyim;
     RecyclerView recyclerYetenek;
-    ProgressBar progressBar;
+    ProgressBar progressBar,
+            profilimageProgress;
     // AllModelsList models;
 
     //GenelBilgi widgets
@@ -99,6 +100,7 @@ public class profilPage extends AppCompatActivity {
         recyclerDeneyim = findViewById(R.id.deneyimList);
         recyclerYetenek = findViewById(R.id.yetenekList);
         progressBar = findViewById(R.id.profileProgress);
+        profilimageProgress = findViewById(R.id.profilimageProgress);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef1 = mFirebaseDatabase.getReference();
 
@@ -114,6 +116,7 @@ public class profilPage extends AppCompatActivity {
 
 
         alertDialog.show();*/
+        progressBar.setVisibility(View.VISIBLE);
         firebaseInit();
 
 
@@ -174,7 +177,7 @@ public class profilPage extends AppCompatActivity {
             UniversalImageLoader universalImageLoader = new UniversalImageLoader(getApplicationContext());
             ImageLoader.getInstance().init(universalImageLoader.configuration());
 
-            UniversalImageLoader.setImage(photoUrl, userProfileImage, null, "");
+            UniversalImageLoader.setImage(photoUrl, userProfileImage, profilimageProgress, "");
 
             //Recycler Listeleri doldurma
 
@@ -188,11 +191,13 @@ public class profilPage extends AppCompatActivity {
         } else
 
         {
-            alertDialog = Permissions.showAlertdilaog(this, "Profiliniz Yükleniyor  ",
-                    "Lütfen Bekleyiniz", 5000);
+            progressBar.setVisibility(View.GONE);
+            alertDialog = Permissions.showAlertdilaog(this, "Profiliniz Boş Gözüküyor  ",
+                    "Profilinizi Güncelleyiniz.", 3000);
 
 
             alertDialog.show();
+
 
             Log.d(TAG, "setProfileItems: dataFromFirebase NULLL" + dataFromFirebase);
         }
