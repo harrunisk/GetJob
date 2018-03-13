@@ -241,6 +241,7 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
             Log.d(TAG, "userImage_fromGalery: Secilen Resim Uri" + "\t" + uri);
             Intent i = new Intent(getActivity(), EditProfile.class);
             i.putExtra("newUserImagefromGaleryUri", uri);
+            i.putExtra("AllItems",profilPage.sendData);
             startActivity(i);
 
             getActivity().finish();

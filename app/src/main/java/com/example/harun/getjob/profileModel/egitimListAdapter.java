@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.harun.getjob.R;
@@ -24,14 +25,17 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
     LayoutInflater inflater;
     egitimListModel egitimListModel;
 
+    private boolean visibilityCheck;
+
     public HashMap<String, ArrayList<egitimListModel>> egitimHash = new HashMap<>();
     public ArrayList<egitimListModel> egitimHashList = new ArrayList<>();
 
 
-    public egitimListAdapter(Context context, ArrayList<egitimListModel> egitimList) {
-        this.egitimList = egitimList;
+    public egitimListAdapter(Context context, ArrayList<egitimListModel> egitimListe, boolean visibility) {
+        Log.d(TAG, "egitimListAdapter: " + egitimListe);
+        this.egitimList = egitimListe;
         this.inflater = LayoutInflater.from(context);
-
+        this.visibilityCheck = visibility;
 
     }
 
@@ -46,7 +50,7 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         egitimListModel = egitimList.get(position);
-
+        Log.d(TAG, "onBindViewHolder: ");
 
         setEgitimHashMap(String.valueOf(position), egitimListModel);
 
@@ -56,8 +60,16 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
         holder.tvBolum.setText(egitimListModel.getBolum());
         holder.tvTur.setText(egitimListModel.getOgrenimTuru());
 
+        if (visibilityCheck) {
+
+            holder.editListRow.setVisibility(View.GONE);
+        } else {
+            holder.editListRow.setVisibility(View.VISIBLE);
+        }
+
 
     }
+
 
     private void setEgitimHashMap(String s, egitimListModel egitimListModel) {
         Log.d(TAG, "setEgitimHashMap: " + "s" + "\t" + egitimListModel.getBolum());
@@ -93,6 +105,7 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
     // Bir satırda bulunan elemanları tanımlayacagımız sınıf
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView bsYil, btsYil, nameOkul, tvBolum, tvTur;
+        ImageView editListRow;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -101,7 +114,7 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
             nameOkul = itemView.findViewById(R.id.nameOkul);
             tvBolum = itemView.findViewById(R.id.tvBolum);
             tvTur = itemView.findViewById(R.id.tvTur);
-
+            editListRow = itemView.findViewById(R.id.editListRow);
 
         }
     }

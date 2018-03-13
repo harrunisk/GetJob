@@ -69,16 +69,17 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/nameOkul"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nameOkul"
                     android:text="Sakarya Üniversitesi"
                     android:textAllCaps="true"
-                    android:textSize="15dp"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
 
 
                 <ImageView
+                    android:id="@+id/editListRow"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
@@ -90,16 +91,16 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/tvBolum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvBolum"
-                android:textSize="14dp"
-                android:text="Bilgisayar Mühendisliği" />
+                android:text="Bilgisayar Mühendisliği"
+                android:textSize="14dp" />
 
             <TextView
+                android:id="@+id/tvTur"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvTur"
                 android:layout_marginTop="2dp"
                 android:text="Yüksek Lisans"
                 android:textSize="12dp"

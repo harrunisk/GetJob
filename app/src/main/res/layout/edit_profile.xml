@@ -85,40 +85,59 @@
                     android:id="@+id/edit_profileFoto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/userProfiletext"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="20dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="15dp"
                     android:orientation="vertical">
 
-                    <com.mikhaellopez.circularimageview.CircularImageView
-                        android:layout_width="120dp"
-                        android:id="@+id/userProfile_image"
-                        android:layout_height="120dp"
-                        android:src="@drawable/man"
-                        app:civ_border_color="@color/SeaGreen"
-                        app:civ_border_width="3dp">
+                    <FrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                    </com.mikhaellopez.circularimageview.CircularImageView>
+                        <com.mikhaellopez.circularimageview.CircularImageView
+                            android:id="@+id/userProfile_image"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:src="@drawable/man"
+                            app:civ_border_color="@color/SeaGreen"
+                            app:civ_border_width="3dp">
+
+                        </com.mikhaellopez.circularimageview.CircularImageView>
+
+                        <ImageView
+                            android:id="@+id/changePhotoImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal|center_vertical"
+                            android:src="@drawable/ic_add_a_photo_black_24dp"
+                            android:tint="@color/SeaGreen" />
+
+
+                    </FrameLayout>
+
 
                     <TextView
                         android:id="@+id/changePhoto"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
                         android:layout_gravity="center_horizontal"
-                        android:textAlignment="center"
-                        android:textSize="15sp"
+                        android:layout_marginTop="15dp"
                         android:text="Fotoğrafı Değiştir."
-                        android:textColor="@color/OrangeRed">
+                        android:textAlignment="center"
+                        android:textColor="@color/OrangeRed"
+                        android:textSize="15sp">
 
                     </TextView>
+
                 </LinearLayout>
 
 
                 <!--İSİM SOYİSİM -->
 
                 <LinearLayout
+                    android:id="@+id/userProfiletext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -132,7 +151,7 @@
                         android:drawableLeft="@drawable/username"
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/black"
-                        android:hint="İsim Giriniz"
+                        android:hint="İsim Soyisim Giriniz"
                         android:padding="10dp"
                         android:theme="@style/FullWidthEditText" />
 
@@ -146,7 +165,8 @@
                         android:drawableTint="@color/black"
                         android:hint="Meslek"
                         android:padding="10dp"
-                        android:theme="@style/FullWidthEditText" />
+                        android:theme="@style/FullWidthEditText"
+                        android:tooltipText="Birden fazla ise virgül koyarak belirtiniz" />
 
                     <EditText
                         android:id="@+id/editLocation"

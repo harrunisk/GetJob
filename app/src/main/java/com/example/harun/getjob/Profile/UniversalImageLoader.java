@@ -22,7 +22,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 public class UniversalImageLoader {
 
-    public static final int defaultImage = R.mipmap.ic_launcher_round;
+    public static final int defaultImage = R.drawable.man;
     private Context context;
 
 
@@ -77,8 +77,6 @@ public class UniversalImageLoader {
                 }
             }
         });
-
-
 
 
     }

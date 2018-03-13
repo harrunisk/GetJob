@@ -74,24 +74,27 @@ public class Permissions {
     }
 
 
-    public static void showAlertdilaog(Activity activity, String permission,String aciklama,long duration) {
+    public static Alerter showAlertdilaog(Activity activity, String permission, String aciklama, long duration) {
 
         Log.d(TAG, "showAlertdilaog: CREATED");
-        Alerter.create(activity).setTitle(permission).setText(aciklama)
+        Alerter a;
+        a = Alerter.create(activity).setTitle(permission).setText(aciklama)
                 .setIcon(R.drawable.ic_notifications_active_black_24dp)
-                 .enableSwipeToDismiss()
+                .enableSwipeToDismiss()
                 .enableProgress(true).
-                 setDuration(duration).
-            //    disableOutsideTouch().
-                setProgressColorRes(R.color.Tomato).
-                setBackgroundColorRes(R.color.SlateBlue).show();
+                        setDuration(duration).
+//                enableInfiniteDuration(true).
+                //    disableOutsideTouch().
+                        setProgressColorRes(R.color.Tomato).
+                        setBackgroundColorRes(R.color.SlateBlue);
 
+
+        return a;
     }
 
 
     /**
      * Her izin için Tek tek kontrol yapacak izin daha önceden verilmişmi verilmemişmi  ve true false dönecek
-     *
      *
      * @param permission
      * @return
@@ -102,7 +105,7 @@ public class Permissions {
 
         int permissionRequest = ActivityCompat.checkSelfPermission(activity, permission);
         if (permissionRequest != PackageManager.PERMISSION_GRANTED) {
-           // Toast.makeText(activity, "İzin Verilmemiş" + permission, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(activity, "İzin Verilmemiş" + permission, Toast.LENGTH_SHORT).show();
             /*if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
 
                 Log.d(TAG, "checkPermision:shouldShowRequestPermissionRationale " + permission);
