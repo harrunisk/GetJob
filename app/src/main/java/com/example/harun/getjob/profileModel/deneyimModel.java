@@ -1,17 +1,19 @@
 package com.example.harun.getjob.profileModel;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 /**
  * Created by mayne on 15.02.2018.
  */
 
-public class deneyimModel {
+public class deneyimModel implements Parcelable {
 
-    private String pozisyon;
-    private String kurum;
-    private String lokasyon;
-    private String ay;
+    public String pozisyon;
+    public String kurum;
+    public String lokasyon;
+    public String ay;
 
     public deneyimModel(String pozisyon, String kurum, String lokasyon, String ay) {
         Log.d("deneyimModelConstructor","Deneyim Model Listesi Dolduruluyor ");
@@ -27,6 +29,25 @@ public class deneyimModel {
         Log.d("deneyimModelNoparameter","Deneyim Model Listesi Dolduruluyor ");
     }
 
+
+    protected deneyimModel(Parcel in) {
+        pozisyon = in.readString();
+        kurum = in.readString();
+        lokasyon = in.readString();
+        ay = in.readString();
+    }
+
+    public static final Creator<deneyimModel> CREATOR = new Creator<deneyimModel>() {
+        @Override
+        public deneyimModel createFromParcel(Parcel in) {
+            return new deneyimModel(in);
+        }
+
+        @Override
+        public deneyimModel[] newArray(int size) {
+            return new deneyimModel[size];
+        }
+    };
 
     public String getPozisyon() {
         return pozisyon;
@@ -53,11 +74,34 @@ public class deneyimModel {
     }
 
     public String getAy() {
-        return ay+" Ay";
+        return ay;
     }
 
     public void setAy(String ay) {
         this.ay = ay;
+    }
+
+    @Override
+    public String toString() {
+        return "deneyimModel{" +
+                "pozisyon='" + pozisyon + '\'' +
+                ", kurum='" + kurum + '\'' +
+                ", lokasyon='" + lokasyon + '\'' +
+                ", ay='" + ay + '\'' +
+                '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(pozisyon);
+        parcel.writeString(kurum);
+        parcel.writeString(lokasyon);
+        parcel.writeString(ay);
     }
 
 

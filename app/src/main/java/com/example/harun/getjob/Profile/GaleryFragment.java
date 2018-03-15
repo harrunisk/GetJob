@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.harun.getjob.R;
 import com.example.harun.getjob.profileModel.PhotoModel;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -106,7 +107,8 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, "init:");
 
         mfilePaths = new FilePaths();
-
+        UniversalImageLoader universalImageLoader = new UniversalImageLoader(activity);
+        ImageLoader.getInstance().init(universalImageLoader.configuration());
         final ArrayList<String> paths = new ArrayList<>();
         // Dönen İmage Directoryleri directory listesine esşitliyorum
         directory = FileSearch.getAllShownImagesPath(true, getActivity(), null);
@@ -241,6 +243,7 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
             Log.d(TAG, "userImage_fromGalery: Secilen Resim Uri" + "\t" + uri);
             Intent i = new Intent(getActivity(), EditProfile.class);
             i.putExtra("newUserImagefromGaleryUri", uri);
+            i.putExtra("AllItems",profilPage.sendData);
             startActivity(i);
 
             getActivity().finish();

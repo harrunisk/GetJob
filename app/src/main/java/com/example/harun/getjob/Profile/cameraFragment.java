@@ -125,7 +125,11 @@ public class cameraFragment extends Fragment {
             //paremetreden gelen data değeri bitmap olarak aldım
             bitmap = (Bitmap) data.getExtras().get("data");
             //Uri outputFileUri = Uri.fromFile(new File(context.getExternalCacheDir().getPath(), "getjob.jpeg"));
-          //  uri = filePaths.getImageFile(getActivity(), bitmap);
+
+            uri = filePaths.getImageFile(getActivity(), bitmap);//Çekilen fotograf önce kayıt ediliri kayıt uri si geri gönderilir
+            //Fotograf kesme ekranına yönlendirilir.
+            //Orada kesilen fotografta kayıt edilir-->Aşagıdaki getImage File
+
             cropImageActivity();
 
 
@@ -137,9 +141,8 @@ public class cameraFragment extends Fragment {
 
 
                 //Crop Edilen Fotoğrafı bitmap olarak alıp kayıt etmek için
-                cropped=filePaths.getCroppedBitmap(croppingImageresult.getUri());//Crop edilen image urisi gönderiliyor.
+                cropped = filePaths.getCroppedBitmap(croppingImageresult.getUri());//Crop edilen image bimtpa olarak gönderiliyor.
                 outputUri = filePaths.getImageFile(getActivity(), cropped); //Kesilen fotograf burada kaydedilip kayıt edilen yerin uri'si return edilir
-
 
 
                 //getCroppingImageUri(croppingImageresult.getUri());
@@ -149,8 +152,9 @@ public class cameraFragment extends Fragment {
 
                     Log.d(TAG, "onActivityResult: Cameradan Gelen Bitmap" + cropped);
                     Intent i = new Intent(getActivity(), EditProfile.class);
-                    i.putExtra("imageFromCam", outputUri);
-                    //Resimin pathini çekildikten sonra kayıt edildiği pathi gönderiyorum edit profile universal image ile yüklencek
+                    i.putExtra("imageFromCam", outputUri);//fotografın pathini (foto çekildikten sonra kayıt edildiği pathi) gönderiyorum edit profile universal image ile yüklencek
+
+                    i.putExtra("AllItems", profilPage.sendData);//Edit Activitye tüm itemler yeniden gönderiliyor Aksi halde Edit Activty yeniden başladıgında İtemler yerine koyulmadıgı için hata verecektir
                     startActivity(i);
                     getActivity().finish();
 

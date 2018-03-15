@@ -71,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Log.d("AUTH",auth.getCurrentUser().getEmail());
                 Log.d(TAG, "onActivityResult:"+auth.getCurrentUser().getPhoneNumber());
+
+                userID = auth.getCurrentUser().getUid();
+
                 Intent intent = new Intent(getApplicationContext(), UserIntro.class);
                 startActivity(intent);
                 finish();

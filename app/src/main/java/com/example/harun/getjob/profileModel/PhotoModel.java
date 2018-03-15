@@ -8,7 +8,10 @@ import android.util.Log;
 
 public class PhotoModel {
 
-    String bucketId, imageBucket, imagePath, imageName;
+    private String bucketId,
+            imageBucket,
+            imagePath,
+            imageName;
 
 
     public PhotoModel(String bucketId, String imageBucket, String imagePath, String imageName) {

@@ -57,7 +57,7 @@
             android:lineSpacingExtra="4dp"
             android:lines="2"
             android:paddingLeft="7dp"
-            android:textColor="#8c8c8c"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
         <EditText
@@ -73,7 +73,7 @@
             android:lineSpacingExtra="4dp"
             android:lines="2"
             android:paddingLeft="7dp"
-            android:textColor="#8c8c8c"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
         <EditText
@@ -89,7 +89,7 @@
             android:lineSpacingExtra="4dp"
             android:lines="2"
             android:paddingLeft="7dp"
-            android:textColor="#8c8c8c"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
         <LinearLayout

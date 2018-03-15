@@ -15,10 +15,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.harun.getjob.FirebaseMethods.FirebaseMethods;
 import com.example.harun.getjob.FirebaseMethods.firebaseContent;
 import com.example.harun.getjob.R;
+import com.example.harun.getjob.profileModel.AllModelsList;
 import com.example.harun.getjob.profileModel.deneyimListAdapter;
 import com.example.harun.getjob.profileModel.deneyimModel;
 import com.example.harun.getjob.profileModel.egitimListAdapter;
@@ -49,7 +51,10 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     ArrayList<yetenekModel> recyclerYetenekList;
     yetenekListAdapter myetenekListAdapter;
 
-    TextView tvTel,
+    AllModelsList mAllModelsList;
+    contentFragment mcontentFragment;
+    ImageView changePhotoImage;
+    public TextView tvTel,
             tvMail,
             tvDogumTarih,
             tvEhliyet,
@@ -92,10 +97,13 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         //   if (Permissions.checkPermissionArray(this,Permissions.PERMISSIONS)) {
 
         gatherViews();       // Tanimlamalar bu fonksiyonda toplanacak
+        initFromDatabaseItem();
         initImageLoader();   //GaleryFragment ve PhotoFragment tan Gelen fotoğrafların handle işlemleri
+
 
         //OnclickHandler..
         changePhoto.setOnClickListener(this);
+        changePhotoImage.setOnClickListener(this);
         saveAll.setOnClickListener(this);
 
 
@@ -110,6 +118,47 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
     }
 
+    private void initFromDatabaseItem() {
+
+        Log.d(TAG, "initFromDatabaseItem: İLKLEMELER YAPILIYOR");
+        intent = getIntent();
+
+        mAllModelsList = intent.getParcelableExtra("AllItems");
+
+        if (mAllModelsList != null) {
+
+
+            Log.d(TAG, "initFromDatabaseItem:\t " + mAllModelsList.getAbout_me() + "\t" + mAllModelsList.getMfirebaseContent().getName());
+            editAboutContent.setText(mAllModelsList.getAbout_me());
+            edituserName.setText(mAllModelsList.getMfirebaseContent().getName());
+            editJob.setText(mAllModelsList.getMfirebaseContent().getJob());
+            editLocation.setText(mAllModelsList.getMfirebaseContent().getLocation());
+            tvTel.setText(mAllModelsList.getMgenelBilgiModel().getPhone());
+            tvMail.setText(mAllModelsList.getMgenelBilgiModel().getE_mail());
+            tvDogumTarih.setText(mAllModelsList.getMgenelBilgiModel().getBirthday());
+            tvEhliyet.setText(mAllModelsList.getMgenelBilgiModel().getEhliyet());
+            tvAskerlik.setText(mAllModelsList.getMgenelBilgiModel().getAskerlik());
+            newPhotoUrl = mAllModelsList.getProfilePhotoUrl();
+
+            egitimListe = mAllModelsList.getMegitimListModel();
+            denemeList = mAllModelsList.getMdeneyimListModel();
+            recyclerYetenekList = mAllModelsList.getMyetenekListModel();
+
+        /*Listeler Boş değilse adapter çağırılsın boşsa gerek yok .. */
+            if (egitimListe.size() > 0) {
+                setRecylerEgitim(egitimListe);
+            }
+            if (denemeList.size() > 0) {
+                setRecylerDeneyim(denemeList);
+            }
+            if (recyclerYetenekList.size() > 0) {
+
+                setRecylerYetenek(recyclerYetenekList);
+            }
+
+        } else
+            Log.d(TAG, "initFromDatabaseItem: ALLMODELLİST NULL");
+    }
 
     /**
      * GALERi Veya Cameradan Gelen Resim userProfilImage  olarak ayarlanıyor.
@@ -118,10 +167,13 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         //Burada Databaseden gelen profil resmi önce konacak ..
 
         Log.d(TAG, "initImageLoader: Image Yükleniyor..");
-        UniversalImageLoader universalImageLoader = new UniversalImageLoader(getApplicationContext());
-        ImageLoader.getInstance().init(universalImageLoader.configuration());
+        if (newPhotoUrl != null) {
 
+            UniversalImageLoader universalImageLoader = new UniversalImageLoader(getApplicationContext());
+            ImageLoader.getInstance().init(universalImageLoader.configuration());
+            UniversalImageLoader.setImage(newPhotoUrl, userProfile_image, null, "");
 
+        }
         intent = getIntent();
 
         if (intent.hasExtra("imageFromCam")) {
@@ -176,7 +228,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         empty_message1 = findViewById(R.id.empty_message1);
         empty_message2 = findViewById(R.id.empty_message2);
         saveAll = findViewById(R.id.saveAll);
-        myetenekModel = new yetenekModel();
+        changePhotoImage = findViewById(R.id.changePhotoImage);
         mFirebaseMethods = new FirebaseMethods(getApplicationContext());
 
 
@@ -215,7 +267,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     /**
      * Eğitim Ekleme Tıklandıgıında
      *
-     * @param view
+     * @param view ->>  XMl deki + Butonu ..
      */
     public void editEgitim(View view) {
         //Buraya Tıklandıgında bir tane Diaglog Fragment Olusturup icerisine edit deneyim xml yükleyecem
@@ -261,34 +313,18 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     /**
      * DialogFragmentten Gelen bilgiler listeye dolduruluyor
      *
-     * @param pz
-     * @param loc
-     * @param ay
-     * @param krm
+     * @param pz-->pozisyon
+     * @param loc-->lokasyon
+     * @param ay-->kaç       ay çalışıldı
+     * @param krm-->nerede   çalışıldı
      */
     @Override
     public void getExperienceContent(String pz, String loc, String ay, String krm) {
 
         denemeList.add(new deneyimModel(pz, krm, loc, ay));
         Log.d(TAG, "interfaceden gelen Deneyim : " + pz + loc);
-        mdeneyimListAdapter = new deneyimListAdapter(this, denemeList);
-
-
-        recyclerView.setAdapter(mdeneyimListAdapter);
-        if (mdeneyimListAdapter.getItemCount() == 0) {
-
-            recyclerView.setVisibility(View.GONE);
-            empty_message.setVisibility(View.VISIBLE);
-
-        }
-        empty_message.setVisibility(View.INVISIBLE);
+        setRecylerDeneyim(denemeList);
         checkExperience = true;//Değişiklik yapıldı
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setHasFixedSize(true);
 
 
     }
@@ -311,27 +347,12 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     @Override
     public void getEgitimContent(String okul, String bolum, String ogrenimTuru, String bsYılı, String btsYılı) {
 
-
         //Egitim List Dolduruluyor
         Log.d(TAG, "interfaceden gelen egitimList : " + okul + bolum + ogrenimTuru + bsYılı + btsYılı);
         egitimListe.add(new egitimListModel(okul, bolum, ogrenimTuru, bsYılı, btsYılı));
-        megitimListAdapter = new egitimListAdapter(this, egitimListe);
-        recyclerViewEgitim.setAdapter(megitimListAdapter);
+        setRecylerEgitim(egitimListe);
 
-        if (megitimListAdapter.getItemCount() == 0) {
-
-            recyclerViewEgitim.setVisibility(View.GONE);
-            empty_message1.setVisibility(View.VISIBLE);
-
-        }
-
-        empty_message1.setVisibility(View.INVISIBLE);
         checkEgitim = true;
-        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
-        linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerViewEgitim.setLayoutManager(linearLayoutManager1);
-        recyclerViewEgitim.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewEgitim.setHasFixedSize(true);
 
     }
 
@@ -342,24 +363,8 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         Log.d(TAG, "interfaceden gelen yetenekList : " + name + "  " + rate);
 
         recyclerYetenekList.add(new yetenekModel(name, rate));
-        myetenekListAdapter = new yetenekListAdapter(this, recyclerYetenekList);
-
-        recyclerViewYetenek.setAdapter(myetenekListAdapter);
-
-
-        if (myetenekListAdapter.getItemCount() == 0) {
-
-            recyclerViewYetenek.setVisibility(View.GONE);
-            empty_message2.setVisibility(View.VISIBLE);
-
-        }
-        empty_message2.setVisibility(View.INVISIBLE);
+        setRecylerYetenek(recyclerYetenekList);
         checkYetenek = true;
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
-        linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerViewYetenek.setLayoutManager(linearLayoutManager2);
-        recyclerViewYetenek.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewYetenek.setHasFixedSize(true);
 
 
     }
@@ -367,6 +372,8 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     @Override
     public void getGenelContent(String tel, String mail, String tarih, String ehliyet, String askerlik) {
         Log.d(TAG, "getGenel Content İnterfaceden Gelen ");
+
+
         tvTel.setText(tel);
         tvMail.setText(mail);
         tvDogumTarih.setText(tarih);
@@ -386,6 +393,81 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
     }
 
+    private void setRecylerYetenek(ArrayList<yetenekModel> _recyclerYetenekList) {
+        Log.d(TAG, "setRecylerYetenek: ");
+        myetenekListAdapter = new yetenekListAdapter(this, _recyclerYetenekList, false);
+
+        recyclerViewYetenek.setAdapter(myetenekListAdapter);
+
+
+        if (myetenekListAdapter.getItemCount() == 0) {
+
+            Log.d(TAG, "setRecylerYetenek:getItemCount() " + myetenekListAdapter.getItemCount());
+            recyclerViewYetenek.setVisibility(View.GONE);
+            empty_message2.setVisibility(View.VISIBLE);
+
+        }
+        empty_message2.setVisibility(View.INVISIBLE);
+
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
+        linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerViewYetenek.setLayoutManager(linearLayoutManager2);
+        recyclerViewYetenek.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewYetenek.setHasFixedSize(true);
+
+
+    }
+
+    private void setRecylerDeneyim(ArrayList<deneyimModel> _deneyimList) {
+        Log.d(TAG, "setRecylerDeneyim: ");
+
+        mdeneyimListAdapter = new deneyimListAdapter(this, _deneyimList, false);
+
+
+        recyclerView.setAdapter(mdeneyimListAdapter);
+        if (mdeneyimListAdapter.getItemCount() == 0) {
+
+            recyclerView.setVisibility(View.GONE);
+            empty_message.setVisibility(View.VISIBLE);
+
+        }
+        empty_message.setVisibility(View.INVISIBLE);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+
+
+    }
+
+    private void setRecylerEgitim(ArrayList<egitimListModel> _egitimListe) {
+        Log.d(TAG, "setRecylerEgitim: DOlduruluyor" + _egitimListe);
+
+        megitimListAdapter = new egitimListAdapter(this, _egitimListe, false);
+        recyclerViewEgitim.setAdapter(megitimListAdapter);
+
+        if (megitimListAdapter.getItemCount() == 0) {
+
+            Log.d(TAG, "setRecylerEgitim: LİSTEBOŞ ");
+            recyclerViewEgitim.setVisibility(View.GONE);
+            empty_message1.setVisibility(View.VISIBLE);
+
+        }
+
+        empty_message1.setVisibility(View.INVISIBLE);
+
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
+        linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerViewEgitim.setLayoutManager(linearLayoutManager1);
+        recyclerViewEgitim.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewEgitim.setHasFixedSize(true);
+
+
+    }
+
+
     @Override
     public void onClick(View view) {
 
@@ -394,6 +476,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
                 Intent intent = new Intent(this, PhotoActivity.class);
                 startActivity(intent);
+                finish();
                 break;
 
             case R.id.saveAll:
@@ -404,7 +487,20 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
                     allChanges.execute();
                     //saveAllchangesProfile();
                     break;
+                }else{
+
+
+                    Toast.makeText(this, "İsim Meslek Lokasyon Boş Olamaz", Toast.LENGTH_SHORT).show();
+                    break;
                 }
+
+
+            case R.id.changePhotoImage:
+
+                Intent intent2 = new Intent(this, PhotoActivity.class);
+                startActivity(intent2);
+                finish();
+                break;
 
 
         }
@@ -435,11 +531,15 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
      * profil üzerinde yapılmıs olaran değişikliler kayıt edilir
      * Değişikler check parametresi ile kontrol edilir
      * check Parametresi kullanıcı bir kayıt girdiğinde true olmaktadır.
+     * Arka Plana almamın sebebi bazen Fotografı filan yükleme uzun sürüyor en azından  bi 10 sn filan
+     * böyle yapınca kullanıcı işlemine devam edebilir.Buradaki sorun ise Güncelleme işleminin hemen sonrasında profilPage'in
+     * yeni güncellemeyi almaması Çünkü direk profilPage açılıyor bu işlemler arka planda yapılırken...
      */
 
     private class SaveAllChanges extends AsyncTask<Void, Void, Void> {
 
         private static final String TAG = "SaveAllChanges";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();

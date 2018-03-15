@@ -28,11 +28,11 @@ import java.util.List;
  * Created by mayne on 17.02.2018.
  */
 
-public class EditEgitimFragment extends DialogFragment implements View.OnClickListener,AdapterView.OnItemSelectedListener {
+public class EditEgitimFragment extends DialogFragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     EditText egitimOkul, egitimBolum, egitimlisans;
     Spinner bs_spinner, bts_spinner;
-    Button egitimSave,egitimCancel;
+    Button egitimSave, egitimCancel;
     contentFragment mcontentFragment;
     egitimListModel megitimListModel;
     String bsyil, btsyil;
@@ -45,6 +45,7 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
             "1600",
             "1500"
     };
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -62,26 +63,25 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
         egitimCancel = v.findViewById(R.id.egitimCancel);
         egitimSave = v.findViewById(R.id.egitimSave);
 
-       // bs_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
-      //  bts_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
+        // bs_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
+        //  bts_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
 
         final List<String> yilList = new ArrayList<>(Arrays.asList(yillarim));
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                v.getContext(),android.R.layout.simple_spinner_dropdown_item,yilList);
+                v.getContext(), android.R.layout.simple_spinner_dropdown_item, yilList);
 
-      // ArrayAdapter yillar = ArrayAdapter.createFromResource(v.getContext(),R.array.yillar,android.R.layout.simple_spinner_dropdown_item);
-       // yillar.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         bs_spinner.setAdapter(spinnerArrayAdapter);
         bts_spinner.setAdapter(spinnerArrayAdapter);
-
+        bts_spinner.setHovered(true);
+        bs_spinner.setHovered(true);
 
         egitimSave.setOnClickListener(this);
         egitimCancel.setOnClickListener(this);
         bs_spinner.setOnItemSelectedListener(this);
 
         bts_spinner.setOnItemSelectedListener(this);
-        //ArrayAdapter<String[]> arrayAdapter = new ArrayAdapter<String[]>(this, android.R.layout.simple_spinner_dropdown_item, megitimListModel.getSpinnerListe())
 
 
         return v;
@@ -100,7 +100,7 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
                 break;
             case R.id.egitimSave:
                 Log.d(TAG, "egitimsave oncLick");
-                mcontentFragment.getEgitimContent(egitimOkul.getText().toString(), egitimBolum.getText().toString(),egitimlisans.getText().toString(),bsyil,btsyil);
+                mcontentFragment.getEgitimContent(egitimOkul.getText().toString(), egitimBolum.getText().toString(), egitimlisans.getText().toString(), bsyil, btsyil);
                 getDialog().dismiss();
                 break;
 
@@ -142,7 +142,7 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
             case R.id.bts_spinner:
                 Log.d(TAG, "Spinner oncLick : Bitis Yili");
 
-                btsyil=adapterView.getItemAtPosition(position).toString();
+                btsyil = adapterView.getItemAtPosition(position).toString();
                 break;
         }
 

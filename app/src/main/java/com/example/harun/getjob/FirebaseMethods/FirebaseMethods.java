@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.harun.getjob.MainActivity;
 import com.example.harun.getjob.Profile.FilePaths;
 import com.example.harun.getjob.R;
+import com.example.harun.getjob.profileModel.AllModelsList;
 import com.example.harun.getjob.profileModel.deneyimModel;
 import com.example.harun.getjob.profileModel.egitimListModel;
 import com.example.harun.getjob.profileModel.genelBilgiModel;
@@ -22,8 +23,10 @@ import com.example.harun.getjob.profileModel.yetenekModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -51,6 +54,8 @@ public class FirebaseMethods {
     private StorageReference mStorageRef;
     private String databaseName = "users_data"; //Firebase Database name
     firebaseContent mfirebaseContent;
+
+
     private Context mContext;
 
     public FirebaseMethods(Context context) {
@@ -257,12 +262,12 @@ public class FirebaseMethods {
         if (checkChanges) {
             Log.d(TAG, "deneyimListFirebase: İcerik Oluşturuluyor.");
 
-            for (Map.Entry<String, ArrayList<deneyimModel>> deneyim_entries : deneyimHash.entrySet()) {
+            for (Map.Entry<String, ArrayList<deneyimModel>> exp_entries : deneyimHash.entrySet()) {
 
-                ArrayList<deneyimModel> deneyimModelArrayList = deneyim_entries.getValue();
+                ArrayList<deneyimModel> experienceList = exp_entries.getValue();
 
 
-                myref2.child("experience_list").setValue(deneyimModelArrayList);
+                myref2.child("experience_list").setValue(experienceList);
 
             }
 
@@ -273,4 +278,134 @@ public class FirebaseMethods {
     }
 
 
+    public AllModelsList getDataFromFirebase(DataSnapshot dataSnapshot) {
+        Log.d(TAG, "onDataChange: getDAtaFromDatabase");
+        final ArrayList<egitimListModel> egitimList = new ArrayList<>();
+
+        final GenericTypeIndicator<ArrayList<egitimListModel>> genericTypeIndicator =
+                new GenericTypeIndicator<ArrayList<egitimListModel>>() {
+                };
+
+        final ArrayList<yetenekModel> yetenekList = new ArrayList<>();
+        GenericTypeIndicator<ArrayList<yetenekModel>> genericTypeIndicator1 = new GenericTypeIndicator<ArrayList<yetenekModel>>() {
+        };
+
+        final ArrayList<deneyimModel> deneyimList = new ArrayList<>();
+        GenericTypeIndicator<ArrayList<deneyimModel>> genericTypeIndicator2 = new GenericTypeIndicator<ArrayList<deneyimModel>>() {
+        };
+
+        genelBilgiModel bilgiModel = new genelBilgiModel();
+        firebaseContent content = new firebaseContent();
+        String photoUrl = new String();
+        String about_me = new String();
+        // AllModelsList model = new AllModelsList();
+
+        //DataSnapShot tüm nodelar arasından users_data bölümü alınıp users datanın şu anki kullanıcıya
+        //ait olan tüm veriler geliyor.
+
+        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+
+            if (dataSnapshot1.getKey().equals(mContext.getString(R.string.users_data))) {
+
+                Log.d(TAG, "onDataChange: dataSnapshot1 TÜM ELEMANLAR" + dataSnapshot1.child(userId).getValue());
+
+
+                /**
+                 * Şimdilik buarada bu kontrolleri koyuyorum daha sonra kullanıcı kayıt yaparken bunları olusturucağım için
+                 * şimdilik kalsın.Ayrıca kontroller liste içleri boş olup olmadıgıda yapıalacak.
+                 */
+                if (dataSnapshot1.child(userId).exists()) { //userID child varsa ise
+
+                    if (dataSnapshot1.child(userId).child("education_list").exists()) {
+                        ArrayList<egitimListModel> egitimListModelArrayList = dataSnapshot1.child(userId).child("education_list").getValue(genericTypeIndicator);
+
+                        if (egitimListModelArrayList.size() > 0) {
+                            for (egitimListModel _egitimListModel : egitimListModelArrayList) {
+
+                                egitimList.add(new egitimListModel(_egitimListModel.okul, _egitimListModel.bolum, _egitimListModel.ogrenimTuru, _egitimListModel.bsYılı, _egitimListModel.btsYılı));
+
+                                Log.d(TAG, "onDataChange: EGİTİMLİSTMODEL" + egitimList);
+
+                                //Log.d(TAG, "onDataChange: " + egitimListModel.okul + "\t" + egitimListModel.bolum + "\t" + egitimListModel.btsYılı);
+
+                            }
+                        } else {
+
+                            Log.d(TAG, "getDataFromFirebase: egitimListBOŞŞŞŞŞŞŞŞ");
+                        }
+
+                    }
+                    if (dataSnapshot1.child(userId).child("experience_list").exists()) {
+
+                        ArrayList<deneyimModel> deneyimModelArrayList = dataSnapshot1.child(userId).child("experience_list").getValue(genericTypeIndicator2);
+                        for (deneyimModel _deneyimModel : deneyimModelArrayList) {
+
+                            //deneyimList.add(new deneyimModel(mdeneyimModel.getPozisyon(), mdeneyimModel.getKurum(), mdeneyimModel.getLokasyon(), mdeneyimModel.getAy()));
+                            deneyimList.add(new deneyimModel(_deneyimModel.pozisyon, _deneyimModel.kurum, _deneyimModel.lokasyon, _deneyimModel.ay));
+                            Log.d(TAG, "getDataFromFirebase: DENEYİMMODEL LİST \t" + deneyimList);
+                        }
+
+                    }
+                    if (dataSnapshot1.child(userId).child("skill_list").exists()) {
+
+                        ArrayList<yetenekModel> yetenekModelArrayList = dataSnapshot1.child(userId).child("skill_list").getValue(genericTypeIndicator1);
+
+                        if (yetenekModelArrayList.size() > 0) {
+
+                            for (yetenekModel _yetenekModel : yetenekModelArrayList) {
+
+                                yetenekList.add(new yetenekModel(_yetenekModel.yetenekName, _yetenekModel.rate));
+                                Log.d(TAG, "getDataFromFirebase: YETENEKLİST" + yetenekList);
+
+                            }
+
+                        } else {
+
+                            Log.d(TAG, "getDataFromFirebase: YETENEKLİSTBOŞŞŞŞŞŞ");
+                        }
+
+                    }
+                    if (dataSnapshot1.child(userId).child("general_content").exists()) {
+
+                        bilgiModel = dataSnapshot1.child(userId).child("general_content").getValue(genelBilgiModel.class);
+
+                    }
+
+                    //else
+                      //  bilgiModel = new genelBilgiModel("Belirtilmemiş", "Belirtilmemiş", "Belirtilmemiş", "Belirtilmemiş", "Belirtilmemiş");
+
+
+
+                    if (dataSnapshot1.child(userId).child("main_content").exists()) {
+
+                        content = dataSnapshot1.child(userId).child("main_content").getValue(firebaseContent.class);
+
+
+                    }
+
+                    if (dataSnapshot1.child(userId).child("about_me").exists()) {
+                        about_me = String.valueOf(dataSnapshot1.child(userId).child("about_me").getValue());
+                    }
+                    if (dataSnapshot1.child(userId).child("profile_photo").exists()) {
+
+                        photoUrl = (String) dataSnapshot1.child(userId).child("profile_photo").getValue();
+
+                    }
+
+
+                 /*   Log.d(TAG, "onDataChange: ARRAY LİST " + egitimListModelArrayList.size() +
+                            deneyimModelArrayList.size() + yetenekModelArrayList.size()
+                            + egitimListModelArrayList.get(0) + "\t" + deneyimModelArrayList.get(0) +
+                            "\t" + bilgiModel + "\t" + content + "\t" + about_me + "\t" + photoUrl);
+*/
+
+                    return new AllModelsList(egitimList, deneyimList, yetenekList, bilgiModel, content, about_me, photoUrl);
+
+                } else
+                    Log.d(TAG, "getDataFromFirebase: ChildBulunamadı");
+
+            }
+        }
+        return null;
+    }
 }

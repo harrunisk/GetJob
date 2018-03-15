@@ -5,11 +5,14 @@ package com.example.harun.getjob.FirebaseMethods;
  */
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Bu class Her kullanıcının edit profile Sayfasındaki ana bilgilerini tutaacak
  */
 
-public class firebaseContent {
+public class firebaseContent implements Parcelable{
 
 private String job;
 private String location;
@@ -27,6 +30,25 @@ private String profil_photo;
     public firebaseContent() {
     }
 
+
+    protected firebaseContent(Parcel in) {
+        job = in.readString();
+        location = in.readString();
+        name = in.readString();
+        profil_photo = in.readString();
+    }
+
+    public static final Creator<firebaseContent> CREATOR = new Creator<firebaseContent>() {
+        @Override
+        public firebaseContent createFromParcel(Parcel in) {
+            return new firebaseContent(in);
+        }
+
+        @Override
+        public firebaseContent[] newArray(int size) {
+            return new firebaseContent[size];
+        }
+    };
 
     public String getJob() {
         return job;
@@ -69,5 +91,18 @@ private String profil_photo;
                 ", name='" + name + '\'' +
                // ", profil_photo='" + profil_photo + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(job);
+        parcel.writeString(location);
+        parcel.writeString(name);
+        parcel.writeString(profil_photo);
     }
 }

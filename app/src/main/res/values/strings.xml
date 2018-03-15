@@ -30,12 +30,16 @@
     <!--Firebase String-->>
 
     <string name="users_images">users_images</string>
+    <string name="users_data">users_data</string>
+    <string name="users_account">users_account</string>
 
 
 
 
     <string name="spinnerPrompt">Baslangıc Yılı</string>
     <string name="spinnerPrompt2">Bitis Yılı</string>
+
+    <string name="toolTip">Birden fazla ise virgül koyarak belirtiniz</string>
 
     <string-array name="askerlik">
         <item>Yapildi</item>
@@ -49,6 +53,7 @@
         <item>A</item>
         <item>B</item>
         <item>C</item>
+        <item>Yok</item>
 
     </string-array>
 
