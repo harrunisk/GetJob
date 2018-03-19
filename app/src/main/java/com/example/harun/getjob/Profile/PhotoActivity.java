@@ -41,27 +41,6 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         }
 
 
-        //Permissions.showAlertdilaog(this, "İzinler Verilmemiş");
-
-
-
-
-           /* */
-        //İzinleri iste
-          /*  if(!Permissions.requestPermission(this,Permissions.PERMISSIONS))
-            {
-
-
-            }
-        }*/
-
-
-        /*else if(Permissions.(this,Permissions.PERMISSIONS)) {
-            //İzinler istendikten sonra true gelirse
-
-
-        }*/
-
 
     }
 

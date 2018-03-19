@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import com.example.harun.getjob.R;
+import com.example.harun.getjob.profileModel.yetenekModel;
 
 /**
  * Created by mayne on 23.02.2018.
@@ -31,6 +32,7 @@ public class EditYetenekFragment extends DialogFragment implements View.OnClickL
     RatingBar mRating;
     EditText yetenekName;
     Button saveContent;
+    private yetenekModel myetenekModel;
     contentFragment mcontentFragment;
 
     @Nullable
@@ -47,6 +49,16 @@ public class EditYetenekFragment extends DialogFragment implements View.OnClickL
 
         closeDialog.setOnClickListener(this);
         saveContent.setOnClickListener(this);
+
+        if (getTag().equals("updateFragment")) {
+
+            myetenekModel = getArguments().getParcelable("yetenekSatir");
+
+            yetenekName.setText(myetenekModel.getYetenekName()); //Null olabilir kullanıcı yetenek eklerken kontrolü yapılacak
+            mRating.setRating(myetenekModel.getRate());
+
+
+        }
 
 
         return view;
@@ -69,10 +81,13 @@ public class EditYetenekFragment extends DialogFragment implements View.OnClickL
                 /*
                 editProfileActivitye gönderildi
                  */
-                mcontentFragment.getYetenekContent(yetenekName.getText().toString(), (int) mRating.getRating());
-                getDialog().dismiss();
-
-
+                if (getTag().equals("updateFragment")) {
+                    mcontentFragment.getYetenekContent(yetenekName.getText().toString(), (int) mRating.getRating(), true);
+                    getDialog().dismiss();
+                } else {
+                    mcontentFragment.getYetenekContent(yetenekName.getText().toString(), (int) mRating.getRating(), false);
+                    getDialog().dismiss();
+                }
                 break;
             default:
                 break;

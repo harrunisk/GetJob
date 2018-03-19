@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,7 +40,7 @@ import static android.app.Activity.RESULT_OK;
 public class GaleryFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = "GaleryFragment";
     CircularImageView user_image;
-    ProgressBar image_progress;
+    // ProgressBar image_progress;
     GridView galeryphoto;
     Spinner directorySpinner;
     ImageView closeGalery;
@@ -66,7 +65,7 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.gallery_fragment, container, false);
         user_image = v.findViewById(R.id.userImage);
-        image_progress = v.findViewById(R.id.image_progress);
+        //  image_progress = v.findViewById(R.id.image_progress);
         galeryphoto = v.findViewById(R.id.galeryphoto);
         directorySpinner = v.findViewById(R.id.spinnerDirectory);
         closeGalery = v.findViewById(R.id.closeGalery);
@@ -85,7 +84,7 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
             init();
 
         } else {
-            Permissions.showAlertdilaog(getActivity(), "İzinler Verilmemiş", "İzinleri verde işimize bakalım",2000);
+            Permissions.showAlertdilaog(getActivity(), "İzinler Verilmemiş", "İzinleri verde işimize bakalım", 2000).show();
 
             Intent i = new Intent(getActivity(), PhotoActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -241,17 +240,20 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
         if (uri != null) {
 
             Log.d(TAG, "userImage_fromGalery: Secilen Resim Uri" + "\t" + uri);
-            Intent i = new Intent(getActivity(), EditProfile.class);
-            i.putExtra("newUserImagefromGaleryUri", uri);
-            i.putExtra("AllItems",profilPage.sendData);
-            startActivity(i);
-
+            //  Intent i = new Intent(getActivity(), EditProfile.class);
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("newUserImagefromGaleryUri", uri);
+            //i.putExtra("AllItems2", profilPage.sendData);
+            //i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //  startActivity(i);
+            getActivity().setResult(RESULT_OK, returnIntent);
             getActivity().finish();
         } else {
             Log.d(TAG, "userImage_fromGalery: Uri yok path " + imagePath);
-            Intent i = new Intent(getActivity(), EditProfile.class);
-            i.putExtra("newUserImagefromGalery", imagePath);
-            startActivity(i);
+            //   Intent i = new Intent(getActivity(), EditProfile.class);
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("newUserImagefromGalery", imagePath);
+            getActivity().setResult(RESULT_OK, returnIntent);
 
             getActivity().finish();
 
@@ -271,7 +273,7 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
                 //outputUri=mfilePaths.getImageUri(getContext(),croppingImageresult.getOriginalBitmap());
                 Log.d(TAG, "onActivityResult: Croopping Image REsult " + croppingImageresult.getUri());
 
-                cropped=mfilePaths.getCroppedBitmap(croppingImageresult.getUri());//Crop edilen image urisi gönderiliyor.Bitmap olarak alınıyor
+                cropped = mfilePaths.getCroppedBitmap(croppingImageresult.getUri());//Crop edilen image urisi gönderiliyor.Bitmap olarak alınıyor
                 outputUri = mfilePaths.getImageFile(getActivity(), cropped); //Kesilen fotograf burada kaydedilip kayıt edilen yerin uri'si return edilir
 
                 user_image.setImageURI(outputUri);
@@ -284,19 +286,19 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-  /*  private void getImageUri(Uri uri) {
-        File resultFile = new File(uri.getPath());
-        Log.d(TAG, "getIMAGEURİ: Cropping RESULT FİLE " + resultFile.toString());
-        BitmapFactory.Options bitmapOpts = new BitmapFactory.Options();
-        bitmapOpts.inMutable = true;
-        cropped = BitmapFactory.decodeFile(resultFile.getPath(), bitmapOpts);
-        outputUri = mfilePaths.getImageFile(getActivity(), cropped); //Kesilen fotograf burada kaydedilip kayıt edilen yerin uri'si return edilir
+    /*  private void getImageUri(Uri uri) {
+          File resultFile = new File(uri.getPath());
+          Log.d(TAG, "getIMAGEURİ: Cropping RESULT FİLE " + resultFile.toString());
+          BitmapFactory.Options bitmapOpts = new BitmapFactory.Options();
+          bitmapOpts.inMutable = true;
+          cropped = BitmapFactory.decodeFile(resultFile.getPath(), bitmapOpts);
+          outputUri = mfilePaths.getImageFile(getActivity(), cropped); //Kesilen fotograf burada kaydedilip kayıt edilen yerin uri'si return edilir
 
-        Log.d(TAG, "getIMAGEURİ: Croopping Image REsult BİTMAP " + cropped + "\t" + outputUri);
-        // return outputUri;
+          Log.d(TAG, "getIMAGEURİ: Croopping Image REsult BİTMAP " + cropped + "\t" + outputUri);
+          // return outputUri;
 
-    }
-*/
+      }
+  */
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

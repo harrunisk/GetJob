@@ -140,13 +140,6 @@ public class EditGenelBilgiFragment extends DialogFragment implements View.OnCli
         return v;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
-    }
-
     //button Click İşlemleri
     @Override
     public void onClick(View view) {

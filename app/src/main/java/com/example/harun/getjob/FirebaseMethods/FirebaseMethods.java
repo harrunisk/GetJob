@@ -158,7 +158,7 @@ public class FirebaseMethods {
 
 
             Log.d(TAG, "Kayıt Ediliyor..: " + databaseName + "\n" + userId + "\n" +
-                    mgenelbilgiler.getBirthday() + "\n" + mgenelbilgiler.getE_mail() + "\n" + mgenelbilgiler.getPhone());
+                    mgenelbilgiler.getBirthday() + "\n" + mgenelbilgiler.getE_mail()+ "\n" + mgenelbilgiler.getPhone());
 
             //   myRef.child(databaseName).child(userId).child("general_content").setValue(mgenelbilgiler);
             myref2.child("general_content").setValue(mgenelbilgiler);
@@ -254,7 +254,7 @@ public class FirebaseMethods {
 
     /**
      * @param deneyimHash-->Eklenen deneyim listesi pozisyon değerleri ile hash lenir
-     * @param checkChanges          -->
+     * @param checkChanges          -->Değişiklik yapılmasında durumunda Hashleme işlemi yapılmalı ve öyle eklenmelidir.
      */
 
     public void addExperienceList(HashMap<String, ArrayList<deneyimModel>> deneyimHash, boolean checkChanges) {
@@ -278,6 +278,15 @@ public class FirebaseMethods {
     }
 
 
+    /**profilPage->firebaseinit() methodu ile buraya bir datasnapshot aktarılır .
+     * Databaseden tüm verileri getirir.
+     * Tüm kontroller burada yapılır Child varmı Child içinde item varmı
+     * Şayet kullanıcı bazı bölümlerin kayıtlarını yapmamış ise  null olarak kayıt eder Profil page'de null gelenler ayrıştırılır.
+     *AllModelList classı burada indirilen tüm itemleri Model classları ile bir arada tutan Parcelable class.Bunları daha sonra isteğin şekilde parse ederek kullanabilrsin
+     * Örnek ->> mAllModelList.getEgitimListModel().getOkul();
+     * @param dataSnapshot -
+     * @return -->profilPage ->> setProfileItems()
+     */
     public AllModelsList getDataFromFirebase(DataSnapshot dataSnapshot) {
         Log.d(TAG, "onDataChange: getDAtaFromDatabase");
         final ArrayList<egitimListModel> egitimList = new ArrayList<>();

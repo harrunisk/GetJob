@@ -8,12 +8,13 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.harun.getjob.FirebaseMethods.FirebaseMethods;
@@ -31,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tapadoo.alerter.Alerter;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 
@@ -39,19 +41,21 @@ public class profilPage extends AppCompatActivity {
     Toolbar toolbar;
     CollapsingToolbarLayout collapsingToolbarLayout;
     FloatingActionButton editProfileFab;
-    TextView aboutContentText;
+    //    TextView aboutContentText;
     public FirebaseMethods mFirebaseMethod;
     ArrayList<egitimListModel> egitimlistFromFirebase;
     egitimListAdapter megitimListAdapter;
     deneyimListAdapter mdeneyimListAdapter;
     yetenekListAdapter myetenekListAdapter;
-    RecyclerView recyclerEgitim;
-    RecyclerView recyclerDeneyim;
-    RecyclerView recyclerYetenek;
-    ProgressBar progressBar,
-            profilimageProgress;
-    // AllModelsList models;
+    private RecyclerView recyclerEgitim;
+    private RecyclerView recyclerDeneyim;
+    private RecyclerView recyclerYetenek;
 
+    ImageView addYetenek_btn, addGenel_btn, addEgitim_btn, addDeneyim_btn, addAbout_btn;
+
+
+    // AllModelsList models;
+    AVLoadingIndicatorView progressBar, profilimageProgress;
     //GenelBilgi widgets
     TextView tvTel, tvMail, tvDogumTarih, tvEhliyet, tvAskerlik, tvAbout_content, tvFullnameuser, tvUserJob, tvCity;
     CircularImageView userProfileImage;
@@ -61,6 +65,7 @@ public class profilPage extends AppCompatActivity {
     TextView empty_message,
             empty_message1,
             empty_message2;
+
     Alerter alertDialog;
     public static AllModelsList sendData;
     //FİREBASE
@@ -70,25 +75,62 @@ public class profilPage extends AppCompatActivity {
     private static final String TAG = "profilPage";
 
     public void init() {
+
+        collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        myRef1 = mFirebaseDatabase.getReference();
+
+        addDeneyim_btn.setVisibility(View.GONE);
+        addEgitim_btn.setVisibility(View.GONE);
+        addGenel_btn.setVisibility(View.GONE);
+        addAbout_btn.setVisibility(View.GONE);
+        addYetenek_btn.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.user_profil_frag);
+        gatherViews();
+        this.init();
+        firebaseInit();
+
+        /*alertDialog = Permissions.showAlertdilaog(this, "Profiliniz Yükleniyor  ",
+                "Lütfen Bekleyiniz", 5000);
+
+
+        alertDialog.show();*/
+
+
+
+    }
+
+    private void gatherViews() {
+
         collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
         editProfileFab = findViewById(R.id.editProfileFab);
 
         // collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.personal_collapsed_title);
         // collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.personal_expanded_title);
 
-        collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
+
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         // toolbar.setTitle("P R O F İ L E");
         // toolbar.setNavigationIcon(R.drawable.arrow);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         tvTel = findViewById(R.id.tvTel);
         tvMail = findViewById(R.id.tvMail);
         tvDogumTarih = findViewById(R.id.tvDogumTarih);
         tvEhliyet = findViewById(R.id.tvEhliyet);
         tvAskerlik = findViewById(R.id.tvAskerlik);
-        tvAbout_content = findViewById(R.id.about_content);
+        tvAbout_content = findViewById(R.id.editAbout_content);
         tvFullnameuser = findViewById(R.id.fullnameuser);
         tvUserJob = findViewById(R.id.userJob);
         tvCity = findViewById(R.id.city);
@@ -101,23 +143,12 @@ public class profilPage extends AppCompatActivity {
         recyclerYetenek = findViewById(R.id.yetenekList);
         progressBar = findViewById(R.id.profileProgress);
         profilimageProgress = findViewById(R.id.profilimageProgress);
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef1 = mFirebaseDatabase.getReference();
 
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profil_frag);
-        this.init();
-        /*alertDialog = Permissions.showAlertdilaog(this, "Profiliniz Yükleniyor  ",
-                "Lütfen Bekleyiniz", 5000);
-
-
-        alertDialog.show();*/
-        progressBar.setVisibility(View.VISIBLE);
-        firebaseInit();
+        addAbout_btn = findViewById(R.id.addAbout_btn);
+        addYetenek_btn = findViewById(R.id.addYetenek_btn);
+        addGenel_btn = findViewById(R.id.addGenel_btn);
+        addEgitim_btn = findViewById(R.id.addEgitim_btn);
+        addDeneyim_btn = findViewById(R.id.addDeneyim_btn);
 
 
     }
@@ -142,6 +173,19 @@ public class profilPage extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void startAnimProgressBar() {
+
+        progressBar.show();
+
+
+    }
+
+    public void stopAnim() {
+
+        progressBar.hide();
 
     }
 
@@ -185,13 +229,14 @@ public class profilPage extends AppCompatActivity {
             setRecyclerEgitim(dataFromFirebase);
             setRecyclerYetenek(dataFromFirebase);
 
-            progressBar.setVisibility(View.GONE);
-
+            //progressBar.setVisibility(View.GONE);
+            stopAnim();
 
         } else
 
         {
-            progressBar.setVisibility(View.GONE);
+            stopAnim();
+            // progressBar.setVisibility(View.GONE);
             alertDialog = Permissions.showAlertdilaog(this, "Profiliniz Boş Gözüküyor  ",
                     "Profilinizi Güncelleyiniz.", 3000);
 
@@ -221,8 +266,25 @@ public class profilPage extends AppCompatActivity {
             LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
             linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerYetenek.setLayoutManager(linearLayoutManager1);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+            // dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.divider));
+            recyclerYetenek.addItemDecoration(dividerItemDecoration);
             recyclerYetenek.setItemAnimator(new DefaultItemAnimator());
             recyclerYetenek.setHasFixedSize(true);
+            /*recyclerYetenek.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL) {
+                @Override
+                public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                    int position = parent.getChildAdapterPosition(view);
+                    // hide the divider for the last child
+                    if (position == parent.getAdapter().getItemCount() - 1) {
+                        outRect.setEmpty();
+                    } else {
+                        super.getItemOffsets(outRect, view, parent, state);
+                    }
+                }
+            });
+*/
+
         }
 
     }
@@ -244,6 +306,9 @@ public class profilPage extends AppCompatActivity {
             LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
             linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerDeneyim.setLayoutManager(linearLayoutManager1);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+            // dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.divider));
+            recyclerDeneyim.addItemDecoration(dividerItemDecoration);
             recyclerDeneyim.setItemAnimator(new DefaultItemAnimator());
             recyclerDeneyim.setHasFixedSize(true);
 
@@ -268,6 +333,9 @@ public class profilPage extends AppCompatActivity {
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerEgitim.setLayoutManager(linearLayoutManager);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+            // dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.divider));
+            recyclerEgitim.addItemDecoration(dividerItemDecoration);
             recyclerEgitim.setHasFixedSize(true);
             recyclerEgitim.setItemAnimator(new DefaultItemAnimator());
 
@@ -280,6 +348,7 @@ public class profilPage extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), EditProfile.class);
         intent.putExtra("AllItems", sendData);
         startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 

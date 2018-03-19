@@ -34,16 +34,16 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
     Spinner bs_spinner, bts_spinner;
     Button egitimSave, egitimCancel;
     contentFragment mcontentFragment;
-    egitimListModel megitimListModel;
+    private egitimListModel megitimListModel;
     String bsyil, btsyil;
 
     private final static String TAG = "EditEgitimFragment";
     String[] yillarim = new String[]{
-            "1900",
-            "1800",
-            "1700",
-            "1600",
-            "1500"
+            "2018",
+            "2017",
+            "2016",
+            "2015",
+            "2014"
     };
 
     @Nullable
@@ -66,7 +66,7 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
         // bs_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
         //  bts_spinner.setPrompt(String.valueOf(R.string.spinnerPrompt));
 
-        final List<String> yilList = new ArrayList<>(Arrays.asList(yillarim));
+        final List<String> yilList = new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.Yillarim)));
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                 v.getContext(), android.R.layout.simple_spinner_dropdown_item, yilList);
@@ -76,6 +76,21 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
         bts_spinner.setAdapter(spinnerArrayAdapter);
         bts_spinner.setHovered(true);
         bs_spinner.setHovered(true);
+
+        if (getTag().equals("updateEgitimFragment")) {
+            Log.d(TAG, "onCreateView: UPDATE EGİTİM FRAGMENT");
+            megitimListModel = getArguments().getParcelable("updateEgitimList");
+
+
+            egitimOkul.setText(megitimListModel.getOkul());
+            egitimBolum.setText(megitimListModel.getBolum());
+            egitimlisans.setText(megitimListModel.getOgrenimTuru());
+            bts_spinner.setSelection(spinnerArrayAdapter.getPosition(megitimListModel.getBtsYılı()));
+            bs_spinner.setSelection(spinnerArrayAdapter.getPosition(megitimListModel.getBsYılı()));
+
+
+        }
+
 
         egitimSave.setOnClickListener(this);
         egitimCancel.setOnClickListener(this);
@@ -100,8 +115,17 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
                 break;
             case R.id.egitimSave:
                 Log.d(TAG, "egitimsave oncLick");
-                mcontentFragment.getEgitimContent(egitimOkul.getText().toString(), egitimBolum.getText().toString(), egitimlisans.getText().toString(), bsyil, btsyil);
-                getDialog().dismiss();
+
+                if (getTag().equals("updateEgitimFragment")) {
+                    mcontentFragment.getEgitimContent(egitimOkul.getText().toString(), egitimBolum.getText().toString(), egitimlisans.getText().toString(), bsyil, btsyil, true);
+                    getDialog().dismiss();
+
+                } else {
+
+                    mcontentFragment.getEgitimContent(egitimOkul.getText().toString(), egitimBolum.getText().toString(), egitimlisans.getText().toString(), bsyil, btsyil, false);
+                    getDialog().dismiss();
+
+                }
                 break;
 
             default:
