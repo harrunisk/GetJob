@@ -108,7 +108,6 @@ public class profilPage extends AppCompatActivity {
         alertDialog.show();*/
 
 
-
     }
 
     private void gatherViews() {

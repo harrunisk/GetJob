@@ -41,31 +41,44 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/man" />
+
 
             </android.support.v7.widget.Toolbar>
 
+            <!-- ÖNE CIKAN İLANLAR  -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:orientation="vertical">
 
-
-                <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/man" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="BURAYA ÖNE CIKAN İLANLAR GELİCEK  "
+                    android:text="S İ Z İ N İ Ç İ N Ö N E R İ L İ Y O R "
                     android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recommendedList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp">
+
+
+                </android.support.v7.widget.RecyclerView>
 
 
             </LinearLayout>
@@ -99,9 +112,9 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp"
-                    app:cardUseCompatPadding="true"
-
                     app:cardElevation="@dimen/cardview_elevation"
+
+                    app:cardUseCompatPadding="true"
 
                     >
 
@@ -141,17 +154,16 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    app:cardUseCompatPadding="true"
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="@dimen/cardview_elevation">
+                    app:cardElevation="@dimen/cardview_elevation"
+                    app:cardUseCompatPadding="true">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="true"
-                        android:focusable="true"
-                       >
+                        android:focusable="true">
 
                         <ImageView
                             android:id="@+id/basvurular"
@@ -193,8 +205,8 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp"
-                    app:cardUseCompatPadding="true"
-                    app:cardElevation="@dimen/cardview_elevation">
+                    app:cardElevation="@dimen/cardview_elevation"
+                    app:cardUseCompatPadding="true">
 
                     <RelativeLayout
                         android:id="@+id/profileLayout"
@@ -235,10 +247,10 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    app:cardUseCompatPadding="true"
-
                     app:cardCornerRadius="5dp"
-                    app:cardElevation="@dimen/cardview_elevation">
+
+                    app:cardElevation="@dimen/cardview_elevation"
+                    app:cardUseCompatPadding="true">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -293,17 +305,16 @@
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp"
-                    app:cardUseCompatPadding="true"
+                    app:cardElevation="@dimen/cardview_elevation"
 
-                    app:cardElevation="@dimen/cardview_elevation">
+                    app:cardUseCompatPadding="true">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="true"
-                        android:focusable="true"
-                        >
+                        android:focusable="true">
 
 
                         <ImageView
@@ -337,16 +348,15 @@
                     android:layout_marginStart="5dp"
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp"
-                    app:cardUseCompatPadding="true"
-                    app:cardElevation="@dimen/cardview_elevation">
+                    app:cardElevation="@dimen/cardview_elevation"
+                    app:cardUseCompatPadding="true">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="true"
-                        android:focusable="true"
-                        >
+                        android:focusable="true">
 
                         <ImageView
                             android:id="@+id/ayarlar"
@@ -354,8 +364,8 @@
                             android:layout_height="45dp"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="10dp"
-                            android:tint="@color/SlateBlue"
-                            android:src="@drawable/ic_settings_black_24dp" />
+                            android:src="@drawable/ic_settings_black_24dp"
+                            android:tint="@color/SlateBlue" />
 
                         <TextView
                             android:layout_width="wrap_content"

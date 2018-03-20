@@ -94,10 +94,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         Log.d(TAG, "OnCreate Calıstı");
         setContentView(R.layout.edit_profile);
 
-//        if (savedInstanceState != null) {
-//
-//
-//        }
+
 
         //   if (Permissions.checkPermissionArray(this,Permissions.PERMISSIONS)) {
 
