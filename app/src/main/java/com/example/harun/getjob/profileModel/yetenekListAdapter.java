@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.harun.getjob.Profile.contentFragment;
 import com.example.harun.getjob.R;
 
 import java.util.ArrayList;
@@ -22,16 +24,20 @@ import java.util.HashMap;
 public class yetenekListAdapter extends RecyclerView.Adapter<yetenekListAdapter.MyViewHolder> {
     private static final String TAG = "yetenekListAdapter";
 
-    LayoutInflater layoutInflater;
-    ArrayList<yetenekModel> yetenekListe;
+    private LayoutInflater layoutInflater;
+    private ArrayList<yetenekModel> yetenekListe;
     // yetenekModel yetenekModel=new yetenekModel();
     private HashMap<String, ArrayList<yetenekModel>> yetenekHash = new HashMap<>();
     private ArrayList<yetenekModel> hashyetenek = new ArrayList<>();
     private boolean visibilityCheck;
+    Context mContext;
+    contentFragment mcontentFragment;
+
 
     public yetenekListAdapter(Context context, ArrayList<yetenekModel> yetenekListe, boolean visibility) {
         Log.d(TAG, "yetenekListAdapter: ");
         this.layoutInflater = LayoutInflater.from(context);
+        this.mContext = context;
         this.yetenekListe = yetenekListe;
         this.visibilityCheck = visibility;
     }
@@ -46,16 +52,10 @@ public class yetenekListAdapter extends RecyclerView.Adapter<yetenekListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: ÇALIŞIYOPRRR\t" + position);
-        yetenekModel myetenekmodel = yetenekListe.get(position);
-
-        //yetenekHash1=yetenekModel.hashmapping(String.valueOf(position), myetenekmodel);
-
+        final yetenekModel myetenekmodel = yetenekListe.get(position);
         setYetenekHash(String.valueOf(position), myetenekmodel);
-        //  Log.d(TAG, "onBindViewHolder: yetenekHASH \t"+yetenekHash1.size());
-
-
         holder.tvYetenek.setText(myetenekmodel.getYetenekName().toUpperCase());
         holder.rateStar.setRating(((float) myetenekmodel.getRate()));
 
@@ -66,6 +66,20 @@ public class yetenekListAdapter extends RecyclerView.Adapter<yetenekListAdapter.
             holder.editYetenekrow.setVisibility(View.VISIBLE);
         }
 
+        holder.editYetenekrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateListRow(myetenekmodel, position);
+            }
+        });
+
+
+    }
+
+    private void updateListRow(yetenekModel myetenekmodel, int position) {
+        Log.d(TAG, "updateListRow: ");
+        this.mcontentFragment = (contentFragment) mContext;
+        mcontentFragment.updateYetenekListItem(myetenekmodel, position);
 
     }
 
@@ -96,11 +110,24 @@ public class yetenekListAdapter extends RecyclerView.Adapter<yetenekListAdapter.
         return yetenekListe.size();
     }
 
+    public void removeItem(int yetenekListPosition, ArrayList<yetenekModel> recyclerYetenekList) {
+
+        Log.d(TAG, "restoreItem: " +"\t"+ yetenekListPosition);
+
+        yetenekHash.clear();
+        yetenekHash.put(String.valueOf(yetenekListPosition),recyclerYetenekList);
+
+        notifyItemRemoved(yetenekListPosition);
+
+
+    }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tvYetenek;
         RatingBar rateStar;
         ImageView editYetenekrow;
+        public LinearLayout yetenekForeground;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -109,6 +136,7 @@ public class yetenekListAdapter extends RecyclerView.Adapter<yetenekListAdapter.
             tvYetenek = itemView.findViewById(R.id.yetenek);
             rateStar = itemView.findViewById(R.id.yetenekRating);
             editYetenekrow = itemView.findViewById(R.id.editYetenekrow);
+            yetenekForeground = itemView.findViewById(R.id.yetenekForeground);
         }
     }
 }

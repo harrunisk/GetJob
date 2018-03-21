@@ -1,113 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="80dp"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/sol"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:paddingBottom="10dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="6dp"
-        android:paddingTop="10dp">
-
-        <TextView
-            android:id="@+id/bsYil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="1964"
-            android:textColor="@color/blue"
-            android:textSize="15dp"
-
-            />
-
-        <TextView
-            android:id="@+id/btsYil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="1978"
-            android:textColor="@color/blue"
-            android:textSize="15dp"
-
-            />
-
-        <View
-            android:layout_width="10dp"
-            android:layout_height="70dp"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/bsYil"
-            android:background="@drawable/line"
-            android:backgroundTint="@color/blue"
-
-            >
-
-
-        </View>
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/sag"
+        android:id="@+id/egitimBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@id/sol"
-        android:paddingEnd="6dp"
-        android:paddingTop="10dp">
+        android:background="@color/SkyBlue">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/delete_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:tint="@color/white"
+            android:src="@drawable/ic_delete_sweep_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/delete_icon"
+            android:text="Delete"
+            android:textColor="#fff"
+            android:textSize="13dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/egitim_foreground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/sol"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="6dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/bsYil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="1964"
+                android:textColor="@color/blue"
+                android:textSize="15dp"
+
+                />
+
+            <TextView
+                android:id="@+id/btsYil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="1978"
+                android:textColor="@color/blue"
+                android:textSize="15dp"
+
+                />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/bsYil"
+                android:background="@drawable/line"
+                android:backgroundTint="@color/blue"
+
+                >
+
+
+            </View>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sag"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_toRightOf="@id/sol"
+            android:paddingEnd="6dp"
+            android:paddingTop="10dp">
 
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/nameOkul"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sakarya Üniversitesi"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+
+                    <ImageView
+                        android:id="@+id/editListRow"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/pencil"
+                        android:tint="@color/blue"
+
+                        />
+
+                </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/nameOkul"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tvBolum"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sakarya Üniversitesi"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textSize="15dp" />
+                    android:text="Bilgisayar Mühendisliği"
+                    android:textSize="14dp" />
 
+                <TextView
+                    android:id="@+id/tvTur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Yüksek Lisans"
+                    android:textSize="12dp"
+                    android:textStyle="italic" />
 
-                <ImageView
-                    android:id="@+id/editListRow"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/pencil"
-                    android:tint="@color/blue"
+            </LinearLayout>
+        </RelativeLayout>
 
-                    />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/tvBolum"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bilgisayar Mühendisliği"
-                android:textSize="14dp" />
-
-            <TextView
-                android:id="@+id/tvTur"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Yüksek Lisans"
-                android:textSize="12dp"
-                android:textStyle="italic" />
-
-        </LinearLayout>
     </RelativeLayout>
 
 
-</RelativeLayout>
+</FrameLayout>

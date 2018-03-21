@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.harun.getjob.Profile.contentFragment;
 import com.example.harun.getjob.R;
 
 import java.util.ArrayList;
@@ -20,12 +22,13 @@ import java.util.HashMap;
 
 public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.ViewHolder> {
 
-    ArrayList<egitimListModel> egitimList;
+    private ArrayList<egitimListModel> egitimList;
     private final static String TAG = "egitimListAdapter";
-    LayoutInflater inflater;
-    egitimListModel egitimListModel;
-
+    private LayoutInflater inflater;
+    private egitimListModel egitimListModel;
+    private Context mcontext;
     private boolean visibilityCheck;
+    contentFragment mcontentFragment;
 
     public HashMap<String, ArrayList<egitimListModel>> egitimHash = new HashMap<>();
     public ArrayList<egitimListModel> egitimHashList = new ArrayList<>();
@@ -35,6 +38,7 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
         Log.d(TAG, "egitimListAdapter: " + egitimListe);
         this.egitimList = egitimListe;
         this.inflater = LayoutInflater.from(context);
+        this.mcontext = context;
         this.visibilityCheck = visibility;
 
     }
@@ -48,7 +52,7 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         egitimListModel = egitimList.get(position);
         Log.d(TAG, "onBindViewHolder: ");
 
@@ -67,6 +71,19 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
             holder.editListRow.setVisibility(View.VISIBLE);
         }
 
+        holder.editListRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateListItem(egitimListModel, position);
+            }
+        });
+
+    }
+
+    private void updateListItem(egitimListModel egitimListModel, int position) {
+        Log.d(TAG, "updateListItem: ");
+        mcontentFragment = (contentFragment) mcontext;
+        mcontentFragment.updateEgitimListItem(egitimListModel, position);
 
     }
 
@@ -101,11 +118,23 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
         return egitimList.size();
     }
 
+    public void removeItem(int egitimListposition, ArrayList<egitimListModel> egitimListe) {
+
+        egitimHash.clear();
+
+        egitimHash.put(String.valueOf(egitimListposition), egitimListe);
+
+        notifyItemRemoved(egitimListposition);
+
+
+    }
+
 
     // Bir satırda bulunan elemanları tanımlayacagımız sınıf
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView bsYil, btsYil, nameOkul, tvBolum, tvTur;
         ImageView editListRow;
+        public RelativeLayout egitim_foreground;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -115,7 +144,7 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
             tvBolum = itemView.findViewById(R.id.tvBolum);
             tvTur = itemView.findViewById(R.id.tvTur);
             editListRow = itemView.findViewById(R.id.editListRow);
-
+            egitim_foreground = itemView.findViewById(R.id.egitim_foreground);
         }
     }
 }

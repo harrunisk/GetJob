@@ -7,6 +7,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
+
     <!-- Toolbar -->
     <RelativeLayout
         android:id="@+id/edit_appbar"
@@ -29,6 +30,7 @@
 
 
                     <ImageView
+                        android:id="@+id/cancel_action"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:layout_marginStart="10dp"
@@ -148,6 +150,7 @@
                         android:id="@+id/edituserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:cursorVisible="false"
                         android:drawableLeft="@drawable/username"
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/black"
@@ -160,6 +163,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
+                        android:cursorVisible="false"
                         android:drawableLeft="@drawable/id_card"
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/black"
@@ -173,6 +177,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
+                        android:cursorVisible="false"
                         android:drawableLeft="@drawable/placeholder"
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/black"
@@ -198,4 +203,17 @@
         </RelativeLayout>
 
     </ScrollView>
+    <!--
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/uploadProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            app:indicatorColor="@color/SlateBlue"
+            app:indicatorName="SemiCircleSpinIndicator"
+
+            />
+
+        -->
 </RelativeLayout>

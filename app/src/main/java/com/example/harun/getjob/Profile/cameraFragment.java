@@ -151,11 +151,11 @@ public class cameraFragment extends Fragment {
                 try {
 
                     Log.d(TAG, "onActivityResult: Cameradan Gelen Bitmap" + cropped);
-                    Intent i = new Intent(getActivity(), EditProfile.class);
+//                    Intent i = new Intent(getActivity(), EditProfile.class);
+                    Intent i = new Intent();
                     i.putExtra("imageFromCam", outputUri);//fotografın pathini (foto çekildikten sonra kayıt edildiği pathi) gönderiyorum edit profile universal image ile yüklencek
-
-                    i.putExtra("AllItems", profilPage.sendData);//Edit Activitye tüm itemler yeniden gönderiliyor Aksi halde Edit Activty yeniden başladıgında İtemler yerine koyulmadıgı için hata verecektir
-                    startActivity(i);
+                    //startActivity(i);
+                    getActivity().setResult(RESULT_OK, i);
                     getActivity().finish();
 
 

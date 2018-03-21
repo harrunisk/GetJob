@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ProgressBar;
 
 import com.example.harun.getjob.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,7 @@ public class GridViewAdapter extends ArrayAdapter<String> {
 
     private static class ViewHolder {
         CustomImageView gridimageView;
-        ProgressBar gridProgressBar;
+        AVLoadingIndicatorView gridProgressBar;
 
     }
 

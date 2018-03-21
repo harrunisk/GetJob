@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.example.harun.getjob.R;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -15,6 +14,7 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 /**
  * Created by mayne on 26.02.2018.
@@ -45,7 +45,7 @@ public class UniversalImageLoader {
     }
 
 
-    public static void setImage(String imageUrl, ImageView image, final ProgressBar mProgressBar,String append ){
+    public static void setImage(String imageUrl, ImageView image, final AVLoadingIndicatorView mProgressBar, String append ){
         ImageLoader imageLoader= ImageLoader.getInstance();
 
         imageLoader.displayImage(append + imageUrl, image, new ImageLoadingListener() {
