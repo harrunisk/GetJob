@@ -4,14 +4,12 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <include layout="@layout/snippet_cardgenelbilgi"></include>
-
-    <include layout="@layout/snippet_card_about"></include>
-
-    <include layout="@layout/snippet_card_deneyim"></include>
-
-    <include layout="@layout/snippet_card_egitim"></include>
 
 
-    <include layout="@layout/snippet_card_yetenek"></include>
+
+    <include layout="@layout/snippet_card_about"> </include>
+    <include layout="@layout/snippet_cardgenelbilgi"> </include>
+    <include layout="@layout/snippet_card_deneyim"> </include>
+    <include layout="@layout/snippet_card_egitim"> </include>
+    <include layout="@layout/snippet_card_yetenek"> </include>
 </LinearLayout>

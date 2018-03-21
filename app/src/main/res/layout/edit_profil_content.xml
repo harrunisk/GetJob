@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+    <include layout="@layout/snippet_card_about">
+
+    </include>
 
     <include
 
@@ -12,9 +15,6 @@
 
     </include>
 
-    <include layout="@layout/snippet_card_about">
-
-    </include>
 
     <include layout="@layout/snippet_card_deneyim">
 

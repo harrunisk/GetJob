@@ -1,6 +1,8 @@
 package com.example.harun.getjob.Profile;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.view.View;
 
 import com.example.harun.getjob.R;
 import com.example.harun.getjob.profileModel.myFragmentPagerAdapter;
+import com.tapadoo.alerter.Alerter;
 
 public class PhotoActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String TAG = "PhotoActivity";
@@ -40,6 +43,34 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
 
         }
 
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case 1:
+                Log.d(TAG, "onRequestPermissionsResult: case 1 ");
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Log.d(TAG, "onRequestPermissionsResult: İSTEMİŞ OLDUGUM İZİNLER ONAYLANDI ");
+
+                    gatherViews();
+                    setupViewPager();
+
+                } else {
+
+                    Log.d(TAG, "onRequestPermissionsResult: İSTEMİŞ OLDUGUM İZİN ONAYLANMADI ..");
+                    Alerter alerter=Permissions.showAlertdilaog(this,"İzinleri Vermez iseniz bu İşlem gerçekleştirilemez","",2000);
+                    alerter.show();
+                    // Toast.makeText(this, "İZİNLERİ VER KARDEŞ ", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+
+
+        }
 
 
     }

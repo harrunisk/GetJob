@@ -41,12 +41,12 @@ public class Permissions {
      *
      * @param permission
      */
-    public static boolean myrequestPermission(Activity activity, String[] permission) {
+    public static void myrequestPermission(Activity activity, String[] permission) {
 
         Log.d(TAG, "requestPermission:İzinler İsteniyor ");
         ActivityCompat.requestPermissions(activity, permission, 1);
 
-        return true;
+
     }
 
 
@@ -118,7 +118,7 @@ public class Permissions {
 
                 return true;
             }*/
-
+            Log.d(TAG, "checkPermision: İZİN VERİLMEMİŞ"+permission);
             return false;
 
         } else {

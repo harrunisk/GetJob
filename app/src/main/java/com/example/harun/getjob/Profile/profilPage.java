@@ -78,6 +78,7 @@ public class profilPage extends AppCompatActivity {
 
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
         setSupportActionBar(toolbar);
+        toolbar.setHovered(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -110,6 +111,40 @@ public class profilPage extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        Log.d(TAG, "onSupportNavigateUp: ");
+        this.finish();
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d(TAG, "onBackPressed: TELEFONUN GERİ tusuna Basıldı");
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+    }
+/* @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.home:
+                Log.d(TAG, "onOptionsItemSelected: ");
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                this.finish();
+                return true;
+
+            default:
+
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }*/
+
     private void gatherViews() {
 
         collapsingToolbarLayout = findViewById(R.id.collapsing_toolbar);
@@ -119,7 +154,7 @@ public class profilPage extends AppCompatActivity {
         // collapsingToolbarLayout.setExpandedTitleTextAppearance(R.style.personal_expanded_title);
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.profile_toolbar);
         // toolbar.setTitle("P R O F İ L E");
         // toolbar.setNavigationIcon(R.drawable.arrow);
 

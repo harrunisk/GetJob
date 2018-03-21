@@ -32,7 +32,7 @@
                 app:titleEnabled="true">
 
                 <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
+                    android:id="@+id/profile_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?android:attr/actionBarSize"
                     android:elevation="4dp"
@@ -71,8 +71,8 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginTop="43dp"
                         android:src="@drawable/man"
-                        app:civ_border_color="@color/mycolor2"
-                        app:civ_border_width="5dp" />
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="2dp" />
 
 
                     <com.wang.avi.AVLoadingIndicatorView
