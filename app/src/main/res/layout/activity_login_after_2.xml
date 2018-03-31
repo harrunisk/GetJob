@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/buildings2">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <SearchView
+        android:id="@+id/searchView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/relativeLayout0"
+        android:background="@color/transparan" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="54dp"
+        android:background="@color/transparan"
+        android:text="İlan Ver"
+        android:textSize="18sp" />
+</RelativeLayout>

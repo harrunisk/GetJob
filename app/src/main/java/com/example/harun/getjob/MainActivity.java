@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -14,8 +15,17 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 
+import custom_font.MyTextView;
+
+import static android.media.audiofx.AcousticEchoCanceler.create;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    ImageView facebook;
+    ImageView twitter;
+    ImageView google;
+    ImageView mail,phone;
+    MyTextView create;
 
     private static final String TAG = "MainActivityLogin";
     private static final int RC_SIGN_IN = 0;
@@ -47,7 +57,111 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         } else {
-            startActivityForResult(AuthUI.getInstance()
+
+            setContentView(R.layout.login);
+             facebook=(ImageView) findViewById(R.id.facebook);
+            // twitter=(ImageView) findViewById(R.id.twitter);
+             google=(ImageView) findViewById(R.id.google);
+             //mail=(ImageView) findViewById(R.id.mail);
+             phone=(ImageView) findViewById(R.id.phone);
+             create=(MyTextView) findViewById(R.id.create);
+
+
+             create.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Intent intent = new Intent(getApplicationContext(), SignUp.class);
+                     startActivity(intent);
+
+
+                 }
+             });
+
+
+             facebook.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+
+                     startActivityForResult(AuthUI.getInstance()
+                             .createSignInIntentBuilder()
+                             .setAvailableProviders(Arrays.asList(
+
+                                     new AuthUI.IdpConfig.FacebookBuilder().build()
+
+                              )).build(), RC_SIGN_IN);
+
+                 }
+             });
+
+             /*
+            twitter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    startActivityForResult(AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(Arrays.asList(
+
+                                    new AuthUI.IdpConfig.TwitterBuilder().build()
+
+                            )).build(), RC_SIGN_IN);
+
+                }
+            });
+
+
+            */
+
+            google.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    startActivityForResult(AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(Arrays.asList(
+
+                                    new AuthUI.IdpConfig.GoogleBuilder().build()
+
+                            )).build(), RC_SIGN_IN);
+
+                }
+            });
+
+           /*
+            mail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    startActivityForResult(AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(Arrays.asList(
+
+                                    new AuthUI.IdpConfig.EmailBuilder().build()
+
+                            )).build(), RC_SIGN_IN);
+
+                }
+            });
+
+
+            */
+            phone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    startActivityForResult(AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(Arrays.asList(
+
+                                    new AuthUI.IdpConfig.PhoneBuilder().build()
+
+                            )).build(), RC_SIGN_IN);
+
+                }
+            });
+
+
+          /*  startActivityForResult(AuthUI.getInstance()
                     .createSignInIntentBuilder()
                     .setAvailableProviders(Arrays.asList(
                             new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -55,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             new AuthUI.IdpConfig.FacebookBuilder().build(),
                             new AuthUI.IdpConfig.PhoneBuilder().build(),
                             new AuthUI.IdpConfig.GoogleBuilder().build())).build(), RC_SIGN_IN);
-
+            */
         }
 
 

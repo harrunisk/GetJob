@@ -23,12 +23,23 @@
             android:name=".UserIntro"
             android:theme="@style/AppTheme2">
 
+
         </activity>
         <activity android:name=".MapsActivityCurrentPlace" />
         <activity android:name=".AdvertCompany" />
-        <activity android:name=".MainActivity"></activity>
+
+
         <activity android:name=".JobSearch.JobSearch"></activity>
 
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>"
+        </activity>
+<activity android:name=".SignUp"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDEf8QNnqFNFsCz_uHOacvTVuCFNwk03sU" />
@@ -45,11 +56,7 @@
         <activity
             android:name=".Intro"
             android:theme="@style/AppTheme2">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
 
         </activity>
@@ -64,7 +71,13 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+
         <activity android:name=".JobSearch.NearJobListActivity" />
+
+        <activity android:name=".LoginAfter">
+
+        </activity>
+
     </application>
 
 </manifest>
