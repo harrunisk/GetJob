@@ -10,9 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.harun.getjob.JobSearch.JobSearch;
 import com.example.harun.getjob.Profile.profilPage;
-import com.example.harun.getjob.profileModel.JobAdvertAdapter;
-import com.example.harun.getjob.profileModel.JobAdvertModel;
+import com.example.harun.getjob.JobSearch.JobAdvertAdapter;
+import com.example.harun.getjob.JobSearch.JobAdvertModel;
 
 import java.util.ArrayList;
 
@@ -60,7 +61,7 @@ public class UserIntro extends AppCompatActivity {
         linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         recyclerViewJobAdvert.setLayoutManager(linearLayoutManager2);
         recyclerViewJobAdvert.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewJobAdvert.setHasFixedSize(true);
+        //recyclerViewJobAdvert.setHasFixedSize(true);
 
 
     }
@@ -78,6 +79,17 @@ public class UserIntro extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), profilPage.class);
         startActivity(intent);
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+    }
+
+    public void jobSearch(View view) {
+
+
+        Intent intent=new Intent(this, JobSearch.class);
+        startActivity(intent);
+
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
 
     }
 }

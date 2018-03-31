@@ -45,13 +45,13 @@ public class UniversalImageLoader {
     }
 
 
-    public static void setImage(String imageUrl, ImageView image, final AVLoadingIndicatorView mProgressBar, String append ){
+    public static void setImage(final String imageUrl, ImageView image, final AVLoadingIndicatorView mProgressBar, String append ){
         ImageLoader imageLoader= ImageLoader.getInstance();
 
         imageLoader.displayImage(append + imageUrl, image, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-                if(mProgressBar != null){ //progressBar bazı yerlerde null gonderdiğim için kontrolu yapıldı
+                if(mProgressBar != null && imageUrl!=null){ //progressBar bazı yerlerde null gonderdiğim için kontrolu yapıldı
                     mProgressBar.setVisibility(View.VISIBLE);
                 }
             }

@@ -44,14 +44,15 @@
 
                     <ImageView
                         android:id="@+id/addGenel_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="2dp"
+
                         android:layout_marginTop="2dp"
                         android:onClick="addGenel"
-                        android:src="@drawable/ic_add_black_24dp"
+                        android:src="@drawable/pencil"
                         android:tint="@color/black" />
 
                     <TextView
@@ -59,7 +60,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="12dp"
-                        android:text="Genel bilgiler"
+                        android:fontFamily="serif-monospace"
+                        android:text="Genel Bilgiler"
+                        android:layout_centerInParent="true"
                         android:textColor="@color/cardview_dark_background"
                         android:textSize="20sp"
                         android:textStyle="bold|italic" />

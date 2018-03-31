@@ -45,25 +45,26 @@
 
                     <ImageView
                         android:id="@+id/addDeneyim_btn"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="2dp"
                         android:layout_marginTop="2dp"
                         android:clickable="true"
                         android:elevation="3dp"
                         android:focusable="true"
                         android:onClick="addDeneyim"
-                        android:src="@drawable/ic_add_black_24dp"
+                        android:src="@drawable/addd"
                         android:tint="@color/black" />
 
                     <TextView
                         android:id="@+id/deneyimTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:padding="12dp"
+                        android:fontFamily="serif-monospace"
+                        android:layout_centerInParent="true"
                         android:text="Deneyimlerim"
                         android:textColor="@color/cardview_dark_background"
                         android:textSize="20sp"

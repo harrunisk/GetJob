@@ -29,12 +29,25 @@ public class Permissions {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+
+    public static final String[] ACCESS_FINE_LOCATION = {
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+
+    public static final String[] MapPermission= {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+
+    };
+
+    public static final String[] ACCESS_COARSE_LOCATION = {
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+
     public static final String[] READ_STORAGE_PERMISSION = {
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
 
-
-    ////HER SINIFTAN KULLANABİLMEK icin burada izin sınfı kullanıyorum . static olarak erişim saglanacak
 
     /**
      * İzinler İstenecek
@@ -78,16 +91,14 @@ public class Permissions {
 
         Log.d(TAG, "showAlertdilaog: CREATED");
         Alerter a;
+
         a = Alerter.create(activity).setTitle(permission).setText(aciklama)
                 .setIcon(R.drawable.ic_notifications_active_black_24dp)
                 .enableSwipeToDismiss()
                 .enableProgress(true).
                         setDuration(duration).
-//                enableInfiniteDuration(true).
-                //    disableOutsideTouch().
                         setProgressColorRes(R.color.Tomato).
                         setBackgroundColorRes(R.color.SlateBlue);
-
 
         return a;
     }
@@ -104,22 +115,11 @@ public class Permissions {
         Log.d(TAG, "checkPermision: İzinler kontrol ediliyor ");
 
         int permissionRequest = ActivityCompat.checkSelfPermission(activity, permission);
+
         if (permissionRequest != PackageManager.PERMISSION_GRANTED) {
-            // Toast.makeText(activity, "İzin Verilmemiş" + permission, Toast.LENGTH_SHORT).show();
-            /*if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
-
-                Log.d(TAG, "checkPermision:shouldShowRequestPermissionRationale " + permission);
-                showAlertdilaog(activity, permission);
-                return false;
-            }*/
-            /*else{
-
-                myrequestPermission(activity,PERMISSIONS);
-
-                return true;
-            }*/
             Log.d(TAG, "checkPermision: İZİN VERİLMEMİŞ"+permission);
             return false;
+
 
         } else {
             Log.d(TAG, "checkPermision: izin verilmiş " + permission);

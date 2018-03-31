@@ -38,7 +38,7 @@ public class EditAboutFragment extends DialogFragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.edit_about, container);
-        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
          getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         aboutText = view.findViewById(R.id.about_text);

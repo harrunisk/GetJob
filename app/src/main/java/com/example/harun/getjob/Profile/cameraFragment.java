@@ -167,6 +167,10 @@ public class cameraFragment extends Fragment {
             }
 
 
+        }else {
+            Log.d(TAG, "onActivityResult: RESULT CANCEL");
+            ((PhotoActivity) getActivity()).selectPage(0);
+
         }
 
 

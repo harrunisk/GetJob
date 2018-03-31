@@ -56,7 +56,6 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     genelBilgiModel mgenelBilgilerim;
     AllModelsList mAllModelsList;
 
-
     ImageView userProfile_image, saveAll, cancel_action, changePhotoImage;
     public TextView tvTel,
             tvMail,
@@ -95,7 +94,6 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         setContentView(R.layout.edit_profile);
 
 
-
         //   if (Permissions.checkPermissionArray(this,Permissions.PERMISSIONS)) {
 
         gatherViews();       // Tanimlamalar bu fonksiyonda toplanacak
@@ -104,7 +102,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
 
         //OnclickHandler..
-        changePhoto.setOnClickListener(this);
+//        changePhoto.setOnClickListener(this);
         changePhotoImage.setOnClickListener(this);
         cancel_action.setOnClickListener(this);
         saveAll.setOnClickListener(this);
@@ -121,6 +119,15 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d(TAG, "onBackPressed: TELEFONUN GERİ tusuna Basıldı");
+        startActivity(new Intent(this, profilPage.class));
+        finish();
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+    }
 
     private void initFromDatabaseItem() {
 
@@ -128,8 +135,8 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
         intent = getIntent();
 
-            Log.d(TAG, "initFromDatabaseItem: ALLITEM KULLANILIYOR ");
-            mAllModelsList = intent.getParcelableExtra("AllItems");
+        Log.d(TAG, "initFromDatabaseItem: ALLITEM KULLANILIYOR ");
+        mAllModelsList = intent.getParcelableExtra("AllItems");
 
         if (mAllModelsList != null) {
 
@@ -217,13 +224,14 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         tvDogumTarih = findViewById(R.id.tvDogumTarih);
         tvEhliyet = findViewById(R.id.tvEhliyet);
         tvAskerlik = findViewById(R.id.tvAskerlik);
-        changePhoto = findViewById(R.id.changePhoto);
+        //changePhoto = findViewById(R.id.changePhoto);
         empty_message = findViewById(R.id.empty_message);
         empty_message1 = findViewById(R.id.empty_message1);
         empty_message2 = findViewById(R.id.empty_message2);
         saveAll = findViewById(R.id.saveAll);
         cancel_action = findViewById(R.id.cancel_action);
         changePhotoImage = findViewById(R.id.changePhotoImage);
+       // yetenekLayout = findViewById(R.id.yetenekLayout);
         //uploadProgress=findViewById(R.id.uploadProgress);
         //uploadProgress.hide();
 
@@ -613,7 +621,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
 
                 checkYetenek = true;
-
+              //  yetenekLayout.forceLayout();
 
             }
 
@@ -625,6 +633,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
 
     }
+
 
     private void setRecylerDeneyim(final ArrayList<deneyimModel> _deneyimList) {
         Log.d(TAG, "setRecylerDeneyim: ");
@@ -730,7 +739,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
 
                     alertDialog.show();
-                    profilPage.sendData.setMdeneyimListModel(_deneyimList);
+                    profilPage.sendData.setMdeneyimListModel(_deneyimList); //Direk güncellemesi için buna eşitliyorum.
                     checkExperience = true;
                     //  Log.d(TAG, "onSwiped: NOTİFYITEMRANGECHANGE" + _deneyimList + "\t" + _deneyimList.size());
                 }
@@ -852,13 +861,13 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.changePhoto:
+           /* case R.id.changePhoto:
 
                 //startActivityForResult
                 Intent intent = new Intent(this, PhotoActivity.class);
                 startActivityForResult(intent, 1);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                break;
+                break;*/
 
             case R.id.saveAll:
 
@@ -901,7 +910,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
      *
      * @param requestCode-->1->PhotoActivty
      * @param resultCode->Resultok-ResultCancel
-     * @param data->photo  uri
+     * @param data->photo                       uri
      */
 
     @Override

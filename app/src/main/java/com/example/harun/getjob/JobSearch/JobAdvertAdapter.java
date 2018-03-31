@@ -1,6 +1,7 @@
-package com.example.harun.getjob.profileModel;
+package com.example.harun.getjob.JobSearch;
 
 import android.content.Context;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.harun.getjob.Profile.UniversalImageLoader;
 import com.example.harun.getjob.R;
@@ -36,7 +38,7 @@ public class JobAdvertAdapter extends RecyclerView.Adapter<JobAdvertAdapter.MyVi
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.job_advert, null,false);
+        View view = inflater.inflate(R.layout.job_advert, null, false);
         MyViewHolder viewHolder = new MyViewHolder(view);
 
         return viewHolder;
@@ -69,7 +71,8 @@ public class JobAdvertAdapter extends RecyclerView.Adapter<JobAdvertAdapter.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView companyName, companyJob, jobDescpriction, companyLocation, companyDistance;
-        ImageView companyLogo, saveAdvert;
+        ImageView companyLogo;
+        FloatingActionButton saveAdvert;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -81,6 +84,13 @@ public class JobAdvertAdapter extends RecyclerView.Adapter<JobAdvertAdapter.MyVi
             companyDistance = itemView.findViewById(R.id.companyDistance);
             companyLogo = itemView.findViewById(R.id.companyLogo);
             saveAdvert = itemView.findViewById(R.id.saveAdvert);
+
+            saveAdvert.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext, "İlan Kayıt Edildi( Eklenecek. )", Toast.LENGTH_SHORT).show();
+                }
+            });
 
 
         }
