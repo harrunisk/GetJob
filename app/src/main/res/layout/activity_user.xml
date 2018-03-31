@@ -54,7 +54,9 @@
             <!-- ÖNE CIKAN İLANLAR  -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:gravity="center_vertical"
                 android:orientation="vertical">
 
 
@@ -63,7 +65,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="5dp"
-                    android:text="S İ Z İ N İ Ç İ N Ö N E R İ L İ Y O R "
+                    android:fontFamily="serif-monospace"
+                    android:text="Sizin İçin Öneriliyor"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="16sp"
@@ -73,9 +76,11 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recommendedList"
                     android:layout_width="wrap_content"
+                    app:reverseLayout="true"
+
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:padding="5dp">
+                    android:paddingTop="10dp">
 
 
                 </android.support.v7.widget.RecyclerView>
@@ -121,7 +126,8 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
+                        android:layout_gravity="center"
+                        android:onClick="jobSearch">
 
                         <ImageView
                             android:id="@+id/searchJobImage"

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@android:color/transparent"
+    android:padding="15dp">
+
+    <RelativeLayout
+        android:id="@+id/a"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:gravity="center">
+
+
+        <TextView
+            android:id="@+id/count_cvDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="100"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+
+            android:textSize="12dp"
+
+            />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/count_cvDisplay"
+            android:text="Özgeçmiş Görüntülenme"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+
+            />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/a"
+        android:background="@color/white">
+
+
+    </View>
+
+
+    <RelativeLayout
+        android:id="@+id/b"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/count_apply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="200"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/count_apply"
+            android:text="Başvuru Sayısı"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+
+            />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_toEndOf="@+id/b"
+        android:background="@color/white">
+
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/c"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/count_saveJob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+
+            />
+
+        <TextView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/count_saveJob"
+            android:text="Kayıtlı İlanlarım"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+
+            />
+    </RelativeLayout>
+
+</RelativeLayout>

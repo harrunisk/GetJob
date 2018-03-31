@@ -180,7 +180,10 @@ public class PhotoActivity extends AppCompatActivity implements View.OnClickList
         mtabLayout = findViewById(R.id.tabsBottom);
 
     }
-
+    void selectPage(int pageIndex){
+        mtabLayout.setScrollPosition(pageIndex,0f,true);
+        mviewPager.setCurrentItem(pageIndex);
+    }
     @Override
     public void onClick(View view) {
 

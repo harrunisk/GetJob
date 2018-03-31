@@ -248,6 +248,8 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
             //  startActivity(i);
             getActivity().setResult(RESULT_OK, returnIntent);
             getActivity().finish();
+            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
         } else {
             Log.d(TAG, "userImage_fromGalery: Uri yok path " + imagePath);
             //   Intent i = new Intent(getActivity(), EditProfile.class);
@@ -256,6 +258,7 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
             getActivity().setResult(RESULT_OK, returnIntent);
 
             getActivity().finish();
+            getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
         }
 
@@ -305,7 +308,10 @@ public class GaleryFragment extends Fragment implements View.OnClickListener {
 
             case R.id.closeGalery:
                 Log.d(TAG, "onClick: CloseActivity");
+
+
                 getActivity().finish();
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
                 break;
 

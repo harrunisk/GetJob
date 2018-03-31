@@ -75,120 +75,129 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/textview_back">
+            android:background="@drawable/textview_back"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
 
-            <!-- PHOTO KISMI -->
-            <RelativeLayout
+            <android.support.v7.widget.CardView
                 android:id="@+id/content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/edit_profileFoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/userProfiletext"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <com.mikhaellopez.circularimageview.CircularImageView
-                            android:id="@+id/userProfile_image"
-                            android:layout_width="120dp"
-                            android:layout_height="120dp"
-                            android:src="@drawable/man"
-                            app:civ_border_color="@color/SeaGreen"
-                            app:civ_border_width="3dp">
-
-                        </com.mikhaellopez.circularimageview.CircularImageView>
-
-                        <ImageView
-                            android:id="@+id/changePhotoImage"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal|center_vertical"
-                            android:src="@drawable/ic_add_a_photo_black_24dp"
-                            android:tint="@color/SeaGreen" />
-
-
-                    </FrameLayout>
-
-
-                    <TextView
-                        android:id="@+id/changePhoto"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="15dp"
-                        android:text="Fotoğrafı Değiştir."
-                        android:textAlignment="center"
-                        android:textColor="@color/OrangeRed"
-                        android:textSize="15sp">
-
-                    </TextView>
-
-                </LinearLayout>
-
-
-                <!--İSİM SOYİSİM -->
-
-                <LinearLayout
-                    android:id="@+id/userProfiletext"
+                android:layout_height="wrap_content"
+                app:cardElevation="5dp"
+                app:cardUseCompatPadding="true">
+                <!-- PHOTO KISMI -->
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@id/edit_profileFoto"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/edituserName"
-                        android:layout_width="match_parent"
+                    <LinearLayout
+                        android:id="@+id/edit_profileFoto"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:cursorVisible="false"
-                        android:drawableLeft="@drawable/username"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/black"
-                        android:hint="İsim Soyisim Giriniz"
-                        android:padding="10dp"
-                        android:theme="@style/FullWidthEditText" />
-
-                    <EditText
-                        android:id="@+id/editJob"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/userProfiletext"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="15dp"
-                        android:cursorVisible="false"
-                        android:drawableLeft="@drawable/id_card"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/black"
-                        android:hint="Meslek"
-                        android:padding="10dp"
-                        android:theme="@style/FullWidthEditText"
-                        android:tooltipText="Birden fazla ise virgül koyarak belirtiniz" />
+                        android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/editLocation"
+                        <FrameLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <com.mikhaellopez.circularimageview.CircularImageView
+                                android:id="@+id/userProfile_image"
+                                android:layout_width="120dp"
+                                android:layout_height="120dp"
+                                android:src="@drawable/man"
+                                app:civ_border_color="@color/SeaGreen"
+                                app:civ_border_width="3dp">
+
+                            </com.mikhaellopez.circularimageview.CircularImageView>
+
+                            <ImageView
+                                android:id="@+id/changePhotoImage"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_gravity="center_horizontal|center_vertical"
+                                android:src="@drawable/ic_add_a_photo_black_24dp"
+                                android:tint="@color/SeaGreen" />
+
+
+                        </FrameLayout>
+
+                        <!--
+                                                <TextView
+                                                    android:id="@+id/changePhoto"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_horizontal"
+                                                    android:layout_marginTop="15dp"
+                                                    android:text="Fotoğrafı Değiştir."
+                                                    android:textAlignment="center"
+                                                    android:textColor="@color/OrangeRed"
+                                                    android:textSize="15sp">
+
+                                                </TextView>
+                        -->
+                    </LinearLayout>
+
+
+                    <!--İSİM SOYİSİM -->
+
+                    <LinearLayout
+                        android:id="@+id/userProfiletext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:cursorVisible="false"
-                        android:drawableLeft="@drawable/placeholder"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/black"
-                        android:hint="İstanbul(Avr)"
-                        android:padding="10dp"
-                        android:theme="@style/FullWidthEditText" />
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@id/edit_profileFoto"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/edituserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:cursorVisible="false"
+                            android:drawableLeft="@drawable/username"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/black"
+                            android:hint="İsim Soyisim Giriniz"
+                            android:padding="10dp"
+                            android:theme="@style/FullWidthEditText" />
+
+                        <EditText
+                            android:id="@+id/editJob"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:cursorVisible="false"
+                            android:drawableLeft="@drawable/id_card"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/black"
+                            android:hint="Meslek"
+                            android:padding="10dp"
+                            android:theme="@style/FullWidthEditText"
+                            android:tooltipText="Birden fazla ise virgül koyarak belirtiniz" />
+
+                        <EditText
+                            android:id="@+id/editLocation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:cursorVisible="false"
+                            android:drawableLeft="@drawable/placeholder"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/black"
+                            android:hint="İstanbul(Avr)"
+                            android:padding="10dp"
+                            android:theme="@style/FullWidthEditText" />
 
 
-                </LinearLayout>
+                    </LinearLayout>
 
-            </RelativeLayout>
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
 
             <RelativeLayout
                 android:layout_width="match_parent"

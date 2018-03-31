@@ -127,23 +127,6 @@ public class profilPage extends AppCompatActivity {
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
     }
-/* @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.home:
-                Log.d(TAG, "onOptionsItemSelected: ");
-                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-                this.finish();
-                return true;
-
-            default:
-
-                return super.onOptionsItemSelected(item);
-
-        }
-
-    }*/
 
     private void gatherViews() {
 

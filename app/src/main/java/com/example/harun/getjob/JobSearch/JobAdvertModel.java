@@ -1,4 +1,4 @@
-package com.example.harun.getjob.profileModel;
+package com.example.harun.getjob.JobSearch;
 
 import android.util.Log;
 
