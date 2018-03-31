@@ -223,14 +223,14 @@ public class Intro extends AwesomeSplash {
         configSplash.setPathSplashStrokeSize(4); //I advise value be <5
         configSplash.setPathSplashStrokeColor(R.color.accent); //any color you want form colors.xml
         configSplash.setAnimPathFillingDuration(1000);
-        configSplash.setPathSplashFillColor(R.color.com_facebook_blue); //path object filling color
 
+        configSplash.setPathSplashFillColor(R.color.com_facebook_blue); //path object filling color
 
         //Customize Title
         configSplash.setTitleSplash("");
         configSplash.setTitleTextColor(R.color.Wheat);
         configSplash.setTitleTextSize(30f); //float value
-        configSplash.setAnimTitleDuration(3000);
+        configSplash.setAnimTitleDuration(0);
         configSplash.setAnimTitleTechnique(Techniques.FlipInX);
         configSplash.setTitleFont("fonts/volatire.ttf"); //provide string to your font located in assets/fonts/
 
@@ -239,7 +239,7 @@ public class Intro extends AwesomeSplash {
 
     @Override
     public void animationsFinished() {
-        Intent Login= new Intent(this,MainActivity.class);
+        Intent Login= new Intent(this,LoginAfter.class);
         startActivity(Login);
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         finish();
