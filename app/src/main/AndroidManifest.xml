@@ -67,7 +67,8 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".JobSearch.NearJobListActivity" />
-        <activity android:name=".LoginAfter">
+        <activity android:name=".LoginAfter"></activity>
+        <activity android:name=".SignUp">
 
         </activity>
     </application>
