@@ -50,8 +50,8 @@ dependencies {
     compile 'com.firebaseui:firebase-ui-auth:3.2.1'
     compile 'com.google.android.gms:play-services:11.8.0'
 
-
-
+//google maa utils
+    compile 'com.google.maps.android:android-maps-utils:0.5'
 
     // Required only if Facebook activity_login support is required
     // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
@@ -59,7 +59,6 @@ dependencies {
     // Required only if Twitter activity_login support is required
     // Find the latest Twitter SDK releases here: https://goo.gl/E5wZvQ
     implementation("com.twitter.sdk.android:twitter-core:3.1.1@aar") { transitive = true }
-
 
     //Splash Screen
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
@@ -77,13 +76,16 @@ dependencies {
     //BottomDialog
     compile 'com.sothree.slidinguppanel:library:3.4.0'
 
-   // compile "biz.laenger.android:vpbs:0.0.5"
+    // compile "biz.laenger.android:vpbs:0.0.5"
 
     //  compile 'com.orhanobut:dialogplus:1.11@aar'
 
-
     //Alerter Library
     implementation 'com.tapadoo.android:alerter:2.0.4'
+
+    //OkHttp Class
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
+
 
     //ProgressBar
     compile 'com.wang.avi:library:2.1.3'

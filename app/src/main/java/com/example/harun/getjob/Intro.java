@@ -219,14 +219,12 @@ public class Intro extends AwesomeSplash {
         configSplash.setPathSplash(DROID_LOGO); //set path String
         configSplash.setOriginalHeight(400); //in relation to your svg (path) resource
         configSplash.setOriginalWidth(400); //in relation to your svg (path) resource
-
-        configSplash.setAnimPathStrokeDrawingDuration(1500);
+        configSplash.setAnimPathStrokeDrawingDuration(1000);
         configSplash.setPathSplashStrokeSize(4); //I advise value be <5
         configSplash.setPathSplashStrokeColor(R.color.accent); //any color you want form colors.xml
-
+        configSplash.setAnimPathFillingDuration(1000);
 
         configSplash.setPathSplashFillColor(R.color.com_facebook_blue); //path object filling color
-
 
         //Customize Title
         configSplash.setTitleSplash("");
