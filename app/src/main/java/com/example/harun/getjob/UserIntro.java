@@ -5,15 +5,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.example.harun.getjob.JobSearch.JobSearch;
-import com.example.harun.getjob.Profile.profilPage;
 import com.example.harun.getjob.JobSearch.JobAdvertAdapter;
 import com.example.harun.getjob.JobSearch.JobAdvertModel;
+import com.example.harun.getjob.JobSearch.JobSearch;
+import com.example.harun.getjob.Profile.profilPage;
 
 import java.util.ArrayList;
 
@@ -59,9 +61,11 @@ public class UserIntro extends AppCompatActivity {
         recyclerViewJobAdvert.setAdapter(mJobAdvertAdapter);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
         linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        SnapHelper snapHelper = new PagerSnapHelper();
         recyclerViewJobAdvert.setLayoutManager(linearLayoutManager2);
         recyclerViewJobAdvert.setItemAnimator(new DefaultItemAnimator());
-        //recyclerViewJobAdvert.setHasFixedSize(true);
+        recyclerViewJobAdvert.setHasFixedSize(true);
+        snapHelper.attachToRecyclerView(recyclerViewJobAdvert);
 
 
     }

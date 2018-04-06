@@ -1,25 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="250dp"
     android:layout_height="wrap_content"
-    android:layoutDirection="locale"
-    android:orientation="vertical">
+    android:orientation="vertical"
+
+    android:padding="8dp">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:text="Şirket İsmi "
         android:textColor="#ff000000"
-        android:text="aaaaaaaaaa"
         android:textStyle="bold" />
 
     <TextView
-        android:text="sssssssss"
         android:id="@+id/snippet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Aradığı meslek"
         android:textColor="#ff7f7f7f" />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="2dp"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/publishDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yayınlanma Tarihi"
+
+            />
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/publishDate"
+            android:text="Distance"
+            android:textColor="@color/mb_red_dark"
+            android:textStyle="italic"
+
+
+            />
+
+        <TextView
+            android:id="@+id/distance2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_toEndOf="@+id/distance"
+            android:textColor="@color/SeaGreen" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="serif-monospace"
+        android:text="Ayrıntılar İçin Tıklayın.."
+        android:textColor="@color/retro"
+        android:textStyle="italic" />
 </LinearLayout>
