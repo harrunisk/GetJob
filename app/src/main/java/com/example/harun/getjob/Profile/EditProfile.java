@@ -231,7 +231,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         saveAll = findViewById(R.id.saveAll);
         cancel_action = findViewById(R.id.cancel_action);
         changePhotoImage = findViewById(R.id.changePhotoImage);
-       // yetenekLayout = findViewById(R.id.yetenekLayout);
+        // yetenekLayout = findViewById(R.id.yetenekLayout);
         //uploadProgress=findViewById(R.id.uploadProgress);
         //uploadProgress.hide();
 
@@ -621,7 +621,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
 
                 checkYetenek = true;
-              //  yetenekLayout.forceLayout();
+                //  yetenekLayout.forceLayout();
 
             }
 
@@ -983,8 +983,8 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
      * Arka Plana almamın sebebi bazen Fotografı filan yükleme uzun sürüyor en azından  bi 10 sn filan
      * böyle yapınca kullanıcı işlemine devam edebilir.
      */
-
-    private class SaveAllChanges extends AsyncTask<Void, Void, Void> {
+////CHECK MEMORY LEAK ARKA PLANDA ÇALIŞIYOR AMA HAFIZADAN SİLİNMİYOR .. ..
+    private  class SaveAllChanges extends AsyncTask<Void, Void, Void> {
 
         private static final String TAG = "SaveAllChanges";
 
