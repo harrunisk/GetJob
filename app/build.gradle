@@ -93,6 +93,16 @@ dependencies {
     //Image Cropper
     compile 'com.theartofdev.edmodo:android-image-cropper:2.5.+'
 
+    //Progress Button
+
+   // compile 'com.ebanx:swipe-button:[0.8.3]'
+   // compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.0.5'
+   // compile 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56'
+
+    compile 'org.altervista.andrearosa:statebutton:1.0.0'
+
+
+
     apply plugin: 'com.google.gms.google-services'
     implementation 'com.facebook.android:facebook-login:[4,5)'
 

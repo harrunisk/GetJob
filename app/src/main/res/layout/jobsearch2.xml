@@ -84,7 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="60dp"
-                        android:layout_marginStart="60dp"
+                        android:layout_marginStart="12dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/roundedbutton2"
                         android:fontFamily="serif-monospace"
@@ -99,9 +99,8 @@
                         android:layout_gravity="top|end"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/ic_my_location_black_24dp"
-                        android:tint="@color/Red"
-                        app:backgroundTint="@color/white"
+                        android:src="@drawable/markeruser"
+                        app:backgroundTint="@color/Snow"
                         app:fabSize="mini" />
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/changeLocation"

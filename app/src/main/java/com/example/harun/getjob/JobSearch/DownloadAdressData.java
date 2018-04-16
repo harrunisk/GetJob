@@ -27,7 +27,7 @@ import okhttp3.Response;
 
 
 /**
- * Arka Planda Adres Bilgisini Çeken Method
+ * Arka Planda Adres Bilgisini Çeker
  * Asıl adres Geocoder'in getFromLocation methodu ile gerçekleştirilecek bu methodda bir hata olur ise
  * google map api ye get isteği yapıcak olan getAdressUsingMapApi çalışacak burada Json Parse işlemi gerçekleştirilerek elde edilen
  * adres bilgisi adressCallback interface  yardımı ile jobsearch activity'e bildirilecek..
@@ -187,13 +187,13 @@ public class DownloadAdressData extends AsyncTask<LatLng, Void, String> {
                 //  e.printStackTrace();
             } finally { ///-->sonunda Bir kontrol yapılacak...
 
-                if (adress.length() <0) {
+                if (adress.length() <= 0) {
 
-                    Log.d(TAG, "getAdress: FİNALLY BLOKKK Return ADRES FROM JSON ");
+                    Log.d(TAG, "Finally:Adres Bilgisi Json olarak Alınacak Diğeri Çalışmadığı için adress.length" + adress.length());
                     adress += getAdressUsingGoogleMapApi(latLngs[0]);
                     //   return adress;
                 } else {
-                    Log.d(TAG, "getAdress:FİNALLY BLOCK Return ADRES Methodu");
+                    Log.d(TAG, "Finally Adres bilgisi GEOCODER İLE SAĞLANDI");
 
                 }
 
@@ -223,7 +223,7 @@ public class DownloadAdressData extends AsyncTask<LatLng, Void, String> {
 
         Log.d(TAG, "onPostExecute:ADRES BİLGİSİ " + s);
 
-        if (s != null) {
+        if (s != null && !s.isEmpty()) {
 
             madressCallback.adressCallbackResult(s);
 

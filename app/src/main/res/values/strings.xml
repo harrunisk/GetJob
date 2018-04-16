@@ -8,7 +8,8 @@
     <string name="soilType">Toprak Tipi</string>
     <string name="productKind">Ürün Çeşidi</string>
 
-
+    <string name="slidingpanel_head"> %1$s %2$s %3$s</string> <!-- Sliding panel Set Head Text İçin yazıldı .. 1 job name 2 uzaklık 3 new location uzaklıgı  -->
+    <string name="userArea"><b> %1$d/ </b> m içinde ilgilenebileceğin  <b> %2$d </b> iş bulduk :)</string> <!-- NearJobListActivity head kısmı için  kaç km içinde kaç sonuc listeleniyor  -->
     //cardview candidate criteria
     <string name="experience">Deneyim</string>
     <string name="militaryStatus">Askerlik Durumu</string>
@@ -32,8 +33,6 @@
     <string name="users_images">users_images</string>
     <string name="users_data">users_data</string>
     <string name="users_account">users_account</string>
-
-
 
 
     <string name="spinnerPrompt">Baslangıc Yılı</string>
@@ -90,6 +89,8 @@
     <string name="twitter_consumer_key" translatable="false">Ws8uStxg4hOiTfAjjB7FdyPoq</string>
     <string name="twitter_consumer_secret" translatable="false">mjD86fuxnn11HbJdaTtOmoWDTg5iTygx1bkW99Qf6tJocAvOA4</string>
     <string name="tamam">Tamam</string>
+
+    <string name="deneme_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum sed orci eget porttitor. Fusce ultricies urna sit amet consectetur tincidunt. Suspendisse tempus libero lectus, a lacinia felis bibendum id. Curabitur ac fringilla leo. Curabitur gravida dolor felis, et molestie dui mollis ac. Maecenas hendrerit dignissim nisl, non efficitur ex eleifend ac. Ut semper at turpis non finibus. Suspendisse potenti. Sed bibendum molestie luctus. Donec lobortis egestas turpis at aliquet. Curabitur non congue neque. Sed non rutrum risus. Sed iaculis mi in ipsum dignissim condimentum. Duis eget cursus leo, tristique eleifend risus. Vivamus ornare turpis et libero aliquet hendrerit. Nunc nec vestibulum tellus, nec feugiat purus.</string>
 
 
 </resources>

@@ -13,6 +13,8 @@
     <dimen name="category_count">12dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_size">16dp</dimen>
+    <dimen name="button_widht">56dp</dimen>
+    <dimen name="button_height">56dp</dimen>
 
 
     <dimen name="card_padding">60dp</dimen>

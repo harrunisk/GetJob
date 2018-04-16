@@ -27,7 +27,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="like"
             android:textColor="@color/silver"
             android:textSize="15dp" />
 
@@ -36,7 +35,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="love"
             android:textColor="@color/silver"
             android:textSize="10dp" />
     </LinearLayout>

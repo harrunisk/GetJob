@@ -1,7 +1,6 @@
-package com.example.harun.getjob.JobSearch;
+package com.example.harun.getjob.JobSearch.JobUtils;
 
 import android.content.Context;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -71,8 +70,8 @@ public class JobAdvertAdapter extends RecyclerView.Adapter<JobAdvertAdapter.MyVi
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView companyName, companyJob, jobDescpriction, companyLocation, companyDistance;
-        ImageView companyLogo;
-        FloatingActionButton saveAdvert;
+        ImageView companyLogo,saveAdvert;
+       // FloatingActionButton saveAdvert;
 
         public MyViewHolder(View itemView) {
             super(itemView);
