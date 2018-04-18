@@ -17,7 +17,7 @@
                 android:id="@+id/job_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_back_black_24dp" />
+                android:src="@drawable/back" />
 
 
             <TextView
@@ -40,7 +40,7 @@
                 android:layout_marginEnd="20dp"
                 android:contentDescription="Filtrele"
                 android:src="@drawable/sort"
-                android:tint="@color/primary_dark" />
+                android:tint="@color/mycolor2" />
         </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>

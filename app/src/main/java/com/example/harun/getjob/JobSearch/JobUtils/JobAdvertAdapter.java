@@ -20,6 +20,10 @@ import java.util.ArrayList;
  * Created by mayne on 20.03.2018.
  */
 
+
+/**
+ * Sizin için öneriliyor Listesinin Adapteri ..
+ */
 public class JobAdvertAdapter extends RecyclerView.Adapter<JobAdvertAdapter.MyViewHolder> {
 
     private static final String TAG = "JobAdvertAdapter";

@@ -3,7 +3,6 @@ package com.example.harun.getjob.JobSearch.JobUtils;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.os.CountDownTimer;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +37,7 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
     private LayoutInflater layoutInflater;
     private Animation animationUp;
     private Animation animDown;
-    FragmentManager fragmentManager;
+    // FragmentManager fragmentManager;
     private Animation animPulse;
     private JobAdvertModel mJobAdvertModel;
 
@@ -218,7 +217,6 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
             companyLogo1 = itemView.findViewById(R.id.companyLogo1);
             tvbasvuru_count = itemView.findViewById(R.id.tvbasvuru_count);
             tvjobname = itemView.findViewById(R.id.tvjobname);
-            //   tvjobtype = itemView.findViewById(R.id.tvjobtype);
             onay = itemView.findViewById(R.id.onay);
             publishdate = itemView.findViewById(R.id.publishdate);
             tvexperience = itemView.findViewById(R.id.tvexperience);
@@ -260,18 +258,27 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
             if (mMap == null) return;
             mMap.addMarker(new MarkerOptions().position(mjobAdvertModel.getPosition())
                     .icon(MapHelperMethods.getMarkerDrawable(mcontext))
-                    .title(mJobAdvertModel.getCompanyName()+"\n".concat(mjobAdvertModel.getCompanyJob())));
+                    .title(mJobAdvertModel.getCompanyName() + "\n".concat(mjobAdvertModel.getCompanyJob())));
             ;
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mjobAdvertModel.getPosition(), 15f));
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         }
 
+        /**
+         * Listte halinde her pozisyonun görüntüsü oluşturulurken buradada her itemi mapview 'e taglıyorum.
+         *
+         * @param position
+         */
         private void bindMapLocation(int position) {
             JobAdvertModel mjobAdvertModel = jobAdvertModelArrayList.get(position);
             //  Log.d(TAG, "bindMapLocation: "+mjobAdvertModel);
             mapview.setTag(mjobAdvertModel);
             setMapLocation();
         }
+
+
+
+
 
 
     }

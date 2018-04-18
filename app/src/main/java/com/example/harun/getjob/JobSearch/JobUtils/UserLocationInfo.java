@@ -11,7 +11,9 @@ import com.google.android.gms.maps.model.Marker;
 
 /**
  * Harita üzerinde dinamik olarak olusturulacak adres konum ve marker ,kapsama alanı bilgilerini  burada tutacagımm ..
- * Bu sınıfın tek nesnesi olacak ve buradaki bilgilere o nesne aracılıgı ile ulasacagım.
+ * <p>
+ * Bu sınıfın tek nesnesi olacak oda JobSearch ilk açıldıgı zaman olusturuluyor
+ * ve buradaki bilgilere o nesne aracılıgı ile ulasıyorum return mUserLocationInfo;.
  */
 public class UserLocationInfo extends JobAdvertModel {
     private static final String TAG = "UserLocationInfo";

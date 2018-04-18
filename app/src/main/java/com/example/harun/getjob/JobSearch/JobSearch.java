@@ -22,8 +22,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,6 +37,7 @@ import com.example.harun.getjob.JobSearch.JobUtils.DrawCircle;
 import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel;
 import com.example.harun.getjob.JobSearch.JobUtils.MapHelperMethods;
 import com.example.harun.getjob.JobSearch.JobUtils.MyClusterMarker;
+import com.example.harun.getjob.JobSearch.JobUtils.AdvertDetails;
 import com.example.harun.getjob.JobSearch.JobUtils.UserLocationInfo;
 import com.example.harun.getjob.Profile.Permissions;
 import com.example.harun.getjob.R;
@@ -101,7 +104,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     private ArrayList<CategoryModel> categoryModelArrayList;
     CategoryAdapter mCategoryAdapter;
     private CategoryModel mCategoryModel;
-
+    AdvertDetails.ViewHolder viewHolder;
     //local variable
     private int countLocation;
     // private String myLocationAdress, newLocationAdress;
@@ -113,7 +116,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     boolean firstClick = true;
     boolean isMyLocationAdress = false, isNewLocationAdress = false;
     boolean locationCheckChange = false;
-
+    ViewGroup scrollableView;
     LocationManager locationManager;
     LocationManager loc;
     MapStyleOptions style;
@@ -160,6 +163,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             new LatLng(46.99444859, 27.6685097),
             new LatLng(44.194859, 29.6656097)
     };
+
     //Kategori recyler ListView in gerçeklenmesi .
     private void setRecylerCategoryList() {
 
@@ -212,6 +216,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         jobNameSlidingPanel = findViewById(R.id.JobName);
         touchHandler = findViewById(R.id.touchHandler);
         mylocButton = findViewById(R.id.myLocButton);
+        scrollableView = findViewById(R.id.scrollableView);
         init();
     }
 
@@ -225,13 +230,14 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         resultList = new ArrayList<>();
-        mUserLocationInfo = UserLocationInfo.getInstance();
+        mUserLocationInfo = UserLocationInfo.getInstance();//USERLOCATİON INFO SİNGLETON NESNESİ ...
         style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro); //Map Style Retro
         downloadAdressData = new DownloadAdressData(getApplicationContext(), this);
         btnListNearJob.setOnClickListener(this);
         slidingPanelListener();
         touchHandlerListener();
         DiscreteSeekBarRange();
+        slidingPanelAdvertInfo();
 
         // gpsTracker = new NewGPSTracker(getApplicationContext());
 
@@ -637,6 +643,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                         // Log.d(TAG, "onPanelStateChanged: KAPANIYORRR");
                         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
                         isOpened = false;
+                        //  addView.invalidate();
                     }
 
                 }
@@ -841,7 +848,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                     Log.d(TAG, "resultListSize>0: ");
                     Intent i = new Intent(this, NearJobListActivity.class);
                     i.putParcelableArrayListExtra("nearList", resultList);
-                    i.putExtra("nearListSize",resultList.size());
+                    i.putExtra("nearListSize", resultList.size());
                     startActivity(i);
                     overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
                     break;
@@ -1026,7 +1033,11 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
         Log.d(TAG, "onClusterItemClick: TIKLANDI");
         // myItem.showInfoWindow();
-        myItem.setCompanyDistance(String.valueOf(MapHelperMethods.getDistanceParce(MapHelperMethods.toRadiusMeters(mUserLocationInfo.getMyLocation(), myItem.getPosition())))); //distance item üzerine tıklayınca hesaplatıyorum.
+        myItem.setCompanyDistance(String.valueOf(
+                MapHelperMethods.getDistanceParce(
+                        MapHelperMethods.toRadiusMeters(
+                                mUserLocationInfo.getMyLocation(), myItem.getPosition())))); // item üzerine tıklayınca distance hesaplatıyorum.
+
         if (mUserLocationInfo.getNewLocationMarker() != null) {
 
             myItem.setNewLocationDistance(String.valueOf(
@@ -1039,11 +1050,43 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
         //myClusterMarker.getMarker(myItem).showInfoWindow();
         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        //jobNameSlidingPanel.setText(myItem.getCompanyJob() + "\t" + myItem.getCompanyDistance() + "\t" + myItem.getNewLocationDistance()); //Sliding Panel TExt
         jobNameSlidingPanel.setText(getString(R.string.slidingpanel_head, myItem.getCompanyJob(), myItem.getCompanyDistance(), myItem.getNewLocationDistance())); //Sliding Panel TExt
         runAdressMethod(myItem.getPosition());
+
+        viewHolder.clearMap();
+        viewHolder.setData(myItem);
+
         mMap.animateCamera(CameraUpdateFactory.newLatLng(myItem.getPosition()));
         return false; //-->true olunca ınfo window calışmıyor ..
+    }
+
+/*  case R.id.action_anchor: {
+        if (mLayout != null) {
+            if (mLayout.getAnchorPoint() == 1.0f) {
+                mLayout.setAnchorPoint(0.7f);
+                mLayout.setPanelState(PanelState.ANCHORED);
+                item.setTitle(R.string.action_anchor_disable);
+            } else {
+                mLayout.setAnchorPoint(1.0f);
+                mLayout.setPanelState(PanelState.COLLAPSED);
+                item.setTitle(R.string.action_anchor_enable);
+            }
+        }
+        return true;*/
+
+    /**
+     * Sliding Panele İlan  detayları sayfasını ekliyorum .. Ve Bu Dosyayı ViewHolder Klasorumde Saklıyorum ...
+     * Tanımlamalarını click eventlerini o class ta gerçekleştiriyorum .
+     */
+    private void slidingPanelAdvertInfo() {
+        Log.d(TAG, "slidingPanelAdvertInfo: ");
+        LayoutInflater inflater = getLayoutInflater();
+
+        View jobadvertdetails = inflater.inflate(R.layout.jobadvertdetails, null);
+
+        viewHolder = new AdvertDetails.ViewHolder(jobadvertdetails, getApplicationContext());
+        scrollableView.addView(jobadvertdetails, 0);
+
     }
 
     @Override

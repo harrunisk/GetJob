@@ -89,9 +89,6 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         Log.d(TAG, "onViewRecycled: aaaa");
         if (myViewHolder != null && myViewHolder.mMap != null) {
             Log.d(TAG, "onViewRecycled: ü");
-            // Clear the map and free up resources by changing the map type to none.
-            // Also reset the map when it gets reattached to layout, so the previous map would
-            // not be displayed.
             myViewHolder.mMap.clear();
             myViewHolder.mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
         }

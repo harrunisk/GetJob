@@ -7,6 +7,8 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
+import org.altervista.andrearosa.statebutton.StateButton;
+
 /**
  * Created by mayne on 20.03.2018.
  */
@@ -22,6 +24,34 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
     private String companyName, companyJob, jobDescpriction, companyLocation, companyDistance, companyLogoUrl;
     private LatLng mPosition;
     private String mTitle, experienceinfo, countApply, newLocationDistance, publishDate;
+    private boolean isSave = false;
+    private int basvuruDurumu = 0;
+
+
+    public StateButton.BUTTON_STATES getBasvuruDurumu() {
+
+        if (basvuruDurumu == 0) {
+
+            return StateButton.BUTTON_STATES.ENABLED;//Yani basvurulabiliri duruma gec basvuru yapılmamıs isse
+
+        } else {
+            return StateButton.BUTTON_STATES.DISABLED; //Basvuru yapılmıs ise butonu devre dısı bırak .
+        }
+    }
+
+
+    public void setBasvuruDurumu(int _basvuruDurumu) { //İlana Basvuru yapılmısmı
+        this.basvuruDurumu = _basvuruDurumu;
+    }
+
+
+    public boolean isSave() {   //İlan kayıt edilmişmi ..
+        return isSave;
+    }
+
+    public void setSave(boolean save) {
+        isSave = save;
+    }
 
     public JobAdvertModel() {
 
@@ -66,7 +96,7 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
                           String publishDate,
                           String experienceinfo,
                           String countApply,
-                         // String companyDistance,
+                          // String companyDistance,
                           String companyLogoUrl) {
 
         Log.d(TAG, "JobAdvertModel: Constructor");
@@ -229,4 +259,6 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         parcel.writeString(newLocationDistance);
         parcel.writeString(publishDate);
     }
+
+
 }
