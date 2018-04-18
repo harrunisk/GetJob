@@ -12,8 +12,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.example.harun.getjob.JobSearch.JobAdvertAdapter;
-import com.example.harun.getjob.JobSearch.JobAdvertModel;
+import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertAdapter;
+import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel;
 import com.example.harun.getjob.JobSearch.JobSearch;
 import com.example.harun.getjob.Profile.profilPage;
 
@@ -32,7 +32,7 @@ public class UserIntro extends AppCompatActivity {
     ArrayList<JobAdvertModel> jobAdvertList;
     JobAdvertAdapter mJobAdvertAdapter;
 
-    String denemeurl = "http://logosolusa.com/wp-content/uploads/parser/MD-Logo-1.png";
+    String denemeurl = "http://wellnessmart.com/wp-content/uploads/md.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

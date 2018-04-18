@@ -1,4 +1,4 @@
-package com.example.harun.getjob.JobSearch;
+package com.example.harun.getjob.JobSearch.JobUtils;
 
 import com.example.harun.getjob.R;
 

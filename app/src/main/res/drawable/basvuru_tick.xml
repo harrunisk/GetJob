@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:drawable="@drawable/tick"
+        android:state_activated="true"
+        android:state_enabled="true"/> <!-- state_activated -->
+
+
+    <item android:drawable="@drawable/tick_disable"
+        android:state_activated="false"
+       android:state_enabled="true" /> <!-- state_activated="false" -->
+
+
+</selector>

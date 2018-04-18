@@ -54,9 +54,9 @@
                         android:id="@+id/companyJob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/companyLogo"
+                        android:layout_alignTop="@+id/companyLogo"
                         android:layout_marginStart="5dp"
-                        android:layout_toEndOf="@id/companyLogo"
+                        android:layout_toEndOf="@+id/companyLogo"
                         android:fontFamily="casual"
                         android:padding="2dp"
                         android:text="BİLGİSAYAR MÜHENDİSİ "
@@ -69,9 +69,9 @@
                         android:id="@+id/jobDescpriction"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/companyJob"
+                        android:layout_below="@+id/companyJob"
                         android:layout_marginStart="5dp"
-                        android:layout_toRightOf="@id/companyLogo"
+                        android:layout_toEndOf="@+id/companyLogo"
                         android:fontFamily="casual"
                         android:padding="2dp"
                         android:text="ANDROİD DEVELOPER "
@@ -99,7 +99,7 @@
                         android:layout_below="@id/jobDescpriction"
                         android:gravity="center_vertical"
                         android:padding="2dp"
-                        android:text="2km"
+                        android:text="01.01.2014"
                         android:textSize="10dp" />
 
 
@@ -112,7 +112,7 @@
 
 
     </RelativeLayout>
-
+<!--
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/saveAdvert"
         android:layout_width="wrap_content"
@@ -125,5 +125,17 @@
         app:fabSize="mini"
         app:srcCompat="@drawable/ic_bookmark_24dp" />
 
+
+-->
+
+    <ImageView
+        android:id="@+id/saveAdvert"
+        android:layout_width="wrap_content"
+        app:backgroundTint="@color/white"
+        app:layout_anchor="@+id/outSection"
+        app:layout_anchorGravity="top|end|left"
+        app:elevation="10dp"
+        android:src="@drawable/ic_bookmark_24dp"
+        android:layout_height="wrap_content" />
 </android.support.design.widget.CoordinatorLayout>
 

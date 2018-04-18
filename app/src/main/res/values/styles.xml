@@ -105,7 +105,7 @@
         <item name="tabPaddingEnd">12dp</item>
         <item name="tabMode">fixed</item>
         <item name="tabGravity">fill</item>
-        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabBackground">@color/white</item>
         <item name="tabTextAppearance">@style/MainTabTextAppearance</item>
     </style>
     <style name="MainTabTextAppearance" parent="TextAppearance.Design.Tab">
@@ -114,7 +114,7 @@
 
     <style name="MainToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:background">@color/mycolor2</item>
+        <item name="android:background">@color/tw__solid_white</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
     </style>
 
@@ -134,6 +134,39 @@
     </style>
 
     <style name="BottomSheetTabLayoutStyle" parent="MainTabLayoutStyle">
-        <item name="tabIndicatorColor">?attr/colorPrimaryDark</item>
+        <item name="tabIndicatorColor">@color/purple</item>
+        <item name="tabSelectedTextColor">@color/SeaGreen</item>
     </style>
+
+    <style name="myButonStyle">
+        <!-- Texts color -->
+        <item name="disabledTextColor">@color/black</item>
+        <item name="enabledTextColor">@color/white_100</item>
+        <item name="loadingTextColor">@color/black_038</item>
+        <item name="successTextColor">@color/white_100</item>
+        <item name="failedTextColor">@color/white_100</item>
+        <!-- Icons color -->
+        <item name="disabledIconColor">@color/black</item>
+        <item name="enabledIconColor">@color/white_100</item>
+        <item name="loadingIconColor">@color/black_038</item>
+        <item name="successIconColor">@color/white_100</item>
+        <item name="failedIconColor">@color/white_100</item>
+    </style>
+
+    <style name="StateButton_md_blueStyle" parent="myButonStyle">
+        <!-- Backgrounds -->
+        <item name="disabledBackground">@drawable/round</item>
+        <item name="enabledBackground">@drawable/toolbar</item>
+        <item name="loadingBackground">@drawable/statebutton_md_bluebg_loading</item>
+        <item name="successBackground">@drawable/statebutton_md_bluebg_success</item>
+        <item name="failedBackground">@drawable/statebutton_md_bluebg_failed</item>
+    </style>
+
+
+
+
+
+
+
+
 </resources>

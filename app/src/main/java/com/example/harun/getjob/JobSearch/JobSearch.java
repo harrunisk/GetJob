@@ -7,8 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -24,13 +22,23 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.harun.getjob.JobSearch.JobUtils.CategoryAdapter;
+import com.example.harun.getjob.JobSearch.JobUtils.CategoryModel;
+import com.example.harun.getjob.JobSearch.JobUtils.DrawCircle;
+import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel;
+import com.example.harun.getjob.JobSearch.JobUtils.MapHelperMethods;
+import com.example.harun.getjob.JobSearch.JobUtils.MyClusterMarker;
+import com.example.harun.getjob.JobSearch.JobUtils.AdvertDetails;
+import com.example.harun.getjob.JobSearch.JobUtils.UserLocationInfo;
 import com.example.harun.getjob.Profile.Permissions;
 import com.example.harun.getjob.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -40,10 +48,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
@@ -54,14 +59,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.android.clustering.view.DefaultClusterRenderer;
-import com.google.maps.android.ui.IconGenerator;
+import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -70,10 +74,10 @@ import java.util.List;
 
 public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMarkerClickListener, LocationListener, DiscreteSeekBar.OnProgressChangeListener,
-        View.OnClickListener, ClusterManager.OnClusterClickListener<MyItem>,
-        ClusterManager.OnClusterItemClickListener<MyItem>,
+        View.OnClickListener, ClusterManager.OnClusterClickListener<JobAdvertModel>,
+        ClusterManager.OnClusterItemClickListener<JobAdvertModel>,
         GoogleMap.OnMyLocationClickListener, GoogleMap.OnCameraChangeListener,
-        ClusterManager.OnClusterItemInfoWindowClickListener<MyItem>,
+        ClusterManager.OnClusterItemInfoWindowClickListener<JobAdvertModel>,
         GoogleMap.OnMarkerDragListener, DownloadAdressData.adressCallback {
 
     private static final String TAG = "JobSearch";
@@ -100,10 +104,10 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     private ArrayList<CategoryModel> categoryModelArrayList;
     CategoryAdapter mCategoryAdapter;
     private CategoryModel mCategoryModel;
-
+    AdvertDetails.ViewHolder viewHolder;
     //local variable
     private int countLocation;
-    private String myLocationAdress, newLocationAdress;
+    // private String myLocationAdress, newLocationAdress;
     DownloadAdressData downloadAdressData;
     private GoogleMap mMap;
     boolean mPermissionGranted;
@@ -112,78 +116,60 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     boolean firstClick = true;
     boolean isMyLocationAdress = false, isNewLocationAdress = false;
     boolean locationCheckChange = false;
-
+    ViewGroup scrollableView;
     LocationManager locationManager;
     LocationManager loc;
     MapStyleOptions style;
-    private LatLng myLocation, newLocationLatLng;
+    //  private LatLng myLocation, newLocationLatLng;
     private Location mLastKnownLocation;
     MyClusterMarker myClusterMarker;
-    Marker currentLocationMarker, newLocationMarker;
+    // Marker currentLocationMarker, newLocationMarker;
     private static final int DEFAULT_ZOOM = 13;
-    private ClusterManager<MyItem> myItemClusterManager;
+    private ClusterManager<JobAdvertModel> myItemClusterManager;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     List<DrawCircle> mCircleList = new ArrayList<>(1);
     ArrayList<LatLng> locationList;
     CustomInfoWindowCluster customInfoWindowCluster;
-    public static boolean should_zoom;
-
-
-    LatLng deneme1 = new LatLng(40.98636580, 28.66981733);
-    LatLng deneme2 = new LatLng(40.981415, 28.6630712);
-    LatLng deneme3 = new LatLng(40.978889, 28.6635097);
-    LatLng deneme4 = new LatLng(40.998889, 28.6687097);
-    LatLng deneme5 = new LatLng(40.994859, 28.6686097);
-
     //Sliding Panel
     private SlidingUpPanelLayout mLayout;
+    ArrayList<JobAdvertModel> resultList;
+    NonHierarchicalDistanceBasedAlgorithm clusterManagerAlgorithm;
+    UserLocationInfo mUserLocationInfo;
+    //public static boolean should_zoom;
 
-
-
-    public void setMyLocation(LatLng myLocation) {
-        Log.d(TAG, "setMyLocation:" + myLocation);
-        this.myLocation = myLocation;
-    }
-
-    public LatLng getMyLocation() {
-        Log.d(TAG, "getMyLocation:Çalıştı ");
-        return myLocation;
-    }
-
-    public void setNewLocationLatLng(LatLng newLocationLatLng) {
-        this.newLocationLatLng = newLocationLatLng;
-    }
-
-    public void setNewLocationAdress(String newLocationAdress) {
-        this.newLocationAdress = newLocationAdress;
-    }
-
-    public String getNewLocationAdress() {
-        return newLocationAdress;
-    }
-
-    public LatLng getNewLocationLatLng() {
-        return newLocationLatLng;
-    }
-
-    //Bulundugum konumun adresini setEdiyorum..
-    public void setMyLocationAdress(String _myLocationAdress) {
-        myLocationAdress = _myLocationAdress;
-    }
-    public String getMyLocationAdress() {
-
-        return myLocationAdress;
-
-    }
+    LatLng[] denemekonumlar = {new LatLng(40.98636580, 28.66981733),
+            new LatLng(40.981415, 28.6630712),
+            new LatLng(40.978889, 28.6635097),
+            new LatLng(40.994859, 28.6686097),
+            new LatLng(40.993259, 28.6386097),
+            new LatLng(40.9933259, 28.63846097),
+            new LatLng(40.992259, 28.647097),
+            new LatLng(40.998889, 28.6687097),
+            new LatLng(43.994859, 28.6686097),
+            new LatLng(44.994859, 28.6686057),
+            new LatLng(46.994859, 28.6685097),
+            new LatLng(47.994859, 24.6685097),
+            new LatLng(40.767554, 30.361397),
+            new LatLng(40.770609, 30.367233),
+            new LatLng(40.771794, 30.388820),
+            new LatLng(47.994859, 24.6685097),
+            new LatLng(40.765489, 30.372384),
+            new LatLng(40.762930, 30.360252),
+            new LatLng(40.764222, 30.351146),
+            new LatLng(40.777247, 30.365028),
+            new LatLng(40.772014, 30.364556),
+            new LatLng(46.97859, 25.6685097),
+            new LatLng(46.9954859, 26.85097),
+            new LatLng(46.99444859, 27.6685097),
+            new LatLng(44.194859, 29.6656097)
+    };
 
     //Kategori recyler ListView in gerçeklenmesi .
     private void setRecylerCategoryList() {
 
         Log.d(TAG, "setRecylerCategoryList: ÇAĞRILDI");
         mCategoryAdapter = new CategoryAdapter(this, mCategoryModel.getDataModel());
-
         categoryRecycler.setAdapter(mCategoryAdapter);
-
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
         linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         categoryRecycler.setLayoutManager(linearLayoutManager2);
@@ -198,12 +184,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         setContentView(R.layout.jobsearch2);
 
         locationList = new ArrayList<>();
-        locationList.add(0, deneme1);
-        locationList.add(1, deneme2);
-        locationList.add(2, deneme3);
-        locationList.add(3, deneme4);
-        locationList.add(4, deneme5);
 
+        locationList.addAll(Arrays.asList(denemekonumlar));
 
         loc = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -222,9 +204,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
     //Widget Xml Baglantıları
     private void gatherViews() {
-
         Log.d(TAG, "gatherViews: ÇAĞRILDI");
-
         categoryRecycler = findViewById(R.id.categoryList);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         tvAdress = findViewById(R.id.tvAdress);
@@ -236,8 +216,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         jobNameSlidingPanel = findViewById(R.id.JobName);
         touchHandler = findViewById(R.id.touchHandler);
         mylocButton = findViewById(R.id.myLocButton);
-        //touchHandler2 = findViewById(R.id.touchHandler2);
-
+        scrollableView = findViewById(R.id.scrollableView);
         init();
     }
 
@@ -246,17 +225,19 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     private void init() {
         Log.d(TAG, "init: ÇAĞRILDI");
         categoryModelArrayList = new ArrayList<>();
-        //  markerList = new ArrayList<>();
         mCategoryModel = new CategoryModel();
         mapFragment.getMapAsync(this);
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        resultList = new ArrayList<>();
+        mUserLocationInfo = UserLocationInfo.getInstance();//USERLOCATİON INFO SİNGLETON NESNESİ ...
         style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro); //Map Style Retro
         downloadAdressData = new DownloadAdressData(getApplicationContext(), this);
         btnListNearJob.setOnClickListener(this);
         slidingPanelListener();
         touchHandlerListener();
         DiscreteSeekBarRange();
+        slidingPanelAdvertInfo();
 
         // gpsTracker = new NewGPSTracker(getApplicationContext());
 
@@ -418,33 +399,28 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         setupMap(mMap); //--->Harita Özelliklerini gerçekleştir.
 
         mylocButton.setOnClickListener(this);
-
         changeLocation.setOnClickListener(this);
 
-        myItemClusterManager = new ClusterManager<MyItem>(this, mMap);
-        //    mMap.setOnCameraIdleListener(myItemClusterManager);
+        myItemClusterManager = new ClusterManager<JobAdvertModel>(this, mMap);
+        // Instantiate the cluster manager algorithm as is done in the ClusterManager
+        clusterManagerAlgorithm = new NonHierarchicalDistanceBasedAlgorithm();
+
+        // Set this local algorithm in clusterManager
+        myItemClusterManager.setAlgorithm(clusterManagerAlgorithm);
+
         myClusterMarker = new MyClusterMarker(this, mMap, myItemClusterManager);
         customInfoWindowCluster = new CustomInfoWindowCluster(getApplicationContext());
         myItemClusterManager.setRenderer(myClusterMarker); //Cluster style
-
         myItemClusterManager.setOnClusterClickListener(this);
-
         mMap.setOnCameraChangeListener(this);
-
         mMap.setOnMarkerClickListener(myItemClusterManager);
-
         mMap.setOnMyLocationClickListener(this);
         mMap.setOnMarkerDragListener(this);
         mMap.setOnInfoWindowClickListener(myItemClusterManager);
-
-
         myItemClusterManager.setOnClusterItemInfoWindowClickListener(this);
-
         myItemClusterManager.setOnClusterItemClickListener(this);
-
-
         getDeviceLocation();  // haritayı son konuma aktif etme
-        drawJobLocation();    //
+        drawJobLocation();
         circleArea.setOnProgressChangeListener(this);
         mMap.setInfoWindowAdapter(myItemClusterManager.getMarkerManager());
         myItemClusterManager.getMarkerCollection()
@@ -461,6 +437,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         Log.d(TAG, "setupMap:Çagırıldı ");
         _mMap.setMapStyle(style);
         _mMap.getUiSettings().setZoomControlsEnabled(true);
+        _mMap.getUiSettings().setCompassEnabled(false);
         _mMap.getUiSettings().setMapToolbarEnabled(false);
         _mMap.setMyLocationEnabled(false);
         _mMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -496,8 +473,6 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         if (location != null) {
             Log.d(TAG, "getCurrentLocation: drawCurrentLocationMarker Çağrılıyor");
             mLastKnownLocation = location; ///Şuanki konum bilinen son konum olarak atanıyor .
-            //LatLng gps = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-
             drawCurrentLocationMarker(mLastKnownLocation);
 
         }
@@ -515,29 +490,19 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
-
                             mLastKnownLocation = task.getResult();
-
                             if (mLastKnownLocation != null) {
                                 Log.d(TAG, "onComplete: mLastKnownLocation" + mLastKnownLocation);
-
                                 LatLng gps = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-                                // setMyLocation(gps);
                                 drawCurrentLocationMarker(mLastKnownLocation);
-
-
                             } else {
                                 Log.d(TAG, "onComplete: mLastKnownLocation NULLL GET CURRENT LOCATİON ");
                                 getCurrentLocation();
-
                             }
-
-
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
                             getCurrentLocation();
-
                         }
                     }
                 });
@@ -559,26 +524,23 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             countLocation = 1;
 
             Drawable currentMarkerStyle = getResources().getDrawable(R.drawable.markeruser);
-
-            BitmapDescriptor icon = getDrawableMarkerAsBitmap(currentMarkerStyle);
-            LatLng gps = convertLocationtoLatLng(location);
+            BitmapDescriptor icon = MapHelperMethods.getDrawableMarkerAsBitmap(currentMarkerStyle);
+            LatLng gps = MapHelperMethods.convertLocationtoLatLng(location);
             isMyLocationAdress = true;
-            setMyLocation(gps);  //-->Bulundugum konumu kayıt et..
-            //setMyLocationAdress(gps); //Adresi set ediyoruz Bulundugumuz konumun
-            downloadAdressData.execute(gps);//--->adres Bilgisini gönderiyoruz..
-
-            currentLocationMarker = mMap.addMarker(new MarkerOptions()
+            mUserLocationInfo.setMyLocation(gps);  //-->Bulundugum konumu kayıt et..
+            downloadAdressData.execute(gps);//--->adres Bilgisini alıyoruz..
+            Marker currentLocationMarker1;
+            currentLocationMarker1 = mMap.addMarker(new MarkerOptions()
                     .position(gps)
                     .icon(icon)
                     .title("Buradasınız"));
 
-            currentLocationMarker.showInfoWindow();
-
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(gps, DEFAULT_ZOOM));
-
-            // tvAdress.setText(getMyLocationAdress());
-            DrawCircle drawCircle = new DrawCircle(location, 1000);//İlk Circle 1-km Alanı kapsayacak
-            mCircleList.add(drawCircle); //Eklenen her circle Listeye alınıyor .
+            currentLocationMarker1.showInfoWindow();
+            mUserLocationInfo.setCurrentLocationMarker(currentLocationMarker1);
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition(mUserLocationInfo.getMyLocation())));
+            DrawCircle drawCircle = new DrawCircle(location, 1000, mMap, getApplicationContext());//İlk Circle 1-km Alanı kapsayacak
+            mCircleList.add(drawCircle); //Bulunan konuma 1 circle atıyorum bu circle daha sonra ulasabilmek adına circle olusturan sınıfı
+            //nesnesini listede tutuyorum Daha sonraki circle değişimleri bu nesne üzerinden gerçekleştiriyorum..
 
         }
 
@@ -593,15 +555,13 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
         countLocation = 2;
         Drawable drawable = getResources().getDrawable(R.drawable.markeruser);
-        drawable.setTint(Color.GREEN);
-
-        BitmapDescriptor bitmapDescriptorFactory = getDrawableMarkerAsBitmap(drawable);
-
-        setNewLocationLatLng(center);//Yeni lokasyonun latlng değerini kayıt ediyorum daha sonra ulasabilmek adına ..
-
-        newLocationMarker = mMap.addMarker(
+        drawable.setTint(getColor(R.color.jumbo));
+        BitmapDescriptor bitmapDescriptorFactory = MapHelperMethods.getDrawableMarkerAsBitmap(drawable);
+        mUserLocationInfo.setNewLocationLatLng(center);//Yeni lokasyonun latlng değerini kayıt ediyorum daha sonra ulasabilmek adına ..
+        Marker newLocationMarker1;
+        newLocationMarker1 = mMap.addMarker(
                 new MarkerOptions().position(center).title("Yeni konumunuz").icon(bitmapDescriptorFactory));
-
+        mUserLocationInfo.setNewLocationMarker(newLocationMarker1);
         runAdressMethod(center);
 
     }
@@ -621,29 +581,21 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
         for (LatLng clustering : locationList) {
             Log.d(TAG, "addClusterItem: ITEMLER EKLENIYOR " + clustering);
-            myItemClusterManager.addItem(new MyItem(clustering, "MD Bilişim Sistemleri ",
-                    "Android Developer", "01.01.2018"));
+            myItemClusterManager.addItem(new JobAdvertModel(
+                    "MD BİLİŞİM SİSTEMLERİ",
+                    "ANDROİD DEVELOPER",
+                    "asdasdasdasd",
+                    "İstanbul",
+                    clustering,
+                    "01.01.2018",
+                    "Tecrübesiz",
+                    "100",
+                    //   String.valueOf(getDistanceParce(
+                    //          toRadiusMeters(getMyLocation(), clustering))),
+                    ""));
+
 
         }
-
-    }
-
-
-    /**
-     * Drawable klasorundeki marker vektorel oldugu icin onu bitmap 'e çeviren fonksiyon yazıldı.
-     *
-     * @param currentMarker -->Drawable marker
-     * @return
-     */
-    public BitmapDescriptor getDrawableMarkerAsBitmap(Drawable currentMarker) {
-
-        Canvas canvas = new Canvas();
-        Bitmap bitmap = Bitmap.createBitmap(currentMarker.getIntrinsicWidth(), currentMarker.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        canvas.setBitmap(bitmap);
-        currentMarker.setBounds(0, 0, currentMarker.getIntrinsicWidth(), currentMarker.getIntrinsicHeight());
-        currentMarker.draw(canvas);
-        return BitmapDescriptorFactory.fromBitmap(bitmap);
-
 
     }
 
@@ -666,16 +618,16 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
-                //Log.d(TAG, "onPanelSlide: ");
+
+
             }
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
                 //previous state Dragging
                 // new State Expanded iken State Draggin olursa  yeni state hidden yapıyorum
-
-                //  Log.d(TAG, "onPanelStateChanged: " + previousState + newState);
                 //Sliding Panel açıldıgında açıldıgını bir local değişkene bildiriyorum
+
                 if (previousState == SlidingUpPanelLayout.PanelState.EXPANDED &&
                         newState == SlidingUpPanelLayout.PanelState.DRAGGING) {
 
@@ -688,10 +640,10 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                 if (previousState == SlidingUpPanelLayout.PanelState.DRAGGING && newState == SlidingUpPanelLayout.PanelState.COLLAPSED) {
 
                     if (isOpened) {
-
                         // Log.d(TAG, "onPanelStateChanged: KAPANIYORRR");
                         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
                         isOpened = false;
+                        //  addView.invalidate();
                     }
 
                 }
@@ -715,11 +667,12 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         if (countLocation == 1) {
 
             return 1;
-        } else {   //1 marKer yoksa 2 marker vardır ozaman
+        } else {
+            //1 marKer yoksa 2 marker vardır ozaman
+            //İlk tıklayısta firstClick true .. yani 1 .tıklayısta mavi 2.tıklayısta kırmızı olcak locationbutton daki marker rengi
+            if (firstClick) {
 
-            if (firstClick) { //İlk tıklayısta
-
-                mylocButton.setImageTintList(ColorStateList.valueOf(Color.GREEN));
+                mylocButton.setImageTintList(ColorStateList.valueOf(Color.BLUE));
                 firstClick = false;
                 return 1;
 
@@ -765,23 +718,19 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
 
 
-    /*ONLOCATİON CHANGE */
+    /*ONLOCATİON CHANGE  BURASI HATALI ÇALIŞABİLİR TEST ETMEDİMM ... */
 
     @Override
     public void onLocationChanged(Location location) {
         Log.d(TAG, "onLocationChanged:MEthodu  " + location.getLatitude());
 
-        for (DrawCircle drawCircle : mCircleList) {
-            drawCircle.removeCirle(); //-->Circle kaldırıyorum
-        }
-        mCircleList.clear();//-->Circle listesini temizliyorum
-
-        currentLocationMarker.remove(); //Şuanki markeri kaldırıyorum
-
+        // for (DrawCircle drawCircle : mCircleList) {
+        DrawCircle drawCircle = mCircleList.get(0);
+        drawCircle.setCenterCircle(MapHelperMethods.convertLocationtoLatLng(location)); //-->Circle kaldırıyorum
+        // mCircleList.clear();//-->Circle listesini temizliyorum
+        mUserLocationInfo.getCurrentLocationMarker().remove(); //Şuanki markeri kaldırıyorum
         mLastKnownLocation = location; //değişen lokasyon değerlerini son bilinen lokasyonuma eşitliyorum
-
         drawCurrentLocationMarker(mLastKnownLocation); //son lokasyona marker, koyuyorum.
-
         locationManager.removeUpdates(this);
 
     }
@@ -861,8 +810,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
             //mCircle Listesinden şu anki  circle alınarak yeni circle verilen uzaklık değerine göre(yarıçap)  olusturuluyor
             //
-            for (DrawCircle drawCircle : mCircleList)
-                drawCircle.setCircleRadius(updatedValue);
+            DrawCircle drawCircle = mCircleList.get(0);
+            drawCircle.setCircleRadius(updatedValue);
 
         }
 
@@ -872,7 +821,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        mMap.clear();
+//       mMap.clear();
     }
 
     @Override
@@ -894,55 +843,57 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                 //Log.d(TAG, "onClick: " + mMap.getCameraPosition().zoom + "\t\t" + mMap.getMaxZoomLevel());
 
                 //Yakındaki daire içerisindeki işler listelenecek
+                getNearJobList();
+                if (resultList.size() > 0) {
+                    Log.d(TAG, "resultListSize>0: ");
+                    Intent i = new Intent(this, NearJobListActivity.class);
+                    i.putParcelableArrayListExtra("nearList", resultList);
+                    i.putExtra("nearListSize", resultList.size());
+                    startActivity(i);
+                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    break;
+                } else {
+                    Toast.makeText(this, "Kapsama alanınızda Size uygun iş bulunamadı.", Toast.LENGTH_SHORT).show();
+                    break;
+                }
 
-                Intent i = new Intent(this, NearJobListActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-
-                break;
 
             case R.id.myLocButton:
                 Log.d(TAG, "onClick: MYLOC BUTTON TIKLANDI");
+                DrawCircle drawCircle = mCircleList.get(0);
                 if (myLocButtonStateCheck() == 1) {
-
-                    currentLocationMarker.showInfoWindow();
-                    tvAdress.setText(getMyLocationAdress());
-
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition(getMyLocation())));
-                    // CameraUpdateFactory.newLatLngZoom(getMyLocation(), 14), 1500, null
+                    mUserLocationInfo.getCurrentLocationMarker().showInfoWindow();
+                    tvAdress.setText(mUserLocationInfo.getMyLocationAdress());
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition(mUserLocationInfo.getMyLocation())));
+                    drawCircle.setCenterCircle(mUserLocationInfo.getMyLocation());
 
                 } else {
-
                     Log.d(TAG, "onClick: NewLocationButon Tıklandı");
-                    tvAdress.setText(getNewLocationAdress());
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition(getNewLocationLatLng())));
-
+                    mUserLocationInfo.getNewLocationMarker().showInfoWindow();
+                    tvAdress.setText(mUserLocationInfo.getNewLocationAdress());
+                    //mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition(mUserLocationInfo.getNewLocationLatLng())));
+                    drawCircle.setCenterCircle(mUserLocationInfo.getNewLocationLatLng());
                 }
 
 
                 break;
 
             case R.id.changeLocation:
-
                 Log.d(TAG, "onClick: Change Location");
-
                 newLocation();
         }
     }
 
-
+    /**
+     * Normal Kamera pozisyonu ...
+     *
+     * @param _center-->latlng
+     * @return
+     */
     private CameraPosition getCameraPosition(LatLng _center) {
-
-
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(_center)      // Sets the center of the map to Mountain View
-                .zoom(14)                   // Sets the zoom
-                //  .bearing(90)                // Sets the orientation of the camera to east
-                .tilt(30)                   // Sets the tilt of the camera to 30 degrees
-                .build();
-
-        return cameraPosition;
-
+        //bearing(90)
+        return new CameraPosition.Builder().target(_center).zoom(DEFAULT_ZOOM).tilt(30).build();
     }
 
     /**
@@ -959,24 +910,21 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
          */
 
         final LatLng center = mMap.getCameraPosition().target;
-        if (!locationCheckChange) {   //İlk defa tıklandıgı durumdaki marker koyma işlemleri ... 
+        DrawCircle drawCircle = mCircleList.get(0);
+        if (!locationCheckChange) {
+            //İlk defa tıklandıgı durumdaki marker koyma işlemleri ...
             locationCheckChange = true;
-
             changeLocation.setImageDrawable(getResources().getDrawable(R.drawable.succesholder));
             Log.d(TAG, "changeMyLocation: " + center);
-
-            if (newLocationMarker == null) {    //Daha öncesinde koyulmus bir marker yoksa
-
+            if (mUserLocationInfo.getNewLocationMarker() == null) {
+                //Daha öncesinde koyulmus bir marker yoksa
                 Log.d(TAG, "changeMyLocation: Marker NulL  Yenisi yapılacak");
                 drawNewLocationMarker(center);
 
-            } else {   //---> önceden koyulmus olan marker varsa markeri ve circle sil yeniden
-                newLocationMarker.remove();
-
-                for (DrawCircle drawCircle : mCircleList) {
-                    drawCircle.removeCirle();
-                }
-                //   mCircleChangeList.clear();
+            } else {
+                //---> önceden koyulmus olan marker varsa markeri sil circle center güncelle ..
+                mUserLocationInfo.getNewLocationMarker().remove();
+                drawCircle.setCenterCircle(center);
                 drawNewLocationMarker(center);
             }
 
@@ -985,18 +933,10 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             ///-->İŞlemler tamamlandıgında
             locationCheckChange = false;
             changeLocation.setImageDrawable(getResources().getDrawable(R.drawable.placeholders));
-            setNewLocationLatLng(mMap.getCameraPosition().target);
+            mUserLocationInfo.setNewLocationLatLng(mMap.getCameraPosition().target);
             isNewLocationAdress = true; //Artık kullanıcı yeni yeri seçtiğinde seçtiği son yer adresi olarak atanacak..
-            runAdressMethod(getNewLocationLatLng());
-
-            for (DrawCircle drawCircle : mCircleList) {
-                drawCircle.removeCirle();
-            }
-
-
-            DrawCircle drawCircle = new DrawCircle(convertLatLngtoLocation(center), 1000);//İlk Circle 1-km Alanı kapsayacak
-            mCircleList.add(drawCircle); //Eklenen her circle Listeye alınıyor .
-
+            runAdressMethod(mUserLocationInfo.getNewLocationLatLng());
+            drawCircle.setCenterCircle(mUserLocationInfo.getNewLocationLatLng());
 
         }
 
@@ -1006,7 +946,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
     //Clustere tıklanınca içerisindeki itemlerin oldugu bölgenin açılıp kameranın oraya hareket etmesini istiyorum .
     @Override
-    public boolean onClusterClick(Cluster<MyItem> cluster) {
+    public boolean onClusterClick(Cluster<JobAdvertModel> cluster) {
 
         Log.d(TAG, "onClusterClick:Tıklandı");
         LatLngBounds.Builder builder = LatLngBounds.builder();
@@ -1033,6 +973,12 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     }
 
 
+    /**
+     * @param latLng alınan konumun adresini öğrenmek üzere DownloadAdressData methodunu cagırıyor.
+     *               Bu method async method oldugunda her konum isteği için ayrı nesne oluşturmak zorundayız..
+     *               1 nesne tüm konumların adresini öğrenemiyoruz calışmıyor .. downloadAdressData nesnesi currentMarker konulurken
+     *               çağrıldıgı için diger tüm konum istekleri yeni nesne ile gerçekleştirilmek zorunda ..
+     */
     public void runAdressMethod(LatLng latLng) {
 
         if (downloadAdressData != null) {
@@ -1047,30 +993,100 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
     }
 
+    /**
+     * Circle kapsama alanına giren itemleri result list içersine ekliyorum.Bu method yakınımdakileri listele dedğinde çalışacak
+     * ve Bu listeyi işlemek üzere NearJobListActivty 'e gönderecek ..
+     */
 
+    public void getNearJobList() {
+        int distance;
+        DrawCircle drawCircle = mCircleList.get(0);
+        resultList.clear();//her çağırıldıgında önceki listeyi temizleyecek ..
+
+        //Tüm Cluster edilmiş itemleri alıyorum ...
+        ArrayList<JobAdvertModel> items = (ArrayList<JobAdvertModel>) clusterManagerAlgorithm.getItems();
+        UserLocationInfo.getInstance().setCircleArea(drawCircle.getCircleRadius());
+        //  Log.d(TAG, "getNearJobList: " + items.get(0).toString() + circleArea.getProgress());
+        for (JobAdvertModel item : items) {
+
+            distance = MapHelperMethods.getDistanceParce(MapHelperMethods.toRadiusMeters(drawCircle.getCenterCircle(), item.getPosition()));
+            item.setCompanyDistance(String.valueOf(distance)); //Circle merkezi ile markerlar arası mesafeyi ölçüp ekliyorum.
+            // Circle alanı içerisinde girenler marker ları sonuç listesine  NearJobListActivtye gönderme üzere ekliyorum.
+            if (distance <= drawCircle.getCircleRadius()) {
+                Log.d(TAG, "getNearJobList: " + distance + "\t" + drawCircle.getCircleRadius() + "\t" + drawCircle.getCenterCircle());
+                resultList.add(item);
+            }
+        }
+
+        Log.d(TAG, "getNearJobList:SONUC Listesi@@@" + resultList);
+    }
+
+
+    /**
+     * Clustering işlemine dahil olmus tüm iş markerleri için üzerine tıklandıgında gerçekleşecek işlemler
+     *
+     * @param myItem --> jobAdvertModel den bilgileri alınaacak .
+     * @return
+     */
     @Override
-    public boolean onClusterItemClick(MyItem myItem) {
+    public boolean onClusterItemClick(JobAdvertModel myItem) {
 
         Log.d(TAG, "onClusterItemClick: TIKLANDI");
         // myItem.showInfoWindow();
-        myItem.setDistance(String.valueOf(getDistanceParce(toRadiusMeters(getMyLocation(), myItem.getPosition())))); //distance item üzerine tıklayınca hesaplatıyorum.
-        if(newLocationMarker!=null){
+        myItem.setCompanyDistance(String.valueOf(
+                MapHelperMethods.getDistanceParce(
+                        MapHelperMethods.toRadiusMeters(
+                                mUserLocationInfo.getMyLocation(), myItem.getPosition())))); // item üzerine tıklayınca distance hesaplatıyorum.
 
-            myItem.setNewLocationDistance(String.valueOf(getDistanceParce(toRadiusMeters(getNewLocationLatLng(),myItem.getPosition()))));
+        if (mUserLocationInfo.getNewLocationMarker() != null) {
+
+            myItem.setNewLocationDistance(String.valueOf(
+                    MapHelperMethods.getDistanceParce(
+                            MapHelperMethods.toRadiusMeters(
+                                    mUserLocationInfo.getNewLocationLatLng(), myItem.getPosition()))));
 
         }
-        customInfoWindowCluster.setClickedItem(myItem);
+        customInfoWindowCluster.setClickedItem(myItem);// Tıkladıgım markerin bilgilerini ınfo windowa bildidiryorum ..
 
         //myClusterMarker.getMarker(myItem).showInfoWindow();
         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-        jobNameSlidingPanel.setText(myItem.getTitle() + "\t" + myItem.getDistance()); //Sliding Panel TExt
-        //  Log.d(TAG, "onClusterItemClick: DENEME UZAKKLIK \t " + result + "\t\t" + result2);
-
-        // downloadAdressData.execute(myItem.getPosition()); //ADres Bilgisi Yazdırılıyor.
+        jobNameSlidingPanel.setText(getString(R.string.slidingpanel_head, myItem.getCompanyJob(), myItem.getCompanyDistance(), myItem.getNewLocationDistance())); //Sliding Panel TExt
         runAdressMethod(myItem.getPosition());
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(myItem.getPosition()));
 
+        viewHolder.clearMap();
+        viewHolder.setData(myItem);
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(myItem.getPosition()));
         return false; //-->true olunca ınfo window calışmıyor ..
+    }
+
+/*  case R.id.action_anchor: {
+        if (mLayout != null) {
+            if (mLayout.getAnchorPoint() == 1.0f) {
+                mLayout.setAnchorPoint(0.7f);
+                mLayout.setPanelState(PanelState.ANCHORED);
+                item.setTitle(R.string.action_anchor_disable);
+            } else {
+                mLayout.setAnchorPoint(1.0f);
+                mLayout.setPanelState(PanelState.COLLAPSED);
+                item.setTitle(R.string.action_anchor_enable);
+            }
+        }
+        return true;*/
+
+    /**
+     * Sliding Panele İlan  detayları sayfasını ekliyorum .. Ve Bu Dosyayı ViewHolder Klasorumde Saklıyorum ...
+     * Tanımlamalarını click eventlerini o class ta gerçekleştiriyorum .
+     */
+    private void slidingPanelAdvertInfo() {
+        Log.d(TAG, "slidingPanelAdvertInfo: ");
+        LayoutInflater inflater = getLayoutInflater();
+
+        View jobadvertdetails = inflater.inflate(R.layout.jobadvertdetails, null);
+
+        viewHolder = new AdvertDetails.ViewHolder(jobadvertdetails, getApplicationContext());
+        scrollableView.addView(jobadvertdetails, 0);
+
     }
 
     @Override
@@ -1086,26 +1102,30 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         // Log.d(TAG, "onCameraChange: " + cameraPosition.target.longitude);
 
         ///Lokasyon Değiştirme Butonu aktifleşmis ise new Location Markerin konumunu kamera her değiştirdiğinde değiştiriecek
+        //Kameranın orta noktası alınacak cameraPosition.target.latitude, cameraPosition.target.longitud
         if (locationCheckChange) {
             LatLng lat = new LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude);
 
-            newLocationMarker.setPosition(lat);
+            mUserLocationInfo.getNewLocationMarker().setPosition(lat);
+            //   newLocationMarker.setPosition(lat);
+            DrawCircle drawCircle = mCircleList.get(0);
+            drawCircle.setCenterCircle(lat); //circle merkezi güncelle
             runAdressMethod(lat);       //Kamera her hareketinde adres değiştiriyor KALDIRILABİLİR ....
 
             myItemClusterManager.onCameraIdle();  ///-->Camera Zoom  13  oldugunda clusterin calısması için
-            should_zoom = cameraPosition.zoom < 14;
+            myClusterMarker.setShould_zoom(cameraPosition.zoom < 14);
 
         } else {
 
             myItemClusterManager.onCameraIdle();  ///-->Camera Zoom  13  oldugunda clusterin calısması için
-            should_zoom = cameraPosition.zoom < 14;
+            myClusterMarker.setShould_zoom(cameraPosition.zoom < 14);
         }
 
 
     }
 
     @Override
-    public void onClusterItemInfoWindowClick(MyItem myItem) {
+    public void onClusterItemInfoWindowClick(JobAdvertModel myItem) {
 
         Log.d(TAG, "onClusterItemInfoWindowClick:Tıklandı ");
         mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
@@ -1131,7 +1151,6 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         //  Log.d(TAG, "onMarkerDragEnd: " + downloadAdressData.execute(marker.getPosition()));
     }
 
-
     //Adress Callback İnterface .. .
     @Override
     public void adressCallbackResult(String result) {
@@ -1140,17 +1159,17 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         //adres bilgisini tutan değişkene atanacak ... 
         if (isMyLocationAdress) {
             Log.d(TAG, "adressCallbackResult:isMyLocationAdress ");
-            setMyLocationAdress(result);
+            mUserLocationInfo.setMyLocationAdress(result);
             isMyLocationAdress = false;
             // return;
         }
 
 
-        ///Kullanıcı yeni bir lokasyon seçmiş ise yeni lokasyonun adresini set etdiyoruz.isNewLocation 
+        ///Kullanıcı yeni bir lokasyon seçmiş ise yeni lokasyonun adresini set etdiyoruz.isNewLocationAdress
         /// Adres değişkenini false yapıyoruz kullanıcı yeni bir yer seçene kadar ...
         if (isNewLocationAdress) {
             Log.d(TAG, "adressCallbackResult: isNewLocationAdress");
-            setNewLocationAdress(result);
+            mUserLocationInfo.setNewLocationAdress(result);
 
             isNewLocationAdress = false;
         }
@@ -1159,236 +1178,5 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         tvAdress.setText(result);
 
     }
-
-
-    /**
-     * Circle Class
-     */
-    private class DrawCircle {
-        private Marker mRadiusMarker, mRadiusMarker2;
-        private Circle mCircle;
-        private double mRadiusMeters;
-        private LatLng circleLocation;
-
-        public DrawCircle(Location center, double radiusMeters) {
-            this.mRadiusMeters = radiusMeters;
-            Log.d(TAG, "DrawCircle:Circle Çiziliyor ");
-
-            circleLocation = convertLocationtoLatLng(center);
-
-
-            // deneme FillColorRenk Kodlarım
-            //rgba(143, 230, 150, 1)    // int  mFillColorArgb=587267853;
-            // 453902080 470679296
-            // Color.argb(100, 243, 85, 133
-            // )Color.argb(1, 143, 230, 150)
-            int mFillColorArgb = 637597695;
-            // rgba(209, 255, 163, 0.68)
-            // rgba(184, 226, 121, 0.28)
-
-
-            mCircle = mMap.addCircle(new CircleOptions()
-                    .center(circleLocation)
-                    // .strokePattern(PATTERN_DOTTED)
-                    .strokeColor(Color.WHITE)
-                    .strokeWidth(5)
-                    .fillColor(mFillColorArgb)
-                    .radius(mRadiusMeters));
-
-
-            // Log.d(TAG, "DrawCircle: " + circleArea.getProgress() * 1000);
-
-        }
-
-
-        /**
-         * Bu method Circle kapsama alanını çizer
-         *
-         * @param circleRadius --> SeekBar dan gelen km Değerine göre çizilen alan belirlenir yarıçap ayarlanır. .
-         */
-        public void setCircleRadius(int circleRadius) {
-
-            this.mCircle.setRadius((circleRadius * 1000));
-            //Log.d(TAG, "setCircleRadius: " + circleArea.getProgress() * 1000);
-            //Log.d(TAG, "setCircleRadius: " + (circleRadius * 1000));
-
-
-            /**
-
-             Seek Bardan gelen km değerine göre çizilen her circle için kamerada circle in sağ ve solunda verilen
-             koordinatlara göre kamera açısını belirler
-             Sağ konum -->toRadiusLatLngRight(myLocation, (circleRadius * 1000) merkez kooordinattan parametre olarak gelen uzaklığın konumu
-             Sol konum -->toRadiusLatLngLeft(myLocation, (circleRadius * 1000)  Bu konumlar sınır olarak belirlenir.
-
-
-             */
-
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            builder.include(toRadiusLatLngLeft(circleLocation, (circleRadius * 1000)));
-            builder.include(toRadiusLatLngRight(circleLocation, (circleRadius * 1000)));
-
-            final LatLngBounds bounds = builder.build();
-
-            final int zoomWidth = getResources().getDisplayMetrics().widthPixels;
-            final int zoomHeight = getResources().getDisplayMetrics().heightPixels;
-            final int zoomPadding = (int) (zoomWidth * 0.10); // Genişliğin 0,10 u kadar kenarlardan boşluk
-
-
-            ///  Log.d(TAG, "setCircleRadius: zoomWİDHT \t" + zoomHeight + "\t" + zoomWidth + "\t" + zoomPadding);
-            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, zoomWidth, zoomHeight, zoomPadding));
-        }
-
-        public void removeCirle() {
-            mCircle.remove();
-            //mCircleList.clear();
-
-        }
-    }
-
-    /**
-     * Verilen merkez koordinatına yine parametre olarak verilen mesafe uzaklıgınca koordinat gönderiri
-     *
-     * @param center-->Merkez    koordinatt
-     * @param radiusMeters-->kaç metre uzaklıkta yarıcapın Mesafesi
-     * @return --LatLng Değeri center.longitude + radiusAngle -->merkezin Sag tarafı
-     */
-    private LatLng toRadiusLatLngRight(LatLng center, double radiusMeters) {
-        double radiusAngle = Math.toDegrees(radiusMeters / 6371009) /
-                Math.cos(Math.toRadians(center.latitude));
-        return new LatLng(center.latitude, center.longitude + radiusAngle);
-    }
-
-    /**
-     * Verilen merkez koordinatına yine parametre olarak verilen mesafe uzaklıgınca koordinat gönderiri
-     *
-     * @param center->Merkez     koordinatt
-     * @param radiusMeters-->kaç metre uzaklıkta Yarıçapın Mesafesi
-     * @return --LatLng Değeri center.longitude - radiusAngle -->merkezin Sol tarafı
-     */
-    private LatLng toRadiusLatLngLeft(LatLng center, double radiusMeters) {
-        double radiusAngle = Math.toDegrees(radiusMeters / 6371009) /
-                Math.cos(Math.toRadians(center.latitude));
-        return new LatLng(center.latitude, center.longitude - radiusAngle);
-    }
-
-    /**
-     * verilen Latlng tipindeki parametreyi Location Tipine dönüştürecek
-     *
-     * @param _latLng -
-     * @return -->Location
-     */
-    public Location convertLatLngtoLocation(LatLng _latLng) {
-        Location targetLocation = new Location("");//provider name is unecessary
-        targetLocation.setLatitude(_latLng.latitude);//your coords of course
-        targetLocation.setLongitude(_latLng.longitude);
-        return targetLocation;
-    }
-
-
-    /**
-     * @param _location--
-     * @return -->Latlng
-     */
-    public LatLng convertLocationtoLatLng(Location _location) {
-        return new LatLng(_location.getLatitude(), _location.getLongitude());
-    }
-
-
-    /**
-     * İki nokta arası uzaklık ölçülüyor
-     *
-     * @param center    -->bulundugunuz konum-->nereden
-     * @param radius--> -->2.Konum .ç Ölçülecek mesafenin konumu-->nereye
-     * @return ->double distance
-     */
-    private double toRadiusMeters(LatLng center, LatLng radius) {
-        float[] result = new float[1];
-        Location.distanceBetween(center.latitude, center.longitude,
-                radius.latitude, radius.longitude, result);
-
-
-        return result[0];
-    }
-
-
-    /**
-     * Gelen mesafe değerini parce eder
-     *
-     * @param distance --> double örn 1120,2121 gibi
-     * @return --> 1120 m
-     */
-    private int getDistanceParce(Double distance) {
-
-
-        double km = distance / 1;
-        DecimalFormat newFormat = new DecimalFormat("####");
-
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = distance % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-
-
-        // Log.d(TAG, "toRadiusMeters: " + km + "\t\t" + kmInDec + "\t\t" + meter + "\t\t" + meterInDec);
-
-        return kmInDec;
-
-    }
-
-
-    /**
-     * Cluster İşlemleri..
-     */
-    private class MyClusterMarker extends DefaultClusterRenderer<MyItem> {
-
-        public Drawable drawable;
-        private final IconGenerator icon = new IconGenerator(getApplicationContext());
-
-        public MyClusterMarker(Context context, GoogleMap map, ClusterManager clusterManager) {
-            super(context, map, clusterManager);
-        }
-
-        public MyClusterMarker(Context context, GoogleMap map, ClusterManager<MyItem> clusterManager, Drawable drawable) {
-            super(context, map, clusterManager);
-            this.drawable = drawable;
-        }
-
-
-        @Override
-        protected void onBeforeClusterItemRendered(MyItem item, MarkerOptions markerOptions) {
-
-            Drawable drawable = getResources().getDrawable(R.drawable.markerjob);
-
-            BitmapDescriptor jobMarker = getDrawableMarkerAsBitmap(drawable);
-
-            markerOptions.icon(jobMarker);
-
-            markerOptions.title("Yakınımdaki İşler");
-
-
-        }
-
-
-        @Override
-        protected void onClusterItemRendered(MyItem clusterItem, Marker marker) {
-            super.onClusterItemRendered(clusterItem, marker);
-        }
-
-        @Override
-        protected void onBeforeClusterRendered(Cluster<MyItem> cluster, MarkerOptions markerOptions) {
-            super.onBeforeClusterRendered(cluster, markerOptions);
-        }
-
-        //Camera Zoom  12 oldugunda  ve Marker sayısı 5 oldugunda en az clusterin calısması için override edildi.
-
-        //should_zoom true ve  cluster marker >4 oldugunda calısacak.
-        @Override
-        protected boolean shouldRenderAsCluster(Cluster<MyItem> cluster) {
-
-            //Log.d(TAG, "shouldRenderAsCluster: " + should_zoom);
-            return super.shouldRenderAsCluster(cluster) && should_zoom;
-
-        }
-    }
-
 
 }
