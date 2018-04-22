@@ -15,14 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.harun.getjob.R;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.altervista.andrearosa.statebutton.StateButton;
 
 import java.util.ArrayList;
 
@@ -37,10 +30,8 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
     private LayoutInflater layoutInflater;
     private Animation animationUp;
     private Animation animDown;
-    // FragmentManager fragmentManager;
     private Animation animPulse;
     private JobAdvertModel mJobAdvertModel;
-
     private ArrayList<MyViewHolder> expandedList = new ArrayList<>(1); //Expand edilen itemin view elemanlarını tutuyorum
 
     public NearJobAdvertAdapter(Context context, ArrayList<JobAdvertModel> jobAdvertModelArrayList) {
@@ -51,7 +42,6 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
         animationUp = AnimationUtils.loadAnimation(context, R.anim.slide_in_up);
         animDown = AnimationUtils.loadAnimation(context, R.anim.slide_up);
         animPulse = AnimationUtils.loadAnimation(context, R.anim.pulse);
-
     }
 
     @Override
@@ -70,7 +60,10 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
         mJobAdvertModel = jobAdvertModelArrayList.get(position);
         Log.d(TAG, "onBindViewHolder: ");
         setData(holder);
-        holder.bindMapLocation(position);
+        holder.bindMapLocation(mJobAdvertModel);
+
+        holder.onay.setActivated(mJobAdvertModel.getBasvuruDurumu().getValue() == 0);
+
         //Listenin yan taraflarına renkler attım düzenlenecek ..
         if (position % 4 == 0) {
             holder.viewleft.setBackgroundTintList(ColorStateList.valueOf(mcontext.getColor(R.color.jumbo)));
@@ -84,7 +77,7 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
         }
 
 
-        holder.btnBasvur.setOnClickListener(new View.OnClickListener() {
+/*        holder.btnBasvur.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: ");
@@ -106,7 +99,7 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
 
             }
         });
-
+*/
         holder.showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,15 +192,14 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements OnMapReadyCallback {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements AdvertDetails.ChangeMarkerCluster {
         View viewleft;
         TextView companyname, tvbasvuru_count, tvjobname, tvjobtype, publishdate, tvexperience, tvdistance, tvdetail;
-        ImageView companyLogo1, detail_image, onay, save_this_advert;
+        ImageView companyLogo1, detail_image, onay;
         RelativeLayout showDetails;
         RelativeLayout expandcard;
-        StateButton btnBasvur;
-        public MapView mapview;
         public GoogleMap mMap;
+        AdvertDetails.ViewHolder viewHolder;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -225,62 +217,57 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
             expandcard = itemView.findViewById(R.id.expandcard);
             detail_image = itemView.findViewById(R.id.showdetails);
             tvdetail = itemView.findViewById(R.id.tvdetail);
-            btnBasvur = itemView.findViewById(R.id.basvurbtn);
-            save_this_advert = itemView.findViewById(R.id.save_this_advert);
-            mapview = itemView.findViewById(R.id.mapView);
-
-            if (mapview != null) {
-                Log.d(TAG, "MyViewHolder: ");
-                mapview.onCreate(null);
-                mapview.getMapAsync(this);
-            }
-
-
-        }
-
-
-        @Override
-        public void onMapReady(GoogleMap googleMap) {
-            Log.d(TAG, "onMapReady: ");
-            MapsInitializer.initialize(mcontext);
-            mMap = googleMap;
-            // mMap.getUiSettings().setZoomControlsEnabled(true);
-            // mMap.getUiSettings().setCompassEnabled(false);
-            mMap.getUiSettings().setMapToolbarEnabled(true);
-
-            setMapLocation();
-        }
-
-        public void setMapLocation() {
-            JobAdvertModel mjobAdvertModel = (JobAdvertModel) mapview.getTag();
-            if (mjobAdvertModel == null) return;
-            // Log.d(TAG, "setMapLocation: " + mjobAdvertModel.getPosition());
-            if (mMap == null) return;
-            mMap.addMarker(new MarkerOptions().position(mjobAdvertModel.getPosition())
-                    .icon(MapHelperMethods.getMarkerDrawable(mcontext))
-                    .title(mJobAdvertModel.getCompanyName() + "\n".concat(mjobAdvertModel.getCompanyJob())));
-            ;
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mjobAdvertModel.getPosition(), 15f));
-            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            viewHolder = new AdvertDetails.ViewHolder(itemView, mcontext, this); //İlan detayları
         }
 
         /**
-         * Listte halinde her pozisyonun görüntüsü oluşturulurken buradada her itemi mapview 'e taglıyorum.
+         * Listte halinde her pozisyonun görüntüsü oluşturulurken buradada her itemi AdvertDetails teki
+         * mapview 'e taglıyorum.
          *
-         * @param position
+         * @param fromNearJobAdapter->
          */
-        private void bindMapLocation(int position) {
-            JobAdvertModel mjobAdvertModel = jobAdvertModelArrayList.get(position);
-            //  Log.d(TAG, "bindMapLocation: "+mjobAdvertModel);
-            mapview.setTag(mjobAdvertModel);
-            setMapLocation();
+        private void bindMapLocation(JobAdvertModel fromNearJobAdapter) {
+            viewHolder.bindMapLocation(fromNearJobAdapter);
         }
 
+        @Override
+        public void changeMarker(JobAdvertModel item, boolean isBasvuru) {
 
 
+            for (JobAdvertModel list : MyclusterManager.getInstance().getMyClusterManager().getAlgorithm().getItems()) {
+
+                if (list.getPosition().equals(item.getPosition())) {
+                    Log.d(TAG, "deneme2: " + list.getCompanyName());
+                    if (isBasvuru) {
+                        list.setBasvuruDurumu(1);
+                        onay.setActivated(true);
+                        list.setIcon(MapHelperMethods.getApplyMarkerDrawable(mcontext));
+                        Log.d(TAG, "changeMarker: " + MyclusterManager.getInstance().getMyClusterMarker());
+
+                        /*Burada Markerlerin cluster olmassı(hepsinin birleşmesi ) durumunda asagıda bir hata meydana geliyor Programın
+                        * durmaması için try catche aldım .*/
+                        try {
+                            MyclusterManager.getInstance().getMyClusterMarker().
+                                    getMarker(list).setIcon(MapHelperMethods.getApplyMarkerDrawable(mcontext));
+
+                        } catch (Exception e) {
+
+                            e.printStackTrace();
+                        }
 
 
+                    } else {
+                        list.setSave(item.isSave());
+                    }
+
+                    Log.d(TAG, "deneme2: " + list);
+                    break;
+                }
+
+
+            }
+
+        }
 
     }
-
 }

@@ -1,6 +1,8 @@
 package com.example.harun.getjob.JobSearch;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -28,6 +30,9 @@ public class NearJobListActivity extends AppCompatActivity {
     myFragmentPagerAdapter pagerAdapter;
     int joblistSize = 0;
 
+
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,7 @@ public class NearJobListActivity extends AppCompatActivity {
 
         gatherViews();
         setupViewPager();
+
 
     }
 
@@ -78,6 +84,8 @@ public class NearJobListActivity extends AppCompatActivity {
         //Head Kısmı için adres ve kapsama alanı ve bulunan iş sayısı texti dolduruluyor .
         userAdress.setText(UserLocationInfo.getInstance().getMyLocationAdress());
         userArea.setText(getString(R.string.userArea, UserLocationInfo.getInstance().getCircleArea(), joblistSize));
+
+
     }
 
     private TabLayout.OnTabSelectedListener onTabSelectedListener(final ViewPager bottom_sheet_viewpager) {
@@ -118,10 +126,16 @@ public class NearJobListActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
+    public void supportNavigateUpTo(@NonNull Intent upIntent) {
+        super.supportNavigateUpTo(upIntent);
+    }
 
-        super.onBackPressed();
+    @Override
+    public void onBackPressed() {
+        //moveTaskToBack(true);
+        finish();
         overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
 
     }
 
@@ -129,6 +143,7 @@ public class NearJobListActivity extends AppCompatActivity {
 
         return mViewPager.getCurrentItem();
     }
+
 
 
 }

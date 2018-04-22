@@ -23,7 +23,8 @@ public class UserLocationInfo extends JobAdvertModel {
     public int circleArea;
     public static UserLocationInfo mUserLocationInfo;
 
-    public UserLocationInfo() {
+    public UserLocationInfo(){
+        super();
     }
 
 
@@ -33,6 +34,7 @@ public class UserLocationInfo extends JobAdvertModel {
             mUserLocationInfo = new UserLocationInfo();
             return mUserLocationInfo;
         } else {
+
 
             Log.d(TAG, "getInstance: NOTNULL");
             return mUserLocationInfo;

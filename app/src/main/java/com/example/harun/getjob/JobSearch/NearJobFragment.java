@@ -29,6 +29,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
     ArrayList<JobAdvertModel> nearJobList;
     private NearJobAdvertAdapter mJobAdvertAdapter;
 
+    //deneme deneme1;
 
     public NearJobFragment() {
 
@@ -47,6 +48,8 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
 
         return view;
     }
+
+
 
     private void setDataList() {
 
@@ -78,14 +81,21 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         nearJobListRecycler.setHasFixedSize(true);
         nearJobListRecycler.setRecyclerListener(this);
         //  snapHelper.attachToRecyclerView(nearJobListRecycler);
-
+        Log.d(TAG, "onAttach: ");
 
     }
+
+    /*public void changeMarker1(JobAdvertModel item) {
+        Log.d(TAG, "changeMarker1: " + item);
+
+        deneme1.deneme2(item);
+
+    }*/
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {
 
-        NearJobAdvertAdapter. MyViewHolder myViewHolder = (NearJobAdvertAdapter.MyViewHolder) holder;
+        NearJobAdvertAdapter.MyViewHolder myViewHolder = (NearJobAdvertAdapter.MyViewHolder) holder;
         Log.d(TAG, "onViewRecycled: aaaa");
         if (myViewHolder != null && myViewHolder.mMap != null) {
             Log.d(TAG, "onViewRecycled: ü");
