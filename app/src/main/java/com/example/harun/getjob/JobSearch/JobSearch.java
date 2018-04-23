@@ -591,7 +591,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                     //   String.valueOf(getDistanceParce(
                     //          toRadiusMeters(getMyLocation(), clustering))),
                     "",
-                    MapHelperMethods.getNormalMarkerDrawable((getApplicationContext()))));
+                    MapHelperMethods.getNormalMarkerDrawable((getApplicationContext())), "ADRES BİLGİSİ .."));
 
         }
 

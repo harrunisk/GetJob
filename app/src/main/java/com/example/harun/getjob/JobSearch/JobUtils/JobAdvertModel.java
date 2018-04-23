@@ -22,7 +22,8 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
 
     private static final String TAG = "JobAdvertModel";
 
-    private String companyName, companyJob, jobDescpriction, companyLocation, companyDistance, companyLogoUrl;
+    private String companyName, companyJob, jobDescpriction, companyLocation, companyDistance, companyLogoUrl,
+            companyAdress;//Adres İş ilanı girilince Alınacak .
     private LatLng mPosition;
     private String mTitle, experienceinfo, countApply, newLocationDistance, publishDate;
     private boolean isSave;
@@ -94,6 +95,13 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         this.companyLogoUrl = companyLogoUrl;
     }
 
+    public String getCompanyAdress() {
+        return companyAdress;
+    }
+
+    public void setCompanyAdress(String companyAdress) {
+        this.companyAdress = companyAdress;
+    }
 
     public JobAdvertModel(String companyName,
                           String companyJob,
@@ -104,7 +112,8 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
                           String experienceinfo,
                           String countApply,
                           // String companyDistance,
-                          String companyLogoUrl, BitmapDescriptor markerIcon) {
+
+                          String companyLogoUrl, BitmapDescriptor markerIcon, String companyAdress) {
 
         Log.d(TAG, "JobAdvertModel: Constructor22");
 
@@ -119,6 +128,7 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         //this.companyDistance = companyDistance;
         this.companyLogoUrl = companyLogoUrl;
         this.markerIcon = markerIcon;
+        this.companyAdress = companyAdress;
 
     }
 
@@ -257,6 +267,7 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         parcel.writeString(publishDate);
         parcel.writeByte((byte) (isSave ? 1 : 0));
         parcel.writeInt(basvuruDurumu);
+        parcel.writeString(companyAdress);
     }
 
     protected JobAdvertModel(Parcel in) {
@@ -274,6 +285,7 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         publishDate = in.readString();
         isSave = in.readByte() != 0;
         basvuruDurumu = in.readInt();
+        companyAdress=in.readString();
     }
 
     public static final Creator<JobAdvertModel> CREATOR = new Creator<JobAdvertModel>() {

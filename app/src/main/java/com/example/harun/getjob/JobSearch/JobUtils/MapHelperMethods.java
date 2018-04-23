@@ -82,7 +82,7 @@ public class MapHelperMethods {
 
     public static BitmapDescriptor getNormalMarkerDrawable(Context context) {
         Log.d(TAG, "getMarkerDrawable: ");
-        Drawable drawable = context.getDrawable(R.drawable.markerjob);
+        Drawable drawable = context.getDrawable(R.drawable.placeholder__2_);
         // BitmapDescriptor bitmapDescriptor =
 
         return MapHelperMethods.getDrawableMarkerAsBitmap(drawable);

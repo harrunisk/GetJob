@@ -37,7 +37,7 @@ public class AdvertDetails extends JobAdvertModel {
      * İlan detayları sayfası ile ilgili hersey bu sınıfta ..
      */
     public static class ViewHolder implements View.OnClickListener, OnMapReadyCallback {
-        TextView tanimTv;
+        TextView tanimTv, jobadresTv, distance3;
         StateButton btnBasvur;
         public MapView mapview;
         public GoogleMap mMap;
@@ -55,6 +55,8 @@ public class AdvertDetails extends JobAdvertModel {
             btnBasvur = itemView.findViewById(R.id.basvurbtn);
             save_this_advert = itemView.findViewById(R.id.save_this_advert);
             tanimTv = itemView.findViewById(R.id.tanimTv);
+            jobadresTv = itemView.findViewById(R.id.jobadresTv);
+            distance3 = itemView.findViewById(R.id.distance3);
             mapview = itemView.findViewById(R.id.mapView);
             if (mapview != null) {
 
@@ -85,6 +87,8 @@ public class AdvertDetails extends JobAdvertModel {
 
             mJobAdvertModel = data;
             Log.d(TAG, "setData: " + mJobAdvertModel);
+            jobadresTv.setText(data.getCompanyAdress());
+            distance3.setText(data.getCompanyDistance());
             save_this_advert.setActivated(data.isSave()); //Daha önceden kayıtlı ise onu set ediyoruz...
             // tanimTv.setText(data.getCompanyDistance());
             btnBasvur.setState(data.getBasvuruDurumu()); //
@@ -145,13 +149,13 @@ public class AdvertDetails extends JobAdvertModel {
                     if (save_this_advert.isActivated()) {
                         save_this_advert.setActivated(false);
                         mJobAdvertModel.setSave(false);
-                        markerCluster.changeMarker(mJobAdvertModel,false);
+                        markerCluster.changeMarker(mJobAdvertModel, false);
                         //Log.d(TAG, "SETSAVE:FALSE " + mJobAdvertModel);
                     } else {
                         save_this_advert.setActivated(true);
                         mJobAdvertModel.setSave(true);
                         //  Log.d(TAG, "SETSAVE:TRUE " + mJobAdvertModel);
-                        markerCluster.changeMarker(mJobAdvertModel,false);
+                        markerCluster.changeMarker(mJobAdvertModel, false);
                     }
                     break;
 
@@ -163,7 +167,7 @@ public class AdvertDetails extends JobAdvertModel {
                         Log.d(TAG, "onClick:btnBasvur.getState().getValue() == 0 ");
                         btnBasvur.setState(StateButton.BUTTON_STATES.DISABLED);
                         mJobAdvertModel.setBasvuruDurumu(1);//Bassvuru yapıldı demek...
-                        markerCluster.changeMarker(mJobAdvertModel,true);
+                        markerCluster.changeMarker(mJobAdvertModel, true);
 
                     } else {
                         Log.d(TAG, "BASVURU DAHA ÖNCEDEN YAPILMIS  İCİN  DİSABLE MODE: ");
