@@ -80,14 +80,23 @@ public class MapHelperMethods {
 
     }
 
-    public static  BitmapDescriptor getMarkerDrawable(Context context) {
+    public static BitmapDescriptor getNormalMarkerDrawable(Context context) {
         Log.d(TAG, "getMarkerDrawable: ");
-        Drawable drawable = context.getDrawable(R.drawable.markerjob);
+        Drawable drawable = context.getDrawable(R.drawable.placeholder__2_);
         // BitmapDescriptor bitmapDescriptor =
 
         return MapHelperMethods.getDrawableMarkerAsBitmap(drawable);
     }
 
+
+    public static BitmapDescriptor getApplyMarkerDrawable(Context context) {
+        Log.d(TAG, "getMarkerDrawable: ");
+        Drawable drawable = context.getDrawable(R.drawable.succesholder);
+     //   drawable.setTint(context.getResources().getColor(R.color.SeaGreen));
+        // BitmapDescriptor bitmapDescriptor =
+
+        return MapHelperMethods.getDrawableMarkerAsBitmap(drawable);
+    }
 
     /**
      * @param _location--

@@ -85,9 +85,12 @@
                         android:layout_marginEnd="60dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="15dp"
-                        android:background="@drawable/roundedbutton2"
+                        android:background="@drawable/edittext2"
                         android:fontFamily="serif-monospace"
                         android:padding="5dp"
+                        android:drawableLeft="@drawable/path_way"
+                        android:drawableTint="@color/SeaGreen"
+                        android:drawablePadding="3dp"
                         android:text="Adres Bilgisi."
                         android:textAlignment="center" />
 

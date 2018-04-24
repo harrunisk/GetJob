@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sliding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    sothree:umanoDragView="@+id/dragView"
+    sothree:umanoOverlay="true"
+    sothree:umanoPanelHeight="50dp"
+    sothree:umanoParallaxOffset="100dp"
+    sothree:umanoScrollableView="@+id/scrollableView"
+    sothree:umanoShadowHeight="4dp">
+
+    <!--MAİN CONTENT-->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <include
+            android:id="@+id/toolbarLayout"
+            layout="@layout/jobsearch_toolbar">
+
+        </include>
+
+
+        <RelativeLayout
+            android:id="@+id/category"
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:layout_below="@+id/toolbarLayout"
+            android:layout_marginTop="2dp"
+            android:background="@color/White">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/categoryList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/touchHandler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/category"
+            android:background="@drawable/dialogcorner"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:id="@+id/touchHandler2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardUseCompatPadding="true">
+
+                    <fragment
+                        android:id="@+id/map"
+                        class="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        />
+
+
+                    <TextView
+                        android:id="@+id/tvAdress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="60dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/edittext2"
+                        android:drawableLeft="@drawable/path_way"
+                        android:drawablePadding="3dp"
+                        android:drawableTint="@color/SeaGreen"
+                        android:fontFamily="serif-monospace"
+                        android:padding="5dp"
+                        android:text="Adres Bilgisi."
+                        android:textAlignment="center" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/myLocButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/markeruser"
+                        app:backgroundTint="@color/white"
+                        app:fabSize="mini" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/changeLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="top|end"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="60dp"
+                        android:src="@drawable/placeholders"
+                        app:backgroundTint="@color/white"
+                        app:fabSize="mini" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/changeArea"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:src="@drawable/circular_area2"
+                        app:backgroundTint="@color/white"
+                        app:fabSize="mini" />
+
+                    <LinearLayout
+                        android:id="@+id/circleAreaLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginStart="5dp"
+                        android:background="@drawable/edittext2"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="3dp"
+                        android:visibility="gone"
+                        android:weightSum="5">
+
+                        <ImageView
+                            android:id="@+id/home"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:layout_weight="0.5"
+                            android:src="@drawable/home"
+
+                            />
+
+                        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar
+                            android:id="@+id/circleArea"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"
+                            app:dsb_max="16"
+                            app:dsb_min="0"
+                            app:dsb_scrubberHeight="3dp"
+                            app:dsb_value="1" />
+
+                        <TextView
+                            android:id="@+id/tvCircle"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="3dp"
+                            android:layout_weight="0.5"
+                            android:background="@drawable/target"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="1km"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="7dp"
+                            android:textStyle="bold" />
+
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+
+                <Button
+                    android:id="@+id/btnListNearJob"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/btnstyle"
+                    android:text="Yakınımdakileri Listele" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- SLIDING LAYOUT -->
+    <LinearLayout
+        android:id="@+id/dragView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:focusable="false"
+        android:orientation="vertical">
+
+        <!--Sliding Header Content -->
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:sothree="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <LinearLayout
+                    android:id="@+id/countbasvuru"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:background="@color/mycolor"
+                    android:gravity="center"
+
+                    android:orientation="vertical"
+                    android:padding="2dp">
+
+                    <TextView
+                        android:id="@+id/tvbasvuru_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="serif"
+                        android:text="50 Basvuru"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="10sp" />
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/distanceSection"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignEnd="@+id/JobName"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/quarter"
+                    android:textSize="14sp">
+
+                    <ImageView
+                        android:id="@+id/manWalk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginEnd="13dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/man_walking"
+
+
+                        />
+
+                    <TextView
+                        android:id="@+id/distanceToyou"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_below="@+id/manWalk"
+                        android:paddingStart="5dp"
+                        android:paddingTop="3dp"
+                        android:text="1100m"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="10dp"
+
+                        />
+
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/companyLogo1"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/countbasvuru"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/zoologo" />
+
+                <TextView
+                    android:id="@+id/companyNamehead"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/companyLogo1"
+                    android:fontFamily="serif"
+                    android:text="MD BİLİŞİM SİSTEMLERİ"
+                    android:textColor="@color/black"
+                    android:textSize="11dp" />
+
+
+                <TextView
+                    android:id="@+id/JobName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/companyNamehead"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/companyLogo1"
+                    android:fontFamily="serif"
+                    android:text="ANDROİD DEVELOPER  "
+                    android:textColor="@color/black"
+                    android:textSize="10dp" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
+        <!--Sliding Panel MAin Content -->
+        <ScrollView
+            android:id="@+id/scrollableView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

@@ -24,65 +24,104 @@ import org.altervista.andrearosa.statebutton.StateButton;
 /**
  * Job Search te Tıklanan her marker için Bottom Sliding Panelde
  */
-public class AdvertDetails {
-
+public class AdvertDetails extends JobAdvertModel {
     private static final String TAG = "AdvertDetails";
-    //private LayoutInflater layoutInflater;
 
-    //  JobAdvertModel mJobAdvert;
-    // ArrayList<JobAdvertModel> models = new ArrayList<>(1);
+    public interface ChangeMarkerCluster {
 
-   /* public AdvertDetails(Context context) {
-        Log.d(TAG, "AdvertDetails: ");
-        mContext = context;
-        // this.layoutInflater = LayoutInflater.from(context);
-        // models.add(0, mJobAdvert);
-        // View jobadvertdetails =  LayoutInflater.from(context).inflate(R.layout.jobadvertdetails, null);
+        void changeMarker(JobAdvertModel item, boolean isBasvuruOrSave);
 
+    }
 
-    }*/
-
-
+    /**
+     * İlan detayları sayfası ile ilgili hersey bu sınıfta ..
+     */
     public static class ViewHolder implements View.OnClickListener, OnMapReadyCallback {
-        TextView tanimTv;
+        TextView tanimTv, jobadresTv, distance3;
         StateButton btnBasvur;
         public MapView mapview;
         public GoogleMap mMap;
         ImageView save_this_advert;
         Context mContext;
+        boolean kontrol;
         private JobAdvertModel mJobAdvertModel;
+        ChangeMarkerCluster markerCluster;
+        // deneme markerCluster;
 
-        public ViewHolder(View itemView, Context mContext) {
+        public ViewHolder(View itemView, Context mContext, ChangeMarkerCluster changeMarkerCluster) {
+            markerCluster = changeMarkerCluster;
             this.mContext = mContext;
             Log.d(TAG, "ViewHolder: ");
             btnBasvur = itemView.findViewById(R.id.basvurbtn);
             save_this_advert = itemView.findViewById(R.id.save_this_advert);
             tanimTv = itemView.findViewById(R.id.tanimTv);
+            jobadresTv = itemView.findViewById(R.id.jobadresTv);
+            distance3 = itemView.findViewById(R.id.distance3);
             mapview = itemView.findViewById(R.id.mapView);
-
             if (mapview != null) {
 
                 mapview.onCreate(null);
                 mapview.getMapAsync(this);
             }
-
-
             save_this_advert.setOnClickListener(this);
             btnBasvur.setOnClickListener(this);
 
+        }
+
+        /**
+         * NearJObAdvertAdapter den gelen itemler.
+         *
+         * @param fromNearJobAdapter
+         */
+
+        public void bindMapLocation(JobAdvertModel fromNearJobAdapter) {
+            //mJobAdvertModel = fromNearJobAdapter;
+            //  Log.d(TAG, "bindMapLocation: "+mjobAdvertModel);
+            //   mapview.setTag(mJobAdvertModel);
+            Log.d(TAG, "bindMapLocation: " + fromNearJobAdapter);
+            setData(fromNearJobAdapter);
         }
 
 
         public void setData(JobAdvertModel data) {
 
             mJobAdvertModel = data;
-            Log.d(TAG, "setData: ");
+            Log.d(TAG, "setData: " + mJobAdvertModel);
+            jobadresTv.setText(data.getCompanyAdress());
+            distance3.setText(data.getCompanyDistance());
             save_this_advert.setActivated(data.isSave()); //Daha önceden kayıtlı ise onu set ediyoruz...
             // tanimTv.setText(data.getCompanyDistance());
             btnBasvur.setState(data.getBasvuruDurumu()); //
             Log.d(TAG, "setData:DİSABLED" + data.getBasvuruDurumu().getValue());
 
             setMapLocation();
+
+        }
+
+
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            Log.d(TAG, "onMapReady: ");
+            MapsInitializer.initialize(mContext);
+            mMap = googleMap;
+            mMap.getUiSettings().setMapToolbarEnabled(true);
+            setMapLocation();
+
+
+        }
+
+        private void setMapLocation() {
+            Log.d(TAG, "setMapLocation: ");
+            if (mJobAdvertModel == null) return;
+            // Log.d(TAG, "setMapLocation: " + mjobAdvertModel.getPosition());
+            if (mMap == null) return;
+            mMap.addMarker(new MarkerOptions().position(mJobAdvertModel.getPosition())
+                    .icon(MapHelperMethods.getNormalMarkerDrawable(mContext))
+                    .title(mJobAdvertModel.getCompanyName() + "\n".concat(mJobAdvertModel.getCompanyJob())));
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mJobAdvertModel.getPosition(), 15f));
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
 
         }
 
@@ -101,46 +140,22 @@ public class AdvertDetails {
         }
 
         @Override
-        public void onMapReady(GoogleMap googleMap) {
-            Log.d(TAG, "onMapReady: ");
-            MapsInitializer.initialize(mContext);
-            mMap = googleMap;
-            mMap.getUiSettings().setMapToolbarEnabled(true);
-            //setMapLocation();
-
-
-        }
-
-        private void setMapLocation() {
-            Log.d(TAG, "setMapLocation: ");
-            if (mJobAdvertModel == null) return;
-            // Log.d(TAG, "setMapLocation: " + mjobAdvertModel.getPosition());
-            if (mMap == null) return;
-            mMap.addMarker(new MarkerOptions().position(mJobAdvertModel.getPosition())
-                    .icon(MapHelperMethods.getMarkerDrawable(mContext))
-                    .title(mJobAdvertModel.getCompanyName() + "\n".concat(mJobAdvertModel.getCompanyJob())));
-            ;
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mJobAdvertModel.getPosition(), 15f));
-            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-
-        }
-
-
-        @Override
         public void onClick(View view) {
 
             switch (view.getId()) {
+
                 case R.id.save_this_advert:
                     Log.d(TAG, "onClick: SAVE THİS ADVERT ");
                     if (save_this_advert.isActivated()) {
                         save_this_advert.setActivated(false);
                         mJobAdvertModel.setSave(false);
-                        Log.d(TAG, "SETSAVE:FALSE ");
+                        markerCluster.changeMarker(mJobAdvertModel, false);
+                        //Log.d(TAG, "SETSAVE:FALSE " + mJobAdvertModel);
                     } else {
                         save_this_advert.setActivated(true);
                         mJobAdvertModel.setSave(true);
-                        Log.d(TAG, "SETSAVE:TRUE ");
+                        //  Log.d(TAG, "SETSAVE:TRUE " + mJobAdvertModel);
+                        markerCluster.changeMarker(mJobAdvertModel, false);
                     }
                     break;
 
@@ -148,17 +163,15 @@ public class AdvertDetails {
                 case R.id.basvurbtn:
                     Log.d(TAG, "onClick: ");
 
-                    if (mJobAdvertModel.getBasvuruDurumu().equals(StateButton.BUTTON_STATES.ENABLED)) { //Basvuru yapılmamıs ise yap
+                    if (mJobAdvertModel.getBasvuruDurumu().equals(StateButton.BUTTON_STATES.ENABLED)) { //Basvuru yapılmamıs buton kullanılabilir durumda ise yap
                         Log.d(TAG, "onClick:btnBasvur.getState().getValue() == 0 ");
                         btnBasvur.setState(StateButton.BUTTON_STATES.DISABLED);
                         mJobAdvertModel.setBasvuruDurumu(1);//Bassvuru yapıldı demek...
-
+                        markerCluster.changeMarker(mJobAdvertModel, true);
 
                     } else {
-
                         Log.d(TAG, "BASVURU DAHA ÖNCEDEN YAPILMIS  İCİN  DİSABLE MODE: ");
-                        // btnBasvur.setState(StateButton.BUTTON_STATES.SUCCESS);
-
+                        //Log.d(TAG, "onClick: " + mJobAdvertModel);
                     }
 
 

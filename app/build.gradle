@@ -51,8 +51,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:11.8.0'
 
 //google maa utils
-    compile 'com.google.maps.android:android-maps-utils:0.5'
-
+    compile 'com.google.maps.android:android-maps-utils:0.5+'
     // Required only if Facebook activity_login support is required
     // Find the latest Facebook SDK releases here: https://goo.gl/Ce5L94
     implementation 'com.facebook.android:facebook-login:4.30.0'

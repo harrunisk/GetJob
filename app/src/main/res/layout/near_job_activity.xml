@@ -80,6 +80,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="17dp"
+                        android:textAppearance="@style/Base.TextAppearance.AppCompat.SearchResult"
                         android:layout_toEndOf="@+id/image5"
                         android:text="Merkez Mah. 128.Sok No :12 Daire 4 İstanbul Beylikdüzü "
                         android:textAlignment="center"

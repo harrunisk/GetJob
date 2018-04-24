@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
@@ -21,12 +22,16 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
 
     private static final String TAG = "JobAdvertModel";
 
-    private String companyName, companyJob, jobDescpriction, companyLocation, companyDistance, companyLogoUrl;
+    private String companyName, companyJob, jobDescpriction, companyLocation, companyDistance, companyLogoUrl,
+            companyAdress;//Adres İş ilanı girilince Alınacak .
     private LatLng mPosition;
     private String mTitle, experienceinfo, countApply, newLocationDistance, publishDate;
-    private boolean isSave = false;
-    private int basvuruDurumu = 0;
+    private boolean isSave;
+    private int basvuruDurumu;
+    public BitmapDescriptor markerIcon;
 
+    public JobAdvertModel() {
+    }
 
     public StateButton.BUTTON_STATES getBasvuruDurumu() {
 
@@ -39,6 +44,13 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         }
     }
 
+    public BitmapDescriptor getIcon() {
+        return markerIcon;
+    }
+
+    public void setIcon(BitmapDescriptor icon) {
+        this.markerIcon = icon;
+    }
 
     public void setBasvuruDurumu(int _basvuruDurumu) { //İlana Basvuru yapılmısmı
         this.basvuruDurumu = _basvuruDurumu;
@@ -51,10 +63,6 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
 
     public void setSave(boolean save) {
         isSave = save;
-    }
-
-    public JobAdvertModel() {
-
     }
 
 
@@ -75,7 +83,7 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
                           //    String publishDate,
                           String companyLogoUrl) {
 
-        Log.d(TAG, "JobAdvertModel: Constructor");
+        Log.d(TAG, "JobAdvertModel: Constructor11");
 
         this.companyName = companyName;
         this.companyJob = companyJob;
@@ -87,6 +95,13 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         this.companyLogoUrl = companyLogoUrl;
     }
 
+    public String getCompanyAdress() {
+        return companyAdress;
+    }
+
+    public void setCompanyAdress(String companyAdress) {
+        this.companyAdress = companyAdress;
+    }
 
     public JobAdvertModel(String companyName,
                           String companyJob,
@@ -97,9 +112,10 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
                           String experienceinfo,
                           String countApply,
                           // String companyDistance,
-                          String companyLogoUrl) {
 
-        Log.d(TAG, "JobAdvertModel: Constructor");
+                          String companyLogoUrl, BitmapDescriptor markerIcon, String companyAdress) {
+
+        Log.d(TAG, "JobAdvertModel: Constructor22");
 
         this.companyName = companyName;
         this.companyJob = companyJob;
@@ -111,6 +127,9 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         this.publishDate = publishDate;
         //this.companyDistance = companyDistance;
         this.companyLogoUrl = companyLogoUrl;
+        this.markerIcon = markerIcon;
+        this.companyAdress = companyAdress;
+
     }
 
     public String getCountApply() {
@@ -192,11 +211,6 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
 
 
     @Override
-    public String toString() {
-        return super.toString();
-    }
-
-    @Override
     public LatLng getPosition() {
         return mPosition;
     }
@@ -212,32 +226,25 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
     }
 
 
-    protected JobAdvertModel(Parcel in) {
-        companyName = in.readString();
-        companyJob = in.readString();
-        jobDescpriction = in.readString();
-        companyLocation = in.readString();
-        companyDistance = in.readString();
-        companyLogoUrl = in.readString();
-        mPosition = in.readParcelable(LatLng.class.getClassLoader());
-        mTitle = in.readString();
-        experienceinfo = in.readString();
-        countApply = in.readString();
-        newLocationDistance = in.readString();
-        publishDate = in.readString();
+    @Override
+    public String toString() {
+        return "JobAdvertModel{" +
+                "companyName='" + companyName + '\'' +
+                ", companyJob='" + companyJob + '\'' +
+                ", jobDescpriction='" + jobDescpriction + '\'' +
+                ", companyLocation='" + companyLocation + '\'' +
+                ", companyDistance='" + companyDistance + '\'' +
+                ", companyLogoUrl='" + companyLogoUrl + '\'' +
+                ", mPosition=" + mPosition +
+                ", mTitle='" + mTitle + '\'' +
+                ", experienceinfo='" + experienceinfo + '\'' +
+                ", countApply='" + countApply + '\'' +
+                ", newLocationDistance='" + newLocationDistance + '\'' +
+                ", publishDate='" + publishDate + '\'' +
+                ", isSave=" + isSave +
+                ", basvuruDurumu=" + basvuruDurumu +
+                '}';
     }
-
-    public static final Creator<JobAdvertModel> CREATOR = new Creator<JobAdvertModel>() {
-        @Override
-        public JobAdvertModel createFromParcel(Parcel in) {
-            return new JobAdvertModel(in);
-        }
-
-        @Override
-        public JobAdvertModel[] newArray(int size) {
-            return new JobAdvertModel[size];
-        }
-    };
 
     @Override
     public int describeContents() {
@@ -258,7 +265,38 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         parcel.writeString(countApply);
         parcel.writeString(newLocationDistance);
         parcel.writeString(publishDate);
+        parcel.writeByte((byte) (isSave ? 1 : 0));
+        parcel.writeInt(basvuruDurumu);
+        parcel.writeString(companyAdress);
     }
 
+    protected JobAdvertModel(Parcel in) {
+        companyName = in.readString();
+        companyJob = in.readString();
+        jobDescpriction = in.readString();
+        companyLocation = in.readString();
+        companyDistance = in.readString();
+        companyLogoUrl = in.readString();
+        mPosition = in.readParcelable(LatLng.class.getClassLoader());
+        mTitle = in.readString();
+        experienceinfo = in.readString();
+        countApply = in.readString();
+        newLocationDistance = in.readString();
+        publishDate = in.readString();
+        isSave = in.readByte() != 0;
+        basvuruDurumu = in.readInt();
+        companyAdress=in.readString();
+    }
 
+    public static final Creator<JobAdvertModel> CREATOR = new Creator<JobAdvertModel>() {
+        @Override
+        public JobAdvertModel createFromParcel(Parcel in) {
+            return new JobAdvertModel(in);
+        }
+
+        @Override
+        public JobAdvertModel[] newArray(int size) {
+            return new JobAdvertModel[size];
+        }
+    };
 }
