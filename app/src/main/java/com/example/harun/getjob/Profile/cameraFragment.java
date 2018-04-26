@@ -59,7 +59,7 @@ public class cameraFragment extends Fragment {
          */
         if (((PhotoActivity) getActivity()).getCurrentTabNumber() == CurrentTab) {
             Log.d(TAG, "loadDATA: CAMERA TAB ");
-        /*Buradan true donmesi durumunda işlemler  yapılmalı*/
+          /*Buradan true donmesi durumunda işlemler  yapılmalı*/
             if (Permissions.checkPermision(getActivity(), Permissions.CAMERA_PERMISSION[0])) {
                 Log.d(TAG, "LOAD DATA : İzinler Alınmış Sıkıntı Tın  ");
                 init();

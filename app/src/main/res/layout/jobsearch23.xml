@@ -77,22 +77,40 @@
 
                         />
 
-
-                    <TextView
-                        android:id="@+id/tvAdress"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="60dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="15dp"
-                        android:background="@drawable/edittext2"
-                        android:drawableLeft="@drawable/path_way"
-                        android:drawablePadding="3dp"
-                        android:drawableTint="@color/SeaGreen"
-                        android:fontFamily="serif-monospace"
-                        android:padding="5dp"
-                        android:text="Adres Bilgisi."
-                        android:textAlignment="center" />
+                        android:background="@drawable/edittext2">
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:id="@+id/adresLoading"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            app:indicatorColor="@color/SlateBlue"
+                            app:indicatorName="BallScaleMultipleIndicator"
+
+                            />
+
+
+                        <TextView
+                            android:id="@+id/tvAdress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="3dp"
+                            android:drawableStart="@drawable/path_way"
+                            android:drawableTint="@color/SeaGreen"
+                            android:fontFamily="sans-serif-smallcaps"
+                            android:padding="5dp"
+                            android:text="Adres Bilgisi."
+                            android:textAlignment="center" />
+
+                    </LinearLayout>
+
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/myLocButton"
