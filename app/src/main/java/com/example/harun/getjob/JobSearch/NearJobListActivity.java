@@ -81,7 +81,8 @@ public class NearJobListActivity extends AppCompatActivity {
         mTabs.addOnTabSelectedListener(onTabSelectedListener(mViewPager));
         onTabSelectedListener(mViewPager);
 
-        //Head Kısmı için adres ve kapsama alanı ve bulunan iş sayısı texti dolduruluyor .
+        //Head Kısmı için adres ve kapsama alanı ve bulunan iş sayısı texti dolduruluyor .Burada yeni konum seçildiğinde bazı işlemler
+        //yapılacak..
         userAdress.setText(UserLocationInfo.getInstance().getMyLocationAdress());
         userArea.setText(getString(R.string.userArea, UserLocationInfo.getInstance().getCircleArea(), joblistSize));
 
