@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -48,6 +47,7 @@ import com.example.harun.getjob.JobSearch.JobUtils.MapHelperMethods;
 import com.example.harun.getjob.JobSearch.JobUtils.MyClusterMarker;
 import com.example.harun.getjob.JobSearch.JobUtils.MyclusterManager;
 import com.example.harun.getjob.JobSearch.JobUtils.UserLocationInfo;
+import com.example.harun.getjob.MyCustomToast;
 import com.example.harun.getjob.Profile.Permissions;
 import com.example.harun.getjob.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -249,7 +249,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         resultList = new ArrayList<>();
         mUserLocationInfo = UserLocationInfo.getInstance();//USERLOCATİON INFO SİNGLETON NESNESİ ...
         style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro); //Map Style Retro
-        downloadAdressData = new DownloadAdressData(this, this,1);
+        downloadAdressData = new DownloadAdressData(this, this, 1);
         btnListNearJob.setOnClickListener(this);
         changeArea.setOnClickListener(this);
         slidingPanelListener();
@@ -553,7 +553,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             currentLocationMarker1.showInfoWindow();
             mUserLocationInfo.setCurrentLocationMarker(currentLocationMarker1);
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition(mUserLocationInfo.getMyLocation())));
-            DrawCircle drawCircle = new DrawCircle(location, 1000, mMap, getApplicationContext(),1);//İlk Circle 1-km Alanı kapsayacak
+            DrawCircle drawCircle = new DrawCircle(location, 1000, mMap, getApplicationContext(), 1);//İlk Circle 1-km Alanı kapsayacak
             mCircleList.add(drawCircle); //Bulunan konuma 1 circle atıyorum bu circle daha sonra ulasabilmek adına circle olusturan sınıfı
             //nesnesini listede tutuyorum Daha sonraki circle değişimleri bu nesne üzerinden gerçekleştiriyorum..
 
@@ -569,8 +569,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     private void drawNewLocationMarker(LatLng center) {
 
         countLocation = 2;
-        Drawable drawable = getResources().getDrawable(R.drawable.markeruser);
-        drawable.setTint(getColor(R.color.jumbo));
+        Drawable drawable = getResources().getDrawable(R.drawable.markeruser2);
+       // drawable.setTint(getColor(R.color.jumbo));
         BitmapDescriptor bitmapDescriptorFactory = MapHelperMethods.getDrawableMarkerAsBitmap(drawable);
         mUserLocationInfo.setNewLocationLatLng(center);//Yeni lokasyonun latlng değerini kayıt ediyorum daha sonra ulasabilmek adına ..
         Marker newLocationMarker1;
@@ -689,12 +689,15 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             // yani 1 .tıklayısta mavi 2.tıklayısta kırmızı olcak locationbutton daki marker rengi
             if (firstClick) {
 
-                mylocButton.setImageTintList(ColorStateList.valueOf(Color.BLUE));
+                mylocButton.setImageDrawable(getDrawable(R.drawable.markeruser2));
+                //mylocButton.setImageTintList(ColorStateList.valueOf(Color.BLUE));
                 firstClick = false;
                 return 1;
 
             } else {
-                mylocButton.setImageTintList(ColorStateList.valueOf(Color.RED));
+                mylocButton.setImageDrawable(getDrawable(R.drawable.markeruser));
+
+               // mylocButton.setImageTintList(ColorStateList.valueOf(Color.RED));
                 firstClick = true;
                 return 2;
 
@@ -901,7 +904,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                             overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
                         } else {
-                            Toast.makeText(getApplicationContext(), "Kapsama alanınızda Size uygun iş bulunamadı.", Toast.LENGTH_SHORT).show();
+                            MyCustomToast.showCustomToast(getApplicationContext(),"Kapsama alanınızda Size uygun iş bulunamadı.");
+                            //Toast.makeText(getApplicationContext(), "Kapsama alanınızda Size uygun iş bulunamadı.", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -1106,7 +1110,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         if (downloadAdressData != null) {
             Log.d(TAG, "runTask: Yeni nesne Oluşturuldu ");
             // adresLoading.show();
-            new DownloadAdressData(this, this,1).execute(latLng);
+            new DownloadAdressData(this, this, 1).execute(latLng);
         } /*else {
 
             Log.d(TAG, "runTask: eski nesne ");
@@ -1303,22 +1307,21 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
      * Burada marker şeklini değiştircem .
      *
      * @param item
-     * @param which
+     * @param which -->İlana basvurumu yapıldı kayıtmı yapıldı ona göre marker işlemini değiştiriyorum
+     *              basvuru yapıldı ->true (AdvertDetail den geliyor ) marker yeşil yapıyorum .
+     *              kayıt için suan bir işlem yok
      */
     @Override
     public void changeMarker(JobAdvertModel item, boolean which) {
         Log.d(TAG, "changeMarker:İNTERFACEEE " + item);
-        //  Drawable drawable = getResources().getDrawable(R.drawable.markerjob);
-        // drawable.setTint(Color.GREEN);
-        // BitmapDescriptor jobMarker = MapHelperMethods.getDrawableMarkerAsBitmap(drawable);
-
-        //item.setIcon(jobMarker);
-
-        myClusterMarker.getMarker(item).setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
-        item.setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
-
-        //myItemClusterManager.removeItem(item);
-        //  myItemClusterManager.addItem(item);
+        if (which) {
+            Log.d(TAG, "changeMarker:bASvuru yapılmıs ");
+            myClusterMarker.getMarker(item).setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
+            item.setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
+        }else
+        {
+            Log.d(TAG, "changeMarker: Kayıt işlemi yapılmıs.");
+        }
     }
 
 }
