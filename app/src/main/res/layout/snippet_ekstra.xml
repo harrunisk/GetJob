@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+
+    <LinearLayout
+        android:id="@+id/ehliyetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/ehliyetv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ms_ic_chevron_end"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text="Ehliyet"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/ehliyetTuru"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/edittextselector"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:hint="Ehliyet Türü Belirtin"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/SeaGreen"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/ehliyetVarbtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Var"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/ehliyetFarketmezBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Farketmez"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cinsiyetLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/ehliyetLayout"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:weightSum="4">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ms_ic_chevron_end"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text="Cinsiyet"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/bayBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Bay"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/bayanBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Bayan"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/cinsiyetFarketmezBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Farketmez"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/askerlikLayout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/cinsiyetLayout"
+        android:layout_marginTop="15dp"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        android:weightSum="4">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ms_ic_chevron_end"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:text="Askerlik"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/askerlikTecilliBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Tecilli"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/askerlikYapildiBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Yapıldı"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+        <Button
+            android:id="@+id/askerlikFarketmezBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Farketmez"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

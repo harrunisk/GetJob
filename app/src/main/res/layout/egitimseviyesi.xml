@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/egitimSeviyesi"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="3dp"
+        app:cardPreventCornerOverlap="true">
+
+        <RelativeLayout
+            android:id="@+id/egitimSeviyesiFore"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/ripplebackgorund"
+            android:backgroundTintMode="src_in"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="-5dp"
+                android:background="@drawable/half_circle"
+                android:tint="@color/black">
+
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:padding="5dp"
+                android:text="Eğitim Seviyesi"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow" />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/egitimSeviyesiBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/statebutton_md_lightgreenbg_loading"
+        android:visibility="gone">
+
+        <include layout="@layout/snippet_egitimseviyesi"></include>
+
+        <!--
+        <android.support.v7.widget.CardView
+            android:id="@+id/card4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="3dp"
+            app:cardElevation="3dp"
+            app:cardUseCompatPadding="true"
+            app:cardPreventCornerOverlap="true"
+            app:contentPadding="5dp">
+
+
+
+        </android.support.v7.widget.CardView>
+-->
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="3dp"
+        app:cardPreventCornerOverlap="true">
+
+        <RelativeLayout
+            android:id="@+id/tecrubeForeground"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/ripplebackgorund"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="-5dp"
+                android:background="@drawable/half_circle"
+                android:tint="@color/black">
+
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:padding="5dp"
+                android:text="Tecrübe / Deneyim "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow" />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/tecrubeBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/statebutton_md_lightgreenbg_loading"
+        android:visibility="gone">
+
+        <include layout="@layout/snippet_experience"></include>
+
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="3dp"
+        app:cardPreventCornerOverlap="true">
+
+        <RelativeLayout
+            android:id="@+id/calismaSekliFore"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/ripplebackgorund"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="-5dp"
+                android:background="@drawable/half_circle"
+                android:tint="@color/black">
+
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:padding="5dp"
+                android:text="Calişma Şekli "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow" />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/calismaSekliBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/statebutton_md_lightgreenbg_loading"
+        android:visibility="gone">
+
+        <include layout="@layout/snippet_calismasekli"></include>
+
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="3dp"
+        app:cardPreventCornerOverlap="true">
+
+        <RelativeLayout
+            android:id="@+id/ekstraFore"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/ripplebackgorund"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="-5dp"
+                android:background="@drawable/half_circle"
+                android:tint="@color/black">
+
+            </View>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
+                android:padding="5dp"
+                android:text="Ekstra Bilgiler"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+
+                />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/right_arrow" />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+    <RelativeLayout
+        android:id="@+id/ekstraBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/statebutton_md_lightgreenbg_loading"
+        android:visibility="gone">
+
+        <include layout="@layout/snippet_ekstra"></include>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

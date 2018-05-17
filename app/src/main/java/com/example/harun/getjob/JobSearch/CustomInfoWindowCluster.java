@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.Marker;
 
 /**
  * Created by mayne on 3.04.2018.
+ * Custom Info Window for Marker
  */
 
 public class CustomInfoWindowCluster implements GoogleMap.InfoWindowAdapter {

@@ -71,6 +71,8 @@
         <activity android:name=".SignUp">
 
         </activity>
+        <activity android:name=".AddJobAdvert.AddJobAdvert"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
     </application>
 
 </manifest>

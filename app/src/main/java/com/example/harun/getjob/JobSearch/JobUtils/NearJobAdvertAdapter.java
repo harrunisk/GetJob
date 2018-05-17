@@ -33,6 +33,9 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
     private Animation animPulse;
     private JobAdvertModel mJobAdvertModel;
     private ArrayList<MyViewHolder> expandedList = new ArrayList<>(1); //Expand edilen itemin view elemanlarını tutuyorum
+    //LayoutAnimationController layoutAnimationController;
+   // int lastPosition = -1;
+   // Animation animation;
 
     public NearJobAdvertAdapter(Context context, ArrayList<JobAdvertModel> jobAdvertModelArrayList) {
         Log.d(TAG, "NearJobAdvertAdapter: ");
@@ -42,6 +45,10 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
         animationUp = AnimationUtils.loadAnimation(context, R.anim.slide_in_up);
         animDown = AnimationUtils.loadAnimation(context, R.anim.slide_up);
         animPulse = AnimationUtils.loadAnimation(context, R.anim.pulse);
+        //int anim = R.anim.layout_anim2;
+        //  layoutAnimationController= AnimationUtils.loadLayoutAnimation(context, anim);
+        //animation = AnimationUtils.loadAnimation(context,
+             //   R.anim.item_animation_from_bottom);
     }
 
     @Override
@@ -76,6 +83,11 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
 
         }
 
+      /*  if (position > lastPosition) {
+            Log.d(TAG, "onBindViewHolder: ");
+            holder.itemView.startAnimation(animation);
+            lastPosition = position;
+        }*/
 
 /*        holder.btnBasvur.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,6 +242,11 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
             viewHolder.bindMapLocation(fromNearJobAdapter);
         }
 
+        /**
+         * Marker Style Change İnterFace
+         * @param item -->Değiştirilecek İtem
+         * @param isBasvuru -->Basvurumu Yoksa Kayıt İşlemimi Yapıldı.
+         */
         @Override
         public void changeMarker(JobAdvertModel item, boolean isBasvuru) {
 

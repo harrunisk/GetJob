@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:background="@drawable/headpic"
+            android:background="@drawable/mainlayoutback"
             android:orientation="vertical">
 
             <android.support.v7.widget.Toolbar
@@ -362,6 +362,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="true"
+                        android:onClick="addJobAdvert"
                         android:focusable="true">
 
                         <ImageView

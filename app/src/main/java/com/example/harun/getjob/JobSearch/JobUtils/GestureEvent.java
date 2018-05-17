@@ -23,7 +23,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 public class GestureEvent implements View.OnTouchListener {
     private static final String TAG = "GestureEvent";
     private float downX, downY, upX, upY;
-    private static final int MIN_DISTANCE = 30;
+    private static final int MIN_DISTANCE = 20;
     private static final int MIN_SWİPEDISTANCE = 70;
     private Activity mActivty;
     //Context context;
@@ -75,7 +75,7 @@ public class GestureEvent implements View.OnTouchListener {
                 }
 
                 //Dikey Swipe Aşagıdan yukarıya veya yukarıdan aşagıya
-                if (Math.abs(deltaY) > MIN_SWİPEDISTANCE) {
+                if (Math.abs(deltaY) > MIN_DISTANCE) {
 
                     if (deltaY < 0) {
                         Log.d(TAG, "onTouch: TopTOBOTTOM ");

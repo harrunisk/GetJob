@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="4">
+
+        <Button
+            android:id="@+id/tecrubesizBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Tecrübesiz"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+        <EditText
+            android:id="@+id/tecrubetext"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnback3"
+            android:gravity="center"
+            android:hint="En az Kaç Yıl "
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLines="1"
+            android:visibility="gone"
+            android:textColor="@color/SeaGreen"
+            android:textSize="13sp" />
+        <Button
+            android:id="@+id/tecrubeliBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Tecrübeli"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+
+
+
+        <Button
+            android:id="@+id/farketmezBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btnselector"
+            android:enabled="true"
+            android:gravity="center"
+            android:text="Farketmez"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

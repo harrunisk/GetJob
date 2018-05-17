@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.example.harun.getjob.AddJobAdvert.AddJobAdvert;
 import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertAdapter;
 import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel;
 import com.example.harun.getjob.JobSearch.JobSearch;
@@ -49,6 +50,9 @@ public class UserIntro extends AppCompatActivity {
         jobAdvertList = new ArrayList<JobAdvertModel>();
     }
 
+    /**
+     * Setup recommend Job Advert List
+     */
     private void setRecyclerAdvertView() {
 
         Log.d(TAG, "setRecyclerAdvertView: ");
@@ -93,6 +97,18 @@ public class UserIntro extends AppCompatActivity {
         startActivity(intent);
 
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+
+    }
+
+    public void addJobAdvert(View view) {
+
+        Intent intent=new Intent(this, AddJobAdvert.class);
+        startActivity(intent);
+
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+
 
 
     }
