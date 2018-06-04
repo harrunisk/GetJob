@@ -69,6 +69,7 @@ public class DrawCircle {
                     // .strokePattern(PATTERN_DOTTED)
                     .strokeColor(mContext.getResources().getColor(R.color.Brown))
                     .strokeWidth(5)
+                    .fillColor(0x11d59563)
                     .radius(mRadiusMeters));
 
 

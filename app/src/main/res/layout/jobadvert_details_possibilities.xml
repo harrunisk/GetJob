@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/imkancard"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="12dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/imkanlar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="İmkanlar"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <ViewSwitcher
+            android:id="@+id/pos_viewSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imkanlar">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Belirtilmemiş"
+                android:textSize="13sp" />
+
+
+            <com.example.harun.getjob.viewpagercards.TagLayout
+                android:id="@+id/imkanlarcontent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp" />
+
+        </ViewSwitcher>
+
+
+        <!--
+                    <TextView
+                        android:id="@+id/sgk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_back"
+                        android:drawableStart="@drawable/ic_done_all_black_10dp"
+                        android:drawablePadding="5dp"
+                        android:padding="5dp"
+                        android:text="SGK"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/yol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/sgk"
+                        android:background="@drawable/edittext_back"
+                        android:drawableLeft="@drawable/ic_done_all_black_10dp"
+                        android:drawablePadding="5dp"
+                        android:padding="5dp"
+                        android:text="Yol"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="10sp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/prim"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/yol"
+                        android:background="@drawable/edittext_back"
+                        android:drawableLeft="@drawable/ic_done_all_black_10dp"
+                        android:drawablePadding="5dp"
+                        android:padding="5dp"
+                        android:text="Prim"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="10sp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/servis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/prim"
+                        android:background="@drawable/edittext_back"
+                        android:drawableLeft="@drawable/ic_done_all_black_10dp"
+                        android:drawablePadding="5dp"
+                        android:padding="5dp"
+                        android:text="Servis"
+
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="10sp"
+
+                        />
+
+                    <TextView
+                        android:id="@+id/yemek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/servis"
+                        android:background="@drawable/edittext_back"
+                        android:drawableLeft="@drawable/ic_done_all_black_10dp"
+                        android:drawablePadding="5dp"
+                        android:padding="5dp"
+                        android:text="Yemek"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="10sp"
+
+                        />
+
+        -->
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

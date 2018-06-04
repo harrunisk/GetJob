@@ -16,6 +16,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -35,7 +37,9 @@ import android.widget.ViewSwitcher;
 
 import com.example.harun.getjob.JobSearch.DownloadAdressData;
 import com.example.harun.getjob.JobSearch.JobUtils.DrawCircle;
+import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
 import com.example.harun.getjob.JobSearch.JobUtils.MapHelperMethods;
+import com.example.harun.getjob.MyCustomToast;
 import com.example.harun.getjob.Profile.Permissions;
 import com.example.harun.getjob.R;
 import com.google.android.gms.common.ConnectionResult;
@@ -70,7 +74,7 @@ import java.util.Locale;
  * Created by mayne on 1.05.2018.
  */
 
-public class StepFour extends Fragment implements Step, View.OnClickListener, OnMapReadyCallback, View.OnTouchListener, GoogleApiClient.OnConnectionFailedListener, TextView.OnEditorActionListener, GoogleMap.OnCameraChangeListener, DownloadAdressData.adressCallback {
+public class StepFour extends Fragment implements Step, View.OnClickListener, OnMapReadyCallback, View.OnTouchListener, GoogleApiClient.OnConnectionFailedListener, TextView.OnEditorActionListener, GoogleMap.OnCameraChangeListener, DownloadAdressData.adressCallback, GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener {
 
     private static final String TAG = "StepFour";
     private boolean mPermissionGranted, isGPSEnabled;
@@ -79,7 +83,7 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     ImageView mapImage;
     Button getLocationBtn;
     TextView companyAdress;
-
+    NestedScrollView nestedScroll;
     AVLoadingIndicatorView mapImageProgress;
     LinearLayout clearLayout, searchLayout;
     private View view;
@@ -101,33 +105,60 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     LatLng coord;
     ViewSwitcher viewSwitcher;
     private DownloadAdressData mDownloadAdressData;
+    JobAdvertModel2 jobAdvertModel2;
 
     //Entire World
     private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-85, -180), new LatLng(85, 180));
     private boolean choosenAdress = false;
 
+    /**
+     * Activty ilk açılışta 4 frragment birden yükleniyor ben bu fragmentin sadece görünür oldugunda yüklenip çalışmasını
+     * istedğim için bu metodu override ettim buradaki mantık
+     * fragment kullanıcı ekranında görünür oldugunda isVisibleToUser=true olur  ve getPermission methodu cagrılarak izin alma işlemleri
+     * sadece ekran görünür oldugunda yapılacak getPermission methodu calısıtıgı zaman zaten izinler verilmiş ise
+     * gatherView oda init
+     * fonksiyonunu cagırarak kullanıcı ekranı olusturulacak .
+     * Adres ile arama yaparken kullanılan mGoogleApiClient kullanıcı ekrandan ayrıldıgı zaman disconnect olmalı bu yüzden burada
+     * ayrıca kontrolleri yapıldı
+     * (mGoogleApiClient != null kontrolune girecek)
+     *
+     * @param isVisibleToUser
+     */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
         if (isVisibleToUser && isResumed()) { //isResumed
+
             Log.d(TAG, "setUserVisibleHint: GÖRÜNÜR ");
             if (mGoogleApiClient != null) {
-                Log.d(TAG, "setUserVisibleHint:mGoogleApiClient != null ");
-                mGoogleApiClient.stopAutoManage(getActivity());
-                mGoogleApiClient.disconnect();
-            }else{
-                Log.d(TAG, "setUserVisibleHint: ELSE");
+                Log.d(TAG, "setUserVisibleHint:mGoogleApiClient !=null ");
+                if (mGoogleApiClient.isConnected()) {
+                    Log.d(TAG, "setUserVisibleHint:mGoogleApiClient !=null and CONNNECTED");
+                    mGoogleApiClient.stopAutoManage(getActivity());
+                    mGoogleApiClient.disconnect();
+                } else {
+                    Log.d(TAG, "setUserVisibleHint:mGoogleApiClient !=null and NOT CONNECTED");
+                    mGoogleApiClient.connect();
+
+                }
+            } else {
+                Log.d(TAG, "setUserVisibleHint: mGoogleApiClient NULLL");
                 getPermission();
 
             }
 
         } else {
             Log.d(TAG, "setUserVisibleHint: ŞUAN GÖRÜNMEZ");
-//            if (isResumed()) {
-//                Log.d(TAG, "setUserVisibleHint:isResumed ");
-//            }
-            
+            if (mGoogleApiClient != null) {
+                Log.d(TAG, "setUserVisibleHintGÖRÜNMEZ:mGoogleApiClient !=null ");
+                if (mGoogleApiClient.isConnected()) {
+                    Log.d(TAG, "setUserVisibleHintGÖRÜNMEZ:mGoogleApiClient !=null and CONNNECTED");
+                    mGoogleApiClient.stopAutoManage(getActivity());
+                    mGoogleApiClient.disconnect();
+                }
+
+            }
         }
 
 
@@ -138,9 +169,17 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
         super.onStart();
         Log.d(TAG, "onStart: ");
         if (mGoogleApiClient != null) {
-            Log.d(TAG, "onPause: mGoogleApiClient != null ");
+            if (!mGoogleApiClient.isConnected())
+                Log.d(TAG, "!mGoogleApiClient.isConnected() ");
             mGoogleApiClient.connect();
         }
+
+
+
+       /* if (mGoogleApiClient != null) {
+            Log.d(TAG, "onPause: mGoogleApiClient != null ");
+            mGoogleApiClient.connect();
+        }*/
 
     }
 
@@ -156,17 +195,18 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
         super.onPause();
         Log.d(TAG, "onPause: METODU ");
         //isFirstTime = true;
-       /* if (mGoogleApiClient != null) {
+        if (mGoogleApiClient != null) {
             Log.d(TAG, "onPause: mGoogleApiClient != null ");
             mGoogleApiClient.stopAutoManage(getActivity());
             mGoogleApiClient.disconnect();
-        }*/
+        }
 
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
         view = inflater.inflate(R.layout.add_jobadvert_step4, container, false);
 
@@ -213,6 +253,7 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
         mapImageProgress = view.findViewById(R.id.mapImageProgress);
         companyAdress = view.findViewById(R.id.companyAdress);
         viewSwitcher = view.findViewById(R.id.viewSwitch);
+        nestedScroll = view.findViewById(R.id.nestedScroll);
         init();
 
     }
@@ -231,6 +272,11 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
         getLocationBtn.setOnClickListener(this);
         viewSwitcher.setInAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.push_left_in));
         viewSwitcher.setOutAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.push_left_out));
+        if (getArguments() != null) {
+            Log.d(TAG, "init:getArguments()!=null ");
+            jobAdvertModel2 = getArguments().getParcelable("jobAdvertModel");
+        }
+
     }
 
     @Override
@@ -258,6 +304,9 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
 
         input_search.setAdapter(mPlaceAutocompleteAdapter);
         mMap.setOnCameraChangeListener(this);
+        mMap.setOnCameraMoveListener(this);
+        mMap.setOnCameraIdleListener(this);
+
     }
 
 
@@ -526,8 +575,38 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     @Nullable
     @Override
     public VerificationError verifyStep() {
-        Log.d(TAG, "verifyStep: ");
-        return null;
+
+        if (validate()) {
+
+            return new VerificationError("Lütfen Bir Adres Seçiniz");
+        } else {
+
+            Log.d(TAG, "verifyStep: ");
+            createsuccesDialog();
+            return null;
+        }
+    }
+
+    private void createsuccesDialog() {
+        Log.d(TAG, "createsuccesDialog: ");
+
+        FragmentManager fragmentManager=getFragmentManager();
+        SuccessDialogFragment successDialogFragment=new SuccessDialogFragment();
+        successDialogFragment.show(fragmentManager,"SuccessDialog");
+
+
+    }
+
+    private boolean validate() {
+
+        if (viewSwitcher.getChildAt(0) == viewSwitcher.getCurrentView()) {
+            //Buradaki kosul -->Şuanki View emptyView (index:0) ise
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
     @Override
@@ -538,6 +617,8 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     @Override
     public void onError(@NonNull VerificationError error) {
         Log.d(TAG, "onError: ");
+        MyCustomToast.showCustomToast(getContext(), "Lütfen Bir Adres Seçiniz ");
+
     }
 
     @Override
@@ -562,6 +643,8 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
 
                 break;
             case R.id.getLocationBtn:
+                // nestedScroll.scrollTo(0, nestedScroll.getBottom());
+                // AddJobAdvert.smoothScroll();
                 //Bulundugu parent view in genişlik ve yükseklik değerlerini alıyorum bu
                 // değerlere göre static mapin size değerini ayarlıyorum
                 choosenAdress = true;
@@ -597,7 +680,11 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
 
                     @Override
                     public void onError(Exception e) {
-                        Toast.makeText(getActivity(), "Bir hata meydana geldi ", Toast.LENGTH_SHORT).show();
+                        Permissions.showAlertdilaog(getActivity(), "Beklenmedik Bir Hata oluştu", "Lütfen Tekrar Deneyin"
+                                , 2000).show();
+
+                        //MyCustomToast.showCustomToast(getActivity(), "Beklenmedik bir Hata Meydana Geldi Bir Daha Deneyin!");
+                        mapImageProgress.setVisibility(View.GONE);
                     }
                 });
 
@@ -605,6 +692,13 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
 
         }
     }
+
+    private void setJobAdress() {
+        Log.d(TAG, "setJobAdress: ");
+        jobAdvertModel2.setCompanyAdress(companyAdress.getText().toString());
+
+    }
+
 
     /**
      * View Switcher Kullanımı
@@ -623,7 +717,7 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     }
 
     /**
-     * Map View Scroll View içinde oldugu için mapin scroll işlemlerinin dogru çalışması override edildi .
+     * Map View Scroll View içinde oldugu için mapin scroll işlemlerinin dogru çalışması için override edildi .
      *
      * @param view
      * @param motionEvent
@@ -698,8 +792,6 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
             Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
 
             try {
-
-
                 List<Address> coordinats = geocoder.getFromLocationName(searching_adress, 1);
 
                 if (coordinats.size() > 0) {
@@ -715,6 +807,7 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
 
             } catch (IOException e) {
 
+                MyCustomToast.showCustomToast(getActivity(), e.getMessage());
                 e.printStackTrace();
             }
 
@@ -748,6 +841,19 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     public void adressCallbackResult(String result) {
 
         companyAdress.setText(result);
+        setJobAdress();
+
+    }
+
+    @Override
+    public void onCameraMove() {
+
+        Log.d(TAG, "onCameraMove: ");
+    }
+
+    @Override
+    public void onCameraIdle() {
+        Log.d(TAG, "onCameraIdle: ");
 
     }
 }

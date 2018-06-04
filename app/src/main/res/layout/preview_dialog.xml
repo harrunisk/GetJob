@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginBottom="50dp"
+    android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:id="@+id/topRelative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialogcorner">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/companyName"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="serif"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:text="MD Bilişim Sistemleri"
+                android:textAlignment="center"
+                android:textSize="13sp" />
+
+            <RelativeLayout
+                android:id="@+id/info1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="3dp">
+
+                <ImageView
+                    android:id="@+id/companyLogo"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/work" />
+
+                <TextView
+                    android:id="@+id/sektor1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/companyLogo"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/companyLogo"
+                    android:fontFamily="casual"
+                    android:hint="Belirtilmemiş"
+                    android:padding="2dp"
+                    android:text="BİLGİSAYAR MÜHENDİSİ"
+                    android:textColor="@color/black"
+                    android:textSize="13dp" />
+
+                <TextView
+                    android:id="@+id/meslek"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sektor1"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/companyLogo"
+                    android:fontFamily="casual"
+                    android:hint="Belirtilmemiş"
+                    android:padding="2dp"
+                    android:text="ANDROİD DEVELOPER "
+                    android:textSize="13dp" />
+
+
+                <TextView
+                    android:id="@+id/preDialog_pbDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/meslek"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@id/companyLogo"
+                    android:gravity="center_vertical"
+                    android:padding="2dp"
+                    android:text="01.01.2014"
+                    android:textSize="11dp" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/dash_line"
+                android:layerType="software">
+
+
+            </View>
+
+            <ScrollView
+                android:id="@+id/scrollViewDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="350dp"
+                android:layout_marginBottom="20dp"
+                android:fillViewport="true"
+                android:scrollbars="vertical">
+
+
+                <LinearLayout
+                    android:id="@+id/fullcontent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="12dp"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="5dp"
+                                    android:fontFamily="serif"
+                                    android:text="İş Tanımı"
+                                    android:textColor="@color/black"
+                                    android:textSize="15dp"
+
+
+                                    />
+
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/istanimTv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Henüz Belirtilmemiş"
+                                android:text="@string/deneme_text"
+                                android:textAlignment="textStart"
+                                android:textColor="@color/black"
+
+                                />
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                    <include layout="@layout/jobadvert_position_info"></include>
+
+                    <include layout="@layout/jobadvert_details_possibilities"></include>
+
+                    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/imkancard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:elevation="12dp"
+                        app:cardUseCompatPadding="true"
+                        app:contentPadding="8dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="serif"
+                                android:text="Konum Bilgisi"
+                                android:textColor="@color/black"
+                                android:textSize="15dp"
+
+
+                                />
+
+
+
+                            <RelativeLayout
+                                android:id="@+id/adrescontent"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+
+                                <TextView
+                                    android:id="@+id/jobadresTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="3dp"
+                                    android:layout_toStartOf="@+id/view1"
+                                    android:hint="Belirtilmemiş"
+                                    android:textColor="@color/black" />
+
+                                <View
+                                    android:id="@+id/view1"
+                                    android:layout_width="2dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginEnd="5dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_toStartOf="@+id/marker"
+                                    android:background="@color/mycolor5" />
+
+                                <ImageView
+                                    android:id="@+id/marker"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:src="@drawable/map_with_locationmark" />
+
+                            </RelativeLayout>
+
+
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+
+                </LinearLayout>
+            </ScrollView>
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/closeDialog1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/topRelative"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_close_black_24dp"
+        android:tint="@color/black"
+        app:backgroundTint="@color/mycolor4"
+        app:elevation="6dp"
+        app:fabSize="normal"
+        app:pressedTranslationZ="12dp" />
+
+</RelativeLayout>

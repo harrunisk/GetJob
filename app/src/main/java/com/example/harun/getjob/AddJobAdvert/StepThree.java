@@ -10,12 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
+import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
+import com.example.harun.getjob.MyCustomToast;
 import com.example.harun.getjob.R;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by mayne on 1.05.2018.
@@ -28,6 +33,9 @@ public class StepThree extends Fragment implements Step, View.OnClickListener {
     TextView tvPrim, tvSsk, tvYemek, tvYol, tvAgi, tvServis, tvMaas, tvKonaklama;
     //RelativeLayout adding_possibility;
     HashMap<View, View> viewHashMap = new HashMap<>();
+    ArrayList<String> stringArraylist = new ArrayList<>();
+    ViewSwitcher viewSwitch_possiblity;
+    private JobAdvertModel2 advertModel2;
 
     @Nullable
     @Override
@@ -56,6 +64,7 @@ public class StepThree extends Fragment implements Step, View.OnClickListener {
         tvYemek = v.findViewById(R.id.tvYemek);
         tvYol = v.findViewById(R.id.tvYol);
         tvKonaklama = v.findViewById(R.id.tvKonaklama);
+        viewSwitch_possiblity = v.findViewById(R.id.viewSwitch_possiblity);
 
         //adding_possibility = v.findViewById(R.id.adding_possibility);
 
@@ -65,6 +74,12 @@ public class StepThree extends Fragment implements Step, View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated: ");
+
+        if (getArguments() != null) {
+            Log.d(TAG, "onViewCreated: getArguments() != null ");
+            advertModel2 = getArguments().getParcelable("jobAdvertModel");
+        }
+
         btnPrim.setOnClickListener(this);
         btnSsk.setOnClickListener(this);
         btnYemek.setOnClickListener(this);
@@ -80,7 +95,51 @@ public class StepThree extends Fragment implements Step, View.OnClickListener {
     @Override
     public VerificationError verifyStep() {
         Log.d(TAG, "verifyStep: ");
+
+        if (validate()) {
+            Log.d(TAG, "verifyStep: validate BOŞŞ ");
+
+            return new VerificationError("En az bir olanak seçmeniz gerekiyor ");
+        }
+        setJobDetails();
         return null;
+    }
+
+    /**
+     * Hashmap içersinde (buttonlar ile textViewler) seçilmiş olan textviewler bulundugu için textlerini alıp listeye ekleyip
+     * model classıma gönderiyorum
+     */
+    private void setJobDetails() {
+        Log.d(TAG, "setJobDetails: ");
+        stringArraylist.clear();
+        for (Map.Entry<View, View> simpleEntry : viewHashMap.entrySet()) {
+
+            stringArraylist.add(((TextView) simpleEntry.getValue()).getText().toString());
+            Log.d(TAG, "setJobDetails: " + ((TextView) simpleEntry.getValue()).getText().toString());
+
+
+        }
+        Log.d(TAG, "setJobDetails: " + stringArraylist.size());
+        advertModel2.setJobPossibility(stringArraylist);//>Listeyi gönderdim .
+
+    }
+
+    /**
+     * Kontrol En az 1 Olanak Secilmiş olması gerekiyor .Secilen her olanak hashmap içerinde saklandıgı için
+     * Boş olması durumda true dönerek kulllanıcıyı bilgilendirecektir.->>>> verifyStep()
+     *
+     * @return
+     */
+    private boolean validate() {
+        Log.d(TAG, "validate: ");
+        if (viewHashMap.isEmpty()) {
+            Log.d(TAG, "validate: Hashmap BOşş");
+            return true;
+        } else {
+            Log.d(TAG, "validate: hash map Dolu ");
+            return false;
+        }
+
     }
 
     @Override
@@ -91,13 +150,14 @@ public class StepThree extends Fragment implements Step, View.OnClickListener {
     @Override
     public void onError(@NonNull VerificationError error) {
         Log.d(TAG, "onError: ");
+        MyCustomToast.showCustomToast(getContext(), "En az bir olanak seçmeniz gerekiyor");
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnKonaklama:
-
                 Log.d(TAG, "onClick: ");
                 viewHashMap.put(btnKonaklama, tvKonaklama);
                 buttonActiveState(btnKonaklama);
@@ -167,14 +227,32 @@ public class StepThree extends Fragment implements Step, View.OnClickListener {
 
     private void setTextViewVisibility(boolean visible, Button whichButton) {
         if (visible) {
+            checkEmptyView();
 
             viewHashMap.get(whichButton).setVisibility(View.VISIBLE);
-
+            Log.d(TAG, "setTextViewVisibility: " + viewHashMap.size());
         } else {
             viewHashMap.get(whichButton).setVisibility(View.GONE);
+            viewHashMap.remove(whichButton);
+            checkEmptyView();
+            Log.d(TAG, "setTextViewVisibility: " + viewHashMap.size());
         }
 
     }
+
+    private void checkEmptyView() {
+        Log.d(TAG, "checkEmptyView: ");
+        if (viewHashMap.isEmpty()) {
+            Log.d(TAG, "checkEmptyView:viewHashMap.isEmpty() ");
+            viewSwitch_possiblity.setDisplayedChild(0);
+
+        } else {
+            Log.d(TAG, "checkEmptyView: NOT NULL ");
+            viewSwitch_possiblity.setDisplayedChild(1);
+        }
+
+    }
+
 
     /*private void addView(CharSequence text) {
         LayoutInflater inflater = getLayoutInflater();

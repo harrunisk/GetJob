@@ -21,26 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <android.support.v7.widget.Toolbar
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:fontFamily="serif-monospace"
-                        android:gravity="center"
-                        android:text="--Şirket İsmi-- "
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"
-                        app:layout_collapseMode="pin"
-
-                        />
-
-                </android.support.v7.widget.Toolbar>
-
-
+                <include layout="@layout/add_jobadvert_toolbar"></include>
             </RelativeLayout>
 
 
@@ -66,14 +47,15 @@
             android:isScrollContainer="true"
             app:ms_activeStepColor="@color/mycolor"
             app:ms_backButtonColor="#FFFFFF"
+            app:ms_backButtonText="Önceki"
             app:ms_bottomNavigationBackground="@color/mycolor"
             app:ms_completeButtonColor="#FFFFFF"
+            app:ms_completeButtonText="Tamamlandı"
             app:ms_inactiveStepColor="#44000000"
             app:ms_nextButtonColor="#FFFFFF"
-            app:ms_stepperType="tabs"
             app:ms_nextButtonText="Sonraki"
-            app:ms_backButtonText="Önceki"
-            app:ms_completeButtonText="Tamamlandı"
+            app:ms_showErrorStateEnabled="true"
+            app:ms_stepperType="tabs"
             app:ms_tabStepDividerWidth="50dp"
             tools:theme="@style/StepperLayoutTheme" />
 

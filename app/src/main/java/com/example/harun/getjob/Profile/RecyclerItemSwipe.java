@@ -10,6 +10,11 @@ import android.view.View;
  * Created by mayne on 18.03.2018.
  */
 
+
+/**
+ *
+ */
+
 public class RecyclerItemSwipe extends ItemTouchHelper.SimpleCallback {
 
     private View foregroundView = null;

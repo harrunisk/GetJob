@@ -552,7 +552,21 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
             currentLocationMarker1.showInfoWindow();
             mUserLocationInfo.setCurrentLocationMarker(currentLocationMarker1);
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition(mUserLocationInfo.getMyLocation())));
+
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+                    getCameraPosition(mUserLocationInfo.getMyLocation())),
+                    new GoogleMap.CancelableCallback() {
+                        @Override
+                        public void onFinish() {
+                            Log.d(TAG, "onFinish: mMap.animateCamera burası düzenlenecek.");
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            Log.d(TAG, "onCancel: mMap.animateCamera");
+
+                        }
+                    });
             DrawCircle drawCircle = new DrawCircle(location, 1000, mMap, getApplicationContext(), 1);//İlk Circle 1-km Alanı kapsayacak
             mCircleList.add(drawCircle); //Bulunan konuma 1 circle atıyorum bu circle daha sonra ulasabilmek adına circle olusturan sınıfı
             //nesnesini listede tutuyorum Daha sonraki circle değişimleri bu nesne üzerinden gerçekleştiriyorum..
@@ -570,7 +584,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
         countLocation = 2;
         Drawable drawable = getResources().getDrawable(R.drawable.markeruser2);
-       // drawable.setTint(getColor(R.color.jumbo));
+        // drawable.setTint(getColor(R.color.jumbo));
         BitmapDescriptor bitmapDescriptorFactory = MapHelperMethods.getDrawableMarkerAsBitmap(drawable);
         mUserLocationInfo.setNewLocationLatLng(center);//Yeni lokasyonun latlng değerini kayıt ediyorum daha sonra ulasabilmek adına ..
         Marker newLocationMarker1;
@@ -697,7 +711,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             } else {
                 mylocButton.setImageDrawable(getDrawable(R.drawable.markeruser));
 
-               // mylocButton.setImageTintList(ColorStateList.valueOf(Color.RED));
+                // mylocButton.setImageTintList(ColorStateList.valueOf(Color.RED));
                 firstClick = true;
                 return 2;
 
@@ -904,7 +918,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                             overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
                         } else {
-                            MyCustomToast.showCustomToast(getApplicationContext(),"Kapsama alanınızda Size uygun iş bulunamadı.");
+                            MyCustomToast.showCustomToast(getApplicationContext(), "Kapsama alanınızda Size uygun iş bulunamadı.");
                             //Toast.makeText(getApplicationContext(), "Kapsama alanınızda Size uygun iş bulunamadı.", Toast.LENGTH_SHORT).show();
 
                         }
@@ -1040,7 +1054,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         if (!locationCheckChange) {
             //İlk defa tıklandıgı durumdaki marker koyma işlemleri ...
             locationCheckChange = true;
-            changeLocation.setImageDrawable(getResources().getDrawable(R.drawable.succesholder));
+            changeLocation.setImageDrawable(getResources().getDrawable(R.drawable.markeranchor));
             Log.d(TAG, "changeMyLocation: " + center);
             if (mUserLocationInfo.getNewLocationMarker() == null) {
                 //Daha öncesinde koyulmus bir marker yoksa
@@ -1318,8 +1332,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             Log.d(TAG, "changeMarker:bASvuru yapılmıs ");
             myClusterMarker.getMarker(item).setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
             item.setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
-        }else
-        {
+        } else {
             Log.d(TAG, "changeMarker: Kayıt işlemi yapılmıs.");
         }
     }

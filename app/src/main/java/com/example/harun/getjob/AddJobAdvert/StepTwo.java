@@ -1,10 +1,12 @@
 package com.example.harun.getjob.AddJobAdvert;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -22,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
 import com.example.harun.getjob.R;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
@@ -35,25 +38,36 @@ import java.util.ArrayList;
 public class StepTwo extends Fragment implements Step, View.OnClickListener, TextWatcher, View.OnFocusChangeListener, TextView.OnEditorActionListener {
 
     private static final String TAG = "StepTwo";
-    Button ilkbtn, lisebtn, unibtn, digerbtn,
-            tecrubesizBtn, tecrubeliBtn, tecrubeFarketmezBtn, stajBtn, partTimeBtn, fullTimeBtn, freeTimeBtn,
-            ehliyetVarbtn, ehliyetFarketmezBtn, bayBtn, bayanBtn, cinsiyetFarketmezBtn, askerlikTecilliBtn, askerlikYapildiBtn, askerlikFarketmezBtn;
+    Button ilkbtn, lisebtn, unibtn, digerbtn, tecrubesizBtn, tecrubeliBtn,
+            tecrubeFarketmezBtn, stajBtn, partTimeBtn, fullTimeBtn, freeTimeBtn,
+            ehliyetVarbtn, ehliyetFarketmezBtn, bayBtn, bayanBtn,
+            cinsiyetFarketmezBtn, askerlikTecilliBtn, askerlikYapildiBtn, askerlikFarketmezBtn;
     EditText tecrubeText, ehliyetTuru;
-
-    RelativeLayout egitimSeviyesiFore, egitimSeviyesiBack,
-            tecrubeForeground, tecrubeBackground, calismaSekliFore, calismaSekliBack, ekstraFore, ekstraBack;
+    RelativeLayout egitimSeviyesiFore, egitimSeviyesiBack, tecrubeForeground, tecrubeBackground,
+            calismaSekliFore, calismaSekliBack, ekstraFore, ekstraBack;
     boolean textChange = false;
+
+    String tecrube;
     LinearLayout askerlikLayout;
+    NestedScrollView nestedScroll_step2;
     ArrayList<View> clickedEgitimList = new ArrayList<>(1);
     ArrayList<View> clickedTecrubeList = new ArrayList<>(1);
     ArrayList<View> clickedCalismaList = new ArrayList<>(1);
     ArrayList<View> clickedehliyetList = new ArrayList<>(1);
     ArrayList<View> clickedCinsiyetList = new ArrayList<>(1);
     ArrayList<View> clickedAskerlikList = new ArrayList<>(1);
+    ArrayList[] arrayLists =
+            {
+                    clickedCalismaList, clickedAskerlikList, clickedTecrubeList, clickedCinsiyetList,
+                    clickedEgitimList, clickedehliyetList
+            };
+
+    private JobAdvertModel2 model2;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: ");
         View v = inflater.inflate(R.layout.add_jobadvert_step2, container, false);
 
@@ -76,7 +90,6 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
         fullTimeBtn = v.findViewById(R.id.fullTimeBtn);
         freeTimeBtn = v.findViewById(R.id.freeTimeBtn);
         partTimeBtn = v.findViewById(R.id.partTimeBtn);
-
         ehliyetVarbtn = v.findViewById(R.id.ehliyetVarbtn);
         ehliyetFarketmezBtn = v.findViewById(R.id.ehliyetFarketmezBtn);
         bayBtn = v.findViewById(R.id.bayBtn);
@@ -98,12 +111,21 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
         ekstraBack = v.findViewById(R.id.ekstraBack);
 
 
+        nestedScroll_step2 = v.findViewById(R.id.nestedScroll_step2);
+
+
     }
 
+    @SuppressLint("UseSparseArrays")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated: ");
+        if (getArguments() != null) {
+            Log.d(TAG, "onViewCreated: getArguments() != null ");
+            model2 = getArguments().getParcelable("jobAdvertModel");
+        }
+
         ilkbtn.setOnClickListener(this);
         lisebtn.setOnClickListener(this);
         unibtn.setOnClickListener(this);
@@ -132,7 +154,33 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
         calismaSekliFore.setOnClickListener(this);
         ekstraFore.setOnClickListener(this);
 
-        // tecrubeText.addTextChangedListener(this);
+
+    }
+
+    private void setJobDetails() {
+        //burada liste bos kontrolleri yapılacak .
+        Log.d(TAG, "setJobDetails: ");
+        model2.setEducationLevel(((Button) clickedEgitimList.get(0)).getText().toString());
+        model2.setGender(((Button) clickedCinsiyetList.get(0)).getText().toString());
+        model2.setEmployeeHour(((Button) clickedCalismaList.get(0)).getText().toString());
+
+        model2.setMilitary(
+                clickedAskerlikList.isEmpty() ? "" : ((Button) clickedAskerlikList.get(0)).getText().toString());
+
+        if (clickedTecrubeList.get(0) == tecrubeliBtn) {
+            model2.setExpLevel(tecrubeText.getText().toString().concat("Yıl-") + ((Button) clickedTecrubeList.get(0)).getText().toString());
+        } else {
+            model2.setExpLevel(((Button) clickedTecrubeList.get(0)).getText().toString());
+        }
+
+        if (clickedehliyetList.get(0) == ehliyetVarbtn) {
+
+            model2.setDrivingLicence(ehliyetTuru.getText().toString().toUpperCase().concat(" Tipi"));
+
+        } else {
+
+            model2.setDrivingLicence(((Button) clickedehliyetList.get(0)).getText().toString());
+        }
 
 
     }
@@ -140,8 +188,75 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
     @Nullable
     @Override
     public VerificationError verifyStep() {
-        Log.d(TAG, "verifyStep: ");
+
+        for (int i = 0; i < arrayLists.length; i++) {
+            Log.d(TAG, "verifyStep:arrayLists.length " + arrayLists.length);
+
+            if (validate(arrayLists[i])) {
+                Log.d(TAG, "verifyStep: ");
+                errorAnim(arrayLists[i]);
+                return new VerificationError("Tüm secenekleri işaretleyiniz!");
+            }
+        }
+
+        setJobDetails();
         return null;
+    }
+
+    private void errorAnim(ArrayList empty_arrayList) {
+        Log.d(TAG, "errorAnim: ");
+        if (empty_arrayList == clickedehliyetList) {
+            Log.d(TAG, "errorAnim:clickedehliyetList ");
+            ekstraFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
+
+        } else if (empty_arrayList == clickedAskerlikList) {
+            Log.d(TAG, "errorAnim:clickedAskerlikList ");
+            ekstraFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
+        } else if (empty_arrayList == clickedCinsiyetList) {
+            Log.d(TAG, "errorAnim:clickedCinsiyetList ");
+            ekstraFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
+
+        } else if (empty_arrayList == clickedCalismaList) {
+            Log.d(TAG, "errorAnim:clickedCalismaList ");
+            calismaSekliFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
+
+        } else if (empty_arrayList == clickedEgitimList) {
+            Log.d(TAG, "errorAnim:clickedEgitimList ");
+            egitimSeviyesiFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
+
+        } else if (empty_arrayList == clickedTecrubeList) {
+            Log.d(TAG, "errorAnim:clickedTecrubeList ");
+            tecrubeForeground.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
+
+        }
+
+    }
+
+    /*LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(getActivity(),
+            R.anim.error_anim);
+    Log.d(TAG, "errorAnim: " + relativeLayoutArrayListHashMap.size());
+    Log.d(TAG, "errorAnim: " + arrayList.size());
+//        Log.d(TAG, "errorAnim: " + relativeLayoutArrayListHashMap.get(arrayList).toString());
+    relativeLayoutArrayListHashMap.get(arrayList).startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
+
+
+}
+*/
+    private boolean validate(ArrayList _arrayList) {
+        Log.d(TAG, "validate: " + _arrayList);
+
+        if (_arrayList.isEmpty()) {
+            Log.d(TAG, "validate: arrayList BOŞŞŞ" + _arrayList);
+            if (clickedCinsiyetList.contains(bayanBtn) && _arrayList == clickedAskerlikList) {
+                Log.d(TAG, "verifyStep: arrayLists[i].contains(bayanBtn) || arrayLists[i] == clickedCinsiyetList");
+                return false;
+            }
+            // errorAnim(_arrayList);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -231,11 +346,15 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
                 clearOtherActiveButton(clickedCalismaList, freeTimeBtn);
                 clickedCalismaList.add(freeTimeBtn);
                 break;
+            //Ehliyet
             case R.id.ehliyetVarbtn:
                 Log.d(TAG, "onClick: ");
                 ehliyetVarbtn.setActivated(true);
                 ehliyetTuru.setVisibility(View.VISIBLE);
                 ehliyetTuru.setActivated(true);
+
+                nestedScroll_step2.smoothScrollBy(0,
+                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
                 clearOtherActiveButton(clickedehliyetList, ehliyetVarbtn);
                 clickedehliyetList.add(ehliyetVarbtn);
                 break;
@@ -243,9 +362,13 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
                 Log.d(TAG, "onClick: ");
                 ehliyetFarketmezBtn.setActivated(true);
                 ehliyetTuru.setVisibility(View.GONE);
+
+                nestedScroll_step2.smoothScrollBy(0,
+                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
                 clearOtherActiveButton(clickedehliyetList, ehliyetFarketmezBtn);
                 clickedehliyetList.add(ehliyetFarketmezBtn);
                 break;
+            //Cinsiyet
             case R.id.bayanBtn:
                 Log.d(TAG, "onClick: ");
                 bayanBtn.setActivated(true);
@@ -256,17 +379,27 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
             case R.id.bayBtn:
                 Log.d(TAG, "onClick: ");
                 bayBtn.setActivated(true);
+
                 askerlikLayout.setVisibility(View.VISIBLE);
+
+                nestedScroll_step2.smoothScrollBy(0,
+                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
                 clearOtherActiveButton(clickedCinsiyetList, bayBtn);
                 clickedCinsiyetList.add(bayBtn);
                 break;
             case R.id.cinsiyetFarketmezBtn:
                 Log.d(TAG, "onClick: ");
                 cinsiyetFarketmezBtn.setActivated(true);
+
                 askerlikLayout.setVisibility(View.VISIBLE);
+
+                nestedScroll_step2.smoothScrollBy(0,
+                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
+
                 clearOtherActiveButton(clickedCinsiyetList, cinsiyetFarketmezBtn);
                 clickedCinsiyetList.add(cinsiyetFarketmezBtn);
                 break;
+            //Askerlik
             case R.id.askerlikTecilliBtn:
                 Log.d(TAG, "onClick: ");
                 askerlikTecilliBtn.setActivated(true);
@@ -285,6 +418,7 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
                 clearOtherActiveButton(clickedAskerlikList, askerlikFarketmezBtn);
                 clickedAskerlikList.add(askerlikFarketmezBtn);
                 break;
+            //Step2 Foreground
             case R.id.egitimSeviyesiFore:
                 Log.d(TAG, "onClick: ");
                 checkVisibilityLayout(egitimSeviyesiBack);
@@ -300,6 +434,8 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
             case R.id.ekstraFore:
                 Log.d(TAG, "onClick: ");
                 checkVisibilityLayout(ekstraBack);
+                nestedScroll_step2.smoothScrollBy(0,
+                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
                 break;
         }
 

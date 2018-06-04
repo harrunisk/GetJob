@@ -2,10 +2,12 @@ package com.example.harun.getjob.AddJobAdvert;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
+import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter;
 import com.stepstone.stepper.viewmodel.StepViewModel;
@@ -15,11 +17,20 @@ import com.stepstone.stepper.viewmodel.StepViewModel;
  */
 
 public class FragmentStepAdapter extends AbstractFragmentStepAdapter {
+    JobAdvertModel2 advertModel2;
+
+    @Override
+    public Parcelable saveState() {
+        Log.d(TAG, "saveState: ");
+        return super.saveState();
+    }
+
 
     private static final String TAG = "FragmentStepAdapter";
 
-    public FragmentStepAdapter(@NonNull FragmentManager fm, @NonNull Context context) {
+    public FragmentStepAdapter(@NonNull FragmentManager fm, @NonNull Context context, JobAdvertModel2 jobAdvertModel2) {
         super(fm, context);
+        this.advertModel2 = jobAdvertModel2;
     }
 
     @Override
@@ -29,7 +40,7 @@ public class FragmentStepAdapter extends AbstractFragmentStepAdapter {
             Log.d(TAG, "createStep: 0");
             StepOne step = new StepOne();
             Bundle b = new Bundle();
-            b.putInt("CurrentKey", position);
+            b.putParcelable("jobAdvertModel", advertModel2);
             step.setArguments(b);
             return step;
 
@@ -37,27 +48,27 @@ public class FragmentStepAdapter extends AbstractFragmentStepAdapter {
         if (position == 1) {
             Log.d(TAG, "createStep: 1");
             final StepTwo step2 = new StepTwo();
-            Bundle b1 = new Bundle();
-            b1.putInt("CurrentKey", position);
-            step2.setArguments(b1);
+            Bundle b = new Bundle();
+            b.putParcelable("jobAdvertModel", advertModel2);
+            step2.setArguments(b);
             return step2;
 
         }
         if (position == 2) {
             Log.d(TAG, "createStep: 2");
             final StepThree step2 = new StepThree();
-            Bundle b1 = new Bundle();
-            b1.putInt("CurrentKey", position);
-            step2.setArguments(b1);
+            Bundle b = new Bundle();
+            b.putParcelable("jobAdvertModel", advertModel2);
+            step2.setArguments(b);
             return step2;
 
         }
         if (position == 3) {
             Log.d(TAG, "createStep: 3");
             final StepFour step4 = new StepFour();
-            Bundle b1 = new Bundle();
-            b1.putInt("CurrentKey", position);
-            step4.setArguments(b1);
+            Bundle b = new Bundle();
+            b.putParcelable("jobAdvertModel", advertModel2);
+            step4.setArguments(b);
             return step4;
 
         } else {

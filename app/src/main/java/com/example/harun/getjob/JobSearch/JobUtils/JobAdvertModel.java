@@ -22,7 +22,12 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
 
     private static final String TAG = "JobAdvertModel";
 
-    private String companyName, companyJob, jobDescpriction, companyLocation, companyDistance, companyLogoUrl,
+    private String companyName,
+            companyJob,
+            jobDescpriction,
+            companyLocation,
+            companyDistance,
+            companyLogoUrl,
             companyAdress;//Adres İş ilanı girilince Alınacak .
     private LatLng mPosition;
     private String mTitle, experienceinfo, countApply, newLocationDistance, publishDate;
@@ -31,6 +36,10 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
     public BitmapDescriptor markerIcon;
 
     public JobAdvertModel() {
+    }
+
+    public void setBasvuruDurumu(int _basvuruDurumu) { //İlana Basvuru yapılmısmı
+        this.basvuruDurumu = _basvuruDurumu;
     }
 
     public StateButton.BUTTON_STATES getBasvuruDurumu() {
@@ -52,10 +61,6 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         this.markerIcon = icon;
     }
 
-    public void setBasvuruDurumu(int _basvuruDurumu) { //İlana Basvuru yapılmısmı
-        this.basvuruDurumu = _basvuruDurumu;
-    }
-
 
     public boolean isSave() {   //İlan kayıt edilmişmi ..
         return isSave;
@@ -74,6 +79,7 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
         this.experienceinfo = experienceinfo;
     }
 
+    //Suggest JobADvert
     public JobAdvertModel(String companyName,
                           String companyJob,
                           String jobDescpriction,
@@ -112,7 +118,6 @@ public class JobAdvertModel implements ClusterItem, Parcelable {
                           String experienceinfo,
                           String countApply,
                           // String companyDistance,
-
                           String companyLogoUrl, BitmapDescriptor markerIcon, String companyAdress) {
 
         Log.d(TAG, "JobAdvertModel: Constructor22");

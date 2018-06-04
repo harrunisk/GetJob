@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:map="http://schemas.android.com/apk/res-auto"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fullcontent"
         android:layout_width="match_parent"
@@ -16,7 +14,8 @@
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
 
 
         <android.support.v7.widget.CardView
@@ -67,284 +66,10 @@
         </android.support.v7.widget.CardView>
 
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/genelcontent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tanim"
-            android:elevation="12dp"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="8dp">
+        <include layout="@layout/jobadvert_position_info"></include>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <include layout="@layout/jobadvert_details_possibilities"></include>
 
-                <TextView
-                    android:id="@+id/genel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="5dp"
-                    android:fontFamily="serif"
-                    android:paddingBottom="3dp"
-                    android:paddingTop="3dp"
-                    android:text="Genel Bilgiler"
-                    android:textColor="@color/black"
-                    android:textSize="15dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/genel"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Eğitim Seviyesi:"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:text="Üniversite Mezunu"
-                            android:textColor="@color/black" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:weightSum="2">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Tecrübe"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:text="3 Yıl Deneyimli"
-                            android:textColor="@color/black" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Askerlik"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:text="Yapıldı"
-                            android:textColor="@color/black" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Cinsiyet"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:text="Bay-Bayan"
-                            android:textColor="@color/black" />
-
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="0.5"
-                            android:text="Calişma Şekli"
-                            android:textColor="@color/black" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.5"
-                            android:text="Tam Zamanlı"
-                            android:textColor="@color/black" />
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/imkancard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/genelcontent"
-            android:elevation="12dp"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="8dp">
-
-            <RelativeLayout
-                android:id="@+id/imkanlarcontent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/genelcontent">
-
-                <TextView
-                    android:id="@+id/imkanlar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="serif"
-                    android:paddingBottom="3dp"
-                    android:paddingTop="3dp"
-                    android:text="İmkanlar"
-                    android:textColor="@color/black"
-                    android:textSize="15dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/imkanlar"
-                    android:layout_marginTop="3dp"
-                    android:weightSum="2">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/sgk"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/edittext_back"
-                            android:drawableLeft="@drawable/ic_done_all_black_10dp"
-                            android:drawablePadding="5dp"
-                            android:padding="5dp"
-                            android:text="SGK"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="10sp"
-
-                            />
-
-                        <TextView
-                            android:id="@+id/yol"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/sgk"
-                            android:background="@drawable/edittext_back"
-                            android:drawableLeft="@drawable/ic_done_all_black_10dp"
-                            android:drawablePadding="5dp"
-                            android:padding="5dp"
-
-                            android:text="Yol"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="10sp"
-
-                            />
-
-                        <TextView
-                            android:id="@+id/prim"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/yol"
-                            android:background="@drawable/edittext_back"
-                            android:drawableLeft="@drawable/ic_done_all_black_10dp"
-                            android:drawablePadding="5dp"
-                            android:padding="5dp"
-                            android:text="Prim"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="10sp"
-
-                            />
-
-                        <TextView
-                            android:id="@+id/servis"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/prim"
-                            android:background="@drawable/edittext_back"
-                            android:drawableLeft="@drawable/ic_done_all_black_10dp"
-                            android:drawablePadding="5dp"
-                            android:padding="5dp"
-                            android:text="Servis"
-
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="10sp"
-
-                            />
-
-                        <TextView
-                            android:id="@+id/yemek"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_toEndOf="@+id/servis"
-                            android:background="@drawable/edittext_back"
-                            android:drawableLeft="@drawable/ic_done_all_black_10dp"
-                            android:drawablePadding="5dp"
-                            android:padding="5dp"
-                            android:text="Yemek"
-                            android:textAlignment="center"
-                            android:textColor="@color/black"
-                            android:textSize="10sp"
-
-                            />
-
-
-                    </RelativeLayout>
-
-
-                </LinearLayout>
-
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
             android:id="@+id/adrescard"
@@ -440,7 +165,7 @@
             app:enabledText="BAŞVUR"
             app:state="enabled" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/save_this_advert"
