@@ -4,7 +4,6 @@
     android:layout_width="250dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-
     android:padding="8dp">
 
     <TextView
@@ -56,10 +55,10 @@
             android:id="@+id/distance2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="italic"
             android:layout_marginStart="3dp"
             android:layout_toEndOf="@+id/distance"
-            android:textColor="@color/jumbo" />
+            android:textColor="@color/jumbo"
+            android:textStyle="italic" />
 
 
     </RelativeLayout>

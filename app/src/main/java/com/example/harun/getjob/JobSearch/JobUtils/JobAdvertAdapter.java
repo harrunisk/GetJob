@@ -37,6 +37,10 @@ public class JobAdvertAdapter extends RecyclerView.Adapter<JobAdvertAdapter.MyVi
         this.inflater = LayoutInflater.from(context);
         this.mContext = context;
         this.jobAdvertModelArrayList = jobAdvertModelArrayList;
+
+
+       // circleAreaLayout.setLayoutAnimation(layoutAnimationController);
+
     }
 
     @Override

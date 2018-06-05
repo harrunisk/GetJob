@@ -1,5 +1,6 @@
 package com.example.harun.getjob.JobSearch;
 
+import android.app.Activity;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.harun.getjob.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -42,20 +44,23 @@ public class DownloadAdressData extends AsyncTask<LatLng, Void, String> {
     private String adressFromJson;
     private adressCallback madressCallback;
     private OkHttpClient okHttpClient = new OkHttpClient();
-  //  public AVLoadingIndicatorView progres;
-    private WeakReference<JobSearch> jobSearchWeakReference; //Context nesnesi yerine bunu kullanıyorum memory leak olmasın diye
+    //  public AVLoadingIndicatorView progres;
+    private WeakReference<Activity> jobSearchWeakReference;
+    //Context nesnesi yerine bunu kullanıyorum memory leak olmasın diye Bu metodu çağıran aktivitye bağlıyorum.
     private static final String TAG = "DownloadAdressData";
+    private int mode;
 
     public interface adressCallback {
         void adressCallbackResult(String result);
     }
 
-    public DownloadAdressData(JobSearch jobSearch, adressCallback _adresCallback) {
+    public DownloadAdressData(Activity activity, adressCallback _adresCallback, int _mode) {
 
         //  super();
-        this.jobSearchWeakReference = new WeakReference<JobSearch>(jobSearch);
+        this.jobSearchWeakReference = new WeakReference<Activity>(activity);
         this.madressCallback = _adresCallback;
-      //  this.progres = progress;
+        this.mode = _mode;
+        //  this.progres = progress;
 
     }
 
@@ -149,8 +154,11 @@ public class DownloadAdressData extends AsyncTask<LatLng, Void, String> {
 
 
         super.onPreExecute();
-      //  progres.setVisibility(View.VISIBLE);
-        jobSearchWeakReference.get().adresLoading.setVisibility(View.VISIBLE);
+
+        if (jobSearchWeakReference.get().isFinishing() || jobSearchWeakReference.get() == null) {
+            return;
+        }
+        visibilityProgress(true);
     }
 
     @Override
@@ -234,14 +242,13 @@ public class DownloadAdressData extends AsyncTask<LatLng, Void, String> {
         if (s != null && !s.isEmpty()) {
 
             madressCallback.adressCallbackResult(s);
-            jobSearchWeakReference.get().adresLoading.setVisibility(View.GONE);
+            visibilityProgress(false);
 
         } else {
             s = "Adres Bilgisi Bulunamadi!";
 
             madressCallback.adressCallbackResult(s);
-            jobSearchWeakReference.get().adresLoading.setVisibility(View.GONE);
-
+            visibilityProgress(false);
 
             //  setAdressFromJson("Adres Bilgisi Bulunamadi!");
         }
@@ -265,6 +272,18 @@ public class DownloadAdressData extends AsyncTask<LatLng, Void, String> {
         }
     }
 
+    private void visibilityProgress(boolean visibility) {
+
+        if (mode == 1) {
+
+            if (visibility) {
+                jobSearchWeakReference.get().findViewById(R.id.adresLoading).setVisibility(View.VISIBLE);
+            } else {
+                jobSearchWeakReference.get().findViewById(R.id.adresLoading).setVisibility(View.GONE);
+            }
+        } else return;
+
+    }
 
 }
 

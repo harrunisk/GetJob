@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.location.Location;
 import android.util.Log;
 
+import com.example.harun.getjob.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Circle;
@@ -32,7 +33,7 @@ public class DrawCircle {
     private Context mContext;
     private LatLng circleLocation;
 
-    public DrawCircle(Location center, double radiusMeters, GoogleMap _mMap, Context context) {
+    public DrawCircle(Location center, double radiusMeters, GoogleMap _mMap, Context context, int mode) {
         Log.d(TAG, "DrawCircle:Circle Çiziliyor ");
 
         this.mRadiusMeters = radiusMeters;
@@ -50,15 +51,29 @@ public class DrawCircle {
         // rgba(209, 255, 163, 0.68)
         // rgba(184, 226, 121, 0.28)
 
+        //Mode 1 JobSearch Circle
+        if (mode == 1) {
+            mCircle = mMap.addCircle(new CircleOptions()
+                    .center(circleLocation)
+                    // .strokePattern(PATTERN_DOTTED)
+                    .strokeColor(Color.WHITE)
+                    .strokeWidth(5)
+                    .fillColor(mFillColorArgb)
+                    .radius(mRadiusMeters));
 
-        mCircle = mMap.addCircle(new CircleOptions()
-                .center(circleLocation)
-                // .strokePattern(PATTERN_DOTTED)
-                .strokeColor(Color.WHITE)
-                .strokeWidth(5)
-                .fillColor(mFillColorArgb)
-                .radius(mRadiusMeters));
 
+        } else if (mode == 2) {  //Mode 2 AddJobAdvert Step4 Circle
+
+            mCircle = mMap.addCircle(new CircleOptions()
+                    .center(circleLocation)
+                    // .strokePattern(PATTERN_DOTTED)
+                    .strokeColor(mContext.getResources().getColor(R.color.Brown))
+                    .strokeWidth(5)
+                    .fillColor(0x11d59563)
+                    .radius(mRadiusMeters));
+
+
+        }
 
         // Log.d(TAG, "DrawCircle: " + circleArea.getProgress() * 1000);
 

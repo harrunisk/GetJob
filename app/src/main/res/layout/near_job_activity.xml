@@ -47,86 +47,74 @@
             </android.support.v7.widget.Toolbar>
 
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/vUserProfileRoot"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="?attr/actionBarSize"
-                android:background="@color/GhostWhite"
+                android:background="@color/white"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                app:cardUseCompatPadding="true"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="1">
 
-                <RelativeLayout
+                <ImageView
+                    android:id="@+id/image5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/waypath"
+
+                    />
+
+                <TextView
+                    android:id="@+id/userAdress"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:id="@+id/image5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/waypath"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/image5"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_toEndOf="@+id/image5"
+                    android:text="Merkez Mah. 128.Sok No :12 Daire 4 İstanbul Beylikdüzü "
+                    android:textAlignment="center"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.SearchResult"
+                    android:textSize="13dp" />
 
-                        />
+                <TextView
+                    android:id="@+id/userArea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/userAdress"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="10dp"
 
-                    <TextView
-                        android:id="@+id/userAdress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/image5"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="17dp"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.SearchResult"
-                        android:layout_toEndOf="@+id/image5"
-                        android:text="Merkez Mah. 128.Sok No :12 Daire 4 İstanbul Beylikdüzü "
-                        android:textAlignment="center"
-                        android:textSize="13dp" />
+                    android:layout_toEndOf="@+id/image5"
+                    android:text="3 Km İçinde 10 sonuc Listeleniyor "
 
-                    <TextView
-                        android:id="@+id/userArea"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/userAdress"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="10dp"
-
-                        android:layout_toEndOf="@+id/image5"
-                        android:text="3 Km İçinde 10 sonuc Listeleniyor "
-
-                        android:textAlignment="center"
-                        android:textSize="12dp" />
-
-                </RelativeLayout>
+                    android:textAlignment="center"
+                    android:textSize="12dp" />
+            </RelativeLayout>
 
 
+        </android.support.design.widget.CollapsingToolbarLayout>
 
 
-            </android.support.v7.widget.CardView>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/nearJobTab"
+            style="@style/BottomSheetTabLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
+
+    </android.support.design.widget.AppBarLayout>
 
 
-
-    </android.support.design.widget.CollapsingToolbarLayout>
-
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/nearJobTab"
-        style="@style/BottomSheetTabLayoutStyle"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/nearJobPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
-
-</android.support.design.widget.AppBarLayout>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
-<android.support.v4.view.ViewPager
-android:id="@+id/nearJobPager"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-    </android.support.design.widget.CoordinatorLayout>
+</android.support.design.widget.CoordinatorLayout>

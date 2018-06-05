@@ -3,7 +3,6 @@ package com.example.harun.getjob.JobSearch;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -44,6 +43,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_nested_scroll, null);
         nearJobListRecycler = view.findViewById(R.id.nearJobList);
+       // int resId = R.anim.layout_animation;
         setDataList();
 
         return view;
@@ -77,11 +77,11 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         // SnapHelper snapHelper = new PagerSnapHelper();
         nearJobListRecycler.setNestedScrollingEnabled(false);
         nearJobListRecycler.setLayoutManager(linearLayoutManager2);
-        nearJobListRecycler.setItemAnimator(new DefaultItemAnimator());
+       // nearJobListRecycler.setItemAnimator(new DefaultItemAnimator());
         nearJobListRecycler.setHasFixedSize(true);
         nearJobListRecycler.setRecyclerListener(this);
+
         //  snapHelper.attachToRecyclerView(nearJobListRecycler);
-        Log.d(TAG, "onAttach: ");
 
     }
 
@@ -94,7 +94,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {
-
+        Log.d(TAG, "onViewRecycled: ");
         NearJobAdvertAdapter.MyViewHolder myViewHolder = (NearJobAdvertAdapter.MyViewHolder) holder;
         Log.d(TAG, "onViewRecycled: aaaa");
         if (myViewHolder != null && myViewHolder.mMap != null) {

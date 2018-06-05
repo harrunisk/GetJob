@@ -1,14 +1,16 @@
 package com.example.harun.getjob.JobSearch;
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -25,6 +27,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -41,6 +47,7 @@ import com.example.harun.getjob.JobSearch.JobUtils.MapHelperMethods;
 import com.example.harun.getjob.JobSearch.JobUtils.MyClusterMarker;
 import com.example.harun.getjob.JobSearch.JobUtils.MyclusterManager;
 import com.example.harun.getjob.JobSearch.JobUtils.UserLocationInfo;
+import com.example.harun.getjob.MyCustomToast;
 import com.example.harun.getjob.Profile.Permissions;
 import com.example.harun.getjob.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -104,7 +111,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     FloatingActionButton mylocButton, changeLocation, changeArea;
     //Sliding Widget From jobsearch 2
     // Sliding Layout
-
+    ValueAnimator colorAnimator;
     CategoryAdapter mCategoryAdapter;
     private CategoryModel mCategoryModel;
     AdvertDetails.ViewHolder viewHolder;
@@ -143,6 +150,11 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             new LatLng(40.978889, 28.6635097),
             new LatLng(40.994859, 28.6686097),
             new LatLng(40.993259, 28.6386097),
+            new LatLng(40.99319, 28.6386497),
+            new LatLng(40.99339, 28.680797),
+            new LatLng(40.9953259, 28.67896097),
+            new LatLng(40.9193259, 28.6673816097),
+            new LatLng(40.99233259, 28.634586097),
             new LatLng(40.9933259, 28.63846097),
             new LatLng(40.992259, 28.647097),
             new LatLng(40.998889, 28.6687097),
@@ -237,7 +249,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         resultList = new ArrayList<>();
         mUserLocationInfo = UserLocationInfo.getInstance();//USERLOCATİON INFO SİNGLETON NESNESİ ...
         style = MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_retro); //Map Style Retro
-        downloadAdressData = new DownloadAdressData(this, this);
+        downloadAdressData = new DownloadAdressData(this, this, 1);
         btnListNearJob.setOnClickListener(this);
         changeArea.setOnClickListener(this);
         slidingPanelListener();
@@ -405,10 +417,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         changeLocation.setOnClickListener(this);
 
         myItemClusterManager = new ClusterManager<JobAdvertModel>(this, mMap);
-        // Instantiate the cluster manager algorithm as is done in the ClusterManager
         clusterManagerAlgorithm = new NonHierarchicalDistanceBasedAlgorithm();
 
-        // Set this local algorithm in clusterManager
         myItemClusterManager.setAlgorithm(clusterManagerAlgorithm);
 
         myClusterMarker = new MyClusterMarker(this, mMap, myItemClusterManager);
@@ -542,8 +552,22 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
             currentLocationMarker1.showInfoWindow();
             mUserLocationInfo.setCurrentLocationMarker(currentLocationMarker1);
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition(mUserLocationInfo.getMyLocation())));
-            DrawCircle drawCircle = new DrawCircle(location, 1000, mMap, getApplicationContext());//İlk Circle 1-km Alanı kapsayacak
+
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+                    getCameraPosition(mUserLocationInfo.getMyLocation())),
+                    new GoogleMap.CancelableCallback() {
+                        @Override
+                        public void onFinish() {
+                            Log.d(TAG, "onFinish: mMap.animateCamera burası düzenlenecek.");
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            Log.d(TAG, "onCancel: mMap.animateCamera");
+
+                        }
+                    });
+            DrawCircle drawCircle = new DrawCircle(location, 1000, mMap, getApplicationContext(), 1);//İlk Circle 1-km Alanı kapsayacak
             mCircleList.add(drawCircle); //Bulunan konuma 1 circle atıyorum bu circle daha sonra ulasabilmek adına circle olusturan sınıfı
             //nesnesini listede tutuyorum Daha sonraki circle değişimleri bu nesne üzerinden gerçekleştiriyorum..
 
@@ -559,8 +583,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     private void drawNewLocationMarker(LatLng center) {
 
         countLocation = 2;
-        Drawable drawable = getResources().getDrawable(R.drawable.markeruser);
-        drawable.setTint(getColor(R.color.jumbo));
+        Drawable drawable = getResources().getDrawable(R.drawable.markeruser2);
+        // drawable.setTint(getColor(R.color.jumbo));
         BitmapDescriptor bitmapDescriptorFactory = MapHelperMethods.getDrawableMarkerAsBitmap(drawable);
         mUserLocationInfo.setNewLocationLatLng(center);//Yeni lokasyonun latlng değerini kayıt ediyorum daha sonra ulasabilmek adına ..
         Marker newLocationMarker1;
@@ -679,12 +703,15 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             // yani 1 .tıklayısta mavi 2.tıklayısta kırmızı olcak locationbutton daki marker rengi
             if (firstClick) {
 
-                mylocButton.setImageTintList(ColorStateList.valueOf(Color.BLUE));
+                mylocButton.setImageDrawable(getDrawable(R.drawable.markeruser2));
+                //mylocButton.setImageTintList(ColorStateList.valueOf(Color.BLUE));
                 firstClick = false;
                 return 1;
 
             } else {
-                mylocButton.setImageTintList(ColorStateList.valueOf(Color.RED));
+                mylocButton.setImageDrawable(getDrawable(R.drawable.markeruser));
+
+                // mylocButton.setImageTintList(ColorStateList.valueOf(Color.RED));
                 firstClick = true;
                 return 2;
 
@@ -747,13 +774,15 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                     locationManager.removeUpdates(this);
                 } else {
                     Log.d(TAG, "onLocationChanged: DRAWCİRLCE NULL ");
+                    mUserLocationInfo.getCurrentLocationMarker().remove(); //Şuanki markeri kaldırıyorum
                     mLastKnownLocation = location; //değişen lokasyon değerlerini son bilinen lokasyonuma eşitliyorum
                     drawCurrentLocationMarker(mLastKnownLocation); //son lokasyona marker, koyuyorum.
                     locationManager.removeUpdates(this);
 
                 }
             } else {
-                Log.d(TAG, "onLocationChanged: aaaaaaaaaaaa");
+                Log.d(TAG, "onLocationChanged: mCircleList NULL");
+                mUserLocationInfo.getCurrentLocationMarker().remove(); //Şuanki markeri kaldırıyorum
                 mLastKnownLocation = location; //değişen lokasyon değerlerini son bilinen lokasyonuma eşitliyorum
                 drawCurrentLocationMarker(mLastKnownLocation); //son lokasyona marker, koyuyorum.
                 locationManager.removeUpdates(this);
@@ -870,22 +899,32 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             case R.id.btnListNearJob:
 
                 //Log.d(TAG, "onClick: " + mMap.getCameraPosition().zoom + "\t\t" + mMap.getMaxZoomLevel());
-
-                //Yakındaki daire içerisindeki işler listelenecek
+                startNewAnimation();
                 getNearJobList();
-                if (resultList.size() > 0) {
-                    Log.d(TAG, "resultListSize>0: ");
-                    Intent i = new Intent(this, NearJobListActivity.class);
-                    i.putParcelableArrayListExtra("nearList", resultList);
-                    i.putExtra("nearListSize", resultList.size());
-                    startActivity(i);
-                    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                    break;
-                } else {
-                    Toast.makeText(this, "Kapsama alanınızda Size uygun iş bulunamadı.", Toast.LENGTH_SHORT).show();
-                    break;
-                }
 
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //Yakındaki daire içerisindeki işler listelenecek
+                        Log.d(TAG, "onClick: ");
+                        if (resultList.size() > 0) {
+                            Log.d(TAG, "resultListSize>0: ");
+                            final Intent i = new Intent(getApplicationContext(), NearJobListActivity.class);
+                            i.putParcelableArrayListExtra("nearList", resultList);
+                            i.putExtra("nearListSize", resultList.size());
+                            // colorAnimator.cancel();
+                            startActivity(i);
+                            overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+                        } else {
+                            MyCustomToast.showCustomToast(getApplicationContext(), "Kapsama alanınızda Size uygun iş bulunamadı.");
+                            //Toast.makeText(getApplicationContext(), "Kapsama alanınızda Size uygun iş bulunamadı.", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+                }, 1000);
+                break;
 
             case R.id.myLocButton:
                 Log.d(TAG, "onClick: MYLOC BUTTON TIKLANDI");
@@ -918,6 +957,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                 if (!circleArea.isShown()) {
 
                     circleAreaLayout.setVisibility(View.VISIBLE);
+                    circleAreaLayoutSetAnimation();
                     changeArea.setImageDrawable(getResources().getDrawable(R.drawable.circular_area_cancel));
 
                 } else {
@@ -927,6 +967,62 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
                 break;
         }
+    }
+
+    /**
+     * Circle Area Animation ..
+     */
+    private void circleAreaLayoutSetAnimation() {
+
+        Log.d(TAG, "circleAreaLayoutSetAnimation: ");
+
+        int anim = R.anim.layout_anim2;
+        LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(getApplicationContext(), anim);
+        circleAreaLayout.setLayoutAnimation(layoutAnimationController);
+
+
+    }
+
+
+    /**
+     * Yakınımdakileri Listele Butonu Animasyonu .LayerList backLayerin Renk değiştirme animasyonu .
+     */
+    private void startNewAnimation() {
+        int colorFrom = getResources().getColor(R.color.mycolor);
+        int colorTo = getResources().getColor(R.color.Aqua);
+        Log.d(TAG, "startNewAnimation: ");
+        LayerDrawable shape = (LayerDrawable) btnListNearJob.getBackground();
+        final GradientDrawable drawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.back_layer);
+        //    final ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), 0, 1);
+        colorAnimator = ValueAnimator.ofFloat(0, 1);
+        final float[] hsv;
+        hsv = new float[3]; // Transition color
+        hsv[1] = 1;
+        hsv[2] = (float) 0.8;
+
+        colorAnimator.setDuration(2000);
+        //  colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        colorAnimator.setInterpolator(new LinearInterpolator());
+        colorAnimator.setRepeatCount(Animation.ABSOLUTE);
+
+        // colorAnimator.setRepeatMode(ValueAnimator.RESTART);
+        colorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                                            @Override
+                                            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                                Log.d(TAG, "onAnimationUpdate: ");
+                                                int runColor;
+                                                hsv[0] = 360 * valueAnimator.getAnimatedFraction();
+                                                runColor = Color.HSVToColor(hsv);
+                                                drawable.setColor(runColor);
+                                                // float[] hsv=Color.HSVToColor((float[]) (colorAnimator.getAnimatedValue()));
+                                                //  drawable.setColor((int) (colorAnimator.getAnimatedValue()));
+                                            }
+                                        }
+
+
+        );
+        colorAnimator.start();
+
     }
 
     /**
@@ -958,7 +1054,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         if (!locationCheckChange) {
             //İlk defa tıklandıgı durumdaki marker koyma işlemleri ...
             locationCheckChange = true;
-            changeLocation.setImageDrawable(getResources().getDrawable(R.drawable.succesholder));
+            changeLocation.setImageDrawable(getResources().getDrawable(R.drawable.markeranchor));
             Log.d(TAG, "changeMyLocation: " + center);
             if (mUserLocationInfo.getNewLocationMarker() == null) {
                 //Daha öncesinde koyulmus bir marker yoksa
@@ -1020,7 +1116,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     /**
      * @param latLng alınan konumun adresini öğrenmek üzere DownloadAdressData methodunu cagırıyor.
      *               Bu method async method oldugunda her konum isteği için ayrı nesne oluşturmak zorundayız..
-     *               1 nesne tüm konumların adresini öğrenemiyoruz calışmıyor .. downloadAdressData nesnesi currentMarker konulurken
+     *               1 nesne tüm konumların adresini öğrenemiyoruz . downloadAdressData nesnesi currentMarker konulurken
      *               çağrıldıgı için diger tüm konum istekleri yeni nesne ile gerçekleştirilmek zorunda ..
      */
     public void runAdressMethod(LatLng latLng) {
@@ -1028,7 +1124,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         if (downloadAdressData != null) {
             Log.d(TAG, "runTask: Yeni nesne Oluşturuldu ");
             // adresLoading.show();
-            new DownloadAdressData(this, this).execute(latLng);
+            new DownloadAdressData(this, this, 1).execute(latLng);
         } /*else {
 
             Log.d(TAG, "runTask: eski nesne ");
@@ -1143,7 +1239,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
 
     /**
-     * Sliding Panele İlan  detayları sayfasını ekliyorum .. Ve Bu Dosyayı ViewHolder Klasorumde Saklıyorum ...
+     * Sliding Panele (Marker üzerine tıklanınca alttan acılan pnael )
+     * İlan  detayları sayfasını ekliyorum .. Ve Bu Dosyayı ViewHolder Klasorumde Saklıyorum ...
      * Tanımlamalarını click eventlerini o class ta gerçekleştiriyorum .
      */
     private void slidingPanelAdvertInfo() {
@@ -1224,22 +1321,20 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
      * Burada marker şeklini değiştircem .
      *
      * @param item
-     * @param which
+     * @param which -->İlana basvurumu yapıldı kayıtmı yapıldı ona göre marker işlemini değiştiriyorum
+     *              basvuru yapıldı ->true (AdvertDetail den geliyor ) marker yeşil yapıyorum .
+     *              kayıt için suan bir işlem yok
      */
     @Override
     public void changeMarker(JobAdvertModel item, boolean which) {
         Log.d(TAG, "changeMarker:İNTERFACEEE " + item);
-        //  Drawable drawable = getResources().getDrawable(R.drawable.markerjob);
-        // drawable.setTint(Color.GREEN);
-        // BitmapDescriptor jobMarker = MapHelperMethods.getDrawableMarkerAsBitmap(drawable);
-
-        //item.setIcon(jobMarker);
-
-        myClusterMarker.getMarker(item).setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
-        item.setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
-
-        //myItemClusterManager.removeItem(item);
-        //  myItemClusterManager.addItem(item);
+        if (which) {
+            Log.d(TAG, "changeMarker:bASvuru yapılmıs ");
+            myClusterMarker.getMarker(item).setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
+            item.setIcon(MapHelperMethods.getApplyMarkerDrawable(getApplicationContext()));
+        } else {
+            Log.d(TAG, "changeMarker: Kayıt işlemi yapılmıs.");
+        }
     }
 
 }

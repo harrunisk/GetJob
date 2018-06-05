@@ -59,6 +59,9 @@ dependencies {
     // Find the latest Twitter SDK releases here: https://goo.gl/E5wZvQ
     implementation("com.twitter.sdk.android:twitter-core:3.1.1@aar") { transitive = true }
 
+    //Picasso ımage loader
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     //Splash Screen
     compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
 
@@ -98,9 +101,11 @@ dependencies {
    // compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.0.5'
    // compile 'com.github.dmytrodanylyk:android-morphing-button:98a4986e56'
 
+    //State Button
     compile 'org.altervista.andrearosa:statebutton:1.0.0'
 
-
+    //Stepper Layout
+    compile 'com.stepstone.stepper:material-stepper:4.3.1'
 
     apply plugin: 'com.google.gms.google-services'
     implementation 'com.facebook.android:facebook-login:[4,5)'

@@ -17,6 +17,7 @@
     <string name="languages">Diller</string>
 
     <string name="text_1"></string>
+    <string name="imkanlartext"> İşveren olarak işçiye ne gibi imkanlar sunmaktasınız?</string>
 
     <string name="save">SAVE</string>
 
@@ -37,6 +38,7 @@
 
     <string name="spinnerPrompt">Baslangıc Yılı</string>
     <string name="spinnerPrompt2">Bitis Yılı</string>
+    <string name="yiltecrubeli">-Yıl</string>
 
     <string name="toolTip">Birden fazla ise virgül koyarak belirtiniz</string>
 
@@ -47,6 +49,32 @@
         <item>Yok</item>
 
     </string-array>
+<string name="tecrubetext"> %1$d Tecrübeli </string>
+
+<string-array name="sektorListe">
+
+    <item>Hukuk</item>
+    <item>Lojistik Taşıma</item>
+    <item>Eğiitim</item>
+    <item>IT ve Yazılım</item>
+    <item>İnsan Kaynakları</item>
+    <item>Güvenlik </item>
+    <item>Güzellik ve Bakım </item>
+    <item>Üretim ve İmalat </item>
+    <item>Temizlik</item>
+    <item>Sağlık</item>
+    <item>İnşaat-yapı</item>
+    <item>Mağazacılık</item>
+    <item>Mühendislik</item>
+    <item>Tamir ve Bakım </item>
+    <item>Tarım ve Hayvancılık </item>
+    <item>Tekstil</item>
+    <item>Muhasebe Finans</item>
+    <item>Bankacılık</item>
+    <item>Pazarlama ve Satış</item>
+
+    </string-array>
+
 
     <string-array name="Ehliyet">
         <item>A</item>

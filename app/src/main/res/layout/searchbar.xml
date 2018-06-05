@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/textview_back"
+    android:elevation="10dp">
+
+    <LinearLayout
+        android:id="@+id/search_adressLayout"
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginTop="1dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/search_adress"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/search" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/clearLayout"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="1dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/clearImage"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_close_black_24dp" />
+
+    </LinearLayout>
+
+    <AutoCompleteTextView
+        android:id="@+id/input_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center"
+        android:fontFamily="serif-monospace"
+        android:layout_toStartOf="@+id/search_adressLayout"
+        android:layout_toEndOf="@id/clearLayout"
+        android:background="@null"
+        android:hint="Adres Bilgisi ile Ara "
+
+        android:imeOptions="actionSearch"
+        android:inputType="textPostalAddress"
+        android:padding="3dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="15sp"
+
+        />
+
+
+</RelativeLayout>

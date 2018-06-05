@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:isScrollContainer="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="3">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2.1">
+
+
+                <fragment
+                    android:id="@+id/assign_map"
+                    class="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    />
+
+                <View
+                    android:id="@+id/transparentView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="65dp"
+                    android:background="@android:color/transparent" />
+
+                <include layout="@layout/searchbar"></include>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/myLocButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="70dp"
+                    android:src="@drawable/ic_my_location_black_24dp"
+                    app:backgroundTint="@color/white"
+                    app:fabSize="normal" />
+
+                <!--
+                <Button
+                    android:id="@+id/a"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="25dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btnstyle"
+                    android:text="Konum Belirle"
+                    android:padding="5dp"
+                    android:textColor="@color/blue"
+
+                    />
+
+                  -->
+
+
+            </FrameLayout>
+
+            <!--Alt Bölüm-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.9"
+
+                >
+
+                <Button
+                    android:id="@+id/getLocationBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripplebackbtn"
+                    android:text="Konum Belirle"
+                    android:textColor="@color/white_100"
+
+                    />
+
+                <ViewSwitcher
+                    android:id="@+id/viewSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/getLocationBtn">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <include layout="@layout/emptyview"></include>
+
+                    </LinearLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:elevation="10dp">
+
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:id="@+id/mapImageProgress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            app:indicatorColor="@color/SlateBlue"
+                            app:indicatorName="BallScaleMultipleIndicator" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/mapImage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start" />
+
+                            <TextView
+                                android:id="@+id/tv1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/mapImage"
+                                android:drawablePadding="10dp"
+                                android:drawableStart="@drawable/ms_ic_chevron_end"
+                                android:drawableTint="@color/black"
+                                android:fontFamily="serif"
+                                android:gravity="center_vertical"
+                                android:padding="2dp"
+                                android:text="Adres Bilgisi"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/companyAdress"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_below="@+id/tv1"
+                                android:layout_marginStart="5dp"
+                                android:layout_toEndOf="@+id/mapImage"
+                                android:gravity="top"
+                                android:padding="2dp"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+                        </RelativeLayout>
+
+
+                    </FrameLayout>
+
+                </ViewSwitcher>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

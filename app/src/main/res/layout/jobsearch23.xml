@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sliding_layout"
@@ -14,8 +15,7 @@
     sothree:umanoShadowHeight="4dp">
 
     <!--MAİN CONTENT-->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -80,7 +80,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="60dp"
+                        android:layout_marginEnd="12dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="15dp"
                         android:background="@drawable/edittext2">
@@ -116,9 +116,9 @@
                         android:id="@+id/myLocButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="top|end"
+                        android:layout_gravity="bottom|end"
                         android:layout_marginEnd="5dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="115dp"
                         android:src="@drawable/markeruser"
                         app:backgroundTint="@color/white"
                         app:fabSize="mini" />
@@ -127,9 +127,9 @@
                         android:id="@+id/changeLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="top|end"
+                        android:layout_gravity="bottom|end"
                         android:layout_marginEnd="5dp"
-                        android:layout_marginTop="60dp"
+                        android:layout_marginBottom="60dp"
                         android:src="@drawable/placeholders"
                         app:backgroundTint="@color/white"
                         app:fabSize="mini" />
@@ -202,7 +202,7 @@
 
             </FrameLayout>
 
-            <RelativeLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 
@@ -216,7 +216,7 @@
                     android:background="@drawable/btnstyle"
                     android:text="Yakınımdakileri Listele" />
 
-            </RelativeLayout>
+            </FrameLayout>
 
         </LinearLayout>
 
@@ -348,7 +348,7 @@
 
             </RelativeLayout>
         </LinearLayout>
-        <!--Sliding Panel MAin Content -->
+        <!--Sliding Panel Buranın içine dinamik view olusturup koyuyorum (jobadvertDetails.xml )MAin Content -->
         <ScrollView
             android:id="@+id/scrollableView"
             android:layout_width="match_parent"
