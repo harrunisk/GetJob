@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 
+import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
 import com.example.harun.getjob.MyCustomToast;
 import com.example.harun.getjob.R;
 
@@ -24,6 +25,8 @@ public class SuccessDialogFragment extends DialogFragment implements View.OnClic
     private static final String TAG = "SuccessDialogFragment";
     FloatingActionButton closeDialog2;
     Button publishBtn;
+    private JobAdvertModel2 model2;
+    SaveJobAdvertToFirebase mSaveJobAdvertToFirebase;
 
     public SuccessDialogFragment() {
         super();
@@ -55,6 +58,16 @@ public class SuccessDialogFragment extends DialogFragment implements View.OnClic
 
         closeDialog2.setOnClickListener(this);
         publishBtn.setOnClickListener(this);
+
+        if (getArguments() != null) {
+            Log.d(TAG, "init: getArguments() != null");
+            model2 = getArguments().getParcelable("jobAdvertModel");
+            new SaveJobAdvertToFirebase(getContext(), model2).execute();
+
+        }
+
+        // mSaveJobAdvertToFirebase.execute();
+
 
     }
 

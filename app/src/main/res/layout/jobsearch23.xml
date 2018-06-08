@@ -77,6 +77,16 @@
 
                         />
 
+                    <com.wang.avi.AVLoadingIndicatorView
+                        android:id="@+id/mapProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        app:indicatorColor="@color/mycolor"
+                        app:indicatorName="BallClipRotatePulseIndicator"
+
+                        />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

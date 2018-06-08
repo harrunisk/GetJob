@@ -590,9 +590,12 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     private void createsuccesDialog() {
         Log.d(TAG, "createsuccesDialog: ");
 
-        FragmentManager fragmentManager=getFragmentManager();
-        SuccessDialogFragment successDialogFragment=new SuccessDialogFragment();
-        successDialogFragment.show(fragmentManager,"SuccessDialog");
+        FragmentManager fragmentManager = getFragmentManager();
+        SuccessDialogFragment successDialogFragment = new SuccessDialogFragment();
+        Bundle b = new Bundle();
+        b.putParcelable("jobAdvertModel", jobAdvertModel2);
+        successDialogFragment.setArguments(b);
+        successDialogFragment.show(fragmentManager, "SuccessDialog");
 
 
     }
@@ -601,7 +604,14 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
 
         if (viewSwitcher.getChildAt(0) == viewSwitcher.getCurrentView()) {
             //Buradaki kosul -->Şuanki View emptyView (index:0) ise
-            return true;
+            if (!companyAdress.getText().equals("")) {
+
+                return true;
+            } else {
+                return false;
+            }
+
+
         } else {
             return false;
         }
@@ -696,6 +706,7 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     private void setJobAdress() {
         Log.d(TAG, "setJobAdress: ");
         jobAdvertModel2.setCompanyAdress(companyAdress.getText().toString());
+        jobAdvertModel2.setmPosition(new com.example.harun.getjob.AddJobAdvert.LatLng(coord.latitude, coord.longitude));
 
     }
 

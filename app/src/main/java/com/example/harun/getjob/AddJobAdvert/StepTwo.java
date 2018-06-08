@@ -248,6 +248,9 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
         if (_arrayList.isEmpty()) {
             Log.d(TAG, "validate: arrayList BOŞŞŞ" + _arrayList);
             if (clickedCinsiyetList.contains(bayanBtn) && _arrayList == clickedAskerlikList) {
+                //Eger Bayanbutonu tıklanmıs ise askerlik sekmesini pas geçiyoruz .return false ile verifyStep if(validate())
+                // kosulunu pas gecerek programa bir sorun yok devam et diyoruz
+
                 Log.d(TAG, "verifyStep: arrayLists[i].contains(bayanBtn) || arrayLists[i] == clickedCinsiyetList");
                 return false;
             }
@@ -373,6 +376,7 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
                 Log.d(TAG, "onClick: ");
                 bayanBtn.setActivated(true);
                 askerlikLayout.setVisibility(View.GONE);
+                clickedAskerlikList.clear();
                 clearOtherActiveButton(clickedCinsiyetList, bayanBtn);
                 clickedCinsiyetList.add(bayanBtn);
                 break;

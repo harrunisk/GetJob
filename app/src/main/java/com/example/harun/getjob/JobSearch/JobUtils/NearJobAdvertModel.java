@@ -2,6 +2,7 @@ package com.example.harun.getjob.JobSearch.JobUtils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
@@ -16,32 +17,65 @@ import java.util.ArrayList;
  */
 
 public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, Parcelable {
-
+    private static final String TAG = "NearJobAdvertModel";
 
     private boolean isSave;
     private int basvuruDurumu;
     private BitmapDescriptor markerIcon;
     private String newLocationDistance, companyDistance;
+    private LatLng mCoord;
 
-    public NearJobAdvertModel(String companyName, String companyJob, String jobSector, String jobDescpriction,
-                              String companyLogoUrl, String companyAdress, String educationLevel, String expLevel,
-                              String employeeHour, String drivingLicence, String military, String gender, String
-                                      publishDate, int countApply, ArrayList<String> jobPossibility, LatLng mPosition,
-                              boolean isSave, int basvuruDurumu, BitmapDescriptor markerIcon,
-                              String newLocationDistance, String companyDistance) {
-        //Bunlar jobADvertModel2 'e Diğerleri bu sınıfın değişkeni
+    public NearJobAdvertModel(
+            String companyName,
+            String companyJob,
+            String jobSector,
+            String jobDescpriction,
+            String companyLogoUrl,
+            String companyAdress,
+            String educationLevel,
+            String expLevel,
+            String employeeHour,
+            String drivingLicence,
+            String military,
+            String gender,
+            String publishDate,
+            int countApply,
+            ArrayList<String> jobPossibility,
+            LatLng mPosition,
+            boolean isSave,
+            int basvuruDurumu,
+            BitmapDescriptor markerIcon,
+            String newLocationDistance, String companyDistance) {
+        //Bunlar jobADvertModel2 'e
+        // Diğerleride bu sınıfın değişkeni
         super(companyName, companyJob, jobSector, jobDescpriction,
                 companyLogoUrl, companyAdress, educationLevel,
                 expLevel, employeeHour, drivingLicence, military,
                 gender, publishDate, countApply, jobPossibility,
-                mPosition);
+                mPosition
+
+        );
 
         this.isSave = isSave;
         this.basvuruDurumu = basvuruDurumu;
         this.markerIcon = markerIcon;
         this.newLocationDistance = newLocationDistance;
         this.companyDistance = companyDistance;
+        setPosition(mPosition);
     }
+
+
+    @Override
+    public LatLng getPosition() {
+        Log.d(TAG, "getPosition: " + mCoord);
+        return mCoord;
+    }
+
+
+    public void setPosition(LatLng mPosition) {
+        Log.d(TAG, "setPosition: " + mPosition);
+        mCoord = mPosition;
+            }
 
     public boolean isSave() {
         return isSave;
@@ -129,10 +163,6 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
         }
     };
 
-    @Override
-    public LatLng getPosition() {
-        return null;
-    }
 
     @Override
     public String getTitle() {

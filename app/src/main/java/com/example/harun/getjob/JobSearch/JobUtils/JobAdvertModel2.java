@@ -32,7 +32,7 @@ public class JobAdvertModel2 implements Parcelable {
                            String military, String gender,
                            String publishDate, int countApply,
                            ArrayList<String> jobPossibility,
-                           LatLng mPosition) {
+                            LatLng _mPosition) {
         Log.d(TAG, "JobAdvertModel2: PARAMETERS CONSTRUCTOR");
         this.companyName = companyName;
         this.companyJob = companyJob;
@@ -49,7 +49,17 @@ public class JobAdvertModel2 implements Parcelable {
         this.publishDate = publishDate;
         this.countApply = countApply;
         this.jobPossibility = jobPossibility;
-        this.mPosition = mPosition;
+        this.mPosition = _mPosition;
+    }
+
+    public LatLng getmPosition() {
+       // Log.d(TAG, "getmPosition: " + mPosition);
+        return mPosition;
+    }
+
+    public void setmPosition(com.example.harun.getjob.AddJobAdvert.LatLng mPosition) {
+       // Log.d(TAG, "setmPosition: ");
+        this.mPosition = new LatLng(mPosition.getLatitude(),mPosition.getLongitude());
     }
 
     public String getCompanyName() {
@@ -173,15 +183,8 @@ public class JobAdvertModel2 implements Parcelable {
         this.jobPossibility = jobPossibility;
     }
 
-    public LatLng getmPosition() {
-        return mPosition;
-    }
 
-    public void setmPosition(LatLng mPosition) {
-        this.mPosition = mPosition;
-    }
-
-    protected JobAdvertModel2(Parcel in) {
+    public JobAdvertModel2(Parcel in) {
         companyName = in.readString();
         companyJob = in.readString();
         jobSector = in.readString();
@@ -197,7 +200,7 @@ public class JobAdvertModel2 implements Parcelable {
         publishDate = in.readString();
         countApply = in.readInt();
         jobPossibility = in.createStringArrayList();
-        mPosition = in.readParcelable(LatLng.class.getClassLoader());
+        mPosition = in.readParcelable(com.example.harun.getjob.AddJobAdvert.LatLng.class.getClassLoader());
     }
 
     public static final Creator<JobAdvertModel2> CREATOR = new Creator<JobAdvertModel2>() {
@@ -258,4 +261,6 @@ public class JobAdvertModel2 implements Parcelable {
                 ", countApply=" + countApply +
                 '}';
     }
+
+
 }

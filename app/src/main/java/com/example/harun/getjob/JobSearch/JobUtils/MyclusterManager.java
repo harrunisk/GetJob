@@ -8,10 +8,15 @@ import com.google.maps.android.clustering.ClusterManager;
  * Created by mayne on 20.04.2018.
  */
 
+
+/**
+ * Cluster Manager Nesnesini global bir snıfı alıyorum baska yerlerdende ulasmam gerekiy.r
+ *
+ */
 public class MyclusterManager {
     private static final String TAG = "MyclusterManager";
 
-    public ClusterManager<JobAdvertModel> myClusterManager;
+    public ClusterManager<NearJobAdvertModel> myClusterManager;
     public MyClusterMarker myClusterMarker;
     public static MyclusterManager myclusterManager;
 
@@ -39,17 +44,17 @@ public class MyclusterManager {
         this.myClusterMarker = myClusterMarker;
     }
 
-    public void setMyClusterManager(ClusterManager<JobAdvertModel> myClusterManager) {
+    public void setMyClusterManager(ClusterManager<NearJobAdvertModel> myClusterManager) {
         Log.d(TAG, "setMyClusterManager: ");
         this.myClusterManager = myClusterManager;
     }
 
-    public ClusterManager<JobAdvertModel> getMyClusterManager() {
+    public ClusterManager<NearJobAdvertModel> getMyClusterManager() {
         Log.d(TAG, "getMyClusterManager: ");
         return myClusterManager;
     }
 
-    public void removeItemCluster(JobAdvertModel model) {
+    public void removeItemCluster(NearJobAdvertModel model) {
 
         Log.d(TAG, "removeItemCluster: ");
         myClusterManager.removeItem(model);

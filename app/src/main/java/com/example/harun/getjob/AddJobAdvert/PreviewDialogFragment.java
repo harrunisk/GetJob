@@ -64,6 +64,7 @@ public class PreviewDialogFragment extends DialogFragment implements View.OnClic
         pos_viewSwitch = view.findViewById(R.id.pos_viewSwitch);
         jobadresTv = view.findViewById(R.id.jobadresTv);
         closeDialog1 = view.findViewById(R.id.closeDialog1);
+        preDialog_pbDate = view.findViewById(R.id.preDialog_pbDate);
     }
 
 
@@ -79,10 +80,11 @@ public class PreviewDialogFragment extends DialogFragment implements View.OnClic
     }
 
     private void init() {
-        Log.d(TAG, "init: ");
+        Log.d(TAG, "init: "+ model2);
 
         sektor1.setText(model2.getJobSector());
         meslek.setText(model2.getCompanyJob());
+        preDialog_pbDate.setText(model2.getPublishDate());
         istanimTv.setText(model2.getJobDescpriction());
         egitimSeviyesiTv.setText(model2.getEducationLevel());
         tecrubeTV.setText(model2.getExpLevel());
@@ -91,6 +93,7 @@ public class PreviewDialogFragment extends DialogFragment implements View.OnClic
         cinsiyetTv.setText(model2.getGender());
         askerlikTv.setText(model2.getMilitary());
         jobadresTv.setText(model2.getCompanyAdress());
+
         addView();
 
     }
@@ -105,7 +108,7 @@ public class PreviewDialogFragment extends DialogFragment implements View.OnClic
                     View tagView = layoutInflater.inflate(R.layout.pos_textview, null, false);
                     TextView tagTextView = tagView.findViewById(R.id.tagText);
                     tagTextView.setText(text);
-                    setMargins(tagTextView, 5, 5, 5, 5);
+                    HelperStaticMethods.setMargins(tagTextView, 5, 5, 5, 5);
                     imkanlarcontent.addView(tagView);
 
                   /*  TextView possibility = new TextView(getContext());
@@ -134,16 +137,6 @@ public class PreviewDialogFragment extends DialogFragment implements View.OnClic
         }
     }
 
-    public void setMargins(View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            Log.d(TAG, "setMargins: ");
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.setLayoutParams(p);
-            v.requestLayout();
-
-        }
-    }
 
     @Override
     public void onClick(View view) {

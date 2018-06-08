@@ -2,11 +2,15 @@ package com.example.harun.getjob.JobSearch.JobUtils;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
+import com.example.harun.getjob.AddJobAdvert.HelperStaticMethods;
 import com.example.harun.getjob.R;
+import com.example.harun.getjob.viewpagercards.TagLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -16,6 +20,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.altervista.andrearosa.statebutton.StateButton;
 
+import java.util.ArrayList;
+
 /**
  * Created by mayne on 17.04.2018.
  */
@@ -24,12 +30,12 @@ import org.altervista.andrearosa.statebutton.StateButton;
 /**
  * Job Search te Tıklanan her marker için Bottom Sliding Panelde
  */
-public class AdvertDetails extends JobAdvertModel {
+public class AdvertDetails {
     private static final String TAG = "AdvertDetails";
 
     public interface ChangeMarkerCluster {
 
-        void changeMarker(JobAdvertModel item, boolean isBasvuruOrSave);
+        void changeMarker(NearJobAdvertModel item, boolean isBasvuruOrSave);
 
     }
 
@@ -37,27 +43,46 @@ public class AdvertDetails extends JobAdvertModel {
      * İlan detayları sayfası ile ilgili hersey bu sınıfta ..
      */
     public static class ViewHolder implements View.OnClickListener, OnMapReadyCallback {
-        TextView tanimTv, jobadresTv, distance3;
+        TextView tanimTv, jobadresTv, distance3,
+                egitimSeviyesiTv, tecrubeTV, calismaSekliTv, ehliyetTv, cinsiyetTv, askerlikTv;
+        TagLayout imkanlarcontent;
         StateButton btnBasvur;
         public MapView mapview;
         public GoogleMap mMap;
         ImageView save_this_advert;
         Context mContext;
+        View tagView;
+        private ViewSwitcher pos_viewSwitch;
         boolean kontrol;
-        private JobAdvertModel mJobAdvertModel;
+        private NearJobAdvertModel mJobAdvertModel;
         ChangeMarkerCluster markerCluster;
         // deneme markerCluster;
 
         public ViewHolder(View itemView, Context mContext, ChangeMarkerCluster changeMarkerCluster) {
+            Log.d(TAG, "ViewHolder: ");
             markerCluster = changeMarkerCluster;
             this.mContext = mContext;
-            Log.d(TAG, "ViewHolder: ");
             btnBasvur = itemView.findViewById(R.id.basvurbtn);
             save_this_advert = itemView.findViewById(R.id.save_this_advert);
             tanimTv = itemView.findViewById(R.id.tanimTv);
             jobadresTv = itemView.findViewById(R.id.jobadresTv);
             distance3 = itemView.findViewById(R.id.distance3);
             mapview = itemView.findViewById(R.id.mapView);
+            egitimSeviyesiTv = itemView.findViewById(R.id.egitimSeviyesiTv);
+            tecrubeTV = itemView.findViewById(R.id.tecrubeTV);
+            calismaSekliTv = itemView.findViewById(R.id.calismaSekliTv);
+            ehliyetTv = itemView.findViewById(R.id.ehliyetTv);
+            cinsiyetTv = itemView.findViewById(R.id.cinsiyetTv);
+            askerlikTv = itemView.findViewById(R.id.askerlikTv);
+            imkanlarcontent = itemView.findViewById(R.id.imkanlarcontent);
+            pos_viewSwitch = itemView.findViewById(R.id.pos_viewSwitch);
+            init();
+
+
+        }
+
+        private void init() {
+
             if (mapview != null) {
 
                 mapview.onCreate(null);
@@ -65,6 +90,7 @@ public class AdvertDetails extends JobAdvertModel {
             }
             save_this_advert.setOnClickListener(this);
             btnBasvur.setOnClickListener(this);
+
 
         }
 
@@ -74,7 +100,7 @@ public class AdvertDetails extends JobAdvertModel {
          * @param fromNearJobAdapter
          */
 
-        public void bindMapLocation(JobAdvertModel fromNearJobAdapter) {
+        public void bindMapLocation(NearJobAdvertModel fromNearJobAdapter) {
             //mJobAdvertModel = fromNearJobAdapter;
             //  Log.d(TAG, "bindMapLocation: "+mjobAdvertModel);
             //   mapview.setTag(mJobAdvertModel);
@@ -83,18 +109,46 @@ public class AdvertDetails extends JobAdvertModel {
         }
 
 
-        public void setData(JobAdvertModel data) {
+        public void setData(NearJobAdvertModel data) {
 
             mJobAdvertModel = data;
             Log.d(TAG, "setData: " + mJobAdvertModel);
             jobadresTv.setText(data.getCompanyAdress());
             distance3.setText(data.getCompanyDistance());
+            tanimTv.setText(data.getJobDescpriction());
+            egitimSeviyesiTv.setText(data.getEducationLevel());
+            tecrubeTV.setText(data.getExpLevel());
+            calismaSekliTv.setText(data.getEmployeeHour());
+            ehliyetTv.setText(data.getDrivingLicence());
+            cinsiyetTv.setText(data.getGender());
+            askerlikTv.setText(data.getMilitary());
             save_this_advert.setActivated(data.isSave()); //Daha önceden kayıtlı ise onu set ediyoruz...
-            // tanimTv.setText(data.getCompanyDistance());
             btnBasvur.setState(data.getBasvuruDurumu()); //
             Log.d(TAG, "setData:DİSABLED" + data.getBasvuruDurumu().getValue());
-
+            addPossibility(data.getJobPossibility());
             setMapLocation();
+
+        }
+
+        private void addPossibility(ArrayList<String> jobPossibility) {
+
+            Log.d(TAG, "addPossibility: ");
+            pos_viewSwitch.setDisplayedChild(1);
+            LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            for (String text : jobPossibility) {
+
+                tagView = layoutInflater.inflate(R.layout.pos_textview, null, false);
+                if (!text.isEmpty()) {
+                    TextView tagText = tagView.findViewById(R.id.tagText);
+                    tagText.setText(text);
+                    HelperStaticMethods.setMargins(tagText, 5, 5, 5, 5);
+                    imkanlarcontent.addView(tagView);
+
+
+                }
+
+
+            }
 
         }
 
@@ -113,16 +167,12 @@ public class AdvertDetails extends JobAdvertModel {
         private void setMapLocation() {
             Log.d(TAG, "setMapLocation: ");
             if (mJobAdvertModel == null) return;
-            // Log.d(TAG, "setMapLocation: " + mjobAdvertModel.getPosition());
             if (mMap == null) return;
-            mMap.addMarker(new MarkerOptions().position(mJobAdvertModel.getPosition())
+            mMap.addMarker(new MarkerOptions().position(mJobAdvertModel.getmPosition())
                     .icon(MapHelperMethods.getNormalMarkerDrawable(mContext))
                     .title(mJobAdvertModel.getCompanyName() + "\n".concat(mJobAdvertModel.getCompanyJob())));
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mJobAdvertModel.getPosition(), 15f));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mJobAdvertModel.getmPosition(), 15f));
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-
-
         }
 
         /**
@@ -135,6 +185,11 @@ public class AdvertDetails extends JobAdvertModel {
                 Log.d(TAG, "clearMap: mMap !=null");
                 mMap.clear();
                 mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
+            }
+            if (pos_viewSwitch.getCurrentView() == pos_viewSwitch.getChildAt(1)) {
+                Log.d(TAG, "clearMap: pos_viewSwitch.getCurrentView() == pos_viewSwitch.getChildAt(1)");
+                imkanlarcontent.removeAllViews();
+
             }
 
         }

@@ -3,7 +3,6 @@ package com.example.harun.getjob.viewpagercards;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,14 +50,14 @@ public class TagLayout extends ViewGroup {
         final int childWidth = childRight - childLeft;
         final int childHeight = childBottom - childTop;
 
-        Log.d(TAG, "onLayout:UUZNLUKLARI        " + childLeft + "\t" + childTop + "\t" + childRight + "\t" + childBottom + "\t" + childWidth + "\t" + childHeight);
+        //  Log.d(TAG, "onLayout:UUZNLUKLARI        " + childLeft + "\t" + childTop + "\t" + childRight + "\t" + childBottom + "\t" + childWidth + "\t" + childHeight);
         maxHeight = 0;
         curLeft = childLeft;
         curTop = childTop;
 
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
-            Log.d(TAG, "onLayout:getChildAt(i); " + i);
+            //  Log.d(TAG, "onLayout:getChildAt(i); " + i);
             if (child.getVisibility() == GONE)
                 return;
 
@@ -68,8 +67,8 @@ public class TagLayout extends ViewGroup {
             curHeight = child.getMeasuredHeight();
             //wrap is reach to the end
             //Bir alt satrıra geçiş
-            if (curLeft + curWidth >= childRight) {
-                Log.d(TAG, "onLayout: ");
+            if (curLeft + curWidth > childRight) {
+                // Log.d(TAG, "onLayout: ");
                 curLeft = childLeft;
                 curTop += maxHeight;
                 maxHeight = 0;
@@ -97,28 +96,30 @@ public class TagLayout extends ViewGroup {
         // from their size.
         for (int i = 0; i < count; i++) {
             final View child = getChildAt(i);
-            Log.d(TAG, "onMeasure: " + i);
+            // Log.d(TAG, "onMeasure: " + i);
             if (child.getVisibility() == GONE)
                 continue;
 
             // Measure the child.
-            measureChild(child, widthMeasureSpec, heightMeasureSpec);
+         //   measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0);
+            measureChild(child, widthMeasureSpec,  heightMeasureSpec);
             maxWidth += Math.max(maxWidth, child.getMeasuredWidth());
             mLeftWidth += child.getMeasuredWidth();
 
             if ((mLeftWidth / (deviceWidth / 2)) > rowCount) {
 
-                Log.d(TAG, "onMeasure:mLeftWidth / deviceWidth) > rowCount ");
+                //  Log.d(TAG, "onMeasure:mLeftWidth / deviceWidth) > rowCount ");
                 maxHeight += child.getMeasuredHeight();
                 rowCount++;
             } else {
-                Log.d(TAG, "onMeasure: else");
+                // Log.d(TAG, "onMeasure: else");
                 maxHeight = Math.max(maxHeight, child.getMeasuredHeight());
             }
             childState = combineMeasuredStates(childState, child.getMeasuredState());
         }
 
         // Check against our minimum height and width
+        // maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
         maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
         maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
 
@@ -126,7 +127,6 @@ public class TagLayout extends ViewGroup {
         setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),
                 resolveSizeAndState(maxHeight, heightMeasureSpec, childState << MEASURED_HEIGHT_STATE_SHIFT));
     }
-
 
 
 }

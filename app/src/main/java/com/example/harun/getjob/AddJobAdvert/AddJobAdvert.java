@@ -14,11 +14,15 @@ import com.example.harun.getjob.R;
 import com.stepstone.stepper.StepperLayout;
 import com.stepstone.stepper.VerificationError;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 /**
  * Created by mayne on 1.05.2018.
  */
 
-public class AddJobAdvert extends AppCompatActivity implements View.OnClickListener,StepperLayout.StepperListener {
+public class AddJobAdvert extends AppCompatActivity implements View.OnClickListener, StepperLayout.StepperListener {
     private static final String TAG = "AddJobAdvert";
     StepperLayout stepperLayout;
     ImageView job_back;
@@ -61,11 +65,20 @@ public class AddJobAdvert extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "init: ");
         passModelObject = new Bundle();
         advertModel2 = new JobAdvertModel2();
+        setJobDetails();
         passModelObject.putParcelable("passModelObject", advertModel2);
         stepperLayout.setAdapter(new FragmentStepAdapter(getSupportFragmentManager(), this, advertModel2));
         job_back.setOnClickListener(this);
         previewTv.setOnClickListener(this);
 
+    }
+
+    private void setJobDetails() {
+        Log.d(TAG, "setJobDetails: ");
+        advertModel2.setPublishDate(new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime()));
+        advertModel2.setCompanyLogoUrl("");
+        advertModel2.setCompanyName("MD Bilişim Sistemleri");
+        advertModel2.setCountApply(0);
     }
 
 
@@ -74,6 +87,8 @@ public class AddJobAdvert extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
 
             case R.id.job_back:
+
+                advertModel2 = null;
                 finish();
                 break;
             case R.id.previewTv:

@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel;
 import com.example.harun.getjob.JobSearch.JobUtils.NearJobAdvertAdapter;
+import com.example.harun.getjob.JobSearch.JobUtils.NearJobAdvertModel;
 import com.example.harun.getjob.R;
 import com.google.android.gms.maps.GoogleMap;
 
@@ -25,7 +25,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
     Bundle extras;
     private static final String TAG = "NearJobFragment";
     private RecyclerView nearJobListRecycler;
-    ArrayList<JobAdvertModel> nearJobList;
+    private ArrayList<NearJobAdvertModel> nearJobList;
     private NearJobAdvertAdapter mJobAdvertAdapter;
 
     //deneme deneme1;
@@ -43,19 +43,18 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_nested_scroll, null);
         nearJobListRecycler = view.findViewById(R.id.nearJobList);
-       // int resId = R.anim.layout_animation;
+        // int resId = R.anim.layout_animation;
         setDataList();
 
         return view;
     }
 
 
-
     private void setDataList() {
 
         //  Log.d(TAG, "setDataList: ");
         try {
-            nearJobList = getArguments().getParcelableArrayList("yetenekSatir");
+            nearJobList = getArguments().getParcelableArrayList("nearJobList");
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -69,7 +68,6 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated: ");
         //Burda List View Doldurulacak Activity Olusutugunda
-
         mJobAdvertAdapter = new NearJobAdvertAdapter(getContext(), nearJobList);
         nearJobListRecycler.setAdapter(mJobAdvertAdapter);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
@@ -77,20 +75,13 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         // SnapHelper snapHelper = new PagerSnapHelper();
         nearJobListRecycler.setNestedScrollingEnabled(false);
         nearJobListRecycler.setLayoutManager(linearLayoutManager2);
-       // nearJobListRecycler.setItemAnimator(new DefaultItemAnimator());
+        // nearJobListRecycler.setItemAnimator(new DefaultItemAnimator());
         nearJobListRecycler.setHasFixedSize(true);
-        nearJobListRecycler.setRecyclerListener(this);
+     //   nearJobListRecycler.setRecyclerListener(this);
 
         //  snapHelper.attachToRecyclerView(nearJobListRecycler);
 
     }
-
-    /*public void changeMarker1(JobAdvertModel item) {
-        Log.d(TAG, "changeMarker1: " + item);
-
-        deneme1.deneme2(item);
-
-    }*/
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {

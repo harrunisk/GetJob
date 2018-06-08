@@ -28,9 +28,8 @@ public class NearJobListActivity extends AppCompatActivity {
     TextView userAdress;
     TextView userArea;
     myFragmentPagerAdapter pagerAdapter;
-    int joblistSize = 0;
-
-
+    private int nearJoblistSize = 0;
+    private int allJoblistSize = 0;
 
 
     @Override
@@ -51,17 +50,20 @@ public class NearJobListActivity extends AppCompatActivity {
      *
      * @return
      */
-    public Bundle getDataFromJobSearchActivity() {
-
-
-        // Intent intent = getIntent();
-
-        // intent.getParcelableArrayListExtra("nearList");
+    public Bundle getDataFromJobSearchActivity(int mode) {
 
         Bundle extras = getIntent().getExtras(); //jobSearchden gelen bundle al
-        joblistSize = extras.getInt("nearListSize"); //liste// size
+        nearJoblistSize = extras.getInt("nearListSize"); //liste// size
+        allJoblistSize = extras.getInt("allJobListSize"); //liste// size
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList("yetenekSatir", extras.getParcelableArrayList("nearList"));
+        if (mode == 1) {
+            bundle.putParcelableArrayList("nearJobList", extras.getParcelableArrayList("nearList"));
+
+        } else {
+
+            bundle.putParcelableArrayList("allJobList", extras.getParcelableArrayList("allJobList"));
+
+        }
 
 
         return bundle;
@@ -71,10 +73,15 @@ public class NearJobListActivity extends AppCompatActivity {
         Log.d(TAG, "setupViewPager: ");
         setSupportActionBar(mToolbar);
         pagerAdapter = new myFragmentPagerAdapter(getSupportFragmentManager());
+
         NearJobFragment nearJobFragment = new NearJobFragment();
-        nearJobFragment.setArguments(getDataFromJobSearchActivity());
+        nearJobFragment.setArguments(getDataFromJobSearchActivity(1));
+
+        AllJobFragment allJobFragment = new AllJobFragment();
+        allJobFragment.setArguments(getDataFromJobSearchActivity(2));
+
         pagerAdapter.addFragment(nearJobFragment, "Yakınımdakiler");
-        pagerAdapter.addFragment(new AllJobFragment(), "Tümü");
+        pagerAdapter.addFragment(allJobFragment, "Tümü");
         mViewPager.setAdapter(pagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mTabs.setupWithViewPager(mViewPager);
@@ -84,7 +91,7 @@ public class NearJobListActivity extends AppCompatActivity {
         //Head Kısmı için adres ve kapsama alanı ve bulunan iş sayısı texti dolduruluyor .Burada yeni konum seçildiğinde bazı işlemler
         //yapılacak..
         userAdress.setText(UserLocationInfo.getInstance().getMyLocationAdress());
-        userArea.setText(getString(R.string.userArea, UserLocationInfo.getInstance().getCircleArea(), joblistSize));
+        userArea.setText(getString(R.string.userArea, UserLocationInfo.getInstance().getCircleArea(), nearJoblistSize));
 
 
     }
@@ -144,7 +151,6 @@ public class NearJobListActivity extends AppCompatActivity {
 
         return mViewPager.getCurrentItem();
     }
-
 
 
 }

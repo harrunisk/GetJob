@@ -32,46 +32,25 @@
             <RelativeLayout
                 android:id="@+id/header"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-                <ImageView
-                    android:id="@+id/companyLogo1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_centerVertical="true"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/zoologo" />
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="14dp"
+                android:layout_toEndOf="@+id/companyLogo1">
 
 
                 <TextView
                     android:id="@+id/companyname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@+id/companyLogo1"
                     android:layout_toStartOf="@+id/countbasvuru"
                     android:fontFamily="serif"
-                    android:layout_marginTop="10dp"
+                    android:gravity="start|center_vertical"
                     android:text="MD BİLİŞİM SİSTEMLERİ"
-                    android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/sector"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_toEndOf="@+id/companyLogo1"
-                    android:layout_toStartOf="@+id/countbasvuru"
-                    android:layout_below="@+id/companyname"
-                    android:fontFamily="serif"
-                    android:layout_marginTop="5dp"
-                    android:text="IT ve Yazılım"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="13dp" />
 
 
                 <LinearLayout
@@ -123,36 +102,36 @@
                     android:id="@+id/bottomsection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/details"
                     android:orientation="vertical">
 
 
                     <RelativeLayout
                         android:id="@+id/jobtitle"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="55dp">
                         <!--
-                                                <ImageView
-                                                    android:id="@+id/jobicon"
-                                                    android:layout_width="30dp"
-                                                    android:layout_height="20dp"
-                                                    android:layout_centerVertical="true"
-                                                    android:layout_marginStart="10dp"
-                                                    android:scaleType="centerInside"
-                                                    android:src="@drawable/jobsearch"
-                                                    android:tint="@color/mycolor5">
+                        <ImageView
+                            android:id="@+id/jobicon"
+                            android:layout_width="30dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/jobsearch"
+                            android:tint="@color/mycolor5">
 
-                                                </ImageView>
-                        -->
+                        </ImageView>
+-->
                         <TextView
                             android:id="@+id/tvjobname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="32dp"
                             android:text="Android Developer "
-                            android:textAlignment="center"
                             android:textColor="@color/black"
-                            android:textSize="13sp" />
+                            android:textSize="15sp" />
 
 
                     </RelativeLayout>
@@ -298,6 +277,16 @@
 
 
             </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/companyLogo1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="5dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/zoologo" />
 
         </RelativeLayout>
 

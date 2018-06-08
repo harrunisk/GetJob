@@ -52,7 +52,7 @@ public class FirebaseMethods {
     public String userId;
     FilePaths mFilePaths;
     private StorageReference mStorageRef;
-    private String databaseName = "users_data"; //Firebase Database name
+    private String databaseName = "users_data"; //SaveJobAdvertToFirebase Database name
     firebaseContent mfirebaseContent;
 
 

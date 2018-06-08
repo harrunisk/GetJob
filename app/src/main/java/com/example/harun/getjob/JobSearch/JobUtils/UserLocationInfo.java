@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.Marker;
  * Bu sınıfın tek nesnesi olacak oda JobSearch ilk açıldıgı zaman olusturuluyor
  * ve buradaki bilgilere o nesne aracılıgı ile ulasıyorum return mUserLocationInfo;.
  */
-public class UserLocationInfo extends JobAdvertModel {
+public class UserLocationInfo {
     private static final String TAG = "UserLocationInfo";
     public LatLng myLocation, newLocationLatLng;
     public Marker currentLocationMarker, newLocationMarker;
@@ -24,7 +24,7 @@ public class UserLocationInfo extends JobAdvertModel {
     public static UserLocationInfo mUserLocationInfo;
 
     public UserLocationInfo(){
-        super();
+     //   super();
     }
 
 

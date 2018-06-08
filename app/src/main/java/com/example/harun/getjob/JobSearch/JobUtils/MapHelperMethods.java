@@ -91,8 +91,8 @@ public class MapHelperMethods {
 
     public static BitmapDescriptor getApplyMarkerDrawable(Context context) {
         Log.d(TAG, "getMarkerDrawable: ");
-        Drawable drawable = context.getDrawable(R.drawable.succesholder);
-     //   drawable.setTint(context.getResources().getColor(R.color.SeaGreen));
+        Drawable drawable = context.getDrawable(R.drawable.success_placeholders);
+        //   drawable.setTint(context.getResources().getColor(R.color.SeaGreen));
         // BitmapDescriptor bitmapDescriptor =
 
         return MapHelperMethods.getDrawableMarkerAsBitmap(drawable);
@@ -129,6 +129,7 @@ public class MapHelperMethods {
      *
      * @param distance --> double örn 1120,2121 gibi
      * @return --> 1120 m
+     *  DAHA SONRA KM ÇEVİRMESİ YAPICAM ....
      */
     public static int getDistanceParce(Double distance) {
 
@@ -144,6 +145,12 @@ public class MapHelperMethods {
         // Log.d(TAG, "toRadiusMeters: " + km + "\t\t" + kmInDec + "\t\t" + meter + "\t\t" + meterInDec);
 
         return kmInDec;
+
+    }
+
+    public static LatLng convertMyLatLng(com.example.harun.getjob.AddJobAdvert.LatLng mPos) {
+        Log.d(TAG, "convertMyLatLng: "+mPos);
+        return new LatLng(mPos.getLatitude(), mPos.getLongitude());
 
     }
 

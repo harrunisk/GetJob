@@ -18,7 +18,7 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 /**
  * Cluster İşlemleri..
  */
-public class MyClusterMarker extends DefaultClusterRenderer<JobAdvertModel> {
+public class MyClusterMarker extends DefaultClusterRenderer<NearJobAdvertModel> {
     private static final String TAG = "MyClusterMarker";
     // public Drawable drawable;
     public Context mContext;
@@ -36,7 +36,7 @@ public class MyClusterMarker extends DefaultClusterRenderer<JobAdvertModel> {
     }
 
     @Override
-    public void onClusterItemRendered(JobAdvertModel clusterItem, Marker marker) {
+    public void onClusterItemRendered(NearJobAdvertModel clusterItem, Marker marker) {
 
         super.onClusterItemRendered(clusterItem, marker);
 
@@ -45,20 +45,20 @@ public class MyClusterMarker extends DefaultClusterRenderer<JobAdvertModel> {
 
 
     @Override
-    public void onClusterRendered(Cluster<JobAdvertModel> cluster, Marker marker) {
+    public void onClusterRendered(Cluster<NearJobAdvertModel> cluster, Marker marker) {
         super.onClusterRendered(cluster, marker);
 
 
     }
 
     @Override
-    public void onBeforeClusterItemRendered(JobAdvertModel item, MarkerOptions markerOptions) {
-        markerOptions.icon(item.getIcon());
+    public void onBeforeClusterItemRendered(NearJobAdvertModel item, MarkerOptions markerOptions) {
+        markerOptions.icon(item.getMarkerIcon());
     }
 
 
     @Override
-    public void onBeforeClusterRendered(Cluster<JobAdvertModel> cluster, MarkerOptions markerOptions) {
+    public void onBeforeClusterRendered(Cluster<NearJobAdvertModel> cluster, MarkerOptions markerOptions) {
         super.onBeforeClusterRendered(cluster, markerOptions);
 
 
@@ -68,7 +68,7 @@ public class MyClusterMarker extends DefaultClusterRenderer<JobAdvertModel> {
 
     //should_zoom true ve  cluster marker >4 oldugunda calısacak.
     @Override
-    public boolean shouldRenderAsCluster(Cluster<JobAdvertModel> cluster) {
+    public boolean shouldRenderAsCluster(Cluster<NearJobAdvertModel> cluster) {
 
         // Log.d(TAG, "shouldRenderAsCluster: " + should_zoom);
         return super.shouldRenderAsCluster(cluster) && should_zoom;
@@ -77,7 +77,7 @@ public class MyClusterMarker extends DefaultClusterRenderer<JobAdvertModel> {
 
 
     @Override
-    public Marker getMarker(Cluster<JobAdvertModel> cluster) {
+    public Marker getMarker(Cluster<NearJobAdvertModel> cluster) {
         Log.d(TAG, "getMarker: " + cluster);
         return super.getMarker(cluster);
 
@@ -85,19 +85,19 @@ public class MyClusterMarker extends DefaultClusterRenderer<JobAdvertModel> {
     }
 
     @Override
-    public Marker getMarker(JobAdvertModel clusterItem) {
+    public Marker getMarker(NearJobAdvertModel clusterItem) {
         Log.d(TAG, "getMarker: ");
         return super.getMarker(clusterItem);
     }
 
 
     @Override
-    public Cluster<JobAdvertModel> getCluster(Marker marker) {
+    public Cluster<NearJobAdvertModel> getCluster(Marker marker) {
         return super.getCluster(marker);
     }
 
     @Override
-    public JobAdvertModel getClusterItem(Marker marker) {
+    public NearJobAdvertModel getClusterItem(Marker marker) {
         return super.getClusterItem(marker);
     }
 
