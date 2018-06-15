@@ -25,7 +25,7 @@ public class NearJobListActivity extends AppCompatActivity {
     android.support.v7.widget.Toolbar mToolbar;
     TabLayout mTabs;
     ViewPager mViewPager;
-    TextView userAdress;
+    TextView userAdress, toolBartitle;
     TextView userArea;
     myFragmentPagerAdapter pagerAdapter;
     private int nearJoblistSize = 0;
@@ -92,7 +92,7 @@ public class NearJobListActivity extends AppCompatActivity {
         //yapılacak..
         userAdress.setText(UserLocationInfo.getInstance().getMyLocationAdress());
         userArea.setText(getString(R.string.userArea, UserLocationInfo.getInstance().getCircleArea(), nearJoblistSize));
-
+        toolBartitle.setText(getIntent().getExtras().getString("Category"));
 
     }
 
@@ -130,6 +130,7 @@ public class NearJobListActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.nearJobPager);
         userAdress = findViewById(R.id.userAdress);
         userArea = findViewById(R.id.userArea);
+        toolBartitle = findViewById(R.id.toolbartitle);
 
     }
 

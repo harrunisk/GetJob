@@ -17,7 +17,7 @@
                 android:id="@+id/job_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/back" />
+                android:src="@drawable/ic_arrow_back_black_24dp" />
 
 
             <TextView

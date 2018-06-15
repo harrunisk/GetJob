@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ViewSwitcher;
 
 import com.example.harun.getjob.JobSearch.JobUtils.NearJobAdvertAdapter;
 import com.example.harun.getjob.JobSearch.JobUtils.NearJobAdvertModel;
@@ -26,6 +27,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
     private static final String TAG = "NearJobFragment";
     private RecyclerView nearJobListRecycler;
     private ArrayList<NearJobAdvertModel> nearJobList;
+    private ViewSwitcher nearJobViewSwitch;
     private NearJobAdvertAdapter mJobAdvertAdapter;
 
     //deneme deneme1;
@@ -43,6 +45,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_nested_scroll, null);
         nearJobListRecycler = view.findViewById(R.id.nearJobList);
+        nearJobViewSwitch = view.findViewById(R.id.nearJobViewSwitch);
         // int resId = R.anim.layout_animation;
         setDataList();
 
@@ -55,6 +58,16 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         //  Log.d(TAG, "setDataList: ");
         try {
             nearJobList = getArguments().getParcelableArrayList("nearJobList");
+            if (nearJobList != null && nearJobList.size() > 0) {
+
+                nearJobViewSwitch.setDisplayedChild(1);
+
+            } else {
+
+                nearJobViewSwitch.setDisplayedChild(0);
+
+            }
+
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
@@ -77,7 +90,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         nearJobListRecycler.setLayoutManager(linearLayoutManager2);
         // nearJobListRecycler.setItemAnimator(new DefaultItemAnimator());
         nearJobListRecycler.setHasFixedSize(true);
-     //   nearJobListRecycler.setRecyclerListener(this);
+        //   nearJobListRecycler.setRecyclerListener(this);
 
         //  snapHelper.attachToRecyclerView(nearJobListRecycler);
 

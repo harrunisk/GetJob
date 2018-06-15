@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ViewSwitcher;
 
 import com.example.harun.getjob.JobSearch.JobUtils.NearJobAdvertAdapter;
 import com.example.harun.getjob.JobSearch.JobUtils.NearJobAdvertModel;
@@ -31,6 +32,7 @@ public class AllJobFragment extends Fragment {
     private RecyclerView allJobRecylerList;
     private ArrayList<NearJobAdvertModel> allJobList;
     private NearJobAdvertAdapter mJobAdvertAdapter;
+    private ViewSwitcher allJobViewSwitch;
 
 
     public AllJobFragment() {
@@ -52,7 +54,7 @@ public class AllJobFragment extends Fragment {
     private void gatherViews(View view) {
 
         allJobRecylerList = view.findViewById(R.id.nearJobList);
-
+        allJobViewSwitch = view.findViewById(R.id.nearJobViewSwitch);
         setDataList();
     }
 
@@ -61,6 +63,11 @@ public class AllJobFragment extends Fragment {
         //  Log.d(TAG, "setDataList: ");
         try {
             allJobList = getArguments().getParcelableArrayList("allJobList");
+            if (allJobList!=null&&allJobList.size() > 0) {
+                allJobViewSwitch.setDisplayedChild(1);
+            } else {
+                allJobViewSwitch.setDisplayedChild(0);
+            }
         } catch (NullPointerException e) {
             e.printStackTrace();
         }

@@ -319,6 +319,7 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
         _mMap.setMyLocationEnabled(false);
         _mMap.getUiSettings().setMyLocationButtonEnabled(false);
         _mMap.setBuildingsEnabled(true);
+        _mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
 
     }
 
@@ -602,22 +603,21 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
 
     private boolean validate() {
 
-        if (viewSwitcher.getChildAt(0) == viewSwitcher.getCurrentView()) {
+       // if (viewSwitcher.getChildAt(0) == viewSwitcher.getCurrentView()) {
             //Buradaki kosul -->Şuanki View emptyView (index:0) ise
-            if (!companyAdress.getText().equals("")) {
-
-                return true;
+            if (companyAdress.getText().length()<=0) {
+                Log.d(TAG, "validate: !companyAdress.getText().equals(\"\")");
+                return true; //true demek hata var demeke
             } else {
+
                 return false;
             }
 
-
-        } else {
-            return false;
         }
+      //  else {
+      //      return false;
+     //   }
 
-
-    }
 
     @Override
     public void onSelected() {

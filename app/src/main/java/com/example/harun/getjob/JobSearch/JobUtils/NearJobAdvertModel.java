@@ -2,7 +2,6 @@ package com.example.harun.getjob.JobSearch.JobUtils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.LatLng;
@@ -26,6 +25,7 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
     private LatLng mCoord;
 
     public NearJobAdvertModel(
+            String jobID,
             String companyName,
             String companyJob,
             String jobSector,
@@ -48,7 +48,7 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
             String newLocationDistance, String companyDistance) {
         //Bunlar jobADvertModel2 'e
         // Diğerleride bu sınıfın değişkeni
-        super(companyName, companyJob, jobSector, jobDescpriction,
+        super(jobID,companyName, companyJob, jobSector, jobDescpriction,
                 companyLogoUrl, companyAdress, educationLevel,
                 expLevel, employeeHour, drivingLicence, military,
                 gender, publishDate, countApply, jobPossibility,
@@ -67,13 +67,13 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
 
     @Override
     public LatLng getPosition() {
-        Log.d(TAG, "getPosition: " + mCoord);
+       // Log.d(TAG, "getPosition: " + mCoord);
         return mCoord;
     }
 
 
     public void setPosition(LatLng mPosition) {
-        Log.d(TAG, "setPosition: " + mPosition);
+       // Log.d(TAG, "setPosition: " + mPosition);
         mCoord = mPosition;
             }
 

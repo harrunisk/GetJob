@@ -52,15 +52,21 @@ public class RetainJobAdvertFromFirebase extends AsyncTask<DataSnapshot, ArrayLi
 
 
     }
+
     @Override
     protected ArrayList<JobAdvertModel2> doInBackground(DataSnapshot... dataSnapshots) {
         Log.d(TAG, "doInBackground: ");
         jobAdverts = new ArrayList<JobAdvertModel2>();
         try {
             for (DataSnapshot child : dataSnapshots[0].getChildren()) {
-                Log.d(TAG, "onDataChange: CHİLD : KeY" + child.getKey());
-                Log.d(TAG, "onDataChange: CHİLD : VALUE " + child.getValue());
-                jobAdverts.add(child.getValue(JobAdvertModel2.class));
+                if (child.exists()) {
+                    Log.d(TAG, "onDataChange: CHİLD : KeY" + child.getKey());
+                    Log.d(TAG, "onDataChange: CHİLD : VALUE " + child.getValue());
+                    jobAdverts.add(child.getValue(JobAdvertModel2.class));
+                } else {
+                    Log.d(TAG, "doInBackground: CHİLD BULUNAMADI .");
+                }
+
             }
 
         } catch (Exception e) {
@@ -70,14 +76,12 @@ public class RetainJobAdvertFromFirebase extends AsyncTask<DataSnapshot, ArrayLi
         return jobAdverts;
 
     }
+
     @Override
     protected void onPostExecute(ArrayList<JobAdvertModel2> completeResult) {
         Log.d(TAG, "onPostExecute: " + completeResult);
-
-            Log.d(TAG, "onPostExecute: ");
-            fromFirebase.JobAdvertFromFirebaseCallback(completeResult);
-          //  mWeakReference.get().findViewById(R.id.mapProgress).setVisibility(View.GONE);
-            Log.d(TAG, "onPostExecute: BOŞŞŞ ");
+        fromFirebase.JobAdvertFromFirebaseCallback(completeResult);
+        //  mWeakReference.get().findViewById(R.id.mapProgress).setVisibility(View.GONE);
     }
 
     @Override
@@ -94,7 +98,7 @@ public class RetainJobAdvertFromFirebase extends AsyncTask<DataSnapshot, ArrayLi
             Log.d(TAG, "onPreExecute: WeakReference.get().isFinishing() || mWeakReference.get() == null ");
             return;
         }
-      //  mWeakReference.get().findViewById(R.id.mapProgress).setVisibility(View.VISIBLE);
+        //  mWeakReference.get().findViewById(R.id.mapProgress).setVisibility(View.VISIBLE);
 
     }
 

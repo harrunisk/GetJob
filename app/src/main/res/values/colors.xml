@@ -36,6 +36,13 @@
     <color name="retro">#755f5d</color>
     <color name="retro1">#d4ccb9</color>
     <color name="retro2">#baafae</color>
+    <color name="retro3">#ebe3cd</color>
+    <color name="retro4">#ff7f00</color>
+    <color name="retro5">#9ba56f</color>
+    <color name="retro6">#f5f1e6</color>
+    <color name="retro7">#dfd8c3</color>
+    <color name="retro8">#fdfcf8</color>
+    <color name="retro9">#e4e3df</color>
     <color name="opak">#29000000</color>
 
     <color name="yellow">#FFFF00</color>

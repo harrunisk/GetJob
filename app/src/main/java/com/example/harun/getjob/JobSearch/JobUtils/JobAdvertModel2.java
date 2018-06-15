@@ -14,7 +14,8 @@ import java.util.ArrayList;
 
 public class JobAdvertModel2 implements Parcelable {
     private static final String TAG = "JobAdvertModel2";
-    private String companyName, companyJob, jobSector, jobDescpriction, companyLogoUrl, companyAdress,
+
+    private String jobID, companyName, companyJob, jobSector, jobDescpriction, companyLogoUrl, companyAdress,
             educationLevel, expLevel, employeeHour, drivingLicence, military, gender, publishDate;
     private ArrayList<String> jobPossibility;
     private LatLng mPosition;
@@ -24,7 +25,7 @@ public class JobAdvertModel2 implements Parcelable {
         Log.d(TAG, "JobAdvertModel2: No PARAMATER CONSTRUCTOR");
     }
 
-    public JobAdvertModel2(String companyName, String companyJob, String jobSector,
+    public JobAdvertModel2(String jobID, String companyName, String companyJob, String jobSector,
                            String jobDescpriction, String companyLogoUrl,
                            String companyAdress, String educationLevel,
                            String expLevel, String employeeHour,
@@ -32,8 +33,9 @@ public class JobAdvertModel2 implements Parcelable {
                            String military, String gender,
                            String publishDate, int countApply,
                            ArrayList<String> jobPossibility,
-                            LatLng _mPosition) {
+                           LatLng _mPosition) {
         Log.d(TAG, "JobAdvertModel2: PARAMETERS CONSTRUCTOR");
+        this.jobID = jobID;
         this.companyName = companyName;
         this.companyJob = companyJob;
         this.jobSector = jobSector;
@@ -52,14 +54,22 @@ public class JobAdvertModel2 implements Parcelable {
         this.mPosition = _mPosition;
     }
 
+    public String getJobID() {
+        return jobID;
+    }
+
+    public void setJobID(String jobID) {
+        this.jobID = jobID;
+    }
+
     public LatLng getmPosition() {
-       // Log.d(TAG, "getmPosition: " + mPosition);
+        // Log.d(TAG, "getmPosition: " + mPosition);
         return mPosition;
     }
 
     public void setmPosition(com.example.harun.getjob.AddJobAdvert.LatLng mPosition) {
-       // Log.d(TAG, "setmPosition: ");
-        this.mPosition = new LatLng(mPosition.getLatitude(),mPosition.getLongitude());
+        // Log.d(TAG, "setmPosition: ");
+        this.mPosition = new LatLng(mPosition.getLatitude(), mPosition.getLongitude());
     }
 
     public String getCompanyName() {
@@ -179,12 +189,13 @@ public class JobAdvertModel2 implements Parcelable {
     }
 
     public void setJobPossibility(ArrayList<String> jobPossibility) {
-        Log.d(TAG, "setJobPossibility: " + jobPossibility.size());
+        // Log.d(TAG, "setJobPossibility: " + jobPossibility.size());
         this.jobPossibility = jobPossibility;
     }
 
 
     public JobAdvertModel2(Parcel in) {
+        jobID = in.readString();
         companyName = in.readString();
         companyJob = in.readString();
         jobSector = in.readString();
@@ -222,6 +233,7 @@ public class JobAdvertModel2 implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(jobID);
         parcel.writeString(companyName);
         parcel.writeString(companyJob);
         parcel.writeString(jobSector);
@@ -243,6 +255,7 @@ public class JobAdvertModel2 implements Parcelable {
     @Override
     public String toString() {
         return "JobAdvertModel2{" +
+                "jobID='" + jobID + '\'' +
                 "companyName='" + companyName + '\'' +
                 ", companyJob='" + companyJob + '\'' +
                 ", jobSector='" + jobSector + '\'' +

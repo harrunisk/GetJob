@@ -40,7 +40,7 @@ public class GestureEvent implements View.OnTouchListener {
 
         switch (motionEvent.getAction()) {
             case MotionEvent.ACTION_DOWN: {
-                Log.d(TAG, "onTouch: aaaaaaaaaaaaaa");
+              //  Log.d(TAG, "onTouch: ");
                 downX = motionEvent.getX();
                 downY = motionEvent.getY();
                 return true;
@@ -54,7 +54,7 @@ public class GestureEvent implements View.OnTouchListener {
                 //Sadece dokunma işlemi ..Yani dokundugun yeri koordinati ile eline çektiğindeki yerin koordinatı eşit ise
                 if (Math.abs(deltaX) == 0) {
 
-                    Log.d(TAG, "onTouch: DELTAX0");
+                 //   Log.d(TAG, "onTouch: DELTAX0");
                     // mWeakReference.get().mSlidingPanelLayout.setAnchorPoint(0.7f);
 
                     ((JobSearch) mActivty).mSlidingPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
@@ -107,6 +107,7 @@ public class GestureEvent implements View.OnTouchListener {
     }
 
     private void onBottomToTopSwipe() {
+
         Log.d(TAG, "onBottomToTopSwipe: ");
     }
 

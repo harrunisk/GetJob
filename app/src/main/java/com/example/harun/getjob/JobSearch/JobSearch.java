@@ -20,7 +20,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -71,6 +70,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
@@ -95,7 +95,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         GoogleMap.OnMyLocationClickListener, GoogleMap.OnCameraChangeListener,
         ClusterManager.OnClusterItemInfoWindowClickListener<NearJobAdvertModel>,
         AdvertDetails.ChangeMarkerCluster,
-        GoogleMap.OnMarkerDragListener, DownloadAdressData.adressCallback, RetainJobAdvertFromFirebase.JobAdvertFromFirebase {
+        GoogleMap.OnMarkerDragListener, DownloadAdressData.adressCallback,
+        RetainJobAdvertFromFirebase.JobAdvertFromFirebase, CategoryModel.doneCallback, CategoryAdapter.CategoryAdapterInterface {
 
     private static final String TAG = "JobSearch";
 
@@ -107,7 +108,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     Button btnListNearJob;
     TextView jobNameSlidingPanel, distanceToyou;
     LinearLayout touchHandler, circleAreaLayout;
-    AVLoadingIndicatorView adresLoading, mapProgress;
+    AVLoadingIndicatorView adresLoading, mapProgress, categoryProgress;
     FloatingActionButton mylocButton, changeLocation, changeArea;
     ValueAnimator colorAnimator;
     CategoryAdapter mCategoryAdapter;
@@ -141,24 +142,26 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     ArrayList<NearJobAdvertModel> allJobList;
     public NonHierarchicalDistanceBasedAlgorithm clusterManagerAlgorithm;
     UserLocationInfo mUserLocationInfo;
-    private FirebaseDatabase mFirebaseDatabase;
+    //private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef;
     private String databaseName = "jobAdvert";
+    private String sektorName = "";
+    private LatLngBounds.Builder builder;
 
     /**
      * Yayında olan
      * İlanları almak için Firebase baglantısını acıyoruz actıgımız baglantıyı retainJobAdvert AsyncTask methoduna gönderiyoruz.
      */
-    private void drawJobLocation() {
-        Log.d(TAG, "drawJobLocation: ÇAĞRILDI");
+    private void getAllJobLocation() {
+        Log.d(TAG, "GetAllJobLocation: ÇAĞRILDI");
+        sektorName = "Tüm İlanlar";
         mapProgress.setVisibility(View.VISIBLE);
-        myRef = FirebaseDatabase.getInstance().getReference().child(databaseName);
         retainJobAdvertFromFirebase = new RetainJobAdvertFromFirebase(this, this);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Log.d(TAG, "onDataChange: dataSnapShot");
+                Log.d(TAG, "GetAllJobLocation->onDataChange: dataSnapShot");
                 retainJobAdvertFromFirebase.execute(dataSnapshot);
 
             }
@@ -173,7 +176,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     @Override
     protected void onStart() {
         Log.d(TAG, "onStart: ");
-        //drawJobLocation();
+        //getAllJobLocation();
         super.onStart();
     }
 
@@ -182,19 +185,6 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         super.onPause();
     }
 
-    //Kategori recyler ListView in gerçeklenmesi .
-    private void setRecylerCategoryList() {
-
-        Log.d(TAG, "setRecylerCategoryList: ÇAĞRILDI");
-        mCategoryAdapter = new CategoryAdapter(this, mCategoryModel.getDataModel());
-        categoryRecycler.setAdapter(mCategoryAdapter);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
-        linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-        categoryRecycler.setLayoutManager(linearLayoutManager2);
-        categoryRecycler.setItemAnimator(new DefaultItemAnimator());
-        categoryRecycler.setHasFixedSize(true);
-
-    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -243,6 +233,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         slidingheader = findViewById(R.id.header);
         adresLoading = findViewById(R.id.adresLoading);
         mapProgress = findViewById(R.id.mapProgress);
+        categoryProgress = findViewById(R.id.categoryProgress);
         init();
     }
 
@@ -250,7 +241,9 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
     private void init() {
         Log.d(TAG, "init: ÇAĞRILDI");
-        mCategoryModel = new CategoryModel();
+        myRef = FirebaseDatabase.getInstance().getReference().child(databaseName).child("publishedAdverts");
+        mCategoryModel = new CategoryModel(getApplicationContext(), this);
+        //getAllSectorFromFirebase = new GetAllSectorFromFirebase(getApplicationContext(), this);
         mapFragment.getMapAsync(this);
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -295,7 +288,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         if (isGPSEnabled) {
             Log.d(TAG, "islocationProviderEnable: " + isGPSEnabled);
             gatherViews();
-            setRecylerCategoryList();
+            // setRecylerCategoryList();
+            mCategoryModel.getDataModel();
 
         } else {
             Log.d(TAG, "islocationProviderEnable: " + isGPSEnabled);
@@ -446,7 +440,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         myItemClusterManager.setOnClusterItemInfoWindowClickListener(this);
         myItemClusterManager.setOnClusterItemClickListener(this);
         getDeviceLocation();  // haritayı son konuma aktif etme
-        drawJobLocation();
+        getAllJobLocation();
         MyclusterManager.getInstance().setMyClusterManager(myItemClusterManager);//clsuterManager Global bir sınıfa alıyorum ..
         circleArea.setOnProgressChangeListener(this);
         mMap.setInfoWindowAdapter(myItemClusterManager.getMarkerManager());
@@ -469,6 +463,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         _mMap.setMyLocationEnabled(false);
         _mMap.getUiSettings().setMyLocationButtonEnabled(false);
         _mMap.setBuildingsEnabled(true);
+        _mMap.getUiSettings().setIndoorLevelPickerEnabled(false);
+        _mMap.setPadding(0, 280, 0, 0);
     }
 
     @SuppressLint("MissingPermission")
@@ -520,7 +516,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                             mLastKnownLocation = task.getResult();
                             if (mLastKnownLocation != null) {
                                 Log.d(TAG, "onComplete: mLastKnownLocation" + mLastKnownLocation);
-                                LatLng gps = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                                //LatLng gps = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                                 drawCurrentLocationMarker(mLastKnownLocation);
                             } else {
                                 Log.d(TAG, "onComplete: mLastKnownLocation NULLL GET CURRENT LOCATİON ");
@@ -565,7 +561,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             currentLocationMarker1.showInfoWindow();
             mUserLocationInfo.setCurrentLocationMarker(currentLocationMarker1);
 
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
+           /* mMap.animateCamera(CameraUpdateFactory.newCameraPosition(
                     getCameraPosition(mUserLocationInfo.getMyLocation())),
                     new GoogleMap.CancelableCallback() {
                         @Override
@@ -578,7 +574,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                             Log.d(TAG, "onCancel: mMap.animateCamera");
 
                         }
-                    });
+                    });*/
             DrawCircle drawCircle = new DrawCircle(location, 1000, mMap, getApplicationContext(), 1);//İlk Circle 1-km Alanı kapsayacak
             mCircleList.add(drawCircle); //Bulunan konuma 1 circle atıyorum bu circle daha sonra ulasabilmek adına circle olusturan sınıfı
             //nesnesini listede tutuyorum Daha sonraki circle değişimleri bu nesne üzerinden gerçekleştiriyorum..
@@ -874,20 +870,22 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                     @Override
                     public void run() {
                         //Yakındaki daire içerisindeki işler listelenecek
-                        Log.d(TAG, "onClick: ");
-                        if (nearJobList.size() > 0) {
+                        //     if (nearJobList.size() > 0) {
+                        if (allJobList.size() > 0) {
                             Log.d(TAG, "resultListSize>0: ");
                             final Intent i = new Intent(getApplicationContext(), NearJobListActivity.class);
                             i.putParcelableArrayListExtra("nearList", nearJobList);
                             i.putParcelableArrayListExtra("allJobList", allJobList);
                             i.putExtra("nearListSize", nearJobList.size());
                             i.putExtra("allJobListSize", allJobList.size());
+                            i.putExtra("Category", sektorName);
                             // colorAnimator.cancel();
+                            btnListNearJob.clearAnimation();
                             startActivity(i);
                             overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
                         } else {
-                            MyCustomToast.showCustomToast(getApplicationContext(), "Kapsama alanınızda Size uygun iş bulunamadı.");
+                            MyCustomToast.showCustomToast(getApplicationContext(), "Bu Sektörde iş bulunamadı.");
                             //Toast.makeText(getApplicationContext(), "Kapsama alanınızda Size uygun iş bulunamadı.", Toast.LENGTH_SHORT).show();
 
                         }
@@ -926,7 +924,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                 if (!circleArea.isShown()) {
 
                     circleAreaLayout.setVisibility(View.VISIBLE);
-                    circleAreaLayoutSetAnimation();
+                    circleAreaLayoutSetAnimation(circleAreaLayout);
                     changeArea.setImageDrawable(getResources().getDrawable(R.drawable.circular_area_cancel));
 
                 } else {
@@ -940,14 +938,16 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
     /**
      * Circle Area Animation ..
+     *
+     * @param layout
      */
-    private void circleAreaLayoutSetAnimation() {
+    private void circleAreaLayoutSetAnimation(LinearLayout layout) {
 
         Log.d(TAG, "circleAreaLayoutSetAnimation: ");
 
         int anim = R.anim.layout_anim2;
         LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(getApplicationContext(), anim);
-        circleAreaLayout.setLayoutAnimation(layoutAnimationController);
+        layout.setLayoutAnimation(layoutAnimationController);
 
 
     }
@@ -1002,6 +1002,21 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         return new CameraPosition.Builder().target(_center).zoom(DEFAULT_ZOOM).tilt(30).build();
     }
 
+
+    private void animateCameraWithBounds(LatLngBounds _bounds) {
+
+        try {
+            Log.d(TAG, "animateCameraWithBounds: ");
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(_bounds, 150));
+            //  mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
     /**
      * Yeni lokasyon belirleme methodu
      */
@@ -1055,17 +1070,17 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     public boolean onClusterClick(Cluster<NearJobAdvertModel> cluster) {
 
         Log.d(TAG, "onClusterClick:Tıklandı");
-        LatLngBounds.Builder builder = LatLngBounds.builder();
+        LatLngBounds.Builder builder2 = LatLngBounds.builder();
 
 
         //Sınır bölgelerini al
         for (ClusterItem item : cluster.getItems()) {
 
-            builder.include(item.getPosition());
+            builder2.include(item.getPosition());
         }
 
         //Bunu Farklı bir fonksiyona alıcamm unutma....
-        LatLngBounds bounds = builder.build();
+        LatLngBounds bounds = builder2.build();
         //final int zoomWidth = getResources().getDisplayMetrics().widthPixels;
         // final int zoomHeight = getResources().getDisplayMetrics().heightPixels;
         // final int zoomPadding = (int) (zoomWidth * 0.10); // Genişliğin 0,10 u kadar kenarlardan boşluk
@@ -1089,7 +1104,6 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
         if (downloadAdressData != null) {
             Log.d(TAG, "runTask: Yeni nesne Oluşturuldu ");
-            // adresLoading.show();
             new DownloadAdressData(this, this, 1).execute(latLng);
         } /*else {
 
@@ -1106,14 +1120,12 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
      */
     @Override
     public void adressCallbackResult(String result) {
-        // adresLoading.hide();
         //1 Kere çalışacak kkullanıcı bulundugu konumdaki marker işaretlenirken yapılan adres isteği buraya düşecek ve kullanıcı
         //adres bilgisini tutan değişkene atanacak ...
         if (isMyLocationAdress) {
             Log.d(TAG, "adressCallbackResult:isMyLocationAdress ");
             mUserLocationInfo.setMyLocationAdress(result);
             isMyLocationAdress = false;
-            // return;
         }
 
 
@@ -1125,10 +1137,8 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
             isNewLocationAdress = false;
         }
-
         Log.d(TAG, "adressCallbackResult: Normal Çalışıyor..");
         tvAdress.setText(result);
-        //  adresLoading.smoothToHide();
 
     }
 
@@ -1144,7 +1154,6 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         allJobList.clear();
         //Tüm Cluster edilmiş itemleri alıyorum ...
         ArrayList<NearJobAdvertModel> items = (ArrayList<NearJobAdvertModel>) clusterManagerAlgorithm.getItems();
-        // denemeListe.addAll(items);
         Log.d(TAG, "getNearJobList: clusterManagerAlgorithm.getItems() " + items);
         UserLocationInfo.getInstance().setCircleArea(drawCircle.getCircleRadius());
         //  Log.d(TAG, "getNearJobList: " + items.get(0).toString() + circleArea.getProgress());
@@ -1217,7 +1226,9 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
     /**
      * Sliding Panele (Marker üzerine tıklanınca alttan acılan pnael )
      * İlan  detayları sayfasını ekliyorum .. Ve Bu Dosyayı ViewHolder Klasorumde Saklıyorum ...
-     * Tanımlamalarını click eventlerini o class ta gerçekleştiriyorum .
+     * İlan detayları sayfasını birçok yerde kullanıdıgım için tek bir Classta bu işlemleri gerçekleştiriyorum Tekrar Tekrar aynı
+     * şeylerini yapmamak için .
+     * Tanımlamalarını click eventlerini o class ta gerçekleştiriyorum .--->
      */
     private void slidingPanelAdvertInfo() {
         Log.d(TAG, "slidingPanelAdvertInfo: ");
@@ -1236,7 +1247,14 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         Log.d(TAG, "onMyLocationClick: MYLOCATİN TIKLANDI ");
     }
 
-
+    /**
+     * Kullanıcı 2.konumu seçmek istediğinde locationCheckChange==true olur ve kamera her değiştiğinde
+     * NewLocationMarker olusturulur ve poziyon bilgisi Kameranın orta noktası olacak şekilde değiştirilir
+     * Aynı Şekilde Kapsama alanınında pozisyonu newLocationMarkerin orta noktasını içerecek şekilde değiştirilir  .
+     * Ve Adres methoduna pozisyon bilgisi gönderilerek o pozisyonun adresi alınır .
+     *
+     * @param cameraPosition
+     */
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
 
@@ -1249,7 +1267,6 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
             LatLng lat = new LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude);
 
             mUserLocationInfo.getNewLocationMarker().setPosition(lat);
-            //   newLocationMarker.setPosition(lat);
             DrawCircle drawCircle = mCircleList.get(0);
             drawCircle.setCenterCircle(lat); //circle merkezi güncelle
             runAdressMethod(lat);       //Kamera her hareketinde adres değiştiriyor  ....
@@ -1315,7 +1332,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
 
     /**
      * RetainJobAdvert Async İşleminde dönen Callback
-     * ->Orada ilanlar firebaseden alınıp burada dolduruluyor .
+     * ->Orada ilanlar firebaseden alınıp işlem tamamlandıgında burada dolduruluyor .
      *
      * @param result-->İş ilanlarını tutan dizi
      */
@@ -1324,11 +1341,12 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
         Log.d(TAG, "JobAdvertFromFirebaseCallback: ");
 
         if (!result.isEmpty()) {
-
+            myItemClusterManager.clearItems();
+            builder = LatLngBounds.builder();
             for (JobAdvertModel2 model2 : result) {
                 Log.d(TAG, "onDataChange: ");
                 myItemClusterManager.addItem(
-                        new NearJobAdvertModel(model2.getCompanyName(), model2.getCompanyJob(), model2.getJobSector(),
+                        new NearJobAdvertModel(model2.getJobID(), model2.getCompanyName(), model2.getCompanyJob(), model2.getJobSector(),
                                 model2.getJobDescpriction(), model2.getCompanyLogoUrl(),
                                 model2.getCompanyAdress(), model2.getEducationLevel(),
                                 model2.getExpLevel(), model2.getEmployeeHour(),
@@ -1339,16 +1357,110 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback,
                                 MapHelperMethods.getNormalMarkerDrawable((getApplicationContext())),
                                 "", ""
                         ));
+                includeBounds(model2.getmPosition()); //Sınır bolgelerini ekliyorum
                 myItemClusterManager.cluster();
             }
             mapProgress.setVisibility(View.GONE);
-
+            Log.d(TAG, "JobAdvertFromFirebaseCallback: " + myItemClusterManager.getAlgorithm().getItems().size());
+            animateCameraWithBounds(includeBounds(mUserLocationInfo.getMyLocation())); //Kullanıcı lokasyonunu eklyorum
         } else {
             Log.d(TAG, "JobAdvertFromFirebaseCallback:");
-            Permissions.showAlertdilaog(this, "Bulunamadı ", "Bu Sektörde İş Yok Gibi", 2000);
+            mapProgress.setVisibility(View.GONE);
+            Permissions.showAlertdilaog(this, sektorName, "Bu Sektörde İş Yok Gibi", 1000).show();
+            myItemClusterManager.clearItems();
+            myItemClusterManager.cluster();
+        }
+
+
+    }
+
+
+    /**
+     * Alınan koordinatları sınır bölgeleri olarak ekliyoruz.
+     *
+     * @param _latlng
+     * @return
+     */
+    private LatLngBounds includeBounds(LatLng _latlng) {
+        Log.d(TAG, "changeCamera");
+
+        //Sınır bölgelerini al
+        builder.include(_latlng);
+        //final int zoomWidth = getResources().getDisplayMetrics().widthPixels;
+        // final int zoomHeight = getResources().getDisplayMetrics().heightPixels;
+        // final int zoomPadding = (int) (zoomWidth * 0.10); // Genişliğin 0,10 u kadar kenarlardan boşluk
+
+        return builder.build();
+    }
+
+
+    /**
+     * Seçilen sektörü alan callback SekTör listesinden seçilen item buraya geliyor buradanda REtainJobAdvertFromFirebase
+     * Async Task methodunda gönderilerek işlenecek.
+     *
+     * @param sectorName-->Seçilen sektör İsmi
+     */
+    @Override
+    public void LoadAdvertWithSectorInfo(final String sectorName) {
+        Log.d(TAG, "LoadAdvertWithSectorInfo: " + sectorName);
+        mapProgress.setVisibility(View.VISIBLE);
+        sektorName = sectorName;
+        final RetainJobAdvertFromFirebase mretainJobAdvertFromFirebase =
+                new RetainJobAdvertFromFirebase(this, this);
+
+        if (sectorName.equals("Tüm İlanlar")) {
+            // sektorName="Tüm İlanlar";
+            Log.d(TAG, "LoadAdvertWithSectorInfo: TÜM İLANLAR ");
+            getAllJobLocation();
+        } else {
+            Query query = myRef.orderByChild("jobSector").equalTo(sectorName);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    mretainJobAdvertFromFirebase.execute(dataSnapshot);
+                    Log.d(TAG, "LoadAdvertWithSectorInfo->>onDataChange: " + dataSnapshot);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.d(TAG, "onCancelled: " + databaseError);
+                }
+            });
 
         }
 
 
     }
+
+    /**
+     * Sektör Listesini(İsimleri ve ilan sayılarını ) asenkron olarak arka planda tek tek çekiyoruz  ve bu method sektör listesinde  kayıtlı 21 adaet sektör
+     * bilgisini almayı tamamlandıgında RecylerView i olusturuyor .
+     *
+     * @param categoryModelArrayList
+     */
+    @Override
+    public void getCategoryCompleteCallback(ArrayList<CategoryModel> categoryModelArrayList) {
+        // Log.d(TAG, "getCategoryCompleteCallback: " + categoryModelArrayList);
+        if (categoryModelArrayList.size() == 21) {
+            categoryProgress.smoothToHide();
+            Log.d(TAG, "getCategoryCompleteCallback:categoryModelArrayList.size() == 21 ");
+            Log.d(TAG, "getCategoryCompleteCallback: " + categoryModelArrayList);
+            mCategoryAdapter = new CategoryAdapter(this,
+                    categoryModelArrayList, this);
+            categoryRecycler.setAdapter(mCategoryAdapter);
+            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
+            linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+            categoryRecycler.setLayoutManager(linearLayoutManager2);
+            // circleAreaLayoutSetAnimation(categoryRecycler);
+            // categoryRecycler.setItemAnimator(new DefaultItemAnimator());
+            LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animt3);
+            categoryRecycler.setLayoutAnimation(layoutAnimationController);
+
+            categoryRecycler.setHasFixedSize(true);
+
+        }
+
+
+    }
+
 }

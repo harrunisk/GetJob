@@ -84,35 +84,6 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
 
         }
 
-      /*  if (position > lastPosition) {
-            Log.d(TAG, "onBindViewHolder: ");
-            holder.itemView.startAnimation(animation);
-            lastPosition = position;
-        }*/
-
-/*        holder.btnBasvur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: ");
-                holder.btnBasvur.setState(StateButton.BUTTON_STATES.DISABLED);
-                holder.btnBasvur.setClickable(false);
-                holder.onay.setActivated(true);
-
-            }
-        });
-        holder.save_this_advert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (holder.save_this_advert.isActivated()) {
-                    holder.save_this_advert.setActivated(false);
-                } else
-                    holder.save_this_advert.setActivated(true);
-
-
-            }
-        });
-*/
         holder.showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
