@@ -30,35 +30,41 @@
         android:layout_margin="2dp"
         android:weightSum="2">
 
+
         <TextView
             android:id="@+id/publishDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yayınlanma Tarihi"
+            android:drawableStart="@drawable/ic_access_time_black_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/black"
+            android:text="2 gündür yayında "
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp" />
 
-            />
+        <!--
+                <TextView
+                    android:id="@+id/distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/publishDate"
+                    android:text="Distance"
+                    android:textColor="@color/mb_red_dark"
+                    android:textStyle="italic"
 
-        <TextView
-            android:id="@+id/distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/publishDate"
-            android:text="Distance"
-            android:textColor="@color/mb_red_dark"
-            android:textStyle="italic"
 
-
-            />
-
-        <TextView
+                    />
+                    <TextView
             android:id="@+id/distance2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_toEndOf="@+id/distance"
             android:textColor="@color/jumbo"
             android:textStyle="italic" />
+        -->
+
 
 
     </RelativeLayout>

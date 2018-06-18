@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.harun.getjob.AddJobAdvert.HelperStaticMethods;
 import com.example.harun.getjob.R;
 import com.google.android.gms.maps.GoogleMap;
 
@@ -26,18 +27,18 @@ import java.util.ArrayList;
 public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdapter.MyViewHolder> {
     private static final String TAG = "NearJobAdvertAdapter";
     Context mcontext;
-    private ArrayList<JobAdvertModel> jobAdvertModelArrayList = new ArrayList<>();
+    private ArrayList<NearJobAdvertModel> jobAdvertModelArrayList = new ArrayList<>();
     private LayoutInflater layoutInflater;
     private Animation animationUp;
     private Animation animDown;
     private Animation animPulse;
-    private JobAdvertModel mJobAdvertModel;
+    private NearJobAdvertModel mJobAdvertModel;
     private ArrayList<MyViewHolder> expandedList = new ArrayList<>(1); //Expand edilen itemin view elemanlarını tutuyorum
     //LayoutAnimationController layoutAnimationController;
-   // int lastPosition = -1;
-   // Animation animation;
+    // int lastPosition = -1;
+    // Animation animation;
 
-    public NearJobAdvertAdapter(Context context, ArrayList<JobAdvertModel> jobAdvertModelArrayList) {
+    public NearJobAdvertAdapter(Context context, ArrayList<NearJobAdvertModel> jobAdvertModelArrayList) {
         Log.d(TAG, "NearJobAdvertAdapter: ");
         this.jobAdvertModelArrayList = jobAdvertModelArrayList;
         this.layoutInflater = LayoutInflater.from(context);
@@ -48,7 +49,7 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
         //int anim = R.anim.layout_anim2;
         //  layoutAnimationController= AnimationUtils.loadLayoutAnimation(context, anim);
         //animation = AnimationUtils.loadAnimation(context,
-             //   R.anim.item_animation_from_bottom);
+        //   R.anim.item_animation_from_bottom);
     }
 
     @Override
@@ -83,35 +84,6 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
 
         }
 
-      /*  if (position > lastPosition) {
-            Log.d(TAG, "onBindViewHolder: ");
-            holder.itemView.startAnimation(animation);
-            lastPosition = position;
-        }*/
-
-/*        holder.btnBasvur.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: ");
-                holder.btnBasvur.setState(StateButton.BUTTON_STATES.DISABLED);
-                holder.btnBasvur.setClickable(false);
-                holder.onay.setActivated(true);
-
-            }
-        });
-        holder.save_this_advert.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (holder.save_this_advert.isActivated()) {
-                    holder.save_this_advert.setActivated(false);
-                } else
-                    holder.save_this_advert.setActivated(true);
-
-
-            }
-        });
-*/
         holder.showDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,11 +161,12 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
 
     private void setData(MyViewHolder holder) {
         holder.tvjobname.setText(mJobAdvertModel.getCompanyJob());
-        holder.tvbasvuru_count.setText(mJobAdvertModel.getCountApply());
+        holder.tvbasvuru_count.setText(String.valueOf(mJobAdvertModel.getCountApply()).concat("\nBasvuru"));
         holder.companyname.setText(mJobAdvertModel.getCompanyName());
-        holder.publishdate.setText(mJobAdvertModel.getPublishDate());
+        holder.publishdate.setText(HelperStaticMethods.getDateDifference(mJobAdvertModel.getPublishDate()));
         holder.tvdistance.setText(mJobAdvertModel.getCompanyDistance());
-        holder.tvexperience.setText(mJobAdvertModel.getExperienceinfo());
+        holder.tvexperience.setText(mJobAdvertModel.getExpLevel());
+        holder.sector.setText(mJobAdvertModel.getJobSector());
         //  holder.tvjobtype.setText(mJobAdvertModel.getJobDescpriction());
 
     }
@@ -206,7 +179,7 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements AdvertDetails.ChangeMarkerCluster {
         View viewleft;
-        TextView companyname, tvbasvuru_count, tvjobname, tvjobtype, publishdate, tvexperience, tvdistance, tvdetail;
+        TextView companyname, tvbasvuru_count, tvjobname, sector, publishdate, tvexperience, tvdistance, tvdetail;
         ImageView companyLogo1, detail_image, onay;
         RelativeLayout showDetails;
         RelativeLayout expandcard;
@@ -220,6 +193,7 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
             companyname = itemView.findViewById(R.id.companyname);
             companyLogo1 = itemView.findViewById(R.id.companyLogo1);
             tvbasvuru_count = itemView.findViewById(R.id.tvbasvuru_count);
+            sector = itemView.findViewById(R.id.sector);
             tvjobname = itemView.findViewById(R.id.tvjobname);
             onay = itemView.findViewById(R.id.onay);
             publishdate = itemView.findViewById(R.id.publishdate);
@@ -238,28 +212,29 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
          *
          * @param fromNearJobAdapter->
          */
-        private void bindMapLocation(JobAdvertModel fromNearJobAdapter) {
+        private void bindMapLocation(NearJobAdvertModel fromNearJobAdapter) {
             viewHolder.bindMapLocation(fromNearJobAdapter);
         }
 
         /**
          * Marker Style Change İnterFace
-         * @param item -->Değiştirilecek İtem
+         *
+         * @param item      -->Değiştirilecek İtem
          * @param isBasvuru -->Basvurumu Yoksa Kayıt İşlemimi Yapıldı.
          */
         @Override
-        public void changeMarker(JobAdvertModel item, boolean isBasvuru) {
+        public void changeMarker(NearJobAdvertModel item, boolean isBasvuru) {
 
-
-            for (JobAdvertModel list : MyclusterManager.getInstance().getMyClusterManager().getAlgorithm().getItems()) {
-
-                if (list.getPosition().equals(item.getPosition())) {
-                    Log.d(TAG, "deneme2: " + list.getCompanyName());
+            Log.d(TAG, "changeMarker: ");
+            for (NearJobAdvertModel list : MyclusterManager.getInstance().getMyClusterManager().getAlgorithm().getItems()) {
+                //   Log.d(TAG, "changeMarker: FOR İÇİ " + list.getmPosition() + "\t" + item.getmPosition());
+                if (list.getmPosition().equals(item.getmPosition())) {
+                    //    Log.d(TAG, "deneme2: " + list.getCompanyName());
                     if (isBasvuru) {
                         list.setBasvuruDurumu(1);
                         onay.setActivated(true);
-                        list.setIcon(MapHelperMethods.getApplyMarkerDrawable(mcontext));
-                        Log.d(TAG, "changeMarker: " + MyclusterManager.getInstance().getMyClusterMarker());
+                        list.setMarkerIcon(MapHelperMethods.getApplyMarkerDrawable(mcontext));
+                        //    Log.d(TAG, "changeMarker: " + MyclusterManager.getInstance().getMyClusterMarker());
 
                         /*Burada Markerlerin cluster olmassı(hepsinin birleşmesi ) durumunda asagıda bir hata meydana geliyor Programın
                         * durmaması için try catche aldım .*/
@@ -279,6 +254,9 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
 
                     Log.d(TAG, "deneme2: " + list);
                     break;
+                } else {
+
+                    Log.d(TAG, "changeMarker: BASARISIZ...");
                 }
 
 

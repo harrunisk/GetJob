@@ -2,9 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@android:color/darker_gray" />
+            <corners android:radius="3dp"> </corners>
+            <solid android:color="@color/retro8" />
         </shape>
     </item>
+    <!--
     <item
         android:bottom="@dimen/statebutton_md_bottom_shadow"
         android:left="@dimen/statebutton_md_left_shadow"
@@ -13,4 +15,5 @@
             <solid android:color="@color/md_grey_100" />
         </shape>
     </item>
+    -->
 </layer-list>

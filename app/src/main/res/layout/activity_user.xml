@@ -55,9 +55,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
                 android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingTop="15dp">
 
 
                 <TextView
@@ -76,11 +76,11 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recommendedList"
                     android:layout_width="wrap_content"
-                    app:reverseLayout="true"
-
                     android:layout_height="wrap_content"
+
                     android:layout_marginTop="5dp"
-                    android:paddingTop="10dp">
+                    android:paddingTop="10dp"
+                    app:reverseLayout="true">
 
 
                 </android.support.v7.widget.RecyclerView>
@@ -124,9 +124,10 @@
                     >
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:background="@drawable/ripplebackgorund"
                         android:onClick="jobSearch">
 
                         <ImageView
@@ -162,13 +163,16 @@
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="@dimen/cardview_elevation"
+
                     app:cardUseCompatPadding="true">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:background="@drawable/ripplebackgorund"
                         android:clickable="true"
+
                         android:focusable="true">
 
                         <ImageView
@@ -183,6 +187,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/basvurular"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginBottom="15dp"
                             android:layout_marginTop="15dp"
                             android:text="BAŞVURULARIM"
@@ -216,10 +221,12 @@
 
                     <RelativeLayout
                         android:id="@+id/profileLayout"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="true"
+                        android:background="@drawable/ripplebackgorund"
+
                         android:focusable="true"
                         android:onClick="profilPage">
 
@@ -259,10 +266,12 @@
                     app:cardUseCompatPadding="true">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="true"
+                        android:background="@drawable/ripplebackgorund"
+
                         android:focusable="true">
 
 
@@ -312,14 +321,15 @@
                     android:layout_weight="1"
                     app:cardCornerRadius="5dp"
                     app:cardElevation="@dimen/cardview_elevation"
-
                     app:cardUseCompatPadding="true">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="true"
+                        android:background="@drawable/ripplebackgorund"
+
                         android:focusable="true">
 
 
@@ -358,12 +368,14 @@
                     app:cardUseCompatPadding="true">
 
                     <RelativeLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:clickable="true"
-                        android:onClick="addJobAdvert"
-                        android:focusable="true">
+                        android:focusable="true"
+                        android:background="@drawable/ripplebackgorund"
+
+                        android:onClick="addJobAdvert">
 
                         <ImageView
                             android:id="@+id/ayarlar"

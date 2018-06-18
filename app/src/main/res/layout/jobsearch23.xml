@@ -2,7 +2,6 @@
 <com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,7 +16,8 @@
     <!--MAİN CONTENT-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
 
         <include
@@ -30,10 +30,21 @@
         <RelativeLayout
             android:id="@+id/category"
             android:layout_width="match_parent"
-            android:layout_height="82dp"
+            android:layout_height="84dp"
             android:layout_below="@+id/toolbarLayout"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:background="@color/White">
+
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/categoryProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="visible"
+                app:indicatorColor="@color/holo_red_light"
+
+                />
 
 
             <android.support.v7.widget.RecyclerView
@@ -52,7 +63,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/category"
-            android:background="@drawable/dialogcorner"
             android:orientation="vertical">
 
 
@@ -60,12 +70,12 @@
                 android:id="@+id/touchHandler2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/dialogcorner">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
                     app:cardCornerRadius="10dp"
                     app:cardUseCompatPadding="true">
 
@@ -74,6 +84,17 @@
                         class="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+
+                        />
+
+                    <com.wang.avi.AVLoadingIndicatorView
+                        android:id="@+id/mapProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        app:indicatorColor="@color/holo_red_light"
+                        app:indicatorName="BallClipRotatePulseIndicator"
 
                         />
 
@@ -117,8 +138,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|end"
-                        android:layout_marginEnd="5dp"
                         android:layout_marginBottom="115dp"
+                        android:layout_marginEnd="5dp"
                         android:src="@drawable/markeruser"
                         app:backgroundTint="@color/white"
                         app:fabSize="mini" />
@@ -128,8 +149,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|end"
-                        android:layout_marginEnd="5dp"
                         android:layout_marginBottom="60dp"
+                        android:layout_marginEnd="5dp"
                         android:src="@drawable/placeholders"
                         app:backgroundTint="@color/white"
                         app:fabSize="mini" />
@@ -235,7 +256,6 @@
         <!--Sliding Header Content -->
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:sothree="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">

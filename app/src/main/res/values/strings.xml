@@ -51,14 +51,16 @@
     </string-array>
 <string name="tecrubetext"> %1$d Tecrübeli </string>
 
+    <item name="TAG_ONLINE_ID" type="id"/>
 <string-array name="sektorListe">
 
     <item>Hukuk</item>
     <item>Lojistik Taşıma</item>
-    <item>Eğiitim</item>
+    <item>Eğitim</item>
     <item>IT ve Yazılım</item>
     <item>İnsan Kaynakları</item>
     <item>Güvenlik </item>
+    <item>Halkla İlişkiler </item>
     <item>Güzellik ve Bakım </item>
     <item>Üretim ve İmalat </item>
     <item>Temizlik</item>

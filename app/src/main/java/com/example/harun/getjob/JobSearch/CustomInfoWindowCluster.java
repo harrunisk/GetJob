@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel;
+import com.example.harun.getjob.AddJobAdvert.HelperStaticMethods;
+import com.example.harun.getjob.JobSearch.JobUtils.NearJobAdvertModel;
 import com.example.harun.getjob.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
@@ -21,7 +22,7 @@ public class CustomInfoWindowCluster implements GoogleMap.InfoWindowAdapter {
     private View myContentsView;
     private LayoutInflater inflate;
     private TextView tvCompanyName, tvSnippet, publishDate, distance, newLocationDistance;
-    private JobAdvertModel clickedItem;
+    private NearJobAdvertModel clickedItem;
 
 
     CustomInfoWindowCluster(Context context) {
@@ -31,7 +32,7 @@ public class CustomInfoWindowCluster implements GoogleMap.InfoWindowAdapter {
         //   this.clickedItem = _clickedItem;
     }
 
-    public void setClickedItem(JobAdvertModel clickedItem) {
+    public void setClickedItem(NearJobAdvertModel clickedItem) {
 
         this.clickedItem = clickedItem;
     }
@@ -49,13 +50,13 @@ public class CustomInfoWindowCluster implements GoogleMap.InfoWindowAdapter {
                 .findViewById(R.id.snippet);
 
         publishDate = myContentsView.findViewById(R.id.publishDate);
-        distance = myContentsView.findViewById(R.id.distance);
-        newLocationDistance = myContentsView.findViewById(R.id.distance2);
+      //  distance = myContentsView.findViewById(R.id.distance);
+      //  newLocationDistance = myContentsView.findViewById(R.id.distance2);
         tvCompanyName.setText(clickedItem.getCompanyName());
-        tvSnippet.setText(clickedItem.getCompanyJob());
-        publishDate.setText(clickedItem.getPublishDate());
-        distance.setText(clickedItem.getCompanyDistance());
-        newLocationDistance.setText(clickedItem.getNewLocationDistance());
+        tvSnippet.setText(clickedItem.getJobSector());
+        publishDate.setText(HelperStaticMethods.getDateDifference(clickedItem.getPublishDate()));
+//        distance.setText(clickedItem.getCompanyDistance());
+      //  newLocationDistance.setText(clickedItem.getNewLocationDistance());
 
 
         return myContentsView;

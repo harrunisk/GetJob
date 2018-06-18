@@ -40,7 +40,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="5dp"
                         android:fontFamily="serif"
                         android:text="İş Tanımı"
                         android:textColor="@color/black"
@@ -90,13 +89,26 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/adresInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:fontFamily="serif"
+                        android:text="Adres Bilgisi"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"
+
+
+                        />
+
+                    <TextView
                         android:id="@+id/jobadresTv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_below="@+id/adresInfo"
                         android:layout_marginEnd="3dp"
+                        android:layout_marginTop="3dp"
                         android:layout_toStartOf="@+id/view1"
-                        android:text="Merkez Mah. 128.Sok No :12 Daire 4 İstanbul Beylikdüzü "
                         android:textColor="@color/black"
 
                         />
@@ -110,7 +122,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toStartOf="@+id/marker"
-                        android:background="@color/mb_purple_dark" />
+                        android:background="@color/Turquoise" />
 
                     <ImageView
                         android:id="@+id/marker"
@@ -119,7 +131,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="10dp"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/map_with_locationmark" />
+                        android:src="@drawable/duplicatemarker" />
 
                     <TextView
                         android:id="@+id/distance3"
@@ -129,7 +141,6 @@
                         android:layout_below="@+id/marker"
                         android:layout_marginEnd="10dp"
                         android:layout_toEndOf="@+id/view1"
-                        android:text="2km"
                         android:textAlignment="center"
                         android:textSize="9dp" />
 
@@ -141,6 +152,7 @@
                     android:id="@+id/mapView"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:layout_marginTop="3dp"
                     android:layout_below="@+id/adrescontent"
                     map:liteMode="true"
                     map:mapType="none" />

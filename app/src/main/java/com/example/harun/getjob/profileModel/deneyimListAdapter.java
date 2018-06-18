@@ -158,7 +158,7 @@ public class deneyimListAdapter extends RecyclerView.Adapter<deneyimListAdapter.
             Log.d(TAG, "Veriler implement edildi SET DATA");
             this.pozisyon.setText(model.getPozisyon());
             this.lokasyon.setText(model.getLokasyon());
-            this.ayText.setText(model.getAy() + " Ay");
+            this.ayText.setText(model.getAy().concat(" Ay"));
             this.kurum.setText(model.getKurum());
 
             this.model1 = model;
