@@ -13,11 +13,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 
 import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
 import com.example.harun.getjob.MyCustomToast;
 import com.example.harun.getjob.R;
+
+import org.altervista.andrearosa.statebutton.StateButton;
 
 /**
  * Created by mayne on 4.06.2018.
@@ -26,10 +27,10 @@ import com.example.harun.getjob.R;
 public class SuccessDialogFragment extends DialogFragment implements View.OnClickListener, DialogInterface.OnKeyListener {
     private static final String TAG = "SuccessDialogFragment";
     FloatingActionButton closeDialog2;
-    Button publishBtn;
+    StateButton publishBtn;
     private JobAdvertModel2 model2;
     private boolean isPublished = false;
-    SaveJobAdvertToFirebase mSaveJobAdvertToFirebase;
+   // SaveJobAdvertToFirebase mSaveJobAdvertToFirebase;
 
     public SuccessDialogFragment() {
         super();
@@ -110,7 +111,8 @@ public class SuccessDialogFragment extends DialogFragment implements View.OnClic
                     new SaveJobAdvertToFirebase(true, model2).execute();
                     //   MyCustomToast.showCustomToast(getActivity(), "Yayınlanacak olan ilanlara eklenecek ! .");
                     isPublished = true;
-                    publishBtn.setClickable(false);
+                    publishBtn.setState(StateButton.BUTTON_STATES.DISABLED);
+                  //  publishBtn.setClickable(false);
                 } else {
 
                     MyCustomToast.showCustomToast(getActivity(), "Yayınlandı ..");

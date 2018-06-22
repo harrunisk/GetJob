@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="50dp"
+    android:layout_centerInParent="true"
     android:background="@android:color/transparent">
 
     <RelativeLayout
@@ -12,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/dialogcorner">
 
         <LinearLayout
@@ -58,7 +60,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
-
+<!--
             <Button
                 android:id="@+id/publishBtn"
                 android:layout_width="wrap_content"
@@ -71,7 +73,21 @@
                 android:textColor="@color/white"
 
                 />
-
+-->
+            <org.altervista.andrearosa.statebutton.StateButton
+                android:id="@+id/publishBtn"
+                style="@style/StateButton_md_greenStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                android:textAlignment="center"
+                app:disabledIcon="@drawable/ic_done_all_black_10dp"
+                app:disabledText="İlanınız Yayınlandı"
+                app:enabledText="Yayınla"
+                app:state="enabled" />
         </LinearLayout>
 
 

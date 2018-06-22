@@ -18,7 +18,7 @@
             android:background="@drawable/btnselector"
             android:enabled="true"
             android:gravity="center"
-            android:text="İlköğretim"
+            android:text="İlköğretim MEZUNU "
             android:textColor="@color/black"
             android:textSize="10sp" />
 
@@ -31,7 +31,7 @@
             android:background="@drawable/btnselector"
             android:enabled="true"
             android:gravity="center"
-            android:text="Lise"
+            android:text="Lise MEZUNU"
             android:textColor="@color/black"
 
             android:textSize="10sp" />
@@ -46,7 +46,7 @@
             android:enabled="true"
             android:gravity="center"
 
-            android:text="Üniversite"
+            android:text="Üniversite MEZUNU "
             android:textColor="@color/black"
             android:textSize="10sp" />
 

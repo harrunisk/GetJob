@@ -80,7 +80,7 @@ public class PreviewDialogFragment extends DialogFragment implements View.OnClic
     }
 
     private void init() {
-        Log.d(TAG, "init: "+ model2);
+        Log.d(TAG, "init: " + model2);
 
         sektor1.setText(model2.getJobSector());
         meslek.setText(model2.getCompanyJob());
@@ -98,6 +98,10 @@ public class PreviewDialogFragment extends DialogFragment implements View.OnClic
 
     }
 
+    /**
+     * İmkanlar bölümüne view ekleme İmkanlar bir listede tutuluyor burada o listenin her elamnı bir view olarak imkanlarcontent
+     * view 'in  ekleniyor
+     */
     private void addView() {
         if (model2.getJobPossibility() != null) {
             pos_viewSwitch.setDisplayedChild(1);

@@ -8,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.example.harun.getjob.AddJobAdvert.ApplicantUserModel;
+import com.example.harun.getjob.AddJobAdvert.ApplyAdvertModel;
 import com.example.harun.getjob.AddJobAdvert.HelperStaticMethods;
+import com.example.harun.getjob.MainActivity;
 import com.example.harun.getjob.R;
 import com.example.harun.getjob.viewpagercards.TagLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -17,10 +20,15 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.altervista.andrearosa.statebutton.StateButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by mayne on 17.04.2018.
@@ -205,12 +213,15 @@ public class AdvertDetails {
                         save_this_advert.setActivated(false);
                         mJobAdvertModel.setSave(false);
                         markerCluster.changeMarker(mJobAdvertModel, false);
+                        addFirebaseAppliedAdvert();
                         //Log.d(TAG, "SETSAVE:FALSE " + mJobAdvertModel);
                     } else {
                         save_this_advert.setActivated(true);
                         mJobAdvertModel.setSave(true);
                         //  Log.d(TAG, "SETSAVE:TRUE " + mJobAdvertModel);
                         markerCluster.changeMarker(mJobAdvertModel, false);
+                        addFirebaseAppliedAdvert();
+
                     }
                     break;
 
@@ -221,8 +232,14 @@ public class AdvertDetails {
                     if (mJobAdvertModel.getBasvuruDurumu().equals(StateButton.BUTTON_STATES.ENABLED)) { //Basvuru yapılmamıs buton kullanılabilir durumda ise yap
                         Log.d(TAG, "onClick:btnBasvur.getState().getValue() == 0 ");
                         btnBasvur.setState(StateButton.BUTTON_STATES.DISABLED);
-                        mJobAdvertModel.setBasvuruDurumu(1);//Bassvuru yapıldı demek...
+                        mJobAdvertModel.setBasvuruDurumu(true);//Bassvuru yapıldı demek...
                         markerCluster.changeMarker(mJobAdvertModel, true);
+
+
+                        //////ADD FİREBASE BASVURU YAPILDI
+
+                        addFirebaseAppliedAdvert();
+
 
                     } else {
                         Log.d(TAG, "BASVURU DAHA ÖNCEDEN YAPILMIS  İCİN  DİSABLE MODE: ");
@@ -235,51 +252,44 @@ public class AdvertDetails {
 
         }
 
+        private void addFirebaseAppliedAdvert() {
+            String date = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
+            final ApplyAdvertModel applyAdvertModel = new ApplyAdvertModel(mJobAdvertModel.getJobID(), date, mJobAdvertModel.isSave(), mJobAdvertModel.getBasvuruDurumu() == StateButton.BUTTON_STATES.DISABLED);
+            final ApplicantUserModel applicantUserModel = new ApplicantUserModel(MainActivity.userID, date);
 
-    }
+            FirebaseDatabase.getInstance().getReference()
+                    .child("users_data")
+                    .child(MainActivity.userID)
+                    .child("applyAdvert")
+                    .child(applyAdvertModel.getJobID()).setValue(applyAdvertModel)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "onSuccess: Basvuru bilgisi kullanıcı basvurularına eklendi ");
 
-
-
-
-
-
-    /*
-    @Override
-    public int getCount() {
-        return models.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return models.get(position);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
-    @Override
-    public View getView(int position, View view, ViewGroup viewGroup) {
-        ViewHolder viewHolder;
-        View myView = view;
-
-        if (myView == null) {
-            Log.d(TAG, "getView: ");
-            myView = layoutInflater.inflate(R.layout.jobadvertdetails, null, false);
-            viewHolder = new ViewHolder(myView);
-            myView.setTag(viewHolder);
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child("jobAdvert")
+                                    .child("publishedAdverts")
+                                    .child(mJobAdvertModel.getJobID())
+                                    .child("applyInfo")
+                                    .child(MainActivity.userID).setValue(applicantUserModel)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d(TAG, "onSuccess: basvuru bilgisi ilan detaylarına eklendi");
+                                        }
+                                    });
 
 
-        } else {
-            viewHolder = (ViewHolder) myView.getTag();
+                        }
+                    });
+
+
         }
 
 
-        viewHolder.setData((JobAdvertModel) getItem(position));
-        return myView;
     }
-*/
+
 }
 
 

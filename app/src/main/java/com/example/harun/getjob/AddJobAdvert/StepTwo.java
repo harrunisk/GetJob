@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -203,6 +204,12 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
         return null;
     }
 
+    /**
+     * Boş olan listenin bulundugu layouta animasyon ekliyorum
+     * .
+     *
+     * @param empty_arrayList
+     */
     private void errorAnim(ArrayList empty_arrayList) {
         Log.d(TAG, "errorAnim: ");
         if (empty_arrayList == clickedehliyetList) {
@@ -212,6 +219,7 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
         } else if (empty_arrayList == clickedAskerlikList) {
             Log.d(TAG, "errorAnim:clickedAskerlikList ");
             ekstraFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
+           // ekstraFore.requestFocus();
         } else if (empty_arrayList == clickedCinsiyetList) {
             Log.d(TAG, "errorAnim:clickedCinsiyetList ");
             ekstraFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
@@ -219,7 +227,7 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
         } else if (empty_arrayList == clickedCalismaList) {
             Log.d(TAG, "errorAnim:clickedCalismaList ");
             calismaSekliFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
-
+          //  calismaSekliFore.requestFocus();
         } else if (empty_arrayList == clickedEgitimList) {
             Log.d(TAG, "errorAnim:clickedEgitimList ");
             egitimSeviyesiFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
@@ -254,10 +262,28 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
                 Log.d(TAG, "verifyStep: arrayLists[i].contains(bayanBtn) || arrayLists[i] == clickedCinsiyetList");
                 return false;
             }
+
             // errorAnim(_arrayList);
 
             return true;
         } else {
+
+            if (_arrayList == clickedTecrubeList && clickedTecrubeList.contains(tecrubeliBtn) && TextUtils.isEmpty(tecrubeText.getText())) {
+
+                Log.d(TAG, "validate:clickedTecrubeList.contains(tecrubeliBtn)&&tecrubeText.getText().length()<=0 ");
+                //Tecrubeli butonu tıklanmış ise bu sefer en az kac yıl oldgunu belirtmesi için tecrubeTExt dolumu bosmu oldgununun kontrolu için yazıldı
+
+                //tecrubeText.setError("");
+                return true;
+
+            }
+            if (_arrayList == clickedehliyetList && clickedehliyetList.contains(ehliyetVarbtn) && TextUtils.isEmpty(ehliyetTuru.getText())) {
+
+                Log.d(TAG, "validate:clickedTecrubeList.contains(tecrubeliBtn)&&tecrubeText.getText().length()<=0 ");
+                //Ehliyet Var Butonu tıklamıs ise Ehliyet Türünü belirmtesi zorunlu oldugu için yazıldı .
+                return true;
+
+            }
             return false;
         }
     }
