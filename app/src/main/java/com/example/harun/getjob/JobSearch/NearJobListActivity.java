@@ -90,7 +90,9 @@ public class NearJobListActivity extends AppCompatActivity {
 
         //Head Kısmı için adres ve kapsama alanı ve bulunan iş sayısı texti dolduruluyor .Burada yeni konum seçildiğinde bazı işlemler
         //yapılacak..
-        userAdress.setText(UserLocationInfo.getInstance().getMyLocationAdress());
+
+        userAdress.setText(getIntent().getExtras().getInt("whichLocation") == 1
+                ? UserLocationInfo.getInstance().getMyLocationAdress() : UserLocationInfo.getInstance().getNewLocationAdress());
         userArea.setText(getString(R.string.userArea, UserLocationInfo.getInstance().getCircleArea(), nearJoblistSize));
         toolBartitle.setText(getIntent().getExtras().getString("Category"));
 
@@ -117,8 +119,6 @@ public class NearJobListActivity extends AppCompatActivity {
 
             }
         };
-
-
     }
 
     private void gatherViews() {

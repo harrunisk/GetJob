@@ -984,7 +984,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
      * böyle yapınca kullanıcı işlemine devam edebilir.
      */
 ////CHECK MEMORY LEAK ARKA PLANDA ÇALIŞIYOR AMA HAFIZADAN SİLİNMİYOR .. ..
-    private  class SaveAllChanges extends AsyncTask<Void, Void, Void> {
+    private class SaveAllChanges extends AsyncTask<Void, Void, Void> {
 
         private static final String TAG = "SaveAllChanges";
 
@@ -1049,7 +1049,10 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
             //   uploadProgress.hide();
             Log.d(TAG, "onPostExecute: bitti activyty açılıyor.");
             Intent i = new Intent(EditProfile.this, profilPage.class);
+         //   ImageLoader.getInstance().destroy();
             startActivity(i);
+
+
             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
             // ((profilPage)getApplicationContext()).profilimageProgress.show();
             finish();

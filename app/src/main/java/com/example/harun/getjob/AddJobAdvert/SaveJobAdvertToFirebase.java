@@ -5,19 +5,15 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
-import com.example.harun.getjob.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 /**
  * Created by mayne on 5.06.2018.
@@ -31,29 +27,15 @@ public class SaveJobAdvertToFirebase extends AsyncTask<Void, Void, Void> {
     //FİREBASE
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference myRef, myref2;
-    private FirebaseAuth mAuth;
-    private String userId; //Burası Company Id olaacak Daha sonra şimdilik userID
-    private StorageReference mStorageRef;
     private String databaseName = "jobAdvert"; //SaveJobAdvertToFirebase Database name
     private String newKey;
     private boolean isPublished;
-//    HashMap<String, List<String>> denemeHash = new HashMap<>();
-//    List<String> denemeList = new ArrayList<>();
-
 
     public SaveJobAdvertToFirebase(boolean isPublished, JobAdvertModel2 mJobAdvertModel2) {
         this.isPublished = isPublished;
         this.mJobAdvertModel2 = mJobAdvertModel2;
-        Log.d(TAG, "SaveJobAdvertToFirebase: " + mJobAdvertModel2);
-        if (MainActivity.userID != null) {
-
-            userId = MainActivity.userID;
-            Log.d(TAG, "FirebaseMethod: @@@@@@@" + userId);
-        }
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
-        mStorageRef = FirebaseStorage.getInstance().getReference();
-
         //ASıl hedef burası kayıt edilen yer
         myref2 = myRef.child(databaseName);
 
@@ -91,60 +73,19 @@ public class SaveJobAdvertToFirebase extends AsyncTask<Void, Void, Void> {
                             Log.d(TAG, "onDataChange: " + dataSnapshot.getKey());
 
                             myref2.child("publishedAdverts").child(dataSnapshot.getKey())
+                                    .child("jobInfo")
                                     .setValue(dataSnapshot.getValue()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Log.d(TAG, "onComplete:ÉKLEME İŞLEMİ BASARILI  ");
                                     if (task.isSuccessful()) {
 
-                                        myref2.child("notPublishedAdverts").child(dataSnapshot.getKey()).removeValue(
-//
-//                                                new DatabaseReference.CompletionListener() {
-//                                            @Override
-//                                            public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-//                                                Log.d(TAG, "onComplete: SİLME İŞLMEİ BASARILI ");
-//                                                Log.d(TAG, "onComplete: "+databaseReference);
-//                                              //  databaseReference.removeValue()
-//                                            }
-//                                        }
-//
-                                        );
+                                        myref2.child("notPublishedAdverts").child(dataSnapshot.getKey()).removeValue();
 
-                                     /*   myref2.child("Sector").child(mJobAdvertModel2.getJobSector()).child(mJobAdvertModel2.getJobID()).addChildEventListener(new ChildEventListener() {
-                                            @Override
-                                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                                Log.d(TAG, "onChildAdded: " + dataSnapshot);
-                                            }
-
-                                            @Override
-                                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                            }
-
-                                            @Override
-                                            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                            }
-
-                                            @Override
-                                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-
-                                            }
-                                        });
-*/
                                     }
                                 }
                             });
-
-
                         }
-
-
                         @Override
                         public void onCancelled(DatabaseError databaseError) {
                             Log.d(TAG, "onCancelled: ");
@@ -159,9 +100,6 @@ public class SaveJobAdvertToFirebase extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    private void publishedAdverts() {
-
-    }
 
     @Override
     protected void onPreExecute() {
@@ -170,12 +108,6 @@ public class SaveJobAdvertToFirebase extends AsyncTask<Void, Void, Void> {
             newKey = myref2.push().getKey();
             mJobAdvertModel2.setJobID(newKey);
         }
-//        denemeList.add(mJobAdvertModel2.getEducationLevel());
-//        denemeList.add(mJobAdvertModel2.getExpLevel());
-//        denemeList.add(mJobAdvertModel2.getEmployeeHour());
-//        denemeList.add(mJobAdvertModel2.getMilitary());
-//        denemeList.add(mJobAdvertModel2.getGender());
-//        denemeHash.put("pozisyon", denemeList);
         super.onPreExecute();
     }
 

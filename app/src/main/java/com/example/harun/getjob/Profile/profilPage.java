@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.harun.getjob.FirebaseMethods.FirebaseMethods;
+import com.example.harun.getjob.MainActivity;
 import com.example.harun.getjob.R;
 import com.example.harun.getjob.profileModel.AllModelsList;
 import com.example.harun.getjob.profileModel.deneyimListAdapter;
@@ -83,7 +84,7 @@ public class profilPage extends AppCompatActivity {
 
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef1 = mFirebaseDatabase.getReference();
+        myRef1 = mFirebaseDatabase.getReference().child(getResources().getString(R.string.users_data));
 
         addDeneyim_btn.setVisibility(View.GONE);
         addEgitim_btn.setVisibility(View.GONE);
@@ -176,20 +177,28 @@ public class profilPage extends AppCompatActivity {
         Log.d(TAG, "firebaseInit: ");
         egitimlistFromFirebase = new ArrayList<>();
 
-        myRef1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange: PRFOİLPAGE");
-                setProfileItems(mFirebaseMethod.getDataFromFirebase(dataSnapshot));
+        try {
+            myRef1.child(MainActivity.userID).child("profile_data").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Log.d(TAG, "onDataChange: PRFOİLPAGE");
+                    setProfileItems(mFirebaseMethod.getDataFromFirebase(dataSnapshot));
 
-            }
+                }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d(TAG, "firebaseInit: Kullanıcı Verisi Bulunamadı .");
+           // setProfileItems(null);
+
+        }
 
     }
 
@@ -223,8 +232,6 @@ public class profilPage extends AppCompatActivity {
             tvDogumTarih.setText(dataFromFirebase.getMgenelBilgiModel().getBirthday());
             tvEhliyet.setText(dataFromFirebase.getMgenelBilgiModel().getEhliyet());
             tvAskerlik.setText(dataFromFirebase.getMgenelBilgiModel().getAskerlik());
-
-
             tvAbout_content.setText(dataFromFirebase.getAbout_me());
             tvFullnameuser.setText(dataFromFirebase.getMfirebaseContent().getName());
             tvUserJob.setText(dataFromFirebase.getMfirebaseContent().getJob());

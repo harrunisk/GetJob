@@ -144,6 +144,8 @@
                         app:backgroundTint="@color/white"
                         app:fabSize="mini" />
 
+
+
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/changeLocation"
                         android:layout_width="wrap_content"
@@ -223,7 +225,7 @@
 
             </FrameLayout>
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 
@@ -232,12 +234,31 @@
                     android:id="@+id/btnListNearJob"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
                     android:background="@drawable/btnstyle"
                     android:text="Yakınımdakileri Listele" />
 
-            </FrameLayout>
+                <ProgressBar
+                    android:id="@+id/btnListNearJobProgress"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_alignEnd="@id/btnListNearJob"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignStart="@id/btnListNearJob"
+                    android:visibility="gone"
+                    android:indeterminate="true"
+                    android:indeterminateBehavior="cycle"
+                    android:indeterminateDuration="10"
+                    android:indeterminateOnly="true"
+                    android:minHeight="20dp"
+                    android:progressBackgroundTintMode="multiply" />
+
+
+            </RelativeLayout>
 
         </LinearLayout>
 

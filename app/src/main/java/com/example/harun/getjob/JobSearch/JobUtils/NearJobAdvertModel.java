@@ -19,7 +19,7 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
     private static final String TAG = "NearJobAdvertModel";
 
     private boolean isSave;
-    private int basvuruDurumu;
+    private boolean basvuruDurumu;
     private BitmapDescriptor markerIcon;
     private String newLocationDistance, companyDistance;
     private LatLng mCoord;
@@ -43,12 +43,12 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
             ArrayList<String> jobPossibility,
             LatLng mPosition,
             boolean isSave,
-            int basvuruDurumu,
+            boolean basvuruDurumu,
             BitmapDescriptor markerIcon,
             String newLocationDistance, String companyDistance) {
         //Bunlar jobADvertModel2 'e
         // Diğerleride bu sınıfın değişkeni
-        super(jobID,companyName, companyJob, jobSector, jobDescpriction,
+        super(jobID, companyName, companyJob, jobSector, jobDescpriction,
                 companyLogoUrl, companyAdress, educationLevel,
                 expLevel, employeeHour, drivingLicence, military,
                 gender, publishDate, countApply, jobPossibility,
@@ -65,17 +65,53 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
     }
 
 
+    protected NearJobAdvertModel(Parcel in) {
+        super(in);
+        isSave = in.readByte() != 0;
+        basvuruDurumu = in.readByte() != 0;
+        newLocationDistance = in.readString();
+        companyDistance = in.readString();
+        mCoord = in.readParcelable(LatLng.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeByte((byte) (isSave ? 1 : 0));
+        dest.writeByte((byte) (basvuruDurumu ? 1 : 0));
+        dest.writeString(newLocationDistance);
+        dest.writeString(companyDistance);
+        dest.writeParcelable(mCoord, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<NearJobAdvertModel> CREATOR = new Creator<NearJobAdvertModel>() {
+        @Override
+        public NearJobAdvertModel createFromParcel(Parcel in) {
+            return new NearJobAdvertModel(in);
+        }
+
+        @Override
+        public NearJobAdvertModel[] newArray(int size) {
+            return new NearJobAdvertModel[size];
+        }
+    };
+
     @Override
     public LatLng getPosition() {
-       // Log.d(TAG, "getPosition: " + mCoord);
+        // Log.d(TAG, "getPosition: " + mCoord);
         return mCoord;
     }
 
 
     public void setPosition(LatLng mPosition) {
-       // Log.d(TAG, "setPosition: " + mPosition);
+        // Log.d(TAG, "setPosition: " + mPosition);
         mCoord = mPosition;
-            }
+    }
 
     public boolean isSave() {
         return isSave;
@@ -85,15 +121,15 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
         isSave = save;
     }
 
-    public void setBasvuruDurumu(int _basvuruDurumu) { //İlana Basvuru yapılmısmı
+    public void setBasvuruDurumu(boolean _basvuruDurumu) { //İlana Basvuru yapılmısmı
         this.basvuruDurumu = _basvuruDurumu;
     }
 
     public StateButton.BUTTON_STATES getBasvuruDurumu() {
 
-        if (basvuruDurumu == 0) {
+        if (!basvuruDurumu) {
 
-            return StateButton.BUTTON_STATES.ENABLED;//Yani basvurulabiliri duruma gec basvuru yapılmamıs isse
+            return StateButton.BUTTON_STATES.ENABLED;//Yani basvurulabiliri duruma gec basvuru yapılmamıs ise
 
         } else {
             return StateButton.BUTTON_STATES.DISABLED; //Basvuru yapılmıs ise butonu devre dısı bırak .
@@ -128,41 +164,6 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
     public void setNewLocationDistance(String newLocationDistance) {
         this.newLocationDistance = newLocationDistance;
     }
-
-    protected NearJobAdvertModel(Parcel in) {
-        super(in);
-        isSave = in.readByte() != 0;
-        basvuruDurumu = in.readInt();
-        newLocationDistance = in.readString();
-        companyDistance = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeByte((byte) (isSave ? 1 : 0));
-        dest.writeInt(basvuruDurumu);
-        dest.writeString(newLocationDistance);
-        dest.writeString(companyDistance);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<NearJobAdvertModel> CREATOR = new Creator<NearJobAdvertModel>() {
-        @Override
-        public NearJobAdvertModel createFromParcel(Parcel in) {
-            return new NearJobAdvertModel(in);
-        }
-
-        @Override
-        public NearJobAdvertModel[] newArray(int size) {
-            return new NearJobAdvertModel[size];
-        }
-    };
-
 
     @Override
     public String getTitle() {

@@ -231,7 +231,7 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
                 if (list.getmPosition().equals(item.getmPosition())) {
                     //    Log.d(TAG, "deneme2: " + list.getCompanyName());
                     if (isBasvuru) {
-                        list.setBasvuruDurumu(1);
+                        list.setBasvuruDurumu(true);
                         onay.setActivated(true);
                         list.setMarkerIcon(MapHelperMethods.getApplyMarkerDrawable(mcontext));
                         //    Log.d(TAG, "changeMarker: " + MyclusterManager.getInstance().getMyClusterMarker());

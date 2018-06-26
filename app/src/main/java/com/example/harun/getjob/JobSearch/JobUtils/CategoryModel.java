@@ -86,7 +86,10 @@ public class CategoryModel {
 
             } else {
                 Query query = FirebaseDatabase.getInstance().getReference().child("jobAdvert").child("publishedAdverts").
-                        orderByChild("jobSector").equalTo(sektorList.get(i));
+                      orderByChild("jobInfo/jobSector").equalTo(sektorList.get(i));
+                //equalTo("jobInfo").
+                // orderByKey().equalTo(sektorList.get(i));
+                //equalTo(sektorList.get(i));
                 getCategoryCount(categoryModelArrayList, sektorList.get(i), query);
             }
 
@@ -109,12 +112,37 @@ public class CategoryModel {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "onDataChange:" + String.valueOf(dataSnapshot.getChildrenCount()));
-
-
+                Log.d(TAG, "onDataChange: " + dataSnapshot);
+                // if (isAll) {
                 count[0] = String.valueOf(dataSnapshot.getChildrenCount());
                 categoryModelArrayList.add(new CategoryModel(sektor, count[0]));
                 mDoneCallback.getCategoryCompleteCallback(categoryModelArrayList);
                 Log.d(TAG, "onDataChange: " + categoryModelArrayList);
+                //}
+
+//
+//                else {
+//
+//                    if (dataSnapshot.getChildren().iterator().next().child("jobInfo").exists()) {
+//                        Log.d(TAG, "onDataChange: dataSnapshot.getChildren().iterator().next().child(jobInfo).exists()");
+//                        if (dataSnapshot.getChildren().iterator().next().child("jobInfo").child("jobSector").getValue() == sektor) {
+//
+//
+//                            Log.d(TAG, "onDataChange: sektör" + sektor);
+//                            count[0] = String.valueOf(dataSnapshot.getChildrenCount());
+//                            categoryModelArrayList.add(new CategoryModel(sektor, count[0]));
+//                            mDoneCallback.getCategoryCompleteCallback(categoryModelArrayList);
+//                            Log.d(TAG, "onDataChange: " + categoryModelArrayList);
+//
+//
+//                        }
+//
+//
+//                    }
+//
+//
+//                }
+
                 //setCategoryModelArrayList(categoryModelArrayList);
             }
 
@@ -126,6 +154,7 @@ public class CategoryModel {
 
         });
     }
+
 
     @Override
     public String toString() {
