@@ -1,6 +1,5 @@
 package com.example.harun.getjob.AddJobAdvert;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,7 +18,7 @@ public class HelperStaticMethods {
 
     public static void setMargins(View v, int l, int t, int r, int b) {
         if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            Log.d(TAG, "setMargins: ");
+           // Log.d(TAG, "setMargins: ");
             ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
             p.setMargins(l, t, r, b);
             v.setLayoutParams(p);
@@ -35,7 +34,7 @@ public class HelperStaticMethods {
      * @return
      */
     public static String getDateDifference(String publishDate) {
-        Log.d(TAG, "getDateDifference:");
+       // Log.d(TAG, "getDateDifference:");
         String difference = "";
         Calendar c = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
@@ -44,14 +43,14 @@ public class HelperStaticMethods {
         Date timestamp;
         try {
             timestamp = sdf.parse(publishDate);
-            Log.d(TAG, "getDateDifference: " + timestamp + "\t" + today);
+          //  Log.d(TAG, "getDateDifference: " + timestamp + "\t" + today);
             difference = String.valueOf(Math.round(((today.getTime() - timestamp.getTime()) / 1000 / 60 / 60 / 24)));
-            Log.d(TAG, "getDateDifference: " + difference);
+          //  Log.d(TAG, "getDateDifference: " + difference);
         } catch (ParseException e) {
-            Log.e(TAG, "getDateDifference: ParseException: " + e.getMessage());
+          //  Log.e(TAG, "getDateDifference: ParseException: " + e.getMessage());
             difference = "0";
         }
-        Log.d(TAG, "getDateDifference: " + difference);
+       // Log.d(TAG, "getDateDifference: " + difference);
         return difference.concat("+ gündür yayinda");
     }
 

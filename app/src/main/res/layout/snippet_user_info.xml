@@ -3,26 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:background="@android:color/transparent"
-    android:padding="15dp">
+    android:gravity="center"
+    android:padding="10dp">
 
     <RelativeLayout
         android:id="@+id/a"
         android:layout_width="100dp"
+        android:gravity="center"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
-        android:gravity="center">
+        >
 
 
         <TextView
             android:id="@+id/count_cvDisplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:text="100"
             android:textAlignment="center"
             android:textColor="@color/white"
-
             android:textSize="12dp"
 
             />
@@ -35,7 +33,7 @@
             android:text="Özgeçmiş Görüntülenme"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="12dp"
+            android:textSize="12sp"
 
             />
 
@@ -43,6 +41,7 @@
 
 
     <View
+        android:id="@+id/v"
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
@@ -57,8 +56,10 @@
         android:id="@+id/b"
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center">
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:layout_toEndOf="@+id/v"
+       >
 
         <TextView
             android:id="@+id/count_apply"
@@ -86,6 +87,7 @@
 
 
     <View
+        android:id="@+id/v2"
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_marginStart="15dp"
@@ -98,9 +100,10 @@
         android:id="@+id/c"
         android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"
-        android:gravity="center">
+        android:layout_marginStart="15dp"
+        android:gravity="center"
+        android:layout_toEndOf="@+id/v2"
+        >
 
         <TextView
             android:id="@+id/count_saveJob"

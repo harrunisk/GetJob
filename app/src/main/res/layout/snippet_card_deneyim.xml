@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.CardView
@@ -47,9 +46,9 @@
                         android:id="@+id/addDeneyim_btn"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:layout_marginEnd="10dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
+                        android:layout_marginEnd="10dp"
                         android:layout_marginTop="2dp"
                         android:clickable="true"
                         android:elevation="3dp"
@@ -62,9 +61,9 @@
                         android:id="@+id/deneyimTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:fontFamily="serif-monospace"
                         android:layout_centerInParent="true"
+                        android:fontFamily="serif-monospace"
+                        android:padding="12dp"
                         android:text="Deneyimlerim"
                         android:textColor="@color/cardview_dark_background"
                         android:textSize="20sp"
@@ -79,22 +78,34 @@
 
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/empty_message"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Hiç Deneyim Eklenmemiş"
-                    android:visibility="visible" />
+                    android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/deneyimList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp">
+                    <TextView
+                        android:id="@+id/empty_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:fontFamily="casual"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Hiç Deneyim Eklenmemiş"
+                        android:visibility="gone" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/deneyimList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp">
 
 
-                </android.support.v7.widget.RecyclerView>
+                    </android.support.v7.widget.RecyclerView>
+
+                </RelativeLayout>
 
 
             </LinearLayout>
@@ -103,8 +114,6 @@
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
-
-
 
 
 </merge>

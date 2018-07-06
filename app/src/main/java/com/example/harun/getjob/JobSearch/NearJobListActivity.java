@@ -9,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.harun.getjob.JobSearch.JobUtils.UserLocationInfo;
@@ -39,11 +40,25 @@ public class NearJobListActivity extends AppCompatActivity {
         setContentView(R.layout.near_job_activity);
 
         gatherViews();
-        setupViewPager();
 
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+        setupViewPager();
+
+    }
 
     /**
      * JobSearch den gelen liste bundle iççine alınarak NearjobFragmentt gönderilecek.
@@ -83,6 +98,17 @@ public class NearJobListActivity extends AppCompatActivity {
         pagerAdapter.addFragment(nearJobFragment, "Yakınımdakiler");
         pagerAdapter.addFragment(allJobFragment, "Tümü");
         mViewPager.setAdapter(pagerAdapter);
+        mViewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                page.setRotationY(position * -30);
+                /*
+                final float normalizedposition = Math.abs(Math.abs(position) - 1);
+                page.setScaleX(normalizedposition / 2 + 0.5f);
+                page.setScaleY(normalizedposition / 2 + 0.5f);
+                 */
+            }
+        });
         mViewPager.setOffscreenPageLimit(1);
         mTabs.setupWithViewPager(mViewPager);
         mTabs.addOnTabSelectedListener(onTabSelectedListener(mViewPager));
@@ -98,13 +124,13 @@ public class NearJobListActivity extends AppCompatActivity {
 
     }
 
-    private TabLayout.OnTabSelectedListener onTabSelectedListener(final ViewPager bottom_sheet_viewpager) {
+    private TabLayout.OnTabSelectedListener onTabSelectedListener(final ViewPager _mViewPager) {
 
         return new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 Log.d(TAG, "onTabSelected: " + tab.getPosition());
-                bottom_sheet_viewpager.setCurrentItem(tab.getPosition());
+                _mViewPager.setCurrentItem(tab.getPosition());
 
 
             }

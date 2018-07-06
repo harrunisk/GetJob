@@ -9,7 +9,7 @@
     <string name="productKind">Ürün Çeşidi</string>
 
     <string name="slidingpanel_head"> %1$s %2$s %3$s</string> <!-- Sliding panel Set Head Text İçin yazıldı .. 1 job name 2 uzaklık 3 new location uzaklıgı  -->
-    <string name="userArea"><b> %1$d/ </b> m içinde ilgilenebileceğin  <b> %2$d </b> iş bulduk :)</string> <!-- NearJobListActivity head kısmı için  kaç km içinde kaç sonuc listeleniyor  -->
+    <string name="userArea"><b> %1$d </b>km içinde ilgilenebileceğin  <b> %2$d </b> iş bulduk :)</string> <!-- NearJobListActivity head kısmı için  kaç km içinde kaç sonuc listeleniyor  -->
     //cardview candidate criteria
     <string name="experience">Deneyim</string>
     <string name="militaryStatus">Askerlik Durumu</string>
@@ -49,33 +49,9 @@
         <item>Yok</item>
 
     </string-array>
-<string name="tecrubetext"> %1$d Tecrübeli </string>
+    <string name="tecrubetext"> %1$d Tecrübeli </string>
 
-    <item name="TAG_ONLINE_ID" type="id"/>
-<string-array name="sektorListe">
-
-    <item>Hukuk</item>
-    <item>Lojistik Taşıma</item>
-    <item>Eğitim</item>
-    <item>IT ve Yazılım</item>
-    <item>İnsan Kaynakları</item>
-    <item>Güvenlik </item>
-    <item>Halkla İlişkiler </item>
-    <item>Güzellik ve Bakım </item>
-    <item>Üretim ve İmalat </item>
-    <item>Temizlik</item>
-    <item>Sağlık</item>
-    <item>İnşaat-yapı</item>
-    <item>Mağazacılık</item>
-    <item>Mühendislik</item>
-    <item>Tamir ve Bakım </item>
-    <item>Tarım ve Hayvancılık </item>
-    <item>Tekstil</item>
-    <item>Muhasebe Finans</item>
-    <item>Bankacılık</item>
-    <item>Pazarlama ve Satış</item>
-
-    </string-array>
+    <item name="TAG_ONLINE_ID" type="id" />
 
 
     <string-array name="Ehliyet">
@@ -122,5 +98,36 @@
 
     <string name="deneme_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum sed orci eget porttitor. Fusce ultricies urna sit amet consectetur tincidunt. Suspendisse tempus libero lectus, a lacinia felis bibendum id. Curabitur ac fringilla leo. Curabitur gravida dolor felis, et molestie dui mollis ac. Maecenas hendrerit dignissim nisl, non efficitur ex eleifend ac. Ut semper at turpis non finibus. Suspendisse potenti. Sed bibendum molestie luctus. Donec lobortis egestas turpis at aliquet. Curabitur non congue neque. Sed non rutrum risus. Sed iaculis mi in ipsum dignissim condimentum. Duis eget cursus leo, tristique eleifend risus. Vivamus ornare turpis et libero aliquet hendrerit. Nunc nec vestibulum tellus, nec feugiat purus.</string>
 
+<!--
+    <string-array name="sektorListe">
+        <item>Hukuki Danışmanlık</item>
+        <item>Lojistik Taşıma</item>
+        <item>Eğitim</item>
+        <item>İş ve Yönetim</item>
+        <item>IT ve Yazılım Geliştirme</item>
+        <item>İnsan Kaynakları</item>
+        <item>Güvenlik </item>
+        <item>Eğlence Animasyon </item>
+        <item>Müşteri Hizmetleri</item>
+        <item>Restoran Konaklama</item>
+        <item>Halkla İlişkiler </item>
+        <item>Güzellik ve Bakım </item>
+        <item>Üretim ve İmalat </item>
+        <item>Temizlik</item>
+        <item>Sağlık</item>
+        <item>İnşaat-yapı</item>
+        <item>Mağazacılık</item>
+        <item>Mühendislik</item>
+        <item>Tamir ve Bakım </item>
+        <item>Tarım ve Hayvancılık </item>
+        <item>Tekstil ve Konfeksiyon</item>
+        <item>Elektrik-Elektronik</item>
+        <item>Ticaret</item>
+        <item>Spor</item>
+        <item>Muhasebe Finans</item>
+        <item>Bankacılık</item>
+        <item>Pazarlama ve Satış</item>
 
+    </string-array>
+-->
 </resources>

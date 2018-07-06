@@ -135,13 +135,13 @@
 
                     <TextView
                         android:id="@+id/distance3"
-                        android:layout_width="30dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_below="@+id/marker"
-                        android:layout_marginEnd="10dp"
                         android:layout_toEndOf="@+id/view1"
                         android:textAlignment="center"
+                        android:text="100000km"
                         android:textSize="9dp" />
 
 

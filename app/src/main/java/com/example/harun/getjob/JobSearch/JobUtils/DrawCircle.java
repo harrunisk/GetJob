@@ -119,7 +119,7 @@ public class DrawCircle {
 
     public int getCircleRadius() {
 
-        return ((int) mCircle.getRadius());
+        return ((int) mCircle.getRadius()/1000);
 
     }
 

@@ -37,6 +37,7 @@ import java.util.Locale;
 
 /**
  * Job Search te Tıklanan her marker için Bottom Sliding Panelde
+ * Yakınımdakileri Listele Butonuna basıldıgında listelenen Liste detaylarında burası yüklenecek
  */
 public class AdvertDetails {
     private static final String TAG = "AdvertDetails";
@@ -66,10 +67,10 @@ public class AdvertDetails {
         ChangeMarkerCluster markerCluster;
         // deneme markerCluster;
 
-        public ViewHolder(View itemView, Context mContext, ChangeMarkerCluster changeMarkerCluster) {
+        public ViewHolder(View itemView, Context mContext,  ChangeMarkerCluster changeMarkerCluster) {
             Log.d(TAG, "ViewHolder: ");
-            markerCluster = changeMarkerCluster;
             this.mContext = mContext;
+            markerCluster = changeMarkerCluster;
             btnBasvur = itemView.findViewById(R.id.basvurbtn);
             save_this_advert = itemView.findViewById(R.id.save_this_advert);
             tanimTv = itemView.findViewById(R.id.tanimTv);
@@ -213,7 +214,14 @@ public class AdvertDetails {
                         save_this_advert.setActivated(false);
                         mJobAdvertModel.setSave(false);
                         markerCluster.changeMarker(mJobAdvertModel, false);
-                        addFirebaseAppliedAdvert();
+                        if (mJobAdvertModel.getBasvuruDurumu().equals(StateButton.BUTTON_STATES.DISABLED)) {
+                            Log.d(TAG, "onClick: BASVURU İŞLEMİ YAPILMIS KAYIDI EKLE ");
+                            addFirebaseAppliedAdvert();
+
+                        } else {
+                            Log.d(TAG, "onClick: NE BASVURU NE KAYIT VAR İLANI KAYDINI TUTMANIN ANLAMI YOK .");
+                            removeFromFirebase();
+                        }
                         //Log.d(TAG, "SETSAVE:FALSE " + mJobAdvertModel);
                     } else {
                         save_this_advert.setActivated(true);
@@ -222,25 +230,19 @@ public class AdvertDetails {
                         markerCluster.changeMarker(mJobAdvertModel, false);
                         addFirebaseAppliedAdvert();
 
+
                     }
                     break;
 
 
                 case R.id.basvurbtn:
                     Log.d(TAG, "onClick: ");
-
                     if (mJobAdvertModel.getBasvuruDurumu().equals(StateButton.BUTTON_STATES.ENABLED)) { //Basvuru yapılmamıs buton kullanılabilir durumda ise yap
                         Log.d(TAG, "onClick:btnBasvur.getState().getValue() == 0 ");
                         btnBasvur.setState(StateButton.BUTTON_STATES.DISABLED);
                         mJobAdvertModel.setBasvuruDurumu(true);//Bassvuru yapıldı demek...
                         markerCluster.changeMarker(mJobAdvertModel, true);
-
-
-                        //////ADD FİREBASE BASVURU YAPILDI
-
                         addFirebaseAppliedAdvert();
-
-
                     } else {
                         Log.d(TAG, "BASVURU DAHA ÖNCEDEN YAPILMIS  İCİN  DİSABLE MODE: ");
                         //Log.d(TAG, "onClick: " + mJobAdvertModel);
@@ -252,11 +254,29 @@ public class AdvertDetails {
 
         }
 
-        private void addFirebaseAppliedAdvert() {
-            String date = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
-            final ApplyAdvertModel applyAdvertModel = new ApplyAdvertModel(mJobAdvertModel.getJobID(), date, mJobAdvertModel.isSave(), mJobAdvertModel.getBasvuruDurumu() == StateButton.BUTTON_STATES.DISABLED);
-            final ApplicantUserModel applicantUserModel = new ApplicantUserModel(MainActivity.userID, date);
+        private void removeFromFirebase() {
 
+            FirebaseDatabase.getInstance().getReference()
+                    .child("users_data")
+                    .child(MainActivity.userID)
+                    .child("applyAdvert")
+                    .child(mJobAdvertModel.getJobID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "onSuccess: İLAN KAYIDI GERİ ALINDI ");
+                }
+            });
+
+        }
+
+        private void addFirebaseAppliedAdvert() {
+
+            String date = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
+            final ApplyAdvertModel applyAdvertModel = new ApplyAdvertModel(
+                    mJobAdvertModel.getJobID(),
+                    date, mJobAdvertModel.isSave(),
+                    mJobAdvertModel.getBasvuruDurumu() == StateButton.BUTTON_STATES.DISABLED);
+            final ApplicantUserModel applicantUserModel = new ApplicantUserModel(MainActivity.userID, date);
             FirebaseDatabase.getInstance().getReference()
                     .child("users_data")
                     .child(MainActivity.userID)
@@ -268,15 +288,35 @@ public class AdvertDetails {
                             Log.d(TAG, "onSuccess: Basvuru bilgisi kullanıcı basvurularına eklendi ");
 
                             FirebaseDatabase.getInstance().getReference()
-                                    .child("jobAdvert")
-                                    .child("publishedAdverts")
-                                    .child(mJobAdvertModel.getJobID())
-                                    .child("applyInfo")
-                                    .child(MainActivity.userID).setValue(applicantUserModel)
+                                    .child("users_data")
+                                    .child(MainActivity.userID)
+                                    .child("suggestionKey").child(mJobAdvertModel.getJobSector()).child(mJobAdvertModel.getCompanyJob()).setValue(mJobAdvertModel.isSave()) //kayıtlara göre ise true değilse false yani basvurulara göre sıralancak
+                                    // .child(mJobAdvertModel.getJobSector()).child(mJobAdvertModel.getCompanyJob()).setValue(true)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "onSuccess: basvuru bilgisi ilan detaylarına eklendi");
+                                            Log.d(TAG, "onSuccess: Kullanıcıya Daha sonra Önerilecek Olan  İlanlar İçin Sektör ve Meslek Bilgisi eklendi ");
+
+                                            //Sadece basvuru işlemi gerçekleşmiş ise
+                                            if (mJobAdvertModel.getBasvuruDurumu() == StateButton.BUTTON_STATES.DISABLED) {
+
+                                                FirebaseDatabase.getInstance().getReference()
+                                                        .child("jobAdvert")
+                                                        .child("publishedAdverts")
+                                                        .child(mJobAdvertModel.getJobID())
+                                                        .child("applyInfo")
+                                                        .child(MainActivity.userID).setValue(applicantUserModel)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d(TAG, "onSuccess: basvuru bilgisi ilanın detaylarına eklendi");
+
+                                                            }
+                                                        });
+
+                                            }
+
+
                                         }
                                     });
 
