@@ -49,7 +49,6 @@ public class AddJobAdvert extends AppCompatActivity implements View.OnClickListe
     private void gatherViews() {
         Log.d(TAG, "gatherViews: ");
         stepperLayout = findViewById(R.id.stepperLayout);
-        stepperLayout.setOffscreenPageLimit(4);
         job_back = findViewById(R.id.job_back);
         companyName = findViewById(R.id.companyName);
         previewTv = findViewById(R.id.previewTv);
@@ -67,7 +66,14 @@ public class AddJobAdvert extends AppCompatActivity implements View.OnClickListe
         advertModel2 = new JobAdvertModel2();
         setJobDetails();
         passModelObject.putParcelable("passModelObject", advertModel2);
+        stepperLayout.setOffscreenPageLimit(4);
         stepperLayout.setAdapter(new FragmentStepAdapter(getSupportFragmentManager(), this, advertModel2));
+       /* stepperLayout.setPageTransformer(new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                page.setRotationY(position * -30);
+            }
+        });*/
         job_back.setOnClickListener(this);
         previewTv.setOnClickListener(this);
 

@@ -83,7 +83,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
-                            android:hint="Örn: Yazılım,Bankacılık,Hizmet,Temizlik.."
+                            android:hint="Sektör Bilgisi Seçiniz-->"
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:textColor="@color/Tomato"
@@ -122,18 +122,37 @@
                     app:contentPadding="8dp">
 
 
-                    <EditText
-                        android:id="@+id/arananMeslekText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:hint="Örn: Bilgisayar Mühendisi,Güvenlik Görevlisi"
-                        android:imeOptions="actionDone"
-                        android:singleLine="true"
-                        android:textColor="@color/Tomato"
-                        android:textColorHint="@color/mycolor"
-                        android:textSize="15sp"
-                        android:theme="@style/MyEditText" />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/arananMeslekText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:hint="Meslek Bilgisi Seçiniz"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:textColor="@color/Tomato"
+                            android:textColorHint="@color/mycolor"
+                            android:textSize="15sp"
+                            android:theme="@style/MyEditText" />
+
+                        <ImageView
+                            android:id="@+id/arananMeslekImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/arananMeslekText"
+                            android:layout_alignEnd="@+id/arananMeslekText"
+                            android:layout_alignTop="@+id/arananMeslekText"
+                            android:layout_centerVertical="true"
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/sort_button_with_three_lines"
+
+
+                            />
+                    </RelativeLayout>
 
 
                 </android.support.v7.widget.CardView>

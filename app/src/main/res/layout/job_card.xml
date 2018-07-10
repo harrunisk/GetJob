@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardcontent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:padding="5dp">
+
+        <ImageView
+            android:id="@+id/companyLogo1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/zoologo" />
+
+
+        <TextView
+            android:id="@+id/companyname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/companyLogo1"
+            android:layout_toStartOf="@+id/countbasvuru"
+            android:fontFamily="serif"
+            android:text="MD BİLİŞİM SİSTEMLERİ"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/sector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/companyname"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/companyLogo1"
+            android:layout_toStartOf="@+id/countbasvuru"
+            android:fontFamily="serif"
+            android:text="IT ve Yazılım"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="13dp" />
+
+
+        <LinearLayout
+            android:id="@+id/countbasvuru"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btnback2"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+            <TextView
+                android:id="@+id/tvbasvuru_count2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50 Basvuru"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+
+        </LinearLayout>
+        <!--
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/retro">
+
+
+                    </View>
+
+        -->
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/deneme"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_below="@+id/header"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/bottomsection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvjobname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Android Developer "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:gravity="center">
+            <!--
+                        <ImageView
+                            android:id="@+id/onay"
+                            android:layout_width="30dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/basvuru_tick" />
+            -->
+            <TextView
+                android:id="@+id/publishdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:drawableLeft="@drawable/ic_access_time_black_24dp"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/black"
+                android:padding="4dp"
+                android:text="2 gündür yayında "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tvdistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/publishdate"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/path_way"
+                android:drawableTint="@color/black"
+                android:padding="4dp"
+                android:text="2km Uzaklıkta "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</RelativeLayout>

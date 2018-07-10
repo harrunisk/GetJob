@@ -23,6 +23,9 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
     private BitmapDescriptor markerIcon;
     private String newLocationDistance, companyDistance;
     private LatLng mCoord;
+    private JobAdvertModel2 jobAdvertModel2;
+    private String suggestType;
+
 
     public NearJobAdvertModel(
             String jobID,
@@ -64,6 +67,17 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
         setPosition(mPosition);
     }
 
+    public NearJobAdvertModel(JobAdvertModel2 model2, String companyDistance, String suggestType) {
+        super(model2.getJobID(), model2.getCompanyName(), model2.getCompanyJob(), model2.getJobSector(), model2.getJobDescpriction(),
+                model2.getCompanyLogoUrl(), model2.getCompanyAdress(), model2.getEducationLevel(),
+                model2.getExpLevel(), model2.getEmployeeHour(), model2.getDrivingLicence(), model2.getMilitary(),
+                model2.getGender(), model2.getPublishDate(), model2.getCountApply(), model2.getJobPossibility(),
+                model2.getmPosition());
+        this.jobAdvertModel2 = model2;
+        this.companyDistance = companyDistance;
+        this.suggestType = suggestType;
+
+    }
 
     protected NearJobAdvertModel(Parcel in) {
         super(in);
@@ -72,6 +86,8 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
         newLocationDistance = in.readString();
         companyDistance = in.readString();
         mCoord = in.readParcelable(LatLng.class.getClassLoader());
+        jobAdvertModel2 = in.readParcelable(JobAdvertModel2.class.getClassLoader());
+        suggestType = in.readString();
     }
 
     @Override
@@ -82,6 +98,8 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
         dest.writeString(newLocationDistance);
         dest.writeString(companyDistance);
         dest.writeParcelable(mCoord, flags);
+        dest.writeParcelable(jobAdvertModel2, flags);
+        dest.writeString(suggestType);
     }
 
     @Override
@@ -100,6 +118,23 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
             return new NearJobAdvertModel[size];
         }
     };
+
+    public JobAdvertModel2 getJobAdvertModel2() {
+        return jobAdvertModel2;
+    }
+
+    public void setJobAdvertModel2(JobAdvertModel2 jobAdvertModel2) {
+        this.jobAdvertModel2 = jobAdvertModel2;
+    }
+
+    public String getSuggestType() {
+        return suggestType;
+    }
+
+    public void setSuggestType(String suggestType) {
+
+        this.suggestType = suggestType;
+    }
 
     @Override
     public LatLng getPosition() {
@@ -136,6 +171,9 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
         }
     }
 
+    public boolean isBasvuruDurumu() {
+        return basvuruDurumu;
+    }
 
     public BitmapDescriptor getMarkerIcon() {
         return markerIcon;
@@ -146,7 +184,7 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
     }
 
     public String getCompanyDistance() {
-        return companyDistance + "m";
+        return companyDistance + " km";
     }
 
     public void setCompanyDistance(String companyDistance) {
@@ -157,7 +195,7 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
         if (newLocationDistance == null) {
             return "";
         } else {
-            return newLocationDistance + "m";
+            return newLocationDistance + "km";
         }
     }
 
@@ -173,5 +211,19 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
     @Override
     public String getSnippet() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "NearJobAdvertModel{" +
+                "isSave=" + isSave +
+                ", basvuruDurumu=" + basvuruDurumu +
+                ", markerIcon=" + markerIcon +
+                ", newLocationDistance='" + newLocationDistance + '\'' +
+                ", companyDistance='" + companyDistance + '\'' +
+                ", mCoord=" + mCoord +
+                ", jobAdvertModel2=" + jobAdvertModel2 +
+                ", suggestType='" + suggestType + '\'' +
+                '}';
     }
 }

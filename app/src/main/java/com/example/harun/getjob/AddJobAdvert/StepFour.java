@@ -35,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.example.harun.getjob.DeviceLocation;
 import com.example.harun.getjob.JobSearch.DownloadAdressData;
 import com.example.harun.getjob.JobSearch.JobUtils.DrawCircle;
 import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
@@ -59,8 +60,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.squareup.picasso.Picasso;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
@@ -74,7 +73,7 @@ import java.util.Locale;
  * Created by mayne on 1.05.2018.
  */
 
-public class StepFour extends Fragment implements Step, View.OnClickListener, OnMapReadyCallback, View.OnTouchListener, GoogleApiClient.OnConnectionFailedListener, TextView.OnEditorActionListener, GoogleMap.OnCameraChangeListener, DownloadAdressData.adressCallback, GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener {
+public class StepFour extends Fragment implements Step, View.OnClickListener, OnMapReadyCallback, View.OnTouchListener, GoogleApiClient.OnConnectionFailedListener, TextView.OnEditorActionListener, GoogleMap.OnCameraChangeListener, DownloadAdressData.adressCallback, GoogleMap.OnCameraMoveListener, GoogleMap.OnCameraIdleListener, DeviceLocation.DeviceLocationCallback {
 
     private static final String TAG = "StepFour";
     private boolean mPermissionGranted, isGPSEnabled;
@@ -102,10 +101,11 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     private Marker mMarker;
 
     private boolean isFirstTime = false;
-    LatLng coord;
+    private LatLng coord;
+    private LatLng myLocationLatLng;
     ViewSwitcher viewSwitcher;
     private DownloadAdressData mDownloadAdressData;
-    JobAdvertModel2 jobAdvertModel2;
+    private JobAdvertModel2 jobAdvertModel2;
 
     //Entire World
     private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-85, -180), new LatLng(85, 180));
@@ -285,7 +285,8 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
         mMap = googleMap;
 
         setupMap(mMap);
-        getDeviceLocation();
+        //getDeviceLocation();
+        new DeviceLocation(getActivity(), this).getDeviceLocation();
 
         mGoogleApiClient = new GoogleApiClient
                 .Builder(getActivity())
@@ -324,40 +325,40 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     }
 
 
-    private void getDeviceLocation() {
+    /* private void getDeviceLocation() {
 
-        Log.d(TAG, "getDeviceLocation: ÇAĞRILDI");
-        try {
-            if (mPermissionGranted) {
-                //   Log.d(TAG, "getDeviceLocation: mPermissionGranted " + mPermissionGranted);
-                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(getActivity(), new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            mLastKnownLocation = task.getResult();
-                            if (mLastKnownLocation != null) {
-                                Log.d(TAG, "onComplete: mLastKnownLocation" + mLastKnownLocation);
-                                LatLng gps = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-                                drawMarkerMoveCamera(gps);
-                                //moveCamera(gps);
-                            } else {
-                                Log.d(TAG, "onComplete: mLastKnownLocation NULLL GET CURRENT LOCATİON ");
-                                getCurrentLocation();
-                            }
-                        } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            getCurrentLocation();
-                        }
-                    }
-                });
-            }
-        } catch (SecurityException e) {
-            Log.e("Exception: %s", e.getMessage());
-        }
-    }
-
+         Log.d(TAG, "getDeviceLocation: ÇAĞRILDI");
+         try {
+             if (mPermissionGranted) {
+                 //   Log.d(TAG, "getDeviceLocation: mPermissionGranted " + mPermissionGranted);
+                 Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+                 locationResult.addOnCompleteListener(getActivity(), new OnCompleteListener<Location>() {
+                     @Override
+                     public void onComplete(@NonNull Task<Location> task) {
+                         if (task.isSuccessful()) {
+                             mLastKnownLocation = task.getResult();
+                             if (mLastKnownLocation != null) {
+                                 Log.d(TAG, "onComplete: mLastKnownLocation" + mLastKnownLocation);
+                                 LatLng gps = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                                 drawMarkerMoveCamera(gps);
+                                 //moveCamera(gps);
+                             } else {
+                                 Log.d(TAG, "onComplete: mLastKnownLocation NULLL GET CURRENT LOCATİON ");
+                                 getCurrentLocation();
+                             }
+                         } else {
+                             Log.d(TAG, "Current location is null. Using defaults.");
+                             Log.e(TAG, "Exception: %s", task.getException());
+                             getCurrentLocation();
+                         }
+                     }
+                 });
+             }
+         } catch (SecurityException e) {
+             Log.e("Exception: %s", e.getMessage());
+         }
+     }
+ */
     private void drawMarkerMoveCamera(LatLng gps) {
 
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(getCameraPosition(gps)));
@@ -390,7 +391,7 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     /**
      * getDeviceLocation methodunda hata olması durumunda konum bilgisi gps den saglanacak
      */
-    @SuppressLint("MissingPermission")
+   /* @SuppressLint("MissingPermission")
     private void getCurrentLocation() {
         Log.d(TAG, "getCurrentLocation:ÇAĞRILDI ");
         // isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -425,6 +426,7 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
         }
 
     }
+*/
 
     /**
      * Kullanıcının GPS konumunu açması için açılan settings penceresinin sonucu burada işleniyor.
@@ -603,20 +605,18 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
 
     private boolean validate() {
 
-       // if (viewSwitcher.getChildAt(0) == viewSwitcher.getCurrentView()) {
-            //Buradaki kosul -->Şuanki View emptyView (index:0) ise
-            if (companyAdress.getText().length()<=0) {
-                Log.d(TAG, "validate: !companyAdress.getText().equals(\"\")");
-                return true; //true demek hata var demeke
-            } else {
+        // if (viewSwitcher.getChildAt(0) == viewSwitcher.getCurrentView()) {
+        //Buradaki kosul -->Şuanki View emptyView (index:0) ise
+        if (companyAdress.getText().length() <= 0) {
+            Log.d(TAG, "validate: !companyAdress.getText().equals(\"\")");
+            return true; //true demek hata var demeke
+        } else {
 
-                return false;
-            }
-
+            return false;
         }
-      //  else {
-      //      return false;
-     //   }
+
+    }
+
 
 
     @Override
@@ -637,7 +637,9 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
             case R.id.myLocButton1:
 
                 Log.d(TAG, "onClick: ");
-                getDeviceLocation();
+                // getDeviceLocation();
+                drawMarkerMoveCamera(myLocationLatLng);
+
                 break;
             case R.id.clearLayout:
 
@@ -865,6 +867,13 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
     @Override
     public void onCameraIdle() {
         Log.d(TAG, "onCameraIdle: ");
+
+    }
+
+    @Override
+    public void deviceLocationCallback(LatLng gps) {
+        myLocationLatLng = gps;
+        drawMarkerMoveCamera(gps);
 
     }
 }

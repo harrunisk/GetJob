@@ -81,7 +81,7 @@ public class FileSearch {
     }
 
     /**
-     * BU METOD İYİLEŞTİRİLMELİ ARTIK KUSACAM .
+     *
      * @param kontrol Bu parametre true ise spinner dolduruluyor  false ise gridview dolduruluyor
      * @param activity
      * @param spinnerdenGelenItem spinnerdaki tıklanan dosyanın Bilgileri geliyor

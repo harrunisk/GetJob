@@ -129,27 +129,29 @@ public class MapHelperMethods {
      *
      * @param distance --> double örn 1120,2121 gibi
      * @return --> 1120 m
-     *  DAHA SONRA KM ÇEVİRMESİ YAPICAM ....
+     * DAHA SONRA KM ÇEVİRMESİ YAPICAM ....
      */
-    public static int getDistanceParce(Double distance) {
+    public static double getDistanceParce(Double distance) {
 
 
         double km = distance / 1;
         DecimalFormat newFormat = new DecimalFormat("####");
+        DecimalFormat format = new DecimalFormat("#00.00");
 
-        int kmInDec = Integer.valueOf(newFormat.format(km));
+        double kmInDec = Integer.valueOf(newFormat.format(km));
         double meter = distance % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
+        double kmDec = kmInDec/1000;//--->KM
+        int meterInDec = Integer.valueOf(newFormat.format(meter));//---->METREE
 
 
-        // Log.d(TAG, "toRadiusMeters: " + km + "\t\t" + kmInDec + "\t\t" + meter + "\t\t" + meterInDec);
+    //    Log.d(TAG, "toRadiusMeters:KM " + km + "\t\tkmInDec" + kmInDec + "\t\tkmDec" + kmDec + "\t\tmeter" + meter + "\t\tmeterInDec" + meterInDec);
 
-        return kmInDec;
+        return kmDec;
 
     }
 
     public static LatLng convertMyLatLng(com.example.harun.getjob.AddJobAdvert.LatLng mPos) {
-        Log.d(TAG, "convertMyLatLng: "+mPos);
+        Log.d(TAG, "convertMyLatLng: " + mPos);
         return new LatLng(mPos.getLatitude(), mPos.getLongitude());
 
     }

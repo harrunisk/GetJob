@@ -47,7 +47,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
         nearJobListRecycler = view.findViewById(R.id.nearJobList);
         nearJobViewSwitch = view.findViewById(R.id.nearJobViewSwitch);
         // int resId = R.anim.layout_animation;
-        setDataList();
+       setDataList();
 
         return view;
     }
@@ -80,7 +80,6 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated: ");
-        //Burda List View Doldurulacak Activity Olusutugunda
         mJobAdvertAdapter = new NearJobAdvertAdapter(getContext(), nearJobList);
         nearJobListRecycler.setAdapter(mJobAdvertAdapter);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());

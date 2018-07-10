@@ -2,24 +2,28 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/transparent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/outSection"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/suggestAdvertCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:elevation="10dp"
-            app:cardCornerRadius="8dp"
+            android:layout_marginStart="30dp"
+            android:focusable="true"
+            android:minWidth="250dp"
+            app:cardCornerRadius="5dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            app:cardElevation="5dp"
             app:cardUseCompatPadding="true">
 
             <LinearLayout
+                android:id="@+id/insection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -31,37 +35,30 @@
                     style="@style/TextAppearance.AppCompat.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="serif"
-                    android:padding="5dp"
+                    android:padding="1dp"
                     android:text="MD Bilişim Sistemleri"
-                    android:textAlignment="center"
-                    android:textSize="15dp" />
+                    android:textSize="17sp" />
 
                 <RelativeLayout
                     android:id="@+id/info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
                     android:layout_marginTop="3dp">
 
-                    <ImageView
-                        android:id="@+id/companyLogo"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:scaleType="fitXY" />
 
                     <TextView
                         android:id="@+id/companyJob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/companyLogo"
-                        android:layout_marginStart="5dp"
-                        android:layout_toEndOf="@+id/companyLogo"
                         android:fontFamily="casual"
                         android:padding="2dp"
                         android:text="BİLGİSAYAR MÜHENDİSİ "
                         android:textColor="@color/black"
-                        android:textSize="10dp"
+                        android:textSize="14sp"
 
                         />
 
@@ -70,40 +67,61 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/companyJob"
-                        android:layout_marginStart="5dp"
-                        android:layout_toEndOf="@+id/companyLogo"
                         android:fontFamily="casual"
                         android:padding="2dp"
                         android:text="ANDROİD DEVELOPER "
-                        android:textSize="10dp" />
+                        android:textSize="14sp" />
 
 
                     <TextView
-                        android:id="@+id/companyLocation"
+                        android:id="@+id/publishDate1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/jobDescpriction"
-                        android:layout_marginStart="5dp"
-                        android:layout_toRightOf="@id/companyLogo"
+                        android:drawablePadding="5dp"
+                        android:drawableStart="@drawable/ic_access_time_black_24dp"
+                        android:drawableTint="@color/black"
+                        android:fontFamily="casual"
                         android:gravity="center_vertical"
                         android:padding="2dp"
-                        android:text="İstanbul "
-                        android:textSize="10dp" />
+
+                        android:text="1 gündür yayında "
+                        android:textSize="10sp" />
 
                     <TextView
                         android:id="@+id/companyDistance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/companyLocation"
+                        android:layout_alignBottom="@+id/publishDate1"
                         android:layout_alignParentEnd="true"
                         android:layout_below="@id/jobDescpriction"
+                        android:drawablePadding="5dp"
+                        android:drawableStart="@drawable/path_way"
+
+                        android:drawableTint="@color/black"
+                        android:fontFamily="casual"
                         android:gravity="center_vertical"
                         android:padding="2dp"
-                        android:text="01.01.2014"
-                        android:textSize="10dp" />
+                        android:textStyle="bold"
+                        android:text="100m "
+                        android:textSize="10sp" />
 
 
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/whySuggest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/filter"
+                    android:fontFamily="casual"
+                    android:gravity="center_vertical"
+                    android:padding="2dp"
+                    android:text="Kayıtlı ilanlarıma göre "
+                    android:textSize="8sp" />
 
 
             </LinearLayout>
@@ -112,30 +130,39 @@
 
 
     </RelativeLayout>
-<!--
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/saveAdvert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:backgroundTint="@color/white"
-        app:layout_anchor="@+id/outSection"
-        app:layout_anchorGravity="top|end|left"
-        app:elevation="10dp"
+    <!--
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/saveAdvert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="@color/white"
+            app:layout_anchor="@+id/outSection"
+            app:layout_anchorGravity="top|end|left"
+            app:elevation="10dp"
 
-        app:fabSize="mini"
-        app:srcCompat="@drawable/ic_bookmark_24dp" />
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_bookmark_24dp" />
 
 
--->
+    -->
+    <ImageView
+        android:id="@+id/companyLogo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="fitXY"
+        app:layout_anchor="@+id/suggestAdvertCard"
+        app:layout_anchorGravity="start|center_vertical" />
 
     <ImageView
         android:id="@+id/saveAdvert"
-        android:layout_width="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/bookmark_suggest_pressedcontrol"
         app:backgroundTint="@color/white"
-        app:layout_anchor="@+id/outSection"
-        app:layout_anchorGravity="top|end|left"
         app:elevation="10dp"
-        android:src="@drawable/ic_bookmark_24dp"
-        android:layout_height="wrap_content" />
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="9dp"
+        app:layout_anchor="@+id/outSection"
+        app:layout_anchorGravity="top|end" />
 </android.support.design.widget.CoordinatorLayout>
 

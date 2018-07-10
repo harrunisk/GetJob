@@ -145,7 +145,6 @@
                         app:fabSize="mini" />
 
 
-
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/changeLocation"
                         android:layout_width="wrap_content"
@@ -157,16 +156,41 @@
                         app:backgroundTint="@color/white"
                         app:fabSize="mini" />
 
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/changeArea"
+                    <FrameLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="bottom|end"
                         android:layout_marginBottom="5dp"
                         android:layout_marginEnd="5dp"
-                        android:src="@drawable/circular_area2"
-                        app:backgroundTint="@color/white"
-                        app:fabSize="mini" />
+
+                        >
+
+                        <TextView
+                            android:id="@+id/changeAreaTv"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:background="@drawable/circular_area"
+                            android:elevation="10dp"
+                            android:fontFamily="casual"
+                            android:gravity="center"
+                            android:text="1/km"
+                            android:textStyle="bold"
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="9sp" />
+
+
+                        <android.support.design.widget.FloatingActionButton
+                            android:id="@+id/changeArea"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:backgroundTint="@color/white"
+                            app:fabSize="mini" />
+
+
+                    </FrameLayout>
+
 
                     <LinearLayout
                         android:id="@+id/circleAreaLayout"
@@ -236,7 +260,7 @@
                     android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginStart="5dp"
-                    android:background="@drawable/btnstyle"
+                    android:background="@drawable/btnback2"
                     android:text="Yakınımdakileri Listele" />
 
                 <ProgressBar
@@ -244,18 +268,18 @@
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="10dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginStart="15dp"
                     android:layout_alignEnd="@id/btnListNearJob"
                     android:layout_alignParentBottom="true"
                     android:layout_alignStart="@id/btnListNearJob"
-                    android:visibility="gone"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
                     android:indeterminate="true"
                     android:indeterminateBehavior="cycle"
                     android:indeterminateDuration="10"
                     android:indeterminateOnly="true"
                     android:minHeight="20dp"
-                    android:progressBackgroundTintMode="multiply" />
+                    android:progressBackgroundTintMode="multiply"
+                    android:visibility="gone" />
 
 
             </RelativeLayout>
@@ -275,11 +299,12 @@
         android:orientation="vertical">
 
         <!--Sliding Header Content -->
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.design.widget.AppBarLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:sothree="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:background="@color/White">
 
             <RelativeLayout
                 android:id="@+id/header"
@@ -293,7 +318,6 @@
                     android:layout_alignParentStart="true"
                     android:background="@color/mycolor"
                     android:gravity="center"
-
                     android:orientation="vertical"
                     android:padding="2dp">
 
@@ -388,8 +412,12 @@
 
 
             </RelativeLayout>
-        </LinearLayout>
-        <!--Sliding Panel Buranın içine dinamik view olusturup koyuyorum (jobadvertDetails.xml )MAin Content -->
+        </android.support.design.widget.AppBarLayout>
+
+        <!--Sliding Panel Buranın içine
+         dinamik view olusturup koyuyorum
+          (jobadvertDetails.xml )
+          MAin Content -->
         <ScrollView
             android:id="@+id/scrollableView"
             android:layout_width="match_parent"

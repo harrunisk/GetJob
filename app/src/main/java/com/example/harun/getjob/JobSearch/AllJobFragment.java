@@ -79,6 +79,7 @@ public class AllJobFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //setDataList();
         mJobAdvertAdapter = new NearJobAdvertAdapter(getContext(), allJobList);
         allJobRecylerList.setAdapter(mJobAdvertAdapter);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());

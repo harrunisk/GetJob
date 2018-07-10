@@ -1,9 +1,9 @@
 package com.example.harun.getjob.JobSearch.JobUtils;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.example.harun.getjob.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -11,7 +11,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Created by mayne on 22.03.2018.
@@ -31,17 +31,29 @@ public class CategoryModel {
     private Context mContext;
     private final String[] count = new String[1];
     private doneCallback mDoneCallback;
+    private sectorCallback sectorCallback;
     private ArrayList<CategoryModel> categoryModelArrayList = new ArrayList<>();
+    private HashMap<String, ArrayList<String>> sectorListfromFirebase = new HashMap<>();
+    private ArrayList<String> subSector;
+    //int sectorCount=0;
 
 
-    public CategoryModel(Context mContext, doneCallback mDoneCallback) {
+    public CategoryModel(Context mContext, @Nullable doneCallback mDoneCallback, @Nullable sectorCallback sectorCallback) {
         this.mContext = mContext;
         this.mDoneCallback = mDoneCallback;
+        this.sectorCallback = sectorCallback;
     }
 
     public interface doneCallback {
 
-        void getCategoryCompleteCallback(ArrayList<CategoryModel> categoryModelArrayList);
+        void getCategoryCompleteCallback(ArrayList<CategoryModel> categoryModelArrayList, int size);
+
+    }
+
+    public interface sectorCallback {
+
+
+        void getSectorCallback(HashMap<String, ArrayList<String>> sectorListfromFirebase);
 
     }
 
@@ -67,12 +79,66 @@ public class CategoryModel {
         this.categoryName = categoryName;
     }
 
+    /**
+     * Sektör Listesini  ve Bu Sektörlerde kaç adet ilan oldugunu bulan method
+     */
+    public void getSectorList() {
+        FirebaseDatabase.getInstance().getReference().child("sectorList").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                //  Log.d(TAG, "onDataChange:dataSnapshot " + dataSnapshot);
+
+                for (DataSnapshot sectors : dataSnapshot.getChildren()) {
+                    subSector = new ArrayList<>();
+                    // Log.d(TAG, "onDataChange:sectors " + sectors);
+                    //  Log.d(TAG, "onDataChange:sectors.getKey " + sectors.getKey());
+
+                    for (DataSnapshot jobs : sectors.getChildren()) {
+
+                        //  Log.d(TAG, "onDataChange:jobs.getKey() " + jobs.getKey());
+                        subSector.add(jobs.getKey());
+                    }
+                    sectorListfromFirebase.put(sectors.getKey(), subSector);
+
+
+                }
+
+                if (sectorCallback != null) {
+
+                    sectorCallback.getSectorCallback(sectorListfromFirebase);
+
+                } else {
+                    //  Log.d(TAG, "onDataChange:TÜM İLANLAR İÇİN CALISTI ");
+                    Query query2 = FirebaseDatabase.getInstance().getReference().child("jobAdvert").child("publishedAdverts");
+                    getCategoryCount(categoryModelArrayList, "Tüm İlanlar", query2);
+                    for (String strings : sectorListfromFirebase.keySet()) {
+                        //  Log.d(TAG, "onDataChange:SEKTÖR LİSTESİ  " + strings);
+                        Query query = FirebaseDatabase.getInstance().getReference().child("jobAdvert").child("publishedAdverts").
+                                orderByChild("jobInfo/jobSector").equalTo(strings);
+                        getCategoryCount(categoryModelArrayList, strings, query);
+
+
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     /**
      * Sektör Listesini  ve Bu Sektörlerde kaç adet ilan oldugunu bulan method
      */
-    public void getDataModel() {
-
+  /*  public void getDataModel() {
+        getSectorList();
         sektor = mContext.getResources().getStringArray(R.array.sektorListe);
         sektorList.add(0, "Tüm İlanlar");
         sektorList.addAll(1, Arrays.asList(sektor));
@@ -80,16 +146,11 @@ public class CategoryModel {
         for (int i = 0; i < sektor.length + 1; i++) {
 
             if (i == 0) {
-
                 Query query = FirebaseDatabase.getInstance().getReference().child("jobAdvert").child("publishedAdverts");
                 getCategoryCount(categoryModelArrayList, sektorList.get(i), query);
-
             } else {
                 Query query = FirebaseDatabase.getInstance().getReference().child("jobAdvert").child("publishedAdverts").
-                      orderByChild("jobInfo/jobSector").equalTo(sektorList.get(i));
-                //equalTo("jobInfo").
-                // orderByKey().equalTo(sektorList.get(i));
-                //equalTo(sektorList.get(i));
+                        orderByChild("jobInfo/jobSector").equalTo(sektorList.get(i));
                 getCategoryCount(categoryModelArrayList, sektorList.get(i), query);
             }
 
@@ -99,6 +160,7 @@ public class CategoryModel {
         Log.d(TAG, "getDataModel: " + categoryModelArrayList);
         // return categoryModelArrayList;
     }
+*/
 
     /**
      * Sektör de kaç adet yayınlanmıs ilan oldugunu getiren method
@@ -111,39 +173,12 @@ public class CategoryModel {
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d(TAG, "onDataChange:" + String.valueOf(dataSnapshot.getChildrenCount()));
-                Log.d(TAG, "onDataChange: " + dataSnapshot);
-                // if (isAll) {
+                //  Log.d(TAG, "onDataChange:" + String.valueOf(dataSnapshot.getChildrenCount()));
+                //  Log.d(TAG, "onDataChange: " + dataSnapshot);
                 count[0] = String.valueOf(dataSnapshot.getChildrenCount());
                 categoryModelArrayList.add(new CategoryModel(sektor, count[0]));
-                mDoneCallback.getCategoryCompleteCallback(categoryModelArrayList);
-                Log.d(TAG, "onDataChange: " + categoryModelArrayList);
-                //}
-
-//
-//                else {
-//
-//                    if (dataSnapshot.getChildren().iterator().next().child("jobInfo").exists()) {
-//                        Log.d(TAG, "onDataChange: dataSnapshot.getChildren().iterator().next().child(jobInfo).exists()");
-//                        if (dataSnapshot.getChildren().iterator().next().child("jobInfo").child("jobSector").getValue() == sektor) {
-//
-//
-//                            Log.d(TAG, "onDataChange: sektör" + sektor);
-//                            count[0] = String.valueOf(dataSnapshot.getChildrenCount());
-//                            categoryModelArrayList.add(new CategoryModel(sektor, count[0]));
-//                            mDoneCallback.getCategoryCompleteCallback(categoryModelArrayList);
-//                            Log.d(TAG, "onDataChange: " + categoryModelArrayList);
-//
-//
-//                        }
-//
-//
-//                    }
-//
-//
-//                }
-
-                //setCategoryModelArrayList(categoryModelArrayList);
+                mDoneCallback.getCategoryCompleteCallback(categoryModelArrayList, sectorListfromFirebase.size());
+                //  Log.d(TAG, "onDataChange: " + categoryModelArrayList);
             }
 
             @Override
