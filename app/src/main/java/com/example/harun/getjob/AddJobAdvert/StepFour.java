@@ -164,6 +164,14 @@ public class StepFour extends Fragment implements Step, View.OnClickListener, On
 
     }
 
+   public void  checkGoogleApiClient(){
+
+
+
+
+   }
+
+
     @Override
     public void onStart() {
         super.onStart();

@@ -31,7 +31,7 @@ public class EditAboutFragment extends DialogFragment implements View.OnClickLis
     Button saveButon;
     EditProfile editProfileInstance;
 
-    public contentFragment aboutinterface;
+    public ProfileInterfaces aboutinterface;
 
     @Nullable
     @Override
@@ -90,7 +90,7 @@ public class EditAboutFragment extends DialogFragment implements View.OnClickLis
         super.onAttach(context);
 
         try {
-            aboutinterface= (contentFragment) getActivity();
+            aboutinterface= (ProfileInterfaces) getActivity();
         } catch (Exception e) {
             Log.e(TAG, "onAttach: interfaceExcp: " + e.getMessage());
         }

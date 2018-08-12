@@ -14,9 +14,15 @@
     <color name="mycolor2">#500B5268</color>
     <color name="markercolor">#EBBA16</color>
     <color name="tw__blue_default">#FF5BAAF4</color>
+    <color name="myblue">#194F82</color>
+    <color name="mygreen">#00AD97</color>
+    <color name="mypurple">#928DAB</color>
+    <color name="myorange">#FFC10D</color>
     <color name="tw__blue_pressed">#FF4186C8</color>
      <color name="md_teal_500">#009688</color>
      <color name="mycolor4">#f6f2df</color>
+     <color name="mycolor7">#BAEE83</color>
+     <color name="mycolor8">#FFC870</color>
 
     <color name="tw__light_gray">#ccd6dd</color>
     <color name="tw__solid_white">#FFFFFFFF</color>

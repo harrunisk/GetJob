@@ -185,7 +185,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:cursorVisible="false"
-                            android:drawableLeft="@drawable/placeholder"
+                            android:drawableLeft="@drawable/placeholder2"
                             android:drawablePadding="10dp"
                             android:drawableTint="@color/black"
                             android:hint="İstanbul(Avr)"

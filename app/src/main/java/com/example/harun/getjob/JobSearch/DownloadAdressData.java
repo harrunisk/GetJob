@@ -159,6 +159,7 @@ public class DownloadAdressData extends AsyncTask<LatLng, Void, String> {
             return;
         }
         visibilityProgress(true);
+
     }
 
     @Override

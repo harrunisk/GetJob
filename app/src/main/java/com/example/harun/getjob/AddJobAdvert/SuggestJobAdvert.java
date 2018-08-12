@@ -88,7 +88,7 @@ public class SuggestJobAdvert extends AsyncTask<DataSnapshot, ArrayList<NearJobA
 
                                  */
 
-                                suggestionList.add(new NearJobAdvertModel(adverts.getValue(JobAdvertModel2.class), String.format(Locale.getDefault(),"%.2f",distance), type));
+                                suggestionList.add(new NearJobAdvertModel(adverts.getValue(JobAdvertModel2.class), String.format(Locale.getDefault(), "%.2f", distance), type));
 
                             }
                         }

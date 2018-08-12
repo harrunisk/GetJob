@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "65073414185-ajtb49lm178u4nram61f46tb3f7vqrjl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.harun.getjob",
+            "certificate_hash": "113091263ac80962462bda8086b9d69f73f1d1d9"
+          }
+        },
+        {
           "client_id": "65073414185-ktbq7hbm0n1mivl2ive29ip2k249ff5v.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -23,11 +31,11 @@
           }
         },
         {
-          "client_id": "65073414185-ajtb49lm178u4nram61f46tb3f7vqrjl.apps.googleusercontent.com",
+          "client_id": "65073414185-ml577l3aabni6m7oev1o9f3d1kugrlk7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.harun.getjob",
-            "certificate_hash": "113091263ac80962462bda8086b9d69f73f1d1d9"
+            "certificate_hash": "4cf1adf4ad87fc7b596960d87594056d37f2beea"
           }
         },
         {

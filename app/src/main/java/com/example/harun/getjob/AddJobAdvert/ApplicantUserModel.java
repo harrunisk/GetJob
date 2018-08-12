@@ -13,18 +13,21 @@ public class ApplicantUserModel implements Parcelable {
     private static final String TAG = "ApplyAdvertModel";
     private String userID;
     private String applyDate;
+    private String preInfoText;
 
     public ApplicantUserModel() {
     }
 
-    public ApplicantUserModel(String jobID, String applyDate) {
+    public ApplicantUserModel(String jobID, String applyDate,String preInfoText) {
         this.userID = jobID;
         this.applyDate = applyDate;
+        this.preInfoText = preInfoText;
     }
 
     protected ApplicantUserModel(Parcel in) {
         userID = in.readString();
         applyDate = in.readString();
+        preInfoText = in.readString();
     }
 
 
@@ -42,6 +45,14 @@ public class ApplicantUserModel implements Parcelable {
 
     public String getUserID() {
         return userID;
+    }
+
+    public String getPreInfoText() {
+        return preInfoText;
+    }
+
+    public void setPreInfoText(String preInfoText) {
+        this.preInfoText = preInfoText;
     }
 
     public void setUserID(String userID) {
@@ -65,6 +76,7 @@ public class ApplicantUserModel implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(userID);
         parcel.writeString(applyDate);
+        parcel.writeString(preInfoText);
     }
 
     @Override
@@ -72,6 +84,7 @@ public class ApplicantUserModel implements Parcelable {
         return "ApplyAdvertModel{" +
                 "userID='" + userID + '\'' +
                 ", applyDate='" + applyDate + '\'' +
+                ", preInfoText='" + preInfoText+ '\'' +
                 '}';
     }
 }

@@ -12,7 +12,7 @@ import android.os.Parcelable;
  * Bu class Her kullanıcının edit profile Sayfasındaki ana bilgilerini tutaacak
  */
 
-public class firebaseContent implements Parcelable{
+public class MainContent implements Parcelable{
 
 private String job;
 private String location;
@@ -20,33 +20,33 @@ private String name;
 private String profil_photo;
 
 
-    public firebaseContent(String job, String location, String name) {
+    public MainContent(String job, String location, String name) {
         this.job = job;
         this.location = location;
         this.name = name;
         //this.profil_photo = profil_photo;
     }
 
-    public firebaseContent() {
+    public MainContent() {
     }
 
 
-    protected firebaseContent(Parcel in) {
+    protected MainContent(Parcel in) {
         job = in.readString();
         location = in.readString();
         name = in.readString();
         profil_photo = in.readString();
     }
 
-    public static final Creator<firebaseContent> CREATOR = new Creator<firebaseContent>() {
+    public static final Creator<MainContent> CREATOR = new Creator<MainContent>() {
         @Override
-        public firebaseContent createFromParcel(Parcel in) {
-            return new firebaseContent(in);
+        public MainContent createFromParcel(Parcel in) {
+            return new MainContent(in);
         }
 
         @Override
-        public firebaseContent[] newArray(int size) {
-            return new firebaseContent[size];
+        public MainContent[] newArray(int size) {
+            return new MainContent[size];
         }
     };
 
@@ -85,7 +85,7 @@ private String profil_photo;
 
     @Override
     public String toString() {
-        return "firebaseContent{" +
+        return "MainContent{" +
                 "job='" + job + '\'' +
                 ", location='" + location + '\'' +
                 ", name='" + name + '\'' +

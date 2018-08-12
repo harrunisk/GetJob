@@ -33,12 +33,15 @@ import com.example.harun.getjob.JobSearch.JobSearch;
 import com.example.harun.getjob.JobSearch.JobUtils.AdvertDetails;
 import com.example.harun.getjob.JobSearch.JobUtils.NearJobAdvertModel;
 import com.example.harun.getjob.JobSearch.JobUtils.SuggestJobAdvertAdapter;
+import com.example.harun.getjob.JobSearch.JobUtils.UserLocationInfo;
+import com.example.harun.getjob.MyAdverts.MyAdvertsActivty;
 import com.example.harun.getjob.Profile.Permissions;
 import com.example.harun.getjob.Profile.profilPage;
 import com.example.harun.getjob.viewpagercards.SnappingRecyclerView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -61,7 +64,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
     private static final String TAG = "UserIntro";
 
 
-    RelativeLayout profileLayout, emptyRecommendList;
+    private RelativeLayout profileLayout, emptyRecommendList;
     private SnappingRecyclerView recyclerViewJobAdvert;
     private SuggestJobAdvertAdapter mSuggestJobAdvertAdapter;
     //private SuggestJobAdvert suggestJobAdvert;
@@ -77,12 +80,11 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
     private ArrayList<NearJobAdvertModel> callbackResultList2;
     private ArrayList<NearJobAdvertModel> fromJobSector;
     private ArrayList<NearJobAdvertModel> fromCompanyJobList;
-    private int counter = 0;
-    private int counter3 = 0;
-    private int counter2 = 0;
+    private int jobCounter = 0;
+    private int sectorCounter = 0;
+    private int callbackCounter = 0;
     private int getNearJobCounter = 0;
     ViewGroup scrollableView;
-    private ViewGroup aaa;
     private SlidingUpPanelLayout mSlidingPanelLayout;
     private MyAppliedAdvert myAppliedAdvert;
     private ArrayList<String> myAppliedAdvertJobIdLList;
@@ -93,6 +95,9 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
     private ImageView companyLogo1;
     private TextView companyname, sector, tvbasvuru_count, tvjobname, publishdate, tvdistance;
 
+
+    //Bu ıd bana heryerde lazım olacak oyuzden static yaptım .
+    public static String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,6 +170,16 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
 
 
     }
+
+    public void myAdverts(View view) {
+
+        Intent intent = new Intent(this, MyAdvertsActivty.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+
+    }
+
 
     /**
      * Kullanıcının GPS konumunu açması için açılan settings penceresinin sonucu burada işleniyor.
@@ -263,6 +278,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
 
     private void init() {
 
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         new DeviceLocation(this, this).getDeviceLocation();
         suggestionsKeys = this;
@@ -281,7 +297,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
         Log.d(TAG, "slidingPanelInit: ");
         ///  LayoutInflater layoutInflater =
         View jobadvertdetails = getLayoutInflater().inflate(R.layout.jobadvertdetails, null);
-        advertDetailsHolder = new AdvertDetails.ViewHolder(jobadvertdetails, this, this);
+        advertDetailsHolder = new AdvertDetails.ViewHolder(jobadvertdetails, this, this, 0);
         scrollableView.addView(jobadvertdetails);
 
     }
@@ -290,6 +306,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
     @Override
     public void deviceLocationCallback(LatLng gps) {
         myLocation = gps;
+        UserLocationInfo.getInstance().setMyLocation(gps);
         getMyAppliedAdvert();
     }
 
@@ -297,7 +314,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
 
 
         myAppliedAdvert = new MyAppliedAdvert(this);
-        FirebaseDatabase.getInstance().getReference().child("users_data").child(MainActivity.userID).child("applyAdvert").
+        FirebaseDatabase.getInstance().getReference().child("users_data").child(userID).child("applyAdvert").
                 addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -352,7 +369,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
 
         FirebaseDatabase.getInstance().getReference()
                 .child("users_data")
-                .child(MainActivity.userID)
+                .child(userID)
                 .child("suggestionKey").
                 addListenerForSingleValueEvent(
                         new ValueEventListener() {
@@ -366,7 +383,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
 
                                     for (DataSnapshot childValue : singleSnaphot.getChildren()) {
                                         keyList.add(new SuggestionsModel(childValue.getKey(), (Boolean) childValue.getValue()));
-                                        counter++; //kac tane ilanın çekildiğini sayıyor getSuggestionsKeysCallback de kullanılmak üzere .Çnkü bu fonksyionun
+                                        jobCounter++; //kac tane ilanın çekildiğini sayıyor getSuggestionsKeysCallback de kullanılmak üzere .Çnkü bu fonksyionun
                                         //durması için kaç tane ilanın çekildiğini bilmemiz lazım .
                                     }
                                     suggestionHash.put(singleSnaphot.getKey(), keyList);
@@ -408,7 +425,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 //  sektoregore = true;
-                                counter3++;
+                                sectorCounter++;
                                 mSuggestJobAdvert2.execute(dataSnapshot);
 
 
@@ -450,7 +467,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
     private void getJobNearMe() {
         getNearJobCounter++;
         final SuggestJobAdvert mSuggestJobAdvert = new SuggestJobAdvert(this, myLocation, "Yakınlarımda", true, myAppliedAdvertJobIdLList);
-        Log.d(TAG, "SuggestJobAdvertCallback:else if (counter == 0)--> " + counter);
+        Log.d(TAG, "SuggestJobAdvertCallback:else if (jobCounter == 0)--> " + jobCounter);
         FirebaseDatabase.getInstance().getReference()
                 .child("jobAdvert")
                 .child("publishedAdverts")
@@ -460,7 +477,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
                         Log.d(TAG, "onDataChange: " + dataSnapshot);
                         if (dataSnapshot.hasChildren()) {
                             mSuggestJobAdvert.execute(dataSnapshot);
-                            counter++;
+                            jobCounter++;
                         } else {
                             emptyRecommendList.setVisibility(View.VISIBLE);
                             suggestListProgress.smoothToHide();
@@ -485,7 +502,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
     public void SuggestJobAdvertCallback(ArrayList<NearJobAdvertModel> callbackResultList, boolean sector) {
 
         Log.d(TAG, "SuggestJobAdvertCallback: " + callbackResultList);
-        counter2++;
+        callbackCounter++;
         //sektörden gelenler fromJobSector meslege göre gelenler fromCompanyJobList alınır .
         if (sector) {
             fromJobSector.addAll(callbackResultList);
@@ -494,12 +511,12 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
             fromCompanyJobList.addAll(callbackResultList);
         }
 
-        //counter -->kac tane mesleğe göre ilan getirildiğini . Ayrıca suggestionkey yoksa kactane yakınımda ilan getirdğini sayıyıor
-        //counter3-->kac tane sektöre göre ilan getirildiğini
-        //Sonuc olarak gelen her ilan için bu method tetiklenir ve counter 2 artırılır .
+        //jobCounter -->kac tane mesleğe göre ilan getirildiğini . Ayrıca suggestionkey yoksa kactane yakınımda ilan getirdğini sayıyıor
+        //sectorCounter-->kac tane sektöre göre ilan getirildiğini
+        //Sonuc olarak gelen her ilan için bu method tetiklenir ve jobCounter 2 artırılır .
         //meslege göre gelen ilanlar + sektöre göre gelen ilanlar =bu methodun kac kere calııstıgı -->>> eşit olursa da  liste doldurulur ç
-        if (counter + counter3 == counter2) {
-            Log.d(TAG, "SuggestJobAdvertCallback: " + counter2 + "\t" + counter + "\t" + counter3);
+        if (jobCounter + sectorCounter == callbackCounter) {
+            Log.d(TAG, "SuggestJobAdvertCallback: " + callbackCounter + "=\t" + jobCounter + "\t" + sectorCounter);
             if (!fromJobSector.isEmpty()) {
 
 
@@ -519,9 +536,9 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
                 //yani olduda öenerilen listem dolu ama ben ordaki ilanların hepsine basvurmusum bana önerilecek olarak gelen ilan kalmamıs
                 //ozaman yapcak bişe yok yakınımdaki tüm ilanları yeniden alcaz sayacları sıfırlıcaz.Her halükarda Sektör Listesi dolu olacagı için
                 //bos oldugunda burası çalışcak .
-                counter = 0;
-                counter2 = 0;
-                counter3 = 0;
+                jobCounter = 0;
+                callbackCounter = 0;
+                sectorCounter = 0;
                 //getNearJobMe methodu ikikez çalıştı ve boş geldiyse empty View göster.
                 if (getNearJobCounter > 2) {
                     emptyRecommendList.setVisibility(View.VISIBLE);
@@ -676,4 +693,6 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
         });
 
     }
+
+
 }

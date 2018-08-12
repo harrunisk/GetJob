@@ -30,8 +30,6 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
     private ViewSwitcher nearJobViewSwitch;
     private NearJobAdvertAdapter mJobAdvertAdapter;
 
-    //deneme deneme1;
-
     public NearJobFragment() {
 
 
@@ -43,7 +41,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         Log.d(TAG, "onCreateView: ");
-        View view = inflater.inflate(R.layout.fragment_nested_scroll, null);
+        View view = inflater.inflate(R.layout.nearjobfragment_content, null);
         nearJobListRecycler = view.findViewById(R.id.nearJobList);
         nearJobViewSwitch = view.findViewById(R.id.nearJobViewSwitch);
         // int resId = R.anim.layout_animation;
@@ -80,7 +78,7 @@ public class NearJobFragment extends Fragment implements RecyclerView.RecyclerLi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated: ");
-        mJobAdvertAdapter = new NearJobAdvertAdapter(getContext(), nearJobList);
+        mJobAdvertAdapter = new NearJobAdvertAdapter(getContext(), nearJobList,0);
         nearJobListRecycler.setAdapter(mJobAdvertAdapter);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
         linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);

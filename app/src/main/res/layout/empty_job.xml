@@ -6,18 +6,17 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:tint="@color/mycolor"
-        android:src="@drawable/jobsearch"
-
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/jobsearch1"
+        android:tint="@color/holo_red_light"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="casual"
-        android:text="Yakınınızda Hiç Bir İlan Bulunamadı "
+        android:fontFamily="monospace"
+        android:text="Size Yakın Bir İlan Bulamadık.Yeter Ki İş Olsun 2 Vesait te Yaparız Diyorsan Yana Kaydır"
         android:textAlignment="center"
         android:textColor="@color/holo_red_light"
         android:textSize="20dp" />

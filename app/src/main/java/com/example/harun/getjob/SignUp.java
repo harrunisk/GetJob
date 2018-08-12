@@ -1,29 +1,21 @@
 package com.example.harun.getjob;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Arrays;
 
 import custom_font.MyTextView;
 
-public class SignUp extends AppCompatActivity
-
-{
+public class SignUp extends AppCompatActivity{
     ImageView facebook;
     ImageView twitter;
     ImageView google;
     ImageView mail,phone;
     MyTextView signin1;
-    private static final String TAG = "MainActivityLogin";
+    private static final String TAG = "SignUp";
     private static final int RC_SIGN_IN = 0;
     private FirebaseAuth auth;
 
@@ -33,14 +25,11 @@ public class SignUp extends AppCompatActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
-
-
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.signup);
+        setContentView(R.layout.sign_up2);
 
 
-
+/*
         signin1=(MyTextView)findViewById(R.id.signin1);
         signin1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,10 +39,10 @@ public class SignUp extends AppCompatActivity
                 finish();
             }
         });
+*/
 
 
-
-        facebook=(ImageView) findViewById(R.id.facebook1);
+    /*    facebook=(ImageView) findViewById(R.id.facebook1);
         // twitter=(ImageView) findViewById(R.id.twitter);
         google=(ImageView) findViewById(R.id.google1);
         //mail=(ImageView) findViewById(R.id.mail);
@@ -72,7 +61,7 @@ public class SignUp extends AppCompatActivity
 
             }
         });
-
+*/
              /*
             twitter.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,7 +81,7 @@ public class SignUp extends AppCompatActivity
 
             */
 
-        google.setOnClickListener(new View.OnClickListener() {
+     /*   google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -105,7 +94,7 @@ public class SignUp extends AppCompatActivity
                         )).build(), RC_SIGN_IN);
 
             }
-        });
+        });*/
 
            /*
             mail.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +114,7 @@ public class SignUp extends AppCompatActivity
 
 
             */
-        phone.setOnClickListener(new View.OnClickListener() {
+     /*   phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -138,7 +127,7 @@ public class SignUp extends AppCompatActivity
                         )).build(), RC_SIGN_IN);
 
             }
-        });
+        });*/
 
 
           /*  startActivityForResult(AuthUI.getInstance()
@@ -158,7 +147,7 @@ public class SignUp extends AppCompatActivity
     }
 
 
-    @Override
+  /*  @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
@@ -186,7 +175,7 @@ public class SignUp extends AppCompatActivity
 
 
         }
-    }
+    }*/
 
     }
 

@@ -49,7 +49,7 @@ public class RetainJobAdvertFromFirebase extends AsyncTask<DataSnapshot, ArrayLi
     protected ArrayList<JobAdvertModel2> doInBackground(DataSnapshot... dataSnapshots) {
         Log.d(TAG, "doInBackground: ");
         jobAdverts = new ArrayList<JobAdvertModel2>();
-        applicantUserModelArrayList = new ArrayList<ApplicantUserModel>();
+      //  applicantUserModelArrayList = new ArrayList<ApplicantUserModel>();
         try {
             for (DataSnapshot child : dataSnapshots[0].getChildren()) {
                 if (child.exists()) {

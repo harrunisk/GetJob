@@ -1,21 +1,28 @@
-package com.example.harun.getjob;
-
+package com.example.harun.getjob.SignInUp;
 
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.daimajia.androidanimations.library.Techniques;
-
-import com.viksaa.sssplash.lib.cnst.Flags;
+import com.example.harun.getjob.R;
+import com.example.harun.getjob.UserIntro;
+import com.google.firebase.auth.FirebaseAuth;
 import com.viksaa.sssplash.lib.activity.AwesomeSplash;
+import com.viksaa.sssplash.lib.cnst.Flags;
 import com.viksaa.sssplash.lib.model.ConfigSplash;
-
-
-
 
 
 //extends AwesomeSplash!
 public class Intro extends AwesomeSplash {
+    private FirebaseAuth auth;
+
+    //Bu ıd bana heryerde lazım olacak oyuzden static yaptım .
+    public static String userID;
+
+    private static final String TAG = "Intro";
+
+
     public static final String DROID_LOGO = "M 31.00,53.70\n" +
             "           C 31.00,53.70 64.00,67.28 64.00,67.28\n" +
             "             72.46,70.89 70.68,71.21 75.09,73.46\n" +
@@ -202,7 +209,7 @@ public class Intro extends AwesomeSplash {
 			/* you don't have to override every property */
 
         //Customize Circular Reveal
-        configSplash.setBackgroundColor(R.color.com_facebook_blue); //any color you want form colors.xml
+        configSplash.setBackgroundColor(R.color.mygreen); //any color you want form colors.xml
         configSplash.setAnimCircularRevealDuration(1000); //int ms
         configSplash.setRevealFlagX(Flags.REVEAL_RIGHT);  //or Flags.REVEAL_LEFT
         configSplash.setRevealFlagY(Flags.REVEAL_BOTTOM); //or Flags.REVEAL_TOP
@@ -212,37 +219,70 @@ public class Intro extends AwesomeSplash {
         //Customize Logo
         configSplash.setLogoSplash(R.mipmap.ic_launcher); //or any other drawable
         configSplash.setAnimLogoSplashDuration(1000); //int ms
-        configSplash.setAnimLogoSplashTechnique(Techniques.Bounce); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
-
+        configSplash.setAnimLogoSplashTechnique(Techniques.BounceInUp); //choose one form Techniques (ref: https://github.com/daimajia/AndroidViewAnimations)
 
         //Customize Path
         configSplash.setPathSplash(DROID_LOGO); //set path String
-        configSplash.setOriginalHeight(400); //in relation to your svg (path) resource
-        configSplash.setOriginalWidth(400); //in relation to your svg (path) resource
+        configSplash.setOriginalHeight(350); //in relation to your svg (path) resource
+        configSplash.setOriginalWidth(350); //in relation to your svg (path) resource
         configSplash.setAnimPathStrokeDrawingDuration(1000);
         configSplash.setPathSplashStrokeSize(4); //I advise value be <5
-        configSplash.setPathSplashStrokeColor(R.color.accent); //any color you want form colors.xml
+        configSplash.setPathSplashStrokeColor(R.color.Wheat); //any color you want form colors.xml
         configSplash.setAnimPathFillingDuration(1000);
 
-        configSplash.setPathSplashFillColor(R.color.com_facebook_blue); //path object filling color
+        configSplash.setPathSplashFillColor(R.color.mypurple); //path object filling color
+
 
         //Customize Title
-        configSplash.setTitleSplash("");
+        configSplash.setTitleSplash("GET-JOB");
         configSplash.setTitleTextColor(R.color.Wheat);
         configSplash.setTitleTextSize(30f); //float value
         configSplash.setAnimTitleDuration(0);
         configSplash.setAnimTitleTechnique(Techniques.FlipInX);
         configSplash.setTitleFont("fonts/volatire.ttf"); //provide string to your font located in assets/fonts/
 
-
     }
 
+    /**
+     * Animasyon bittiğinde Eğer Kullanıcı tanımlanabilmiş ise Direk UserIntro ya Geçiş Yapılacak
+     * Eğer Kullanıcı Tanımlaması Yapılmamıs İse Login After gidip elemanmı işmi aradıgını sorup kayıt ekranlarına
+     * yönlendirilmesi yapılacak .
+     */
     @Override
     public void animationsFinished() {
-        Intent Login= new Intent(this,LoginAfter.class);
+
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null) {
+            Log.d(TAG, "Kullanici ADİ @@ \t" + auth.getCurrentUser().getEmail());
+
+            userID = auth.getCurrentUser().getUid();
+            Log.i(TAG, "onCreate: KULLANICI GİRİŞİ TANIMLANDI ");
+            Log.d(TAG, "onCreate: USERID @@\t" + userID);
+
+            // Intent intent = new Intent(getApplicationContext(), UserIntro.class);
+            Intent intent = new Intent(this, UserIntro.class);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+        } else {
+
+            Log.d(TAG, "animationsFinished: Kullanıcı Tanımlanmadı Login Aftera yönlendiriliyor.");
+            Log.i(TAG, "animationsFinished: Kullanıcı Tanımlanmadı");
+            Intent Login = new Intent(this, LoginAfter.class);
+            startActivity(Login);
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            finish();
+
+
+        }
+
+
+
+       /* Intent Login= new Intent(this,LoginAfter.class);
         startActivity(Login);
         overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-        finish();
+        finish();*/
         //transit to another activity here
         //or do whatever you want
     }

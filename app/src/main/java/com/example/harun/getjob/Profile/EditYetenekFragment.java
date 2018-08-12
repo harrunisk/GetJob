@@ -33,7 +33,7 @@ public class EditYetenekFragment extends DialogFragment implements View.OnClickL
     EditText yetenekName;
     Button saveContent;
     private yetenekModel myetenekModel;
-    contentFragment mcontentFragment;
+    ProfileInterfaces mcontentFragment;
 
     @Nullable
     @Override
@@ -99,7 +99,7 @@ public class EditYetenekFragment extends DialogFragment implements View.OnClickL
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mcontentFragment = (contentFragment) getActivity();
+            mcontentFragment = (ProfileInterfaces) getActivity();
         } catch (Exception e) {
             Log.d(TAG, " OnAttach Error : " + e.getLocalizedMessage());
 

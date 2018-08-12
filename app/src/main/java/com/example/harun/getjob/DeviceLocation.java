@@ -49,29 +49,29 @@ public class DeviceLocation {
 
         Log.d(TAG, "getDeviceLocation: ÇAĞRILDI");
         try {
-           // if (mPermissionGranted) {
-                //   Log.d(TAG, "getDeviceLocation: mPermissionGranted " + mPermissionGranted);
-                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            mLastKnownLocation = task.getResult();
-                            if (mLastKnownLocation != null) {
-                                Log.d(TAG, "onComplete: mLastKnownLocation" + mLastKnownLocation);
-                                deviceLocationCallback.deviceLocationCallback(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
-                            } else {
-                                Log.d(TAG, "onComplete: mLastKnownLocation NULLL GET CURRENT LOCATİON ");
-                                getCurrentLocation();
-                            }
+            // if (mPermissionGranted) {
+            //   Log.d(TAG, "getDeviceLocation: mPermissionGranted " + mPermissionGranted);
+            Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+            locationResult.addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    if (task.isSuccessful()) {
+                        mLastKnownLocation = task.getResult();
+                        if (mLastKnownLocation != null) {
+                            Log.d(TAG, "onComplete: mLastKnownLocation" + mLastKnownLocation);
+                            deviceLocationCallback.deviceLocationCallback(new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude()));
                         } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
+                            Log.d(TAG, "onComplete: mLastKnownLocation NULLL GET CURRENT LOCATİON ");
                             getCurrentLocation();
                         }
+                    } else {
+                        Log.d(TAG, "Current location is null. Using defaults.");
+                        Log.e(TAG, "Exception: %s", task.getException());
+                        getCurrentLocation();
                     }
-                });
-          //  }
+                }
+            });
+            //  }
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
         }
@@ -81,9 +81,11 @@ public class DeviceLocation {
     @SuppressLint("MissingPermission")
     public void getCurrentLocation() {
         Log.d(TAG, "getCurrentLocation:ÇAĞRILDI ");
-        // isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
+        Log.d(TAG, "getCurrentLocation: isNetworkEnabled" + isNetworkEnabled);
+        Log.d(TAG, "getCurrentLocation: isGPSEnabled" + isGPSEnabled);
         Location location = null;
         if (!(isGPSEnabled || isNetworkEnabled)) {
 
@@ -105,7 +107,7 @@ public class DeviceLocation {
             }
         }
         if (location != null) {
-            Log.d(TAG, "getCurrentLocation: drawCurrentLocationMarker Çağrılıyor");
+            Log.d(TAG, "getCurrentLocation: Location=!null");
             mLastKnownLocation = location; ///Şuanki konum bilinen son konum olarak atanıyor .
 
             deviceLocationCallback.deviceLocationCallback(MapHelperMethods.convertLocationtoLatLng(mLastKnownLocation));
@@ -113,6 +115,8 @@ public class DeviceLocation {
 
         } else {
             Log.d(TAG, "getCurrentLocation: ");
+            deviceLocationCallback.deviceLocationCallback(null);
+
 
         }
 

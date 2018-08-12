@@ -8,7 +8,7 @@ package com.example.harun.getjob.profileModel;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.harun.getjob.FirebaseMethods.firebaseContent;
+import com.example.harun.getjob.FirebaseMethods.MainContent;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class AllModelsList implements Parcelable {
     private ArrayList<deneyimModel> mdeneyimListModel;
     private ArrayList<yetenekModel> myetenekListModel;
     private genelBilgiModel mgenelBilgiModel;
-    private firebaseContent mfirebaseContent;
+    private MainContent mfirebaseContent;
     private String about_me;
     private String profilePhotoUrl;
 
@@ -35,7 +35,7 @@ public class AllModelsList implements Parcelable {
                          ArrayList<deneyimModel> mdeneyimListModel,
                          ArrayList<yetenekModel> myetenekListModel,
                          genelBilgiModel mgenelBilgiModel,
-                         firebaseContent mfirebaseContent,
+                         MainContent mfirebaseContent,
                          String about_me,
                          String profilePhotoUrl) {
 
@@ -55,7 +55,7 @@ public class AllModelsList implements Parcelable {
         myetenekListModel = in.createTypedArrayList(yetenekModel.CREATOR);
 
         mgenelBilgiModel = in.readParcelable(genelBilgiModel.class.getClassLoader());
-        mfirebaseContent = in.readParcelable(firebaseContent.class.getClassLoader());
+        mfirebaseContent = in.readParcelable(MainContent.class.getClassLoader());
         about_me = in.readString();
         profilePhotoUrl = in.readString();
 
@@ -144,11 +144,11 @@ public class AllModelsList implements Parcelable {
         this.mgenelBilgiModel = mgenelBilgiModel;
     }
 
-    public firebaseContent getMfirebaseContent() {
+    public MainContent getMfirebaseContent() {
         return mfirebaseContent;
     }
 
-    public void setMfirebaseContent(firebaseContent mfirebaseContent) {
+    public void setMfirebaseContent(MainContent mfirebaseContent) {
         this.mfirebaseContent = mfirebaseContent;
     }
 

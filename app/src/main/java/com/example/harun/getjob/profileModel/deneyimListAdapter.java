@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.harun.getjob.Profile.contentFragment;
+import com.example.harun.getjob.Profile.ProfileInterfaces;
 import com.example.harun.getjob.R;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class deneyimListAdapter extends RecyclerView.Adapter<deneyimListAdapter.
     private ArrayList<deneyimModel> deneyimHashList = new ArrayList<>();
     deneyimModel model;
     private boolean visibilityCheck;
-    contentFragment mcontentFragment;
+    ProfileInterfaces mcontentFragment;
 
 
     public deneyimListAdapter(Context context, ArrayList<deneyimModel> mList, boolean visibility) {
@@ -83,8 +83,8 @@ public class deneyimListAdapter extends RecyclerView.Adapter<deneyimListAdapter.
     public void editList(deneyimModel model, int position) {
 
         Log.d(TAG, "editList: " + model + position);
-        this.mcontentFragment = (contentFragment) mContext;
-        mcontentFragment.UpdateDeneyimListItem(model, position);
+        this.mcontentFragment = (ProfileInterfaces) mContext;
+        mcontentFragment.updateDeneyimListItem(model, position);
 
         // notifyItemChanged(position);
 

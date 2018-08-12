@@ -1,18 +1,33 @@
 package com.example.harun.getjob.JobSearch.JobUtils;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import com.example.harun.getjob.AddJobAdvert.ApplicantUserModel;
 import com.example.harun.getjob.AddJobAdvert.ApplyAdvertModel;
 import com.example.harun.getjob.AddJobAdvert.HelperStaticMethods;
-import com.example.harun.getjob.MainActivity;
 import com.example.harun.getjob.R;
+import com.example.harun.getjob.UserIntro;
 import com.example.harun.getjob.viewpagercards.TagLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,13 +36,17 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.altervista.andrearosa.statebutton.StateButton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 /**
@@ -37,7 +56,8 @@ import java.util.Locale;
 
 /**
  * Job Search te Tıklanan her marker için Bottom Sliding Panelde
- * Yakınımdakileri Listele Butonuna basıldıgında listelenen Liste detaylarında burası yüklenecek
+ * Yakınımdakileri Listele Butonuna basıldıgında listelenen Liste detaylarında Önerilen İlanlar Detaylarında Kısaca Tüm İlanların Detay Kısmında
+ * burası yüklenecek
  */
 public class AdvertDetails {
     private static final String TAG = "AdvertDetails";
@@ -51,7 +71,7 @@ public class AdvertDetails {
     /**
      * İlan detayları sayfası ile ilgili hersey bu sınıfta ..
      */
-    public static class ViewHolder implements View.OnClickListener, OnMapReadyCallback {
+    public static class ViewHolder implements View.OnClickListener, OnMapReadyCallback, CompoundButton.OnCheckedChangeListener {
         TextView tanimTv, jobadresTv, distance3,
                 egitimSeviyesiTv, tecrubeTV, calismaSekliTv, ehliyetTv, cinsiyetTv, askerlikTv;
         TagLayout imkanlarcontent;
@@ -61,13 +81,20 @@ public class AdvertDetails {
         ImageView save_this_advert;
         Context mContext;
         View tagView;
+        private EditText preInfoTag;
         private ViewSwitcher pos_viewSwitch;
         boolean kontrol;
         private NearJobAdvertModel mJobAdvertModel;
         ChangeMarkerCluster markerCluster;
+        private int mode;
+        private ArrayAdapter<String> savedPreInfoAdapter;
+        private HashMap<String, String> mySavedPreInfoHashMap;
+        private ArrayList<String> mySavedPreInfoTagList;
+        private Spinner savedPreInfoSpinner;
+        private Switch saveSwitch;
         // deneme markerCluster;
 
-        public ViewHolder(View itemView, Context mContext,  ChangeMarkerCluster changeMarkerCluster) {
+        public ViewHolder(View itemView, Context mContext, @Nullable ChangeMarkerCluster changeMarkerCluster, int mode) {
             Log.d(TAG, "ViewHolder: ");
             this.mContext = mContext;
             markerCluster = changeMarkerCluster;
@@ -85,6 +112,9 @@ public class AdvertDetails {
             askerlikTv = itemView.findViewById(R.id.askerlikTv);
             imkanlarcontent = itemView.findViewById(R.id.imkanlarcontent);
             pos_viewSwitch = itemView.findViewById(R.id.pos_viewSwitch);
+            this.mode = mode;
+            //bu mode değişkeni ile changeMarkerCluster İnterface inin ne zaman tetiklenip tetiklenmiyecegini ayarlıyorum
+            //Çünkü bu sınıf 3 4 yerde kullanılıyor.Bazı yerlerde markerin durumunun değişmesi gerekmediğinden dolayı . mode 0 markerdurumu değiştir   mode 1 markerdurumu değiştirme
             init();
 
 
@@ -150,7 +180,7 @@ public class AdvertDetails {
                 if (!text.isEmpty()) {
                     TextView tagText = tagView.findViewById(R.id.tagText);
                     tagText.setText(text);
-                    HelperStaticMethods.setMargins(tagText, 5, 5, 5, 5);
+                    HelperStaticMethods.setMargins(tagText, 5, 5, 5, 0);
                     imkanlarcontent.addView(tagView);
 
 
@@ -213,10 +243,11 @@ public class AdvertDetails {
                     if (save_this_advert.isActivated()) {
                         save_this_advert.setActivated(false);
                         mJobAdvertModel.setSave(false);
-                        markerCluster.changeMarker(mJobAdvertModel, false);
+                        changeMarkerState(false);
+
                         if (mJobAdvertModel.getBasvuruDurumu().equals(StateButton.BUTTON_STATES.DISABLED)) {
                             Log.d(TAG, "onClick: BASVURU İŞLEMİ YAPILMIS KAYIDI EKLE ");
-                            addFirebaseAppliedAdvert();
+                            addFirebaseAppliedAdvert("", false);
 
                         } else {
                             Log.d(TAG, "onClick: NE BASVURU NE KAYIT VAR İLANI KAYDINI TUTMANIN ANLAMI YOK .");
@@ -227,8 +258,8 @@ public class AdvertDetails {
                         save_this_advert.setActivated(true);
                         mJobAdvertModel.setSave(true);
                         //  Log.d(TAG, "SETSAVE:TRUE " + mJobAdvertModel);
-                        markerCluster.changeMarker(mJobAdvertModel, false);
-                        addFirebaseAppliedAdvert();
+                        changeMarkerState(false);
+                        addFirebaseAppliedAdvert("", false);
 
 
                     }
@@ -239,10 +270,13 @@ public class AdvertDetails {
                     Log.d(TAG, "onClick: ");
                     if (mJobAdvertModel.getBasvuruDurumu().equals(StateButton.BUTTON_STATES.ENABLED)) { //Basvuru yapılmamıs buton kullanılabilir durumda ise yap
                         Log.d(TAG, "onClick:btnBasvur.getState().getValue() == 0 ");
-                        btnBasvur.setState(StateButton.BUTTON_STATES.DISABLED);
+                        btnBasvur.setState(StateButton.BUTTON_STATES.LOADING);
                         mJobAdvertModel.setBasvuruDurumu(true);//Bassvuru yapıldı demek...
-                        markerCluster.changeMarker(mJobAdvertModel, true);
-                        addFirebaseAppliedAdvert();
+                        showPreInfoDıalog();
+                        changeMarkerState(true);
+
+
+                        // addFirebaseAppliedAdvert();
                     } else {
                         Log.d(TAG, "BASVURU DAHA ÖNCEDEN YAPILMIS  İCİN  DİSABLE MODE: ");
                         //Log.d(TAG, "onClick: " + mJobAdvertModel);
@@ -254,66 +288,254 @@ public class AdvertDetails {
 
         }
 
+        /**
+         * Ön Yazı Eklemek İçin Acılan Dialog ve İŞlemleri
+         */
+        private void showPreInfoDıalog() {
+
+            Log.d(TAG, "showPreInfoDıalog: ");
+            final Dialog dialog = new Dialog(mContext, R.style.CustomDialog);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setContentView(R.layout.preinfo_dialog);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                @Override
+                public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+
+                    if (keyCode == KeyEvent.KEYCODE_BACK) {
+
+                        Log.d(TAG, "onKey: BACK ");
+                    }
+
+
+                    return true;
+                }
+            });
+            final EditText infoText = dialog.findViewById(R.id.infoText);
+            Button doneBtn = dialog.findViewById(R.id.doneBtn);
+            savedPreInfoSpinner = dialog.findViewById(R.id.savedPreInfoSpinner);
+            preInfoTag = dialog.findViewById(R.id.preInfoTag);
+            saveSwitch = dialog.findViewById(R.id.saveSwitch);
+            getMySavedPreInfo();
+            saveSwitch.setOnCheckedChangeListener(this);
+            savedPreInfoSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    if (adapterView.getSelectedItem().equals("Kayıtlı Ön Yazılarımdan Seç")) {
+
+                        Log.d(TAG, "onItemSelected: " + adapterView.getSelectedItem());
+
+
+                    } else {
+
+
+                        infoText.setText(mySavedPreInfoHashMap.get(adapterView.getSelectedItem().toString()));
+                        Log.d(TAG, "onItemSelected: " + adapterView.getSelectedItem());
+
+                    }
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            doneBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    //Önyazı Kayıt Etme acık
+                    if (saveSwitch.isChecked()) {
+
+                        if (TextUtils.isEmpty(preInfoTag.getText())) {
+
+                            //Onyazı Baslıgı Bos ise
+                            Log.d(TAG, "KAYIT ETME ACIK BASLIK BOS : ");
+                            preInfoTag.setError("Bos Olamaz");
+
+                        } else {
+                            Log.d(TAG, "onClick: KAYIT ETME ACIK BASLIK DOLU  ");
+                            btnBasvur.setState(StateButton.BUTTON_STATES.DISABLED);
+                            addFirebaseAppliedAdvert(infoText.getText().toString(), true);
+                            dialog.dismiss();
+                        }
+
+                    } else {
+                        Log.d(TAG, "KAYIT ETME KAPALI ON YAZI KAYIDINA GEREK YOK ");
+                        btnBasvur.setState(StateButton.BUTTON_STATES.DISABLED);
+                        addFirebaseAppliedAdvert(infoText.getText().toString(), false);
+                        dialog.dismiss();
+
+                    }
+                }
+            });
+
+            dialog.show();
+
+        }
+
+        /**
+         * Kayıtlı Ön yazılarımı Firebaseden al Spinner İçerisine Yerleştir  ve Spinner İşlemlerini yap
+         */
+        private void getMySavedPreInfo() {
+
+            Log.d(TAG, "getMySavedPreInfo: ");
+            mySavedPreInfoHashMap = new HashMap<>();
+            mySavedPreInfoTagList = new ArrayList<>();
+            FirebaseDatabase.getInstance().getReference().child("users_data").child(UserIntro.userID).
+                    child("myPreInfo").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    Log.d(TAG, "onDataChange: ");
+
+                    if (dataSnapshot.hasChildren()) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            mySavedPreInfoHashMap.put(snapshot.getKey(), (String) snapshot.getValue());
+                            Log.d(TAG, "onDataChange:KAYIT ON YAZILAR  " + snapshot);
+
+                        }
+                        mySavedPreInfoTagList.addAll(mySavedPreInfoHashMap.keySet());
+                        mySavedPreInfoTagList.add("Kayıtlı Ön Yazılarımdan Seç");
+                        savedPreInfoAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, mySavedPreInfoTagList) {
+
+                            // 0 dan büyükse liste son ekleneni liste içerisnde gösterme yani "Kayıtlı Ön yazılarımdan sec yazısını "
+                            @Override
+                            public int getCount() {
+                                return super.getCount() > 0 ? super.getCount() - 1 : super.getCount();
+                            }
+                        };
+                        savedPreInfoSpinner.setAdapter(savedPreInfoAdapter);
+                        savedPreInfoSpinner.setHovered(true);
+                        savedPreInfoSpinner.setSelection(savedPreInfoAdapter.getCount());//Sonuncu yu al Spinner hint olacak
+
+                    } else {
+                        Log.d(TAG, "onDataChange: KAYITLI ONYAZI BULUNAMADI");
+                        mySavedPreInfoTagList.add("Kayitli Ön Yaziniz Yok ");
+                        savedPreInfoAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, mySavedPreInfoTagList);
+//                        {
+//
+//
+//                            // 0 dan büyükse liste son ekleneni liste içerisnde gösterme yani "Kayıtlı Ön yazılarımdan sec yazısını "
+//                            @Override
+//                            public int getCount() {
+//                                return super.getCount();
+//                            }
+//                        };
+                        savedPreInfoSpinner.setAdapter(savedPreInfoAdapter);
+                        savedPreInfoSpinner.setHovered(true);
+                       // savedPreInfoSpinner.setSelection(savedPreInfoAdapter.getCount());//Sonuncu yu al Spinner hint olacak
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+        }
+
+        /**
+         * Mode 0 markerin gerekli oldugu durumlarda gecerlidir.
+         *
+         * @param isBasvuruOrSave
+         */
+        private void changeMarkerState(boolean isBasvuruOrSave) {
+            if (mode == 0) {
+                Log.d(TAG, "changeMarkerState: MODE" + mode);
+                markerCluster.changeMarker(mJobAdvertModel, isBasvuruOrSave);
+
+            } else {
+
+
+                return;
+            }
+        }
+
         private void removeFromFirebase() {
 
             FirebaseDatabase.getInstance().getReference()
                     .child("users_data")
-                    .child(MainActivity.userID)
+                    .child(UserIntro.userID)
                     .child("applyAdvert")
                     .child(mJobAdvertModel.getJobID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    Log.d(TAG, "onSuccess: İLAN KAYIDI GERİ ALINDI ");
+                    Log.i(TAG, "onSuccess: İLAN KAYIDI GERİ ALINDI ");
                 }
             });
 
         }
 
-        private void addFirebaseAppliedAdvert() {
+        /**
+         * Kayıt veya Basvuru İşlemlerinde Firebase Kayıdı Yapıyor
+         *
+         * @param infoText
+         * @param issavePreInfo -->Ön yazının kayıt edilip edilmeyecegini belirten parametre
+         */
+        private void addFirebaseAppliedAdvert(final String infoText, final boolean issavePreInfo) {
 
-            String date = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
+            final String date = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().getTime());
             final ApplyAdvertModel applyAdvertModel = new ApplyAdvertModel(
                     mJobAdvertModel.getJobID(),
                     date, mJobAdvertModel.isSave(),
                     mJobAdvertModel.getBasvuruDurumu() == StateButton.BUTTON_STATES.DISABLED);
-            final ApplicantUserModel applicantUserModel = new ApplicantUserModel(MainActivity.userID, date);
             FirebaseDatabase.getInstance().getReference()
                     .child("users_data")
-                    .child(MainActivity.userID)
+                    .child(UserIntro.userID)
                     .child("applyAdvert")
                     .child(applyAdvertModel.getJobID()).setValue(applyAdvertModel)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Log.d(TAG, "onSuccess: Basvuru bilgisi kullanıcı basvurularına eklendi ");
+                            Log.i(TAG, "onSuccess: Basvuru bilgisi kullanıcı basvurularına eklendi ");
 
                             FirebaseDatabase.getInstance().getReference()
                                     .child("users_data")
-                                    .child(MainActivity.userID)
-                                    .child("suggestionKey").child(mJobAdvertModel.getJobSector()).child(mJobAdvertModel.getCompanyJob()).setValue(mJobAdvertModel.isSave()) //kayıtlara göre ise true değilse false yani basvurulara göre sıralancak
+                                    .child(UserIntro.userID)
+                                    .child("suggestionKey").child(mJobAdvertModel.getJobSector()).child(mJobAdvertModel.getCompanyJob()).setValue(mJobAdvertModel.isSave()) //kayıtlara göre ise true değilse false yani basvurulara göre  sıralancak önerilecek ilanlar
                                     // .child(mJobAdvertModel.getJobSector()).child(mJobAdvertModel.getCompanyJob()).setValue(true)
                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                         @Override
                                         public void onSuccess(Void aVoid) {
-                                            Log.d(TAG, "onSuccess: Kullanıcıya Daha sonra Önerilecek Olan  İlanlar İçin Sektör ve Meslek Bilgisi eklendi ");
+                                            Log.i(TAG, "onSuccess: Kullanıcıya Daha sonra Önerilecek Olan  İlanlar İçin Sektör ve Meslek Bilgisi eklendi ");
 
                                             //Sadece basvuru işlemi gerçekleşmiş ise
                                             if (mJobAdvertModel.getBasvuruDurumu() == StateButton.BUTTON_STATES.DISABLED) {
-
+                                                final ApplicantUserModel applicantUserModel = new ApplicantUserModel(UserIntro.userID, date, infoText);
                                                 FirebaseDatabase.getInstance().getReference()
                                                         .child("jobAdvert")
                                                         .child("publishedAdverts")
                                                         .child(mJobAdvertModel.getJobID())
                                                         .child("applyInfo")
-                                                        .child(MainActivity.userID).setValue(applicantUserModel)
+                                                        .child(UserIntro.userID).setValue(applicantUserModel)
                                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
-                                                                Log.d(TAG, "onSuccess: basvuru bilgisi ilanın detaylarına eklendi");
+                                                                Log.i(TAG, "onSuccess: basvuru bilgisi ilanın detaylarına eklendi");
 
                                                             }
                                                         });
 
+                                                //Kayıt Etme acık ise
+                                                if (issavePreInfo) {
+                                                    FirebaseDatabase.getInstance().getReference().child("users_data")
+                                                            .child(UserIntro.userID).child("myPreInfo").child(preInfoTag.getText().toString()).setValue(infoText).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.i(TAG, "onSuccess: onyazı Bilgisi KAayıt Edildi");
+                                                        }
+                                                    });
+
+                                                }
                                             }
 
 
@@ -328,6 +550,22 @@ public class AdvertDetails {
         }
 
 
+        //Switch Btn -->Ön yazı Kaydet
+        @Override
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            Log.d(TAG, "onCheckedChanged: " + b);
+            if (b) {
+
+                preInfoTag.setVisibility(View.VISIBLE);
+
+            } else {
+
+                preInfoTag.setVisibility(View.GONE);
+                preInfoTag.setText("");
+
+            }
+        }
     }
 
 }

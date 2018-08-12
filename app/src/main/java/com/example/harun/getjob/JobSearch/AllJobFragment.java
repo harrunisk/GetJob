@@ -43,7 +43,7 @@ public class AllJobFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_nested_scroll, null);
+        View view = inflater.inflate(R.layout.nearjobfragment_content, null);
 
         gatherViews(view);
         return view;
@@ -80,7 +80,7 @@ public class AllJobFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //setDataList();
-        mJobAdvertAdapter = new NearJobAdvertAdapter(getContext(), allJobList);
+        mJobAdvertAdapter = new NearJobAdvertAdapter(getContext(), allJobList,0);
         allJobRecylerList.setAdapter(mJobAdvertAdapter);
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
         linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);

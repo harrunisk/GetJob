@@ -44,7 +44,7 @@ public class EditGenelBilgiFragment extends DialogFragment implements View.OnCli
     DatePickerDialog.OnDateSetListener date;
     DatePickerDialog mdatepicker;
     String secilenEhliyet, secilenAskerlik;
-    contentFragment minterface;
+    ProfileInterfaces minterface;
     genelBilgiModel genelBilgiModel;
     String ehliyetText;
     String askerlikText;
@@ -187,7 +187,7 @@ public class EditGenelBilgiFragment extends DialogFragment implements View.OnCli
 
         super.onAttach(context);
         try {
-            minterface = (contentFragment) getActivity();
+            minterface = (ProfileInterfaces) getActivity();
 
         } catch (Exception e) {
             Log.d(TAG, "onAttach İnterface" + e.getLocalizedMessage());

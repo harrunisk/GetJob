@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.harun.getjob.MainActivity;
 import com.example.harun.getjob.Profile.FilePaths;
 import com.example.harun.getjob.R;
 import com.example.harun.getjob.profileModel.AllModelsList;
@@ -50,24 +49,31 @@ public class FirebaseMethods {
     public DatabaseReference myRef, myref2;
     private FirebaseAuth mAuth;
     public String userId;
-    FilePaths mFilePaths;
+    private FilePaths mFilePaths;
     private StorageReference mStorageRef;
     private String databaseName = "users_data"; //SaveJobAdvertToFirebase Database name
-    firebaseContent mfirebaseContent;
-
-
+    private MainContent mainContent;
     private Context mContext;
+    private UploadPhotoCallback uploadPhotoCallback;
+
+    public interface UploadPhotoCallback {
+
+        void uploadPhotoListener(boolean isSuccess);
+
+
+    }
 
     public FirebaseMethods(Context context) {
         Log.d(TAG, "FirebaseMethod: Çağırıldı");
         mContext = context;
-        mfirebaseContent = new firebaseContent();
+        mainContent = new MainContent();
         mFilePaths = new FilePaths();
-        if (MainActivity.userID != null) {
-
-            userId = MainActivity.userID;
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            //userId = UserIntro.userID;
             Log.d(TAG, "FirebaseMethod: @@@@@@@" + userId);
         }
+
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         myRef = mFirebaseDatabase.getReference();
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -78,11 +84,11 @@ public class FirebaseMethods {
     }
 
 
-    public void uploadProfileImages(Uri imageUri) {
+    public void uploadProfileImages(Uri imageUri,UploadPhotoCallback _uploadPhotoCallback) {
 
         Bitmap bitmap;
         Log.d(TAG, "uploadProfileImages: " + imageUri);
-
+        uploadPhotoCallback=_uploadPhotoCallback;
         //Fotoğrafın ekleneceği yer
         StorageReference mstorageReferences =
                 mStorageRef.child(mContext.getString(R.string.users_images)).child(userId + "/profile_photo");
@@ -103,12 +109,13 @@ public class FirebaseMethods {
                 Uri firebaseUrl = taskSnapshot.getDownloadUrl();
                 //mfirebaseContent.setProfil_photo(String.valueOf(firebaseUrl));
                 myref2.child("profile_photo").setValue(firebaseUrl.toString());
+                uploadPhotoCallback.uploadPhotoListener(true);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "onFailure: PHOTO FAİLED" + e.getLocalizedMessage());
-
+                uploadPhotoCallback.uploadPhotoListener(false);
                 Toast.makeText(mContext, "Photo upload failed ", Toast.LENGTH_SHORT).show();
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -131,7 +138,7 @@ public class FirebaseMethods {
      * @param fbContent-->bilgiler bu sınıfta saklanıyor .
      */
 
-    public void userProfile(firebaseContent fbContent) {
+    public void userProfile(MainContent fbContent) {
         ///  if (kontrol) {
 
         Log.d(TAG, "userProfile: İcerikler olusturuluyor ");
@@ -306,7 +313,7 @@ public class FirebaseMethods {
         GenericTypeIndicator<ArrayList<deneyimModel>> genericTypeIndicator2 = new GenericTypeIndicator<ArrayList<deneyimModel>>() {
         };
         genelBilgiModel bilgiModel = new genelBilgiModel();
-        firebaseContent content = new firebaseContent();
+        MainContent content = new MainContent();
         String photoUrl = new String();
         String about_me = new String();
 
@@ -370,7 +377,7 @@ public class FirebaseMethods {
 
                 Log.d(TAG, "getDataFromFirebase: dataSnapshot1.getKey().equals(main_content)");
 
-                content = dataSnapshot1.getValue(firebaseContent.class);
+                content = dataSnapshot1.getValue(MainContent.class);
 
 
             } else if (dataSnapshot1.getKey().equals("profile_photo")) {
@@ -469,7 +476,7 @@ public class FirebaseMethods {
 
             if (dataSnapshot1.child(userId).child("main_content").exists()) {
 
-                content = dataSnapshot1.child(userId).child("main_content").getValue(firebaseContent.class);
+                content = dataSnapshot1.child(userId).child("main_content").getValue(MainContent.class);
 
 
             }

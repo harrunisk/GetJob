@@ -18,8 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.harun.getjob.FirebaseMethods.FirebaseMethods;
-import com.example.harun.getjob.MainActivity;
 import com.example.harun.getjob.R;
+import com.example.harun.getjob.UserIntro;
 import com.example.harun.getjob.profileModel.AllModelsList;
 import com.example.harun.getjob.profileModel.deneyimListAdapter;
 import com.example.harun.getjob.profileModel.egitimListAdapter;
@@ -178,7 +178,7 @@ public class profilPage extends AppCompatActivity {
         egitimlistFromFirebase = new ArrayList<>();
 
         try {
-            myRef1.child(MainActivity.userID).child("profile_data").addValueEventListener(new ValueEventListener() {
+            myRef1.child(UserIntro.userID).child("profile_data").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d(TAG, "onDataChange: PRFOİLPAGE");

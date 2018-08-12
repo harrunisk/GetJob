@@ -13,12 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 
 import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
 import com.example.harun.getjob.MyCustomToast;
 import com.example.harun.getjob.R;
-
-import org.altervista.andrearosa.statebutton.StateButton;
 
 /**
  * Created by mayne on 4.06.2018.
@@ -27,10 +26,10 @@ import org.altervista.andrearosa.statebutton.StateButton;
 public class SuccessDialogFragment extends DialogFragment implements View.OnClickListener, DialogInterface.OnKeyListener {
     private static final String TAG = "SuccessDialogFragment";
     FloatingActionButton closeDialog2;
-    StateButton publishBtn;
+    private Button publishBtn;
     private JobAdvertModel2 model2;
     private boolean isPublished = false;
-   // SaveJobAdvertToFirebase mSaveJobAdvertToFirebase;
+    // SaveJobAdvertToFirebase mSaveJobAdvertToFirebase;
 
     public SuccessDialogFragment() {
         super();
@@ -42,7 +41,7 @@ public class SuccessDialogFragment extends DialogFragment implements View.OnClic
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "SuccessDialogFragment: ");
-        View v = inflater.inflate(R.layout.success_dialog_jobadvert, container);
+        View v = inflater.inflate(R.layout.success_dialog_jobadvert2, container);
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getDialog().setCanceledOnTouchOutside(false);
@@ -111,8 +110,11 @@ public class SuccessDialogFragment extends DialogFragment implements View.OnClic
                     new SaveJobAdvertToFirebase(true, model2).execute();
                     //   MyCustomToast.showCustomToast(getActivity(), "Yayınlanacak olan ilanlara eklenecek ! .");
                     isPublished = true;
-                    publishBtn.setState(StateButton.BUTTON_STATES.DISABLED);
-                  //  publishBtn.setClickable(false);
+                    publishBtn.setActivated(true);
+                   // publishBtn.setEnabled(false);
+                    //  publishBtn.setState(StateButton.BUTTON_STATES.DISABLED);
+                      publishBtn.setClickable(false);
+                      publishBtn.setText("İLAN YAYINLANDI");
                 } else {
 
                     MyCustomToast.showCustomToast(getActivity(), "Yayınlandı ..");

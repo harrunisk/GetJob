@@ -56,7 +56,6 @@ public class NearJobListActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        setupViewPager();
 
     }
 
@@ -132,7 +131,6 @@ public class NearJobListActivity extends AppCompatActivity {
                 Log.d(TAG, "onTabSelected: " + tab.getPosition());
                 _mViewPager.setCurrentItem(tab.getPosition());
 
-
             }
 
             @Override
@@ -157,6 +155,7 @@ public class NearJobListActivity extends AppCompatActivity {
         userAdress = findViewById(R.id.userAdress);
         userArea = findViewById(R.id.userArea);
         toolBartitle = findViewById(R.id.toolbartitle);
+        setupViewPager();
 
     }
 

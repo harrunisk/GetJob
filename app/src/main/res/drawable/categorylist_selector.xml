@@ -6,7 +6,7 @@
     </item>
     <!-- android:state_activated="true"  android:state_activated="false" -->
 
-    <item android:drawable="@drawable/rect_back"
+    <item android:drawable="@drawable/rect_back2"
         android:state_selected="false">
 
     </item>

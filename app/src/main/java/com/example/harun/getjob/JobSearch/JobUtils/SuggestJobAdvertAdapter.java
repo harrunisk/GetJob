@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.example.harun.getjob.AddJobAdvert.ApplicantUserModel;
 import com.example.harun.getjob.AddJobAdvert.ApplyAdvertModel;
 import com.example.harun.getjob.AddJobAdvert.HelperStaticMethods;
-import com.example.harun.getjob.MainActivity;
 import com.example.harun.getjob.Profile.UniversalImageLoader;
 import com.example.harun.getjob.R;
+import com.example.harun.getjob.UserIntro;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.FirebaseDatabase;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -120,10 +120,10 @@ public class SuggestJobAdvertAdapter extends RecyclerView.Adapter<SuggestJobAdve
                 mAdvertModel.getJobAdvertModel2().getJobID(),
                 date, mAdvertModel.isSave(),
                 false);
-        final ApplicantUserModel applicantUserModel = new ApplicantUserModel(MainActivity.userID, date);
+        final ApplicantUserModel applicantUserModel = new ApplicantUserModel(UserIntro.userID, date,"");
         FirebaseDatabase.getInstance().getReference()
                 .child("users_data")
-                .child(MainActivity.userID)
+                .child(UserIntro.userID)
                 .child("applyAdvert")
                 .child(applyAdvertModel.getJobID()).setValue(applyAdvertModel)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -134,7 +134,7 @@ public class SuggestJobAdvertAdapter extends RecyclerView.Adapter<SuggestJobAdve
 
                         FirebaseDatabase.getInstance().getReference()
                                 .child("users_data")
-                                .child(MainActivity.userID)
+                                .child(UserIntro.userID)
                                 .child("suggestionKey").child(mAdvertModel.getJobAdvertModel2().getJobSector()).child(mAdvertModel.getJobAdvertModel2().getCompanyJob()).setValue(mAdvertModel.isSave()) //kayıtlara göre ise true değilse false yani basvurulara göre sıralancak
                                 // .child(mJobAdvertModel.getJobSector()).child(mJobAdvertModel.getCompanyJob()).setValue(true)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -150,7 +150,7 @@ public class SuggestJobAdvertAdapter extends RecyclerView.Adapter<SuggestJobAdve
                                                     .child("publishedAdverts")
                                                     .child(mAdvertModel.getJobAdvertModel2().getJobID())
                                                     .child("applyInfo")
-                                                    .child(MainActivity.userID).setValue(applicantUserModel)
+                                                    .child(UserIntro.userID).setValue(applicantUserModel)
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
@@ -258,7 +258,7 @@ public class SuggestJobAdvertAdapter extends RecyclerView.Adapter<SuggestJobAdve
 
         FirebaseDatabase.getInstance().getReference()
                 .child("users_data")
-                .child(MainActivity.userID)
+                .child(UserIntro.userID)
                 .child("applyAdvert")
                 .child(nearJobAdvertModel.getJobAdvertModel2().getJobID()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
