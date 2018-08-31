@@ -10,6 +10,26 @@
 
     <string name="slidingpanel_head"> %1$s %2$s %3$s</string> <!-- Sliding panel Set Head Text İçin yazıldı .. 1 job name 2 uzaklık 3 new location uzaklıgı  -->
     <string name="userArea"><b> %1$d </b>km içinde ilgilenebileceğin  <b> %2$d </b> iş bulduk :)</string> <!-- NearJobListActivity head kısmı için  kaç km içinde kaç sonuc listeleniyor  -->
+
+    <string name="verificationText" formatted="true" translatable="true">
+       <![CDATA[ <font  color="black">Lütfen %1$s mailinizi kontrol edin Bir yanlışlık olduğunu düşünüyorsanız</font>
+      <font  color="red"><u><b>buraya tıklayın</b></u></font>]]></string>
+
+    <string name="verifcationPhoneCode"> %1$s telefon numaranıza bir aktivasyon kodu gönderdik.
+        Bu kodu aşağıya yazarak onaylayınız. </string>
+
+
+    <string name="menu_item_purchase" translatable="false">
+        <font color="red">P</font>
+        <font color="orange">r</font>
+        <font color="yellow">e</font>
+        <font color="green">m</font>
+        <font color="white">i</font>
+        <font color="blue">u</font>
+        <font color="purple">m</font>
+    </string>
+
+
     //cardview candidate criteria
     <string name="experience">Deneyim</string>
     <string name="militaryStatus">Askerlik Durumu</string>
@@ -17,7 +37,7 @@
     <string name="languages">Diller</string>
 
     <string name="text_1"></string>
-    <string name="imkanlartext"> İşveren olarak işçiye ne gibi imkanlar sunmaktasınız?</string>
+    <string name="imkanlartext"> İşveren olarak çalışanınıza ne gibi imkanlar sunmaktasınız?</string>
 
     <string name="save">SAVE</string>
 
@@ -34,6 +54,7 @@
     <string name="users_images">users_images</string>
     <string name="users_data">users_data</string>
     <string name="users_account">users_account</string>
+    <string name="preinfohint"><b>Birşeyler Yazın </b><br><i>(Bir şey yazmak istemiyorsanız boş bırakarak TAMAMLA butonuna basabilirsiniz..)</i>  </br>  </string>
 
 
     <string name="spinnerPrompt">Baslangıc Yılı</string>
@@ -98,36 +119,36 @@
 
     <string name="deneme_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean fermentum sed orci eget porttitor. Fusce ultricies urna sit amet consectetur tincidunt. Suspendisse tempus libero lectus, a lacinia felis bibendum id. Curabitur ac fringilla leo. Curabitur gravida dolor felis, et molestie dui mollis ac. Maecenas hendrerit dignissim nisl, non efficitur ex eleifend ac. Ut semper at turpis non finibus. Suspendisse potenti. Sed bibendum molestie luctus. Donec lobortis egestas turpis at aliquet. Curabitur non congue neque. Sed non rutrum risus. Sed iaculis mi in ipsum dignissim condimentum. Duis eget cursus leo, tristique eleifend risus. Vivamus ornare turpis et libero aliquet hendrerit. Nunc nec vestibulum tellus, nec feugiat purus.</string>
 
-<!--
-    <string-array name="sektorListe">
-        <item>Hukuki Danışmanlık</item>
-        <item>Lojistik Taşıma</item>
-        <item>Eğitim</item>
-        <item>İş ve Yönetim</item>
-        <item>IT ve Yazılım Geliştirme</item>
-        <item>İnsan Kaynakları</item>
-        <item>Güvenlik </item>
-        <item>Eğlence Animasyon </item>
-        <item>Müşteri Hizmetleri</item>
-        <item>Restoran Konaklama</item>
-        <item>Halkla İlişkiler </item>
-        <item>Güzellik ve Bakım </item>
-        <item>Üretim ve İmalat </item>
-        <item>Temizlik</item>
-        <item>Sağlık</item>
-        <item>İnşaat-yapı</item>
-        <item>Mağazacılık</item>
-        <item>Mühendislik</item>
-        <item>Tamir ve Bakım </item>
-        <item>Tarım ve Hayvancılık </item>
-        <item>Tekstil ve Konfeksiyon</item>
-        <item>Elektrik-Elektronik</item>
-        <item>Ticaret</item>
-        <item>Spor</item>
-        <item>Muhasebe Finans</item>
-        <item>Bankacılık</item>
-        <item>Pazarlama ve Satış</item>
+    <!--
+        <string-array name="sektorListe">
+            <item>Hukuki Danışmanlık</item>
+            <item>Lojistik Taşıma</item>
+            <item>Eğitim</item>
+            <item>İş ve Yönetim</item>
+            <item>IT ve Yazılım Geliştirme</item>
+            <item>İnsan Kaynakları</item>
+            <item>Güvenlik </item>
+            <item>Eğlence Animasyon </item>
+            <item>Müşteri Hizmetleri</item>
+            <item>Restoran Konaklama</item>
+            <item>Halkla İlişkiler </item>
+            <item>Güzellik ve Bakım </item>
+            <item>Üretim ve İmalat </item>
+            <item>Temizlik</item>
+            <item>Sağlık</item>
+            <item>İnşaat-yapı</item>
+            <item>Mağazacılık</item>
+            <item>Mühendislik</item>
+            <item>Tamir ve Bakım </item>
+            <item>Tarım ve Hayvancılık </item>
+            <item>Tekstil ve Konfeksiyon</item>
+            <item>Elektrik-Elektronik</item>
+            <item>Ticaret</item>
+            <item>Spor</item>
+            <item>Muhasebe Finans</item>
+            <item>Bankacılık</item>
+            <item>Pazarlama ve Satış</item>
 
-    </string-array>
--->
+        </string-array>
+    -->
 </resources>

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.harun.getjob.Profile.contentFragment;
+import com.example.harun.getjob.Profile.ProfileInterfaces;
 import com.example.harun.getjob.R;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
     private egitimListModel egitimListModel;
     private Context mcontext;
     private boolean visibilityCheck;
-    contentFragment mcontentFragment;
+    ProfileInterfaces mcontentFragment;
 
     public HashMap<String, ArrayList<egitimListModel>> egitimHash = new HashMap<>();
     public ArrayList<egitimListModel> egitimHashList = new ArrayList<>();
@@ -82,7 +82,7 @@ public class egitimListAdapter extends RecyclerView.Adapter<egitimListAdapter.Vi
 
     private void updateListItem(egitimListModel egitimListModel, int position) {
         Log.d(TAG, "updateListItem: ");
-        mcontentFragment = (contentFragment) mcontext;
+        mcontentFragment = (ProfileInterfaces) mcontext;
         mcontentFragment.updateEgitimListItem(egitimListModel, position);
 
     }

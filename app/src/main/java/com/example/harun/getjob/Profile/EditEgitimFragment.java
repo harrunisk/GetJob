@@ -33,7 +33,7 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
     EditText egitimOkul, egitimBolum, egitimlisans;
     Spinner bs_spinner, bts_spinner;
     Button egitimSave, egitimCancel;
-    contentFragment mcontentFragment;
+    ProfileInterfaces mcontentFragment;
     private egitimListModel megitimListModel;
     String bsyil, btsyil;
 
@@ -141,7 +141,7 @@ public class EditEgitimFragment extends DialogFragment implements View.OnClickLi
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mcontentFragment = (contentFragment) getActivity();
+            mcontentFragment = (ProfileInterfaces) getActivity();
 
 
         } catch (Exception e) {

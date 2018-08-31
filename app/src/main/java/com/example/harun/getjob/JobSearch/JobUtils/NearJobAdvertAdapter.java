@@ -33,12 +33,13 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
     private Animation animDown;
     private Animation animPulse;
     private NearJobAdvertModel mJobAdvertModel;
+    private int mode;
     private ArrayList<MyViewHolder> expandedList = new ArrayList<>(1); //Expand edilen itemin view elemanlarını tutuyorum
     //LayoutAnimationController layoutAnimationController;
     // int lastPosition = -1;
     // Animation animation;
 
-    public NearJobAdvertAdapter(Context context, ArrayList<NearJobAdvertModel> jobAdvertModelArrayList) {
+    public NearJobAdvertAdapter(Context context, ArrayList<NearJobAdvertModel> jobAdvertModelArrayList, int mode) {
         Log.d(TAG, "NearJobAdvertAdapter: ");
         this.jobAdvertModelArrayList = jobAdvertModelArrayList;
         this.layoutInflater = LayoutInflater.from(context);
@@ -46,6 +47,7 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
         animationUp = AnimationUtils.loadAnimation(context, R.anim.slide_in_up);
         animDown = AnimationUtils.loadAnimation(context, R.anim.slide_up);
         animPulse = AnimationUtils.loadAnimation(context, R.anim.pulse);
+        this.mode = mode;
         //int anim = R.anim.layout_anim2;
         //  layoutAnimationController= AnimationUtils.loadLayoutAnimation(context, anim);
         //animation = AnimationUtils.loadAnimation(context,
@@ -203,7 +205,7 @@ public class NearJobAdvertAdapter extends RecyclerView.Adapter<NearJobAdvertAdap
             expandcard = itemView.findViewById(R.id.expandcard);
             detail_image = itemView.findViewById(R.id.showdetails);
             tvdetail = itemView.findViewById(R.id.tvdetail);
-            viewHolder = new AdvertDetails.ViewHolder(itemView, mcontext, this); //İlan detayları
+            viewHolder = new AdvertDetails.ViewHolder(itemView, mcontext, this, mode); //İlan detayları
         }
 
         /**

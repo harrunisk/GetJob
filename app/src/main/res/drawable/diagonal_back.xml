@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/pic03"/>
-    <item>
-        <bitmap android:src="@drawable/pic03" android:gravity="center" android:alpha="0.1"/>
-    </item>
+<item android:drawable="@color/SeaGreen"/>
 
-    <item android:top="200dp"
-        android:bottom="-250dp"
-        android:left="0dp"
-        android:right="-200dp">
-        <rotate
-            android:fromDegrees="-10"
-            android:pivotX="0%"
-            android:pivotY="100%">
-            <shape
-                android:shape="rectangle">
-                <solid
-                    android:color="?android:colorBackground"/>
-            </shape>
-        </rotate>
-    </item>
+<item
+    android:top="100dp"
+    android:bottom="-100dp"
+    android:left="0dp"
+    android:right="-300dp">
+    <rotate
+        android:fromDegrees="-13"
+        android:pivotX="0%"
+        android:pivotY="100%">
+        <shape
+            android:shape="rectangle">
+            <solid
+                android:color="@color/orange"/>
+        </shape>
+    </rotate>
+</item>
 </layer-list>

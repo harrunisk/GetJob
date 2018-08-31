@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.harun.getjob.Profile.contentFragment;
+import com.example.harun.getjob.Profile.ProfileInterfaces;
 import com.example.harun.getjob.R;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class yetenekListAdapter extends RecyclerView.Adapter<yetenekListAdapter.
     private ArrayList<yetenekModel> hashyetenek = new ArrayList<>();
     private boolean visibilityCheck;
     Context mContext;
-    contentFragment mcontentFragment;
+    ProfileInterfaces mcontentFragment;
 
 
     public yetenekListAdapter(Context context, ArrayList<yetenekModel> yetenekListe, boolean visibility) {
@@ -78,7 +78,7 @@ public class yetenekListAdapter extends RecyclerView.Adapter<yetenekListAdapter.
 
     private void updateListRow(yetenekModel myetenekmodel, int position) {
         Log.d(TAG, "updateListRow: ");
-        this.mcontentFragment = (contentFragment) mContext;
+        this.mcontentFragment = (ProfileInterfaces) mContext;
         mcontentFragment.updateYetenekListItem(myetenekmodel, position);
 
     }

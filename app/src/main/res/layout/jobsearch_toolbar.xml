@@ -1,49 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/white_grey_border_bottom">
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/white"
+    app:title="İlanlar">
 
-    <android.support.v7.widget.Toolbar
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:text="İş Ara"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:fontFamily="serif"
+            android:gravity="center"
+            android:layout_height="match_parent" />
 
         <RelativeLayout
+            android:id="@+id/searchLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/job_back"
+            android:layout_toStartOf="@id/search"
+            android:background="@color/navy3"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/search_jobLayout"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/search_job"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/search" />
+
+            </LinearLayout>
 
 
-            <ImageView
-                android:id="@+id/job_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_back_black_24dp" />
+            <LinearLayout
+                android:id="@+id/clearLayout"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="1dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center">
 
+                <ImageView
+                    android:id="@+id/clearImage"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/circleback"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_close_black_10dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+            </LinearLayout>
+
+            <AutoCompleteTextView
+                android:id="@+id/input_searchJob"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/search_jobLayout"
+                android:layout_toStartOf="@+id/clearLayout"
+                android:background="@null"
                 android:fontFamily="serif-monospace"
-                android:text="JOB SEARCH "
-                android:textAlignment="center"
-                android:textSize="20sp"
-
+                android:gravity="center"
+                android:hint="Meslek Arayın"
+                android:imeOptions="actionSearch"
+                android:inputType="textPostalAddress"
+                android:padding="3dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="15sp"
 
                 />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="20dp"
-                android:contentDescription="Filtrele"
-                android:src="@drawable/sort"
-                android:tint="@color/mycolor2" />
+
         </RelativeLayout>
 
-    </android.support.v7.widget.Toolbar>
+
+        <ImageView
+            android:id="@+id/job_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:src="@drawable/ic_arrow_back_black_24dp" />
+
+<!--
+        <ImageView
+            android:id="@+id/filtre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="Filtrele"
+            android:src="@drawable/sort"
+            android:tint="@color/mycolor2" />
+-->
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="7dp"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="Search"
+            android:src="@drawable/search"
+            android:tint="@color/black" />
 
 
+    </RelativeLayout>
 </android.support.design.widget.AppBarLayout>

@@ -128,10 +128,9 @@
                             android:id="@+id/emptyRecommendList"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:visibility="gone"
                             android:layout_centerInParent="true"
-                            >
+                            android:gravity="center"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:id="@+id/emptyImage"
@@ -145,11 +144,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="15dp"
-                                android:textColor="@color/white"
-                                android:fontFamily="casual"
                                 android:layout_toEndOf="@id/emptyImage"
+                                android:fontFamily="casual"
                                 android:text="ÖNERİLECEK BİR İLAN BULAMADIK"
-                                android:textAlignment="center" />
+                                android:textAlignment="center"
+                                android:textColor="@color/white" />
 
                         </RelativeLayout>
 
@@ -193,7 +192,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:background="@drawable/ripplebackgorund"
+                                android:background="@drawable/ripplebackgorund_red"
                                 android:onClick="jobSearch">
 
                                 <ImageView
@@ -202,7 +201,7 @@
                                     android:layout_height="45dp"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginTop="10dp"
-                                    android:src="@drawable/jobsearch" />
+                                    android:src="@drawable/jobsearch2" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -211,6 +210,7 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginBottom="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="casual"
                                     android:text="İŞ ARA"
                                     android:textAlignment="center"
                                     android:textColor="@color/black"
@@ -238,8 +238,8 @@
                                 android:layout_gravity="center"
                                 android:background="@drawable/ripplebackgorund"
                                 android:clickable="true"
-
-                                android:focusable="true">
+                                android:focusable="true"
+                                android:onClick="myAdverts">
 
                                 <ImageView
                                     android:id="@+id/basvurular"
@@ -256,7 +256,9 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginBottom="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="casual"
                                     android:text="BAŞVURULARIM"
+
                                     android:textAlignment="center"
                                     android:textColor="@color/black"
                                     android:textSize="15sp"
@@ -311,7 +313,9 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginBottom="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="casual"
                                     android:text="PROFİLİM"
+
                                     android:textAlignment="center"
                                     android:textColor="@color/black"
                                     android:textSize="15sp"
@@ -358,7 +362,9 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginBottom="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="casual"
                                     android:text="ÖZGEÇMİŞİM"
+
                                     android:textAlignment="center"
                                     android:textColor="@color/black"
                                     android:textSize="15sp"
@@ -414,7 +420,9 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginBottom="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="casual"
                                     android:text="MESAJLAR"
+
                                     android:textAlignment="center"
                                     android:textColor="@color/black"
                                     android:textSize="15sp"
@@ -459,7 +467,9 @@
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginBottom="15dp"
                                     android:layout_marginTop="15dp"
+                                    android:fontFamily="casual"
                                     android:text="AYARLAR"
+
                                     android:textAlignment="center"
                                     android:textColor="@color/black"
                                     android:textSize="15sp"
@@ -496,9 +506,8 @@
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:background="@color/White"
                 android:layout_height="120dp"
-                >
+                android:background="@color/White">
 
                 <!--  <android.support.v7.widget.Toolbar
                       android:id="@+id/bottom_sheet_toolbar"
@@ -506,9 +515,7 @@
                       android:layout_width="match_parent" />
                       -->
 
-                <include
-                    layout="@layout/job_card">
-                </include>
+                <include layout="@layout/job_card"></include>
             </android.support.design.widget.AppBarLayout>
 
 

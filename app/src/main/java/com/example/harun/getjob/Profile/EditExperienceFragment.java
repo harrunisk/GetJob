@@ -27,7 +27,7 @@ public class EditExperienceFragment extends DialogFragment implements View.OnCli
     private EditText deneyimPoz, deneyimKurum, deneyimAy, deneyimLokasyon;
     private Button editSave, editCancel;
     String deneyim, kurum, ay, lokasyon;
-    private contentFragment mcontentFragment;
+    private ProfileInterfaces mcontentFragment;
     private deneyimModel mdeneyimModel;
 
 
@@ -70,9 +70,9 @@ public class EditExperienceFragment extends DialogFragment implements View.OnCli
 
          *tıklanan satırın öğeleri yükleniyor
          */
-        if (getTag().equals("UpdateDeneyimListItem")) {
+        if (getTag().equals("updateDeneyimListItem")) {
 
-            Log.d(TAG, "onCreateView: UpdateDeneyimListItem");
+            Log.d(TAG, "onCreateView: updateDeneyimListItem");
 
             //mdeneyimModel = ((EditProfile) getActivity()).getRowItems();
 
@@ -95,7 +95,7 @@ public class EditExperienceFragment extends DialogFragment implements View.OnCli
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mcontentFragment = (contentFragment) getActivity();
+            mcontentFragment = (ProfileInterfaces) getActivity();
 
 
         } catch (Exception e) {
@@ -115,7 +115,7 @@ public class EditExperienceFragment extends DialogFragment implements View.OnCli
         lokasyon = deneyimLokasyon.getText().toString();
         ay = deneyimAy.getText().toString();
 
-        if(getTag().equals("UpdateDeneyimListItem")){
+        if(getTag().equals("updateDeneyimListItem")){
             mcontentFragment.getExperienceContent(deneyim, lokasyon, ay, kurum,true);///Burdan verileere istedğin yerden erişebilrsin.
 
         }else{

@@ -28,7 +28,9 @@
         <activity android:name=".MapsActivityCurrentPlace" />
         <activity android:name=".AdvertCompany" />
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".JobSearch.JobSearch"></activity>
+
+        <activity android:name=".JobSearch.JobSearch"
+            android:theme="@style/AppTheme2"> </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -44,7 +46,7 @@
         </activity>
 
         <activity
-            android:name=".Intro"
+            android:name=".SignInUp.Intro"
             android:theme="@style/AppTheme2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,11 +69,14 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".JobSearch.NearJobListActivity" />
-        <activity android:name=".LoginAfter"></activity>
+        <activity android:name=".SignInUp.LoginAfter"></activity>
         <activity android:name=".SignUp">
 
         </activity>
         <activity android:name=".AddJobAdvert.AddJobAdvert"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity android:name=".MyAdverts.MyAdvertsActivty" />
+        <activity android:name=".SignInUp.SignInUpActivity"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
     </application>
 

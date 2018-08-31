@@ -8,7 +8,7 @@ import com.example.harun.getjob.profileModel.yetenekModel;
  * Created by mayne on 16.02.2018.
  */
 
-public interface contentFragment {
+public interface ProfileInterfaces {
 
 
     void sendAboutContent(String input);
@@ -20,7 +20,7 @@ public interface contentFragment {
 
     void getGenelContent(String tel, String mail, String tarih, String ehliyet, String askerlik);
 
-    void UpdateDeneyimListItem(deneyimModel model, int position);
+    void updateDeneyimListItem(deneyimModel model, int position);
 
     void updateYetenekListItem(yetenekModel model, int position);
     void updateEgitimListItem(egitimListModel model, int position);

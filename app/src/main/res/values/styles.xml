@@ -9,9 +9,14 @@
     </style>
 
 
-   <style name="StepperLayoutTheme" parent="MSDefaultStepperLayoutTheme">
-   </style>
+    <style name="StepperLayoutTheme" parent="MSDefaultStepperLayoutTheme"></style>
 
+    <style name="DialogSlideAnimation">
+
+        <item name="android:windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_up</item>
+
+    </style>
 
     <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -47,7 +52,7 @@
 
     <style name="personal_expanded_title">
         <item name="android:textSize">0sp</item>
-        <item name="android:text"> </item>
+        <item name="android:text"></item>
         <item name="android:textColor">@color/Brown</item>
     </style>
 
@@ -64,6 +69,7 @@
         <item name="windowActionBarOverlay">true</item>
 
     </style>
+
     <style name="My_AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
@@ -71,8 +77,7 @@
     </style>
 
 
-
-    <style name="spinner_style" >
+    <style name="spinner_style">
         <item name="android:background">@drawable/spinnerstyle</item>
         <item name="android:layout_marginLeft">5dp</item>
         <item name="android:layout_marginRight">5dp</item>
@@ -83,9 +88,7 @@
     </style>
 
 
-
-
-    <style name="ToolBarStyle" parent="ToolBarStyle.Base"/>
+    <style name="ToolBarStyle" parent="ToolBarStyle.Base" />
 
     <style name="ToolBarStyle.Base" parent="">
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
@@ -103,8 +106,7 @@
     </style>
 
 
-
-<!-- BOTTOM SHEET TOOLBAR STYLE -->
+    <!-- BOTTOM SHEET TOOLBAR STYLE -->
 
     <style name="MainTabLayoutStyle" parent="Widget.Design.TabLayout">
         <item name="tabPaddingStart">12dp</item>
@@ -114,6 +116,7 @@
         <item name="tabBackground">@color/white</item>
         <item name="tabTextAppearance">@style/MainTabTextAppearance</item>
     </style>
+
     <style name="MainTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">12sp</item>
     </style>
@@ -168,6 +171,62 @@
         <item name="failedBackground">@drawable/statebutton_md_bluebg_failed</item>
     </style>
 
+    <style name="LoginStateButtonStyle">
+        <!-- Backgrounds -->
+        <item name="disabledBackground">@drawable/round</item>
+        <item name="enabledBackground">@drawable/rect_back</item>
+        <item name="loadingBackground">@drawable/purpleback</item>
+        <item name="successBackground">@drawable/yellowback</item>
+        <item name="failedBackground">@drawable/rect_back</item>
+
+        <!--Texts Color-->
+        <item name="disabledTextColor">@color/black</item>
+        <item name="enabledTextColor">@color/white</item>
+        <item name="loadingTextColor">@color/white_100</item>
+        <item name="successTextColor">@color/white_100</item>
+        <item name="failedTextColor">@color/white_100</item>
+        <!-- Icons color -->
+
+        <item name="disabledIcon">@drawable/ic_done_all_black_10dp</item>
+        <item name="successIcon">@drawable/ic_done_all_black_10dp</item>
+
+        <item name="disabledIconColor">@color/black</item>
+        <item name="enabledIconColor">@color/white</item>
+        <item name="loadingIconColor">@color/white</item>
+        <item name="successIconColor">@color/white_100</item>
+        <item name="failedIconColor">@color/white_100</item>
 
 
+    </style>
+
+
+    <style name="CustomDialog" parent="AppTheme2">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+    <style name="MyDialogTheme" parent="android:Theme.Holo.Light">
+        <!-- Fill the screen -->
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+
+        <item name="android:background">#ff0000</item>
+    </style>
+
+
+    <style name="mySwitchStyle" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/SeaGreen</item>
+
+        <!-- inActive -->
+        <item name="colorSwitchThumbNormal">@color/retro</item>
+
+        <!-- Active -->
+        <item name="android:colorForeground">#42221f1f
+        </item>
+    </style>
 </resources>

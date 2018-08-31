@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.harun.getjob.FirebaseMethods.FirebaseMethods;
-import com.example.harun.getjob.FirebaseMethods.firebaseContent;
+import com.example.harun.getjob.FirebaseMethods.MainContent;
 import com.example.harun.getjob.R;
 import com.example.harun.getjob.profileModel.AllModelsList;
 import com.example.harun.getjob.profileModel.deneyimListAdapter;
@@ -37,7 +37,7 @@ import com.tapadoo.alerter.Alerter;
 import java.io.File;
 import java.util.ArrayList;
 
-public class EditProfile extends AppCompatActivity implements contentFragment, View.OnClickListener {
+public class EditProfile extends AppCompatActivity implements ProfileInterfaces, View.OnClickListener {
     private static final String TAG = "EditProfile";
     ArrayList<deneyimModel> deneyimList;
     public TextView editAboutContent;
@@ -51,7 +51,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
     ArrayList<egitimListModel> egitimListe;
     ArrayList<yetenekModel> recyclerYetenekList;
 
-    firebaseContent mfirebaseContent;
+    MainContent mfirebaseContent;
     FirebaseMethods mFirebaseMethods;
     genelBilgiModel mgenelBilgilerim;
     AllModelsList mAllModelsList;
@@ -473,10 +473,10 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
      * @param position-->tıklanan liste ögesinin pozisyon değeri-->pozisyon değişkeni yerel bir değişkene atanıp kullanılacak..
      */
     @Override
-    public void UpdateDeneyimListItem(deneyimModel model, int position) {
+    public void updateDeneyimListItem(deneyimModel model, int position) {
 
-        Log.d(TAG, "UpdateDeneyimListItem: " + model + "\t " + position);
-        //Log.d(TAG, "UpdateDeneyimListItem: Silinmeden önce " + denemeList);
+        Log.d(TAG, "updateDeneyimListItem: " + model + "\t " + position);
+        //Log.d(TAG, "updateDeneyimListItem: Silinmeden önce " + denemeList);
 
         getRowItems = new Bundle();
         getRowItems.putParcelable("deneyimSatir", model); //Fragmenta gönderilen satır itemleri
@@ -485,7 +485,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         FragmentManager fragment3 = getFragmentManager();
         EditExperienceFragment expDialog1 = new EditExperienceFragment();
         expDialog1.setArguments(getRowItems);
-        expDialog1.show(fragment3, "UpdateDeneyimListItem");
+        expDialog1.show(fragment3, "updateDeneyimListItem");
     }
 
     @Override
@@ -984,7 +984,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
      * böyle yapınca kullanıcı işlemine devam edebilir.
      */
 ////CHECK MEMORY LEAK ARKA PLANDA ÇALIŞIYOR AMA HAFIZADAN SİLİNMİYOR .. ..
-    private class SaveAllChanges extends AsyncTask<Void, Void, Void> {
+    private class SaveAllChanges extends AsyncTask<Void, Void, Void> implements FirebaseMethods.UploadPhotoCallback {
 
         private static final String TAG = "SaveAllChanges";
 
@@ -1002,7 +1002,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
 
             Log.d(TAG, "saveAllchangesProfile: @@@@DEĞİŞİKLER KAYIT EDİLİYOR ");
 
-            mfirebaseContent = new firebaseContent(
+            mfirebaseContent = new MainContent(
                     editJob.getText().toString()
                     , editLocation.getText().toString()
                     , edituserName.getText().toString()
@@ -1035,7 +1035,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
                 checkExperience = false;
             }
             if (checkPhoto) {
-                mFirebaseMethods.uploadProfileImages(newPhotoUri);
+                mFirebaseMethods.uploadProfileImages(newPhotoUri, this);
                 checkPhoto = false;
             }
 
@@ -1049,7 +1049,7 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
             //   uploadProgress.hide();
             Log.d(TAG, "onPostExecute: bitti activyty açılıyor.");
             Intent i = new Intent(EditProfile.this, profilPage.class);
-         //   ImageLoader.getInstance().destroy();
+            //   ImageLoader.getInstance().destroy();
             startActivity(i);
 
 
@@ -1062,6 +1062,11 @@ public class EditProfile extends AppCompatActivity implements contentFragment, V
         protected void onProgressUpdate(Void... values) {
             super.onProgressUpdate(values);
 
+        }
+
+        @Override
+        public void uploadPhotoListener(boolean isSuccess) {
+            Log.d(TAG, "uploadPhotoListener: YÜKLEME DURUMMU -->>" + isSuccess);
         }
     }
 }

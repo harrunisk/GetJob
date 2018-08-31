@@ -7,7 +7,7 @@
         android:color="@color/SeaGreen"
        />
 
-    <corners android:radius="10dp" android:angle="270"
+    <corners android:radius="20dp" android:angle="270"
         />
 
     <gradient

@@ -46,7 +46,7 @@ public class CategoryModel {
 
     public interface doneCallback {
 
-        void getCategoryCompleteCallback(ArrayList<CategoryModel> categoryModelArrayList, int size);
+        void getCategoryCompleteCallback(ArrayList<CategoryModel> categoryModelArrayList, int size,HashMap<String, ArrayList<String>> sectorHash);
 
     }
 
@@ -177,7 +177,7 @@ public class CategoryModel {
                 //  Log.d(TAG, "onDataChange: " + dataSnapshot);
                 count[0] = String.valueOf(dataSnapshot.getChildrenCount());
                 categoryModelArrayList.add(new CategoryModel(sektor, count[0]));
-                mDoneCallback.getCategoryCompleteCallback(categoryModelArrayList, sectorListfromFirebase.size());
+                mDoneCallback.getCategoryCompleteCallback(categoryModelArrayList, sectorListfromFirebase.size(),sectorListfromFirebase);
                 //  Log.d(TAG, "onDataChange: " + categoryModelArrayList);
             }
 

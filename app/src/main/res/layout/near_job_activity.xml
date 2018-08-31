@@ -91,7 +91,6 @@
 
                     android:layout_toEndOf="@+id/image5"
                     android:text="3 Km İçinde 10 sonuc Listeleniyor "
-
                     android:textAlignment="center"
                     android:textSize="12dp" />
             </RelativeLayout>

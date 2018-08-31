@@ -17,14 +17,12 @@ import java.util.Arrays;
 
 import custom_font.MyTextView;
 
-import static android.media.audiofx.AcousticEchoCanceler.create;
-
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ImageView facebook;
     ImageView twitter;
     ImageView google;
-    ImageView mail,phone;
+    ImageView mail, phone;
     MyTextView create;
 
     private static final String TAG = "MainActivityLogin";
@@ -32,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth auth;
 
     //Bu ıd bana heryerde lazım olacak oyuzden static yaptım .
-    public static String userID;
+    public static String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,58 +38,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // auth.getCurrentUser().getUid();
 
+        /**
+         * Kullanıcı Tanımlanırsa Giriş Yapma İşlemi basarılı ve USerIntro ya Yönlendir
+         * Kullanıcı Tanımlanamaz ise Giriş Yapma Ekranına Yönlendir.
+         */
         auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
-            //logcate yazar bizde bakarız oradan
             Log.d(TAG, "Kullanici ADİ @@ \t" + auth.getCurrentUser().getEmail());
 
-            userID = auth.getCurrentUser().getUid();
-
-            Log.d(TAG, "onCreate: USERID @@\t" + userID);
+            userId = auth.getCurrentUser().getUid();
+            Log.i(TAG, "onCreate: KULLANICI GİRİŞİ TANIMLANDI ");
+            Log.d(TAG, "onCreate: USERID @@\t" + userId);
 
             Intent intent = new Intent(getApplicationContext(), UserIntro.class);
             startActivity(intent);
             finish();
-            // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
 
         } else {
 
+
             setContentView(R.layout.login);
-             facebook=(ImageView) findViewById(R.id.facebook);
+            facebook = (ImageView) findViewById(R.id.facebook);
             // twitter=(ImageView) findViewById(R.id.twitter);
-             google=(ImageView) findViewById(R.id.google);
-             //mail=(ImageView) findViewById(R.id.mail);
-             phone=(ImageView) findViewById(R.id.phone);
-             create=(MyTextView) findViewById(R.id.create);
+            google = (ImageView) findViewById(R.id.google);
+            //mail=(ImageView) findViewById(R.id.mail);
+            phone = (ImageView) findViewById(R.id.phone);
+            create = (MyTextView) findViewById(R.id.create);
 
 
-             create.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     Intent intent = new Intent(getApplicationContext(), SignUp.class);
-                     startActivity(intent);
+            create.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplicationContext(), SignUp.class);
+                    startActivity(intent);
 
 
-                 }
-             });
+                }
+            });
 
 
-             facebook.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
+            facebook.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-                     startActivityForResult(AuthUI.getInstance()
-                             .createSignInIntentBuilder()
-                             .setAvailableProviders(Arrays.asList(
+                    startActivityForResult(AuthUI.getInstance()
+                            .createSignInIntentBuilder()
+                            .setAvailableProviders(Arrays.asList(
 
-                                     new AuthUI.IdpConfig.FacebookBuilder().build()
+                                    new AuthUI.IdpConfig.FacebookBuilder().build()
 
-                              )).build(), RC_SIGN_IN);
+                            )).build(), RC_SIGN_IN);
 
-                 }
-             });
+                }
+            });
 
              /*
             twitter.setOnClickListener(new View.OnClickListener() {
@@ -183,10 +184,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 //user logged in
 
 
-                Log.d("AUTH",auth.getCurrentUser().getEmail());
-                Log.d(TAG, "onActivityResult:"+auth.getCurrentUser().getPhoneNumber());
+                Log.d("AUTH", auth.getCurrentUser().getEmail());
+                Log.d(TAG, "onActivityResult:" + auth.getCurrentUser().getPhoneNumber());
 
-                userID = auth.getCurrentUser().getUid();
+                userId = auth.getCurrentUser().getUid();
 
                 Intent intent = new Intent(getApplicationContext(), UserIntro.class);
                 startActivity(intent);
