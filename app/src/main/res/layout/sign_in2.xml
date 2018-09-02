@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+    >
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/signinContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradiant">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="15dp"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:paddingTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="460dp"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/diagonal_back3">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/userProfile_image"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/userlogin2"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="1dp">
+
+                    </com.mikhaellopez.circularimageview.CircularImageView>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/sign_up">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="50dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="serif"
+                            android:text="Giriş Yap "
+                            android:textAlignment="center"
+                            android:textColor="@color/black"
+                            android:textSize="15dp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center">
+
+                            <android.support.design.widget.FloatingActionButton
+                                android:id="@+id/signin_mailBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginTop="1dp"
+                                android:src="@drawable/mail"
+                                app:backgroundTint="@color/white"
+                                app:elevation="2dp"
+                                app:fabSize="mini" />
+
+                            <android.support.design.widget.FloatingActionButton
+                                android:id="@+id/signin_phoneBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="1dp"
+                                android:src="@drawable/call_answer"
+                                app:backgroundTint="@color/white"
+                                app:elevation="2dp"
+                                app:fabSize="mini" />
+                            <android.support.design.widget.FloatingActionButton
+                                android:id="@+id/signin_AnonymouslyBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="2dp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="1dp"
+                                android:src="@drawable/anonymous_user"
+                                app:backgroundTint="@color/white"
+                                app:elevation="2dp"
+                                app:fabSize="mini" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/signin_mailLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/signin_mailInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Mail"
+                                android:textAlignment="viewStart"
+                                android:touchscreenBlocksFocus="true"
+                                app:counterOverflowTextAppearance="@color/colorAccent">
+
+
+                                <EditText
+                                    android:id="@+id/signin_mailtext"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:fontFamily="serif"
+                                    android:gravity="start"
+                                    android:inputType="textEmailAddress"
+                                    android:padding="15dp"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/signin_passwordInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Şifre"
+                                android:textAlignment="viewStart"
+                                app:counterOverflowTextAppearance="@color/colorAccent"
+                              >
+
+
+                                <EditText
+                                    android:id="@+id/signin_passwordText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:fontFamily="serif"
+                                    android:gravity="start"
+                                    android:inputType="textPassword|textWebPassword"
+                                    android:padding="15dp"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/black"
+                                    android:textSize="15sp" />
+
+                            </android.support.design.widget.TextInputLayout>
+
+
+                            <TextView
+                            android:id="@+id/resetPassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="serif"
+                            android:text="Şifremi Unuttum"
+                            android:textAlignment="center"
+                            android:textColor="@color/wallet_hint_foreground_holo_dark"
+                            android:textSize="12dp"
+                            android:textStyle="italic" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/signin_AnonymouslyLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:fontFamily="serif"
+                                android:text="Anonim Olarak Giriş Yap "
+                                android:textAlignment="center"
+                                android:textColor="@color/black"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/signin_phoneLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:layoutAnimation="@anim/layout_animt3"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Telefon Numaraniz*(5xx xxx xxxx) "
+                                android:textAlignment="center"
+                                app:counterOverflowTextAppearance="@color/colorAccent">
+
+
+                                <EditText
+                                    android:id="@+id/signin_phoneText"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:fontFamily="serif"
+                                    android:gravity="center"
+                                    android:inputType="phone"
+                                    android:padding="15dp"
+                                    android:textAlignment="center"
+                                    android:textColor="@color/primary_dark"
+                                    android:textSize="15sp" />
+
+                            </android.support.design.widget.TextInputLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <org.altervista.andrearosa.statebutton.StateButton
+                    android:id="@+id/sign_inBtn"
+                    style="@style/LoginStateButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="70dp"
+                    android:layout_marginStart="70dp"
+                    android:layout_marginTop="-30dp"
+                    android:paddingEnd="10dp"
+                    app:enabledIconColor="@color/white"
+                    app:enabledText="Giriş Yap"
+                    app:failedText="Yeniden Dene"
+                    app:loadingText="Giriş Yapılıyor"
+                    app:state="enabled"
+                    app:successText="Giriş Başarılı" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/footer_linear"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="6dp"
     android:layout_marginRight="6dp"
-    android:background="@color/white"
+    android:background="@android:color/transparent"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -17,13 +16,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Öz.Grntlnme"
-            android:textColor="#bcbaba"
-            android:textSize="14sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -34,6 +26,13 @@
             android:textColor="#797878"
             android:textSize="16sp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Öz.Grntlnme"
+            android:textColor="#bcbaba"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -44,6 +43,16 @@
         android:gravity="center"
 
         android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="125"
+            android:textColor="#797878"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -53,15 +62,6 @@
             android:textColor="#bcbaba"
             android:textSize="14sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="125"
-            android:textColor="#797878"
-            android:textSize="16sp" />
-
     </LinearLayout>
 
     <LinearLayout
@@ -72,13 +72,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Mesajlarım"
-            android:textColor="#bcbaba"
-            android:textSize="14sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -89,5 +82,12 @@
             android:textColor="#797878"
             android:textSize="16sp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Mesajlarım"
+            android:textColor="#bcbaba"
+            android:textSize="14sp" />
     </LinearLayout>
 </LinearLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar1"
+            style="@style/BottomSheetAppBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="90dp">
+    -->
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparan">
+
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar1"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+
+            android:background="@drawable/mdtp_done_background_color">
+
+
+            <android.support.v7.widget.Toolbar
+                style="@style/MainToolbarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="İLANLARIM"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium.Inverse"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:id="@+id/backBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="5dp"
+                        android:src="@drawable/ic_arrow_back_black_24dp" />
+                </RelativeLayout>
+
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+        <!--
+            </android.support.design.widget.AppBarLayout>
+        -->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/myAdvertsTab"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginStart="40dp"
+            android:background="@drawable/tag_back"
+            android:backgroundTint="@color/white"
+            android:elevation="8dp"
+            app:layout_anchor="@+id/appbar1"
+            app:layout_anchorGravity="bottom"
+            app:tabBackground="@drawable/tabselector"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@android:color/transparent"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/SeaGreen">
+
+        </android.support.design.widget.TabLayout>
+
+        <!--            app:tabBackground="@drawable/tabselector"
+-->
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/myAdverts_viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        </android.support.v4.view.ViewPager>
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</RelativeLayout>

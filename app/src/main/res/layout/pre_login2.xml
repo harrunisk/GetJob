@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradiant4"
+    android:padding="8dp"
+    android:weightSum="2">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/dialogcorner">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/employeeSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="casual"
+                android:padding="10dp"
+                android:text="ELEMAN MI ARIYORSUN ? "
+                android:textAlignment="center"
+                android:textColor="@color/myblue"
+                android:textSize="20dp"
+                android:textStyle="bold"
+
+                />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_alignEnd="@id/employeeSearch"
+                android:layout_alignStart="@id/employeeSearch"
+                android:layout_below="@+id/employeeSearch"
+                android:layout_gravity="center"
+                android:background="@color/myblue"> </View>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="serif"
+            android:padding="5dp"
+            android:text="Hemen İlanını Yayınla Aradığın Elemanı Hemen Bul "
+            android:textAlignment="center"
+            android:textColor="@color/myblue"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv3"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/elemanAriyorumTv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end|bottom"
+                android:layout_weight="1"
+                android:background="@drawable/tag_back"
+                android:fontFamily="casual"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Eleman Arıyorum"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="100dp"-->
+    <!--android:background="@drawable/diagonal_back"-->
+
+    <!--&gt;-->
+
+
+    <!--</RelativeLayout>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/myblue"
+        android:background="@drawable/dialogcorner">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/jobSearchTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="casual"
+                android:padding="10dp"
+                android:text="İŞ Mi ARIYORSUN ? "
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+
+                />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_alignEnd="@id/jobSearchTag"
+                android:layout_alignStart="@id/jobSearchTag"
+                android:layout_below="@+id/jobSearchTag"
+                android:layout_gravity="center"
+                android:background="@color/white"></View>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:fontFamily="serif"
+            android:padding="5dp"
+            android:layout_centerInParent="true"
+            android:text="Sana Uygun İşi Hemen Bul "
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv4"
+            android:padding="5dp"
+            android:layout_marginTop="50dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/isAriyorumTv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tag_back"
+                android:fontFamily="casual"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Is Ariyorum  "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

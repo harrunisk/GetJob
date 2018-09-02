@@ -14,7 +14,8 @@
     <style name="DialogSlideAnimation">
 
         <item name="android:windowEnterAnimation">@anim/slide_in_up</item>
-        <item name="android:windowExitAnimation">@anim/slide_out_up</item>
+        <!--<item name="android:windowExitAnimation">@anim/slide_out_up</item>-->
+        
 
     </style>
 
@@ -187,10 +188,9 @@
         <item name="failedTextColor">@color/white_100</item>
         <!-- Icons color -->
 
-        <item name="disabledIcon">@drawable/ic_done_all_black_10dp</item>
         <item name="successIcon">@drawable/ic_done_all_black_10dp</item>
 
-        <item name="disabledIconColor">@color/black</item>
+        <item name="disabledIconColor">@color/white</item>
         <item name="enabledIconColor">@color/white</item>
         <item name="loadingIconColor">@color/white</item>
         <item name="successIconColor">@color/white_100</item>
