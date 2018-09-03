@@ -39,7 +39,7 @@ public class yetenekListAdapter extends RecyclerView.Adapter<yetenekListAdapter.
         this.layoutInflater = LayoutInflater.from(context);
         this.mContext = context;
         this.yetenekListe = yetenekListe;
-        this.visibilityCheck = visibility;
+        this.visibilityCheck = visibility;//yetenek ekleme butonu profil pagede gösterilmeyecek editprofile pagede gösterilecek
     }
 
     @Override
@@ -116,7 +116,6 @@ public class yetenekListAdapter extends RecyclerView.Adapter<yetenekListAdapter.
 
         yetenekHash.clear();
         yetenekHash.put(String.valueOf(yetenekListPosition),recyclerYetenekList);
-
         notifyItemRemoved(yetenekListPosition);
 
 

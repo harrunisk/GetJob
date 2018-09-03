@@ -158,16 +158,16 @@ public class EditProfile extends AppCompatActivity implements ProfileInterfaces,
             recyclerYetenekList = mAllModelsList.getMyetenekListModel();
 
         /*  Listeler Boş değilse adapter çağırılsın boşsa gerek yok .. */
-            if (egitimListe.size() > 0) {
-                setRecylerEgitim(egitimListe);
-            }
-            if (deneyimList.size() > 0) {
-                setRecylerDeneyim(deneyimList);
-            }
-            if (recyclerYetenekList.size() > 0) {
+            // if (egitimListe.size() > 0) {
+            setRecylerEgitim(egitimListe);
+            // }
+            //if (deneyimList.size() > 0) {
+            setRecylerDeneyim(deneyimList);
+            //  }
+            //  if (recyclerYetenekList.size() > 0) {
 
-                setRecylerYetenek(recyclerYetenekList);
-            }
+            setRecylerYetenek(recyclerYetenekList);
+            //   }
 
         } else
             Log.d(TAG, "initFromDatabaseItem: ALLMODELLİST NULL");
@@ -523,337 +523,349 @@ public class EditProfile extends AppCompatActivity implements ProfileInterfaces,
 
     private void setRecylerYetenek(final ArrayList<yetenekModel> _recyclerYetenekList) {
         Log.d(TAG, "setRecylerYetenek: ");
-        myetenekListAdapter = new yetenekListAdapter(this, _recyclerYetenekList, false);
+        if (!_recyclerYetenekList.isEmpty()) {
+            recyclerViewYetenek.setVisibility(View.VISIBLE);
+            empty_message2.setVisibility(View.INVISIBLE);
+            myetenekListAdapter = new yetenekListAdapter(this, _recyclerYetenekList, false);
 
-        recyclerViewYetenek.setAdapter(myetenekListAdapter);
+            recyclerViewYetenek.setAdapter(myetenekListAdapter);
 
 
-        if (myetenekListAdapter.getItemCount() == 0) {
+//        if (myetenekListAdapter.getItemCount() == 0) {
+//
+//            Log.d(TAG, "setRecylerYetenek:getItemCount() " + myetenekListAdapter.getItemCount());
+//            recyclerViewYetenek.setVisibility(View.GONE);
+//            empty_message2.setVisibility(View.VISIBLE);
+//
+//        }
 
-            Log.d(TAG, "setRecylerYetenek:getItemCount() " + myetenekListAdapter.getItemCount());
+
+            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
+            linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerViewYetenek.setLayoutManager(linearLayoutManager2);
+
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+            // Drawable verticalDivider =
+//        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.divider));
+            // dividerItemDecoration.getItemOffsets(new RecyclerView.ItemDecoration(o));
+            recyclerViewYetenek.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewYetenek.setHasFixedSize(true);
+            recyclerViewYetenek.addItemDecoration(dividerItemDecoration);
+
+            //Liste Öğesi Sağa kaydırıldıgında Delete İşlemini gerçekleştirecek.
+
+            ItemTouchHelper.SimpleCallback swipeYetenekList = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                    return true;
+                }
+
+
+                @Override
+                public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                    if (viewHolder != null) {
+                        final View yetenekForeground = ((yetenekListAdapter.MyViewHolder) viewHolder).yetenekForeground;
+
+                        getDefaultUIUtil().onSelected(yetenekForeground);
+                    }
+                }
+
+                @Override
+                public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                    final View yetenekForeground = ((yetenekListAdapter.MyViewHolder) viewHolder).yetenekForeground;
+
+                    getDefaultUIUtil().onDrawOver(c, recyclerView, yetenekForeground, dX, dY, actionState, isCurrentlyActive);
+
+                    //   super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+
+                @Override
+                public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                    final View yetenekForeground = ((yetenekListAdapter.MyViewHolder) viewHolder).yetenekForeground;
+
+                    getDefaultUIUtil().onDraw(c, recyclerView, yetenekForeground, dX, dY, actionState, isCurrentlyActive);
+
+                    //  super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+
+                @Override
+                public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+
+                    final View yetenekForeground = ((yetenekListAdapter.MyViewHolder) viewHolder).yetenekForeground;
+
+                    getDefaultUIUtil().clearView(yetenekForeground);
+
+                }
+
+                @Override
+                public int convertToAbsoluteDirection(int flags, int layoutDirection) {
+                    return super.convertToAbsoluteDirection(flags, layoutDirection);
+                }
+
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                    Log.d(TAG, "onSwiped: ");
+
+
+                    int yetenekListPosition = viewHolder.getAdapterPosition();
+                    _recyclerYetenekList.remove(yetenekListPosition);
+                    myetenekListAdapter.removeItem(yetenekListPosition, _recyclerYetenekList);
+                    Alerter alertDialog = Permissions.showAlertdilaog(EditProfile.this, "Yetenek Silindi",
+                            "", 1000);
+
+                    alertDialog.show();
+                    profilPage.sendData.setMyetenekListModel(_recyclerYetenekList);
+
+
+                    checkYetenek = true;
+                    //  yetenekLayout.forceLayout();
+
+                }
+
+
+            };
+
+            ItemTouchHelper swipeYetenek = new ItemTouchHelper(swipeYetenekList);
+            swipeYetenek.attachToRecyclerView(recyclerViewYetenek);
+        } else {
+            // Log.d(TAG, "setRecylerYetenek:getItemCount() " + myetenekListAdapter.getItemCount());
             recyclerViewYetenek.setVisibility(View.GONE);
             empty_message2.setVisibility(View.VISIBLE);
 
         }
-        empty_message2.setVisibility(View.INVISIBLE);
-
-
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
-        linearLayoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerViewYetenek.setLayoutManager(linearLayoutManager2);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
-        // Drawable verticalDivider =
-//        dividerItemDecoration.setDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.divider));
-        // dividerItemDecoration.getItemOffsets(new RecyclerView.ItemDecoration(o));
-        recyclerViewYetenek.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewYetenek.setHasFixedSize(true);
-        recyclerViewYetenek.addItemDecoration(dividerItemDecoration);
-
-        //Liste Öğesi Sağa kaydırıldıgında Delete İşlemini gerçekleştirecek.
-
-        ItemTouchHelper.SimpleCallback swipeYetenekList = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return true;
-            }
-
-
-            @Override
-            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-                if (viewHolder != null) {
-                    final View yetenekForeground = ((yetenekListAdapter.MyViewHolder) viewHolder).yetenekForeground;
-
-                    getDefaultUIUtil().onSelected(yetenekForeground);
-                }
-            }
-
-            @Override
-            public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                final View yetenekForeground = ((yetenekListAdapter.MyViewHolder) viewHolder).yetenekForeground;
-
-                getDefaultUIUtil().onDrawOver(c, recyclerView, yetenekForeground, dX, dY, actionState, isCurrentlyActive);
-
-                //   super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            }
-
-            @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                final View yetenekForeground = ((yetenekListAdapter.MyViewHolder) viewHolder).yetenekForeground;
-
-                getDefaultUIUtil().onDraw(c, recyclerView, yetenekForeground, dX, dY, actionState, isCurrentlyActive);
-
-                //  super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            }
-
-            @Override
-            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-
-                final View yetenekForeground = ((yetenekListAdapter.MyViewHolder) viewHolder).yetenekForeground;
-
-                getDefaultUIUtil().clearView(yetenekForeground);
-
-            }
-
-            @Override
-            public int convertToAbsoluteDirection(int flags, int layoutDirection) {
-                return super.convertToAbsoluteDirection(flags, layoutDirection);
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                Log.d(TAG, "onSwiped: ");
-
-
-                int yetenekListPosition = viewHolder.getAdapterPosition();
-
-                _recyclerYetenekList.remove(yetenekListPosition);
-
-                myetenekListAdapter.removeItem(yetenekListPosition, _recyclerYetenekList);
-
-
-                Alerter alertDialog = Permissions.showAlertdilaog(EditProfile.this, "Yetenek Silindi",
-                        "", 1000);
-
-
-                alertDialog.show();
-                profilPage.sendData.setMyetenekListModel(_recyclerYetenekList);
-
-
-                checkYetenek = true;
-                //  yetenekLayout.forceLayout();
-
-            }
-
-
-        };
-
-        ItemTouchHelper swipeYetenek = new ItemTouchHelper(swipeYetenekList);
-        swipeYetenek.attachToRecyclerView(recyclerViewYetenek);
-
 
     }
 
 
     private void setRecylerDeneyim(final ArrayList<deneyimModel> _deneyimList) {
         Log.d(TAG, "setRecylerDeneyim: ");
+        if (!_deneyimList.isEmpty()) {
+            recyclerViewDeneyim.setVisibility(View.VISIBLE);
 
-        mdeneyimListAdapter = new deneyimListAdapter(this, _deneyimList, false);
+            empty_message.setVisibility(View.INVISIBLE);
+            mdeneyimListAdapter = new deneyimListAdapter(this, _deneyimList, false);
+            recyclerViewDeneyim.setAdapter(mdeneyimListAdapter);
+            //Liste Boş ise empty Mesaj Devreye girecek.
+//        if (mdeneyimListAdapter.getItemCount() == 0) {
+//
+//            recyclerViewDeneyim.setVisibility(View.GONE);
+//            empty_message.setVisibility(View.VISIBLE);
+//
+//        }
 
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerViewDeneyim.setLayoutManager(linearLayoutManager);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+            recyclerViewDeneyim.addItemDecoration(dividerItemDecoration);
+            recyclerViewDeneyim.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewDeneyim.setHasFixedSize(true);
 
-        recyclerViewDeneyim.setAdapter(mdeneyimListAdapter);
-        //Liste Boş ise empty Mesaj Devreye girecek.
-        if (mdeneyimListAdapter.getItemCount() == 0) {
-
-            recyclerViewDeneyim.setVisibility(View.GONE);
-            empty_message.setVisibility(View.VISIBLE);
-
-        }
-        empty_message.setVisibility(View.INVISIBLE);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerViewDeneyim.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
-        recyclerViewDeneyim.addItemDecoration(dividerItemDecoration);
-        recyclerViewDeneyim.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewDeneyim.setHasFixedSize(true);
-
-        ItemTouchHelper.SimpleCallback swipeDelete = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return true;
+            ItemTouchHelper.SimpleCallback swipeDelete = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
 
-            }
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                    return true;
 
-            @Override
-            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-                //super.onSelectedChanged(viewHolder, actionState);
 
-                if (viewHolder != null) {
+                }
+
+                @Override
+                public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                    //super.onSelectedChanged(viewHolder, actionState);
+
+                    if (viewHolder != null) {
+                        final View deneyimView_foreground = ((deneyimListAdapter.MyViewHolder) viewHolder).deneyimView_foreground;
+
+                        getDefaultUIUtil().onSelected(deneyimView_foreground);
+                    }
+
+                }
+
+                @Override
+                public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY,
+                                            int actionState, boolean isCurrentlyActive) {
                     final View deneyimView_foreground = ((deneyimListAdapter.MyViewHolder) viewHolder).deneyimView_foreground;
 
-                    getDefaultUIUtil().onSelected(deneyimView_foreground);
+                    getDefaultUIUtil().onDrawOver(c, recyclerView, deneyimView_foreground, dX, dY, actionState, isCurrentlyActive);
+
                 }
 
-            }
+                @Override
+                public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                    final View deneyimView_foreground = ((deneyimListAdapter.MyViewHolder) viewHolder).deneyimView_foreground;
 
-            @Override
-            public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY,
-                                        int actionState, boolean isCurrentlyActive) {
-                final View deneyimView_foreground = ((deneyimListAdapter.MyViewHolder) viewHolder).deneyimView_foreground;
+                    getDefaultUIUtil().clearView(deneyimView_foreground);
 
-                getDefaultUIUtil().onDrawOver(c, recyclerView, deneyimView_foreground, dX, dY, actionState, isCurrentlyActive);
+                }
 
-            }
+                @Override
+                public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                    //super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
 
-            @Override
-            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                final View deneyimView_foreground = ((deneyimListAdapter.MyViewHolder) viewHolder).deneyimView_foreground;
+                    final View deleteView = ((deneyimListAdapter.MyViewHolder) viewHolder).deneyimView_foreground;
 
-                getDefaultUIUtil().clearView(deneyimView_foreground);
-
-            }
-
-            @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                //super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-
-                final View deleteView = ((deneyimListAdapter.MyViewHolder) viewHolder).deneyimView_foreground;
-
-                getDefaultUIUtil().onDraw(c, recyclerView, deleteView, dX, dY, actionState, isCurrentlyActive);
+                    getDefaultUIUtil().onDraw(c, recyclerView, deleteView, dX, dY, actionState, isCurrentlyActive);
 
 
-            }
+                }
 
 
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                Log.d(TAG, "onSwiped: ");
-                int deneyimListPosition = viewHolder.getAdapterPosition();
-                //Log.d(TAG, "onSwiped: SİLİNMEDEN ÖNCE " + _deneyimList + "\t" + "SİLİNECEK POZİYON " + position);
-                if (viewHolder instanceof deneyimListAdapter.MyViewHolder) {
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                    Log.d(TAG, "onSwiped: ");
+                    int deneyimListPosition = viewHolder.getAdapterPosition();
+                    //Log.d(TAG, "onSwiped: SİLİNMEDEN ÖNCE " + _deneyimList + "\t" + "SİLİNECEK POZİYON " + position);
+                    if (viewHolder instanceof deneyimListAdapter.MyViewHolder) {
 
-                    //Kullanıcı Sağa kaydırdığında
-                    /**
-                     * 1 ->Pozisyondaki itemi listeden Silmen lazım
-                     * 2->Hashmapi temizlemen lazım Ardından burda yeni oluşan listeyi gönderip hashlenecek
-                     * 3->deneyimListAdaptere itemin kaldırıldığını söylemen laızm notifyItemRemoveds
-                     *
-                     *
-                     *
-                     */
+                        //Kullanıcı Sağa kaydırdığında
+                        /**
+                         * 1 ->Pozisyondaki itemi listeden Silmen lazım
+                         * 2->Hashmapi temizlemen lazım Ardından burda yeni oluşan listeyi gönderip hashlenecek
+                         * 3->deneyimListAdaptere itemin kaldırıldığını söylemen laızm notifyItemRemoveds
+                         *
+                         *
+                         *
+                         */
 
-                    _deneyimList.remove(deneyimListPosition);
-                    // Log.d(TAG, "onSwiped: POZİYON SİLİNDİ");
-                    mdeneyimListAdapter.removeItem(deneyimListPosition, _deneyimList);
-                    // Log.d(TAG, "onSwiped:SİLİNDİKTEN SONRA  " + _deneyimList + position);
+                        _deneyimList.remove(deneyimListPosition);
+                        // Log.d(TAG, "onSwiped: POZİYON SİLİNDİ");
+                        mdeneyimListAdapter.removeItem(deneyimListPosition, _deneyimList);
+                        // Log.d(TAG, "onSwiped:SİLİNDİKTEN SONRA  " + _deneyimList + position);
 //                    Toast.makeText(EditProfile.this, "İtem Silindi " + denemeList.get(position), Toast.LENGTH_LONG).show();
-                    // mdeneyimListAdapter.notifyItemRemoved(position);
-                    // mdeneyimListAdapter.notifyItemRangeChanged(0, _deneyimList.size());
-                    Alerter alertDialog = Permissions.showAlertdilaog(EditProfile.this, "Deneyim Silindi",
-                            "", 1000);
+                        // mdeneyimListAdapter.notifyItemRemoved(position);
+                        // mdeneyimListAdapter.notifyItemRangeChanged(0, _deneyimList.size());
+                        Alerter alertDialog = Permissions.showAlertdilaog(EditProfile.this, "Deneyim Silindi",
+                                "", 1000);
 
 
-                    alertDialog.show();
-                    profilPage.sendData.setMdeneyimListModel(_deneyimList); //Direk güncellemesi için buna eşitliyorum.
-                    checkExperience = true;
-                    //  Log.d(TAG, "onSwiped: NOTİFYITEMRANGECHANGE" + _deneyimList + "\t" + _deneyimList.size());
+                        alertDialog.show();
+                        profilPage.sendData.setMdeneyimListModel(_deneyimList); //Direk güncellemesi için buna eşitliyorum.
+                        checkExperience = true;
+                        //  Log.d(TAG, "onSwiped: NOTİFYITEMRANGECHANGE" + _deneyimList + "\t" + _deneyimList.size());
+                    }
+
+
+                }
+
+                @Override
+                public int convertToAbsoluteDirection(int flags, int layoutDirection) {
+                    return super.convertToAbsoluteDirection(flags, layoutDirection);
                 }
 
 
-            }
-
-            @Override
-            public int convertToAbsoluteDirection(int flags, int layoutDirection) {
-                return super.convertToAbsoluteDirection(flags, layoutDirection);
-            }
-
-
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeDelete);
-        itemTouchHelper.attachToRecyclerView(recyclerViewDeneyim);
+            };
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeDelete);
+            itemTouchHelper.attachToRecyclerView(recyclerViewDeneyim);
+        } else {
+            Log.d(TAG, "setRecylerDeneyim: BOŞ");
+            recyclerViewDeneyim.setVisibility(View.GONE);
+            empty_message.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setRecylerEgitim(final ArrayList<egitimListModel> _egitimListe) {
         Log.d(TAG, "setRecylerEgitim: DOlduruluyor" + _egitimListe);
+        if (!_egitimListe.isEmpty()) {
+            recyclerViewEgitim.setVisibility(View.VISIBLE);
+            empty_message1.setVisibility(View.INVISIBLE);
+            megitimListAdapter = new egitimListAdapter(this, _egitimListe, false);
+            recyclerViewEgitim.setAdapter(megitimListAdapter);
 
-        megitimListAdapter = new egitimListAdapter(this, _egitimListe, false);
-        recyclerViewEgitim.setAdapter(megitimListAdapter);
+//        if (megitimListAdapter.getItemCount() == 0) {
+//
+//            Log.d(TAG, "setRecylerEgitim: LİSTEBOŞ ");
+//            recyclerViewEgitim.setVisibility(View.GONE);
+//            empty_message1.setVisibility(View.VISIBLE);
+//
+//        }
 
-        if (megitimListAdapter.getItemCount() == 0) {
 
+            LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
+            linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
+            recyclerViewEgitim.setLayoutManager(linearLayoutManager1);
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
+            recyclerViewEgitim.addItemDecoration(dividerItemDecoration);
+            recyclerViewEgitim.setItemAnimator(new DefaultItemAnimator());
+            recyclerViewEgitim.setHasFixedSize(true);
+
+            ItemTouchHelper.SimpleCallback swipeEgitimList = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                    return true;
+                }
+
+                @Override
+                public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+                    if (viewHolder != null) {
+                        final View egitim_foreground = ((egitimListAdapter.ViewHolder) viewHolder).egitim_foreground;
+
+                        getDefaultUIUtil().onSelected(egitim_foreground);
+                    }
+                }
+
+                @Override
+                public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                    final View egitim_foreground = ((egitimListAdapter.ViewHolder) viewHolder).egitim_foreground;
+
+                    getDefaultUIUtil().onDrawOver(c, recyclerView, egitim_foreground, dX, dY, actionState, isCurrentlyActive);
+
+                    //   super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+
+                @Override
+                public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                    final View egitim_foreground = ((egitimListAdapter.ViewHolder) viewHolder).egitim_foreground;
+
+                    getDefaultUIUtil().onDraw(c, recyclerView, egitim_foreground, dX, dY, actionState, isCurrentlyActive);
+
+                    //  super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+
+                @Override
+                public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+
+                    final View egitim_foreground = ((egitimListAdapter.ViewHolder) viewHolder).egitim_foreground;
+
+                    getDefaultUIUtil().clearView(egitim_foreground);
+
+                }
+
+                @Override
+                public int convertToAbsoluteDirection(int flags, int layoutDirection) {
+                    return super.convertToAbsoluteDirection(flags, layoutDirection);
+                }
+
+
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+                    Log.d(TAG, "onSwiped: ");
+                    int egitimListposition = viewHolder.getAdapterPosition();
+                    _egitimListe.remove(egitimListposition);
+
+                    megitimListAdapter.removeItem(egitimListposition, _egitimListe);
+
+                    Alerter alertDialog = Permissions.showAlertdilaog(EditProfile.this, "Eğitim Bilgisi Silindi.",
+                            "", 1000);
+
+
+                    alertDialog.show();
+                    profilPage.sendData.setMegitimListModel(_egitimListe);
+                    checkEgitim = true; // Listede Değişiklik Yapıldı
+
+
+                }
+            };
+            ItemTouchHelper egitimTouchHelper = new ItemTouchHelper(swipeEgitimList);
+            egitimTouchHelper.attachToRecyclerView(recyclerViewEgitim);
+
+        } else {
             Log.d(TAG, "setRecylerEgitim: LİSTEBOŞ ");
             recyclerViewEgitim.setVisibility(View.GONE);
             empty_message1.setVisibility(View.VISIBLE);
-
         }
-
-        empty_message1.setVisibility(View.INVISIBLE);
-
-        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(this);
-        linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerViewEgitim.setLayoutManager(linearLayoutManager1);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL);
-        recyclerViewEgitim.addItemDecoration(dividerItemDecoration);
-        recyclerViewEgitim.setItemAnimator(new DefaultItemAnimator());
-        recyclerViewEgitim.setHasFixedSize(true);
-
-        ItemTouchHelper.SimpleCallback swipeEgitimList = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return true;
-            }
-
-            @Override
-            public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-                if (viewHolder != null) {
-                    final View egitim_foreground = ((egitimListAdapter.ViewHolder) viewHolder).egitim_foreground;
-
-                    getDefaultUIUtil().onSelected(egitim_foreground);
-                }
-            }
-
-            @Override
-            public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                final View egitim_foreground = ((egitimListAdapter.ViewHolder) viewHolder).egitim_foreground;
-
-                getDefaultUIUtil().onDrawOver(c, recyclerView, egitim_foreground, dX, dY, actionState, isCurrentlyActive);
-
-                //   super.onChildDrawOver(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            }
-
-            @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                final View egitim_foreground = ((egitimListAdapter.ViewHolder) viewHolder).egitim_foreground;
-
-                getDefaultUIUtil().onDraw(c, recyclerView, egitim_foreground, dX, dY, actionState, isCurrentlyActive);
-
-                //  super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            }
-
-            @Override
-            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-
-                final View egitim_foreground = ((egitimListAdapter.ViewHolder) viewHolder).egitim_foreground;
-
-                getDefaultUIUtil().clearView(egitim_foreground);
-
-            }
-
-            @Override
-            public int convertToAbsoluteDirection(int flags, int layoutDirection) {
-                return super.convertToAbsoluteDirection(flags, layoutDirection);
-            }
-
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-
-                Log.d(TAG, "onSwiped: ");
-                int egitimListposition = viewHolder.getAdapterPosition();
-                _egitimListe.remove(egitimListposition);
-
-                megitimListAdapter.removeItem(egitimListposition, _egitimListe);
-
-                Alerter alertDialog = Permissions.showAlertdilaog(EditProfile.this, "Eğitim Bilgisi Silindi.",
-                        "", 1000);
-
-
-                alertDialog.show();
-                profilPage.sendData.setMegitimListModel(_egitimListe);
-                checkEgitim = true; // Listede Değişiklik Yapıldı
-
-
-            }
-        };
-        ItemTouchHelper egitimTouchHelper = new ItemTouchHelper(swipeEgitimList);
-        egitimTouchHelper.attachToRecyclerView(recyclerViewEgitim);
-
-
     }
 
 

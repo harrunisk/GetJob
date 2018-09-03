@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/delete_icon"
-            android:text="Delete"
+            android:text="Sil"
             android:textColor="#fff"
             android:textSize="13dp" />
 

@@ -265,7 +265,6 @@ public class FirebaseMethods {
      */
 
     public void addExperienceList(HashMap<String, ArrayList<deneyimModel>> deneyimHash, boolean checkChanges) {
-
         if (checkChanges) {
             Log.d(TAG, "deneyimListFirebase: İcerik Oluşturuluyor.");
 

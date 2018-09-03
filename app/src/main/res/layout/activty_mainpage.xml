@@ -38,18 +38,18 @@
                     android:orientation="vertical">
 
                     <android.support.v7.widget.Toolbar
-                        android:id="@+id/toolbar"
+                        android:id="@+id/userIntro_toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="?android:attr/actionBarSize"
                         app:theme="@style/TransparanToolbar">
 
-                        <ImageView
-                            android:id="@+id/back"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="start"
-                            android:src="@drawable/ic_arrow_back_black_24dp"
-                            android:tint="#FFFFFF" />
+                        <!--<ImageView-->
+                            <!--android:id="@+id/back"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="match_parent"-->
+                            <!--android:gravity="start"-->
+                            <!--android:src="@drawable/ic_arrow_back_black_24dp"-->
+                            <!--android:tint="#FFFFFF" />-->
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -61,12 +61,14 @@
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:layout_gravity="end"
-                            android:layout_marginEnd="5dp"
-                            android:src="@drawable/man" />
+                        <!--<ImageView-->
+                            <!--android:id="@+id/settings"-->
+                            <!--android:layout_width="30dp"-->
+                            <!--android:layout_height="30dp"-->
+                            <!--android:layout_gravity="end"-->
+                            <!--android:tint="@color/white"-->
+                            <!--android:layout_marginEnd="5dp"-->
+                            <!--android:src="@drawable/ic_settings_black_24dp" />-->
 
 
                     </android.support.v7.widget.Toolbar>

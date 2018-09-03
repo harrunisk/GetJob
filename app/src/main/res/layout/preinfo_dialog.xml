@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:focusableInTouchMode="true">
+
+    <RelativeLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/yellowback"
+        android:backgroundTint="@color/white"
+        android:elevation="10dp"
+        android:orientation="vertical"
+
+        >
+
+        <RelativeLayout
+            android:id="@+id/spinnerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp">
+
+            <Spinner
+                android:id="@+id/savedPreInfoSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:scrollbars="horizontal"
+                android:spinnerMode="dropdown"
+                android:textAlignment="center">
+
+            </Spinner>
+
+            <Switch
+                android:id="@+id/saveSwitch"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/savedPreInfoSpinner"
+                android:padding="10dp"
+                android:fontFamily="casual"
+                android:textStyle="italic"
+                android:textColor="@color/SeaGreen"
+                android:text="İşlem Tamamlandığında Bu Ön Yazımı Kaydet"
+                android:theme="@style/mySwitchStyle"
+                />
+
+            <EditText
+                android:id="@+id/preInfoTag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/saveSwitch"
+                android:fontFamily="casual"
+                android:hint="Ön Yazı Başlığı Girin "
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:theme="@style/MyEditText"
+                android:visibility="gone" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/SeaGreen"
+                android:layout_below="@+id/preInfoTag"
+                android:background="@drawable/dash_line"
+                android:layerType="software">
+
+
+            </View>
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/infoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/spinnerLayout"
+            android:layout_marginBottom="55dp">
+
+
+            <EditText
+                android:id="@+id/infoText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:fontFamily="casual"
+                android:gravity="start"
+                android:hint="@string/preinfohint"
+                android:overScrollMode="ifContentScrolls"
+                android:padding="10dp"
+                android:scrollbarStyle="insideInset"
+                android:scrollbars="vertical"
+                android:inputType="textMultiLine"
+                android:textColor="@color/Tomato"
+                android:textColorHint="@color/mycolor"
+                android:textSize="15sp"
+                android:theme="@style/MyEditText" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/doneBtn"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/SeaGreen"
+                android:fontFamily="serif-monospace"
+                android:text="TAMAMLA"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/yellowback"
+        android:backgroundTint="@color/SeaGreen"
+        android:elevation="10dp"
+        android:padding="10dp"
+        app:layout_anchor="@+id/contentLayout"
+        app:layout_anchorGravity="top|center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="casual"
+            android:text="ÖN YAZI "
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

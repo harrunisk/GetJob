@@ -23,8 +23,7 @@ public class UserLocationInfo {
     public int circleArea;
     public static UserLocationInfo mUserLocationInfo;
 
-    public UserLocationInfo(){
-     //   super();
+    private UserLocationInfo(){
     }
 
 

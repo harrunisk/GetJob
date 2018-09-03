@@ -98,7 +98,7 @@ public class profilPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_profil_frag);
+        setContentView(R.layout.user_profil_frag2);
         gatherViews();
         this.init();
         firebaseInit();

@@ -11,7 +11,7 @@ import com.tapadoo.alerter.Alerter;
 
 
 //Kullanılacak Bütün izinleri bu sınıftan alınacak
-public class Permissions {
+public  class Permissions {
     public static final String TAG = "Permission";
 
     public static final String[] PERMISSIONS = {

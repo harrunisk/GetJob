@@ -12,7 +12,10 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -42,6 +45,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -92,18 +96,20 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
     private boolean isOpened;
 
     //SlidingPanel Widgets
-    private ImageView companyLogo1;
+    private ImageView companyLogo1, settings;
     private TextView companyname, sector, tvbasvuru_count, tvjobname, publishdate, tvdistance;
-
-
     //Bu ıd bana heryerde lazım olacak oyuzden static yaptım .
     public static String userID;
+    public FirebaseUser currentUser;
+    private Toolbar actionToolbar;
+    private FirebaseAuth mAuth;
+  //  private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activty_mainpage);
-
+        mAuth = FirebaseAuth.getInstance();
         loc = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         if (Permissions.checkPermissionArray(this, Permissions.MapPermission)) {
@@ -115,6 +121,41 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
             Log.d(TAG, "onCreate: İzinler Verilmemiş ");
             Permissions.myrequestPermission(this, Permissions.MapPermission);
 
+        }
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_login, menu);
+        Log.d(TAG, "onCreateOptionsMenu: ");
+        return super.onCreateOptionsMenu(menu);
+
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: ");
+        switch (item.getItemId()) {
+            case R.id.action_sign_out:
+                signOut();
+                break;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void signOut() {
+        Log.d(TAG, "signOut: ");
+        if (!currentUser.isAnonymous() && currentUser != null) {
+            Log.d(TAG, "signOut:Kullanıcı Çıkış Yaptı ");
+            mAuth.signOut();
+            //finish();
         }
 
 
@@ -273,12 +314,59 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
         tvjobname = findViewById(R.id.tvjobname);
         publishdate = findViewById(R.id.publishdate);
         tvdistance = findViewById(R.id.tvdistance);
+        actionToolbar = findViewById(R.id.userIntro_toolbar);
+        // settings = findViewById(R.id.settings);
         init();
     }
 
-    private void init() {
+    //    @Override
+//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//    }
+    public void onStop() {
+        super.onStop();
+        if (mAuthStateListener != null) {
+            Log.d(TAG, "onStop:(mAuthStateListener != null ");
+            mAuth.removeAuthStateListener(mAuthStateListener);
 
-        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }
+    }
+
+    /*
+   OnCreate den Sonra On Start methodu calısacak Buradada kullanıcı giriş yapıp yapmadıgı belırlenecek .
+     */
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+        //  mAuth.addAuthStateListener(mAuthStateListener);
+
+    }
+
+    private FirebaseAuth.AuthStateListener mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+        @Override
+        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            currentUser = firebaseAuth.getCurrentUser();
+            if (currentUser != null) {
+                // System.out.println("User logged in");
+                userID = currentUser.getUid();
+                Log.d(TAG, "onAuthStateChanged:User logged in ");
+            } else {
+                //System.out.println("User not logged in");
+                finish();
+                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                Log.d(TAG, "onAuthStateChanged:User not logged in ");
+
+            }
+        }
+    };
+
+    private void init() {
+        //   Toolbar toolbar=findViewById(R.id.userIntro_toolbar);
+        // setSupportActionBar(toolbar);
+        setSupportActionBar(actionToolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //    currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mAuth.addAuthStateListener(mAuthStateListener);
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         new DeviceLocation(this, this).getDeviceLocation();
         suggestionsKeys = this;
@@ -292,6 +380,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
 
 
     }
+
 
     private void slidingPanelInit() {
         Log.d(TAG, "slidingPanelInit: ");
