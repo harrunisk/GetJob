@@ -39,25 +39,25 @@ import java.util.ArrayList;
 public class StepTwo extends Fragment implements Step, View.OnClickListener, TextWatcher, View.OnFocusChangeListener, TextView.OnEditorActionListener {
 
     private static final String TAG = "StepTwo";
-    Button ilkbtn, lisebtn, unibtn, digerbtn, tecrubesizBtn, tecrubeliBtn,
+    private Button ilkbtn, lisebtn, unibtn, digerbtn, tecrubesizBtn, tecrubeliBtn,
             tecrubeFarketmezBtn, stajBtn, partTimeBtn, fullTimeBtn, freeTimeBtn,
             ehliyetVarbtn, ehliyetFarketmezBtn, bayBtn, bayanBtn,
             cinsiyetFarketmezBtn, askerlikTecilliBtn, askerlikYapildiBtn, askerlikFarketmezBtn;
-    EditText tecrubeText, ehliyetTuru;
-    RelativeLayout egitimSeviyesiFore, egitimSeviyesiBack, tecrubeForeground, tecrubeBackground,
+    private EditText tecrubeText, ehliyetTuru;
+    private RelativeLayout egitimSeviyesiFore, egitimSeviyesiBack, tecrubeForeground, tecrubeBackground,
             calismaSekliFore, calismaSekliBack, ekstraFore, ekstraBack;
-    boolean textChange = false;
+    private boolean textChange = false;
 
-    String tecrube;
-    LinearLayout askerlikLayout;
-    NestedScrollView nestedScroll_step2;
-    ArrayList<View> clickedEgitimList = new ArrayList<>(1);
-    ArrayList<View> clickedTecrubeList = new ArrayList<>(1);
-    ArrayList<View> clickedCalismaList = new ArrayList<>(1);
-    ArrayList<View> clickedehliyetList = new ArrayList<>(1);
-    ArrayList<View> clickedCinsiyetList = new ArrayList<>(1);
-    ArrayList<View> clickedAskerlikList = new ArrayList<>(1);
-    ArrayList[] arrayLists =
+    private String tecrube;
+    private LinearLayout askerlikLayout;
+    private NestedScrollView nestedScroll_step2;
+    private ArrayList<View> clickedEgitimList = new ArrayList<>(1);
+    private ArrayList<View> clickedTecrubeList = new ArrayList<>(1);
+    private ArrayList<View> clickedCalismaList = new ArrayList<>(1);
+    private ArrayList<View> clickedehliyetList = new ArrayList<>(1);
+    private ArrayList<View> clickedCinsiyetList = new ArrayList<>(1);
+    private ArrayList<View> clickedAskerlikList = new ArrayList<>(1);
+    private ArrayList[] arrayLists =
             {
                     clickedCalismaList, clickedAskerlikList, clickedTecrubeList, clickedCinsiyetList,
                     clickedEgitimList, clickedehliyetList
@@ -219,7 +219,7 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
         } else if (empty_arrayList == clickedAskerlikList) {
             Log.d(TAG, "errorAnim:clickedAskerlikList ");
             ekstraFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
-           // ekstraFore.requestFocus();
+            // ekstraFore.requestFocus();
         } else if (empty_arrayList == clickedCinsiyetList) {
             Log.d(TAG, "errorAnim:clickedCinsiyetList ");
             ekstraFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
@@ -227,7 +227,7 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
         } else if (empty_arrayList == clickedCalismaList) {
             Log.d(TAG, "errorAnim:clickedCalismaList ");
             calismaSekliFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
-          //  calismaSekliFore.requestFocus();
+            //  calismaSekliFore.requestFocus();
         } else if (empty_arrayList == clickedEgitimList) {
             Log.d(TAG, "errorAnim:clickedEgitimList ");
             egitimSeviyesiFore.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.error_anim));
@@ -381,9 +381,8 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
                 ehliyetVarbtn.setActivated(true);
                 ehliyetTuru.setVisibility(View.VISIBLE);
                 ehliyetTuru.setActivated(true);
+                nestedSmoothScroll();
 
-                nestedScroll_step2.smoothScrollBy(0,
-                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
                 clearOtherActiveButton(clickedehliyetList, ehliyetVarbtn);
                 clickedehliyetList.add(ehliyetVarbtn);
                 break;
@@ -391,9 +390,8 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
                 Log.d(TAG, "onClick: ");
                 ehliyetFarketmezBtn.setActivated(true);
                 ehliyetTuru.setVisibility(View.GONE);
+                nestedSmoothScroll();
 
-                nestedScroll_step2.smoothScrollBy(0,
-                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
                 clearOtherActiveButton(clickedehliyetList, ehliyetFarketmezBtn);
                 clickedehliyetList.add(ehliyetFarketmezBtn);
                 break;
@@ -412,8 +410,8 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
 
                 askerlikLayout.setVisibility(View.VISIBLE);
 
-                nestedScroll_step2.smoothScrollBy(0,
-                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
+                nestedSmoothScroll();
+
                 clearOtherActiveButton(clickedCinsiyetList, bayBtn);
                 clickedCinsiyetList.add(bayBtn);
                 break;
@@ -423,8 +421,8 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
 
                 askerlikLayout.setVisibility(View.VISIBLE);
 
-                nestedScroll_step2.smoothScrollBy(0,
-                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
+                nestedSmoothScroll();
+
 
                 clearOtherActiveButton(clickedCinsiyetList, cinsiyetFarketmezBtn);
                 clickedCinsiyetList.add(cinsiyetFarketmezBtn);
@@ -464,13 +462,19 @@ public class StepTwo extends Fragment implements Step, View.OnClickListener, Tex
             case R.id.ekstraFore:
                 Log.d(TAG, "onClick: ");
                 checkVisibilityLayout(ekstraBack);
-                nestedScroll_step2.smoothScrollBy(0,
-                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
+                nestedSmoothScroll();
+
                 break;
         }
 
 
     }
+
+    private void nestedSmoothScroll() {
+        nestedScroll_step2.smoothScrollBy(0,
+                nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
+    }
+
 
     /**
      * Bu methodda parametre olarak gelen layouta bir animasyon ekliypruz ve visibility ayarlarını yapıyoruz.

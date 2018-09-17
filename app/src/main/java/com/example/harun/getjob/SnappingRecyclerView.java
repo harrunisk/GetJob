@@ -1,4 +1,4 @@
-package com.example.harun.getjob.viewpagercards;
+package com.example.harun.getjob;
 
 import android.content.Context;
 import android.os.Build;

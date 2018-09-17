@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:id="@+id/job_searchBar"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/white"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/searchLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/myblue"
+            android:background="@drawable/round"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:id="@+id/search_jobLayout"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="1dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/search_job"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/search" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/clearLayout"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="1dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="1dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/clearImage"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/circleback"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_close_black_10dp" />
+
+            </LinearLayout>
+
+            <AutoCompleteTextView
+                android:id="@+id/input_searchJob"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/search_jobLayout"
+                android:layout_toStartOf="@+id/clearLayout"
+                android:background="@null"
+                android:fontFamily="serif-monospace"
+                android:gravity="center"
+                android:hint="Meslek Arayın"
+                android:imeOptions="actionSearch"
+                android:inputType="textPostalAddress"
+                android:padding="3dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="15sp"
+
+                />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</android.support.design.widget.AppBarLayout>

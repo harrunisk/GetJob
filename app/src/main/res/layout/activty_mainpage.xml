@@ -115,7 +115,7 @@
 
                         -->
 
-                        <com.example.harun.getjob.viewpagercards.SnappingRecyclerView
+                        <com.example.harun.getjob.SnappingRecyclerView
                             android:id="@+id/recommendedList"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                             android:padding="5dp"
                             app:reverseLayout="true">
 
-                        </com.example.harun.getjob.viewpagercards.SnappingRecyclerView>
+                        </com.example.harun.getjob.SnappingRecyclerView>
 
                         <RelativeLayout
                             android:id="@+id/emptyRecommendList"

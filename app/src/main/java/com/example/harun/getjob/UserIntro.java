@@ -40,7 +40,6 @@ import com.example.harun.getjob.JobSearch.JobUtils.UserLocationInfo;
 import com.example.harun.getjob.MyAdverts.MyAdvertsActivty;
 import com.example.harun.getjob.Profile.Permissions;
 import com.example.harun.getjob.Profile.profilPage;
-import com.example.harun.getjob.viewpagercards.SnappingRecyclerView;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -674,7 +673,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
         //  Log.d(TAG, "checkList: CAGRILDI ");
         callbackResultList2.addAll(fromCompanyJobList);
         for (NearJobAdvertModel asJob : fromCompanyJobList) {
-            for (Iterator<NearJobAdvertModel> iterator = fromJobSector.iterator(); iterator.hasNext(); ) {
+            for (Iterator<NearJobAdvertModel>iterator = fromJobSector.iterator(); iterator.hasNext(); ) {
                 NearJobAdvertModel model = iterator.next();
                 if (asJob.getJobAdvertModel2().getCompanyJob().equals(model.getJobAdvertModel2().getCompanyJob())) {
                     iterator.remove();

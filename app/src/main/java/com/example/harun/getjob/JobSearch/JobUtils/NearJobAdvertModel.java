@@ -213,6 +213,8 @@ public class NearJobAdvertModel extends JobAdvertModel2 implements ClusterItem, 
         return null;
     }
 
+
+
     @Override
     public String toString() {
         return "NearJobAdvertModel{" +

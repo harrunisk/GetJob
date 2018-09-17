@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/filterAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/White"
+            android:fitsSystemWindows="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/filterText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="Filtrele"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignTop="@+id/filterText"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/filterText"
+                    android:background="@drawable/filter" />
+
+                <TextView
+                    android:id="@+id/choosenSector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="SEKTÖR İSMİ"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/choosenJob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/choosenSector"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+
+                    android:text="MESLEK İSMİ"
+                    android:textColor="@color/place_autocomplete_prediction_secondary_text"
+                    android:textSize="13dp" />
+
+
+            </RelativeLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:id="@+id/filterDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/place_autocomplete_search_hint"
+            android:layout_below="@id/filterAppBar"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:text="Tüm İlanlar ->Meslek İsmi İlan Sayısı -->>  " />
+            <TextView
+                android:id="@+id/advertCount"
+                android:layout_width="wrap_content"
+                android:layout_toEndOf="@+id/tv4"
+                android:text="asdsad"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+            />
+            <ViewSwitcher
+
+                android:id="@+id/filterViewSwitch"
+                android:layout_width="match_parent"
+                android:layout_marginTop="2dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv4">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Filtre Uygulanmamış"
+                    android:textSize="15sp" />
+
+
+                <com.example.harun.getjob.TagLayout
+                    android:id="@+id/filterContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
+
+            </ViewSwitcher>
+
+
+        </RelativeLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:id="@+id/nestedScroll_step3"
+            android:layout_height="match_parent"
+            android:isScrollContainer="true"
+            android:layout_below="@+id/filterDetails"
+           >
+
+            <include layout="@layout/add_jobadvert_step2_content">
+
+            </include>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

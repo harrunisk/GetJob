@@ -36,7 +36,7 @@
                 android:textSize="13sp" />
 
 
-            <com.example.harun.getjob.viewpagercards.TagLayout
+            <com.example.harun.getjob.TagLayout
                 android:id="@+id/imkanlarcontent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
