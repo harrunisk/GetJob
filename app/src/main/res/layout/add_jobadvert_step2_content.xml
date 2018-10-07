@@ -16,7 +16,7 @@
         <RelativeLayout
             android:id="@+id/egitimSeviyesiFore"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:background="@drawable/ripplebackgorund"
             android:backgroundTintMode="src_in"
             android:clickable="true"
@@ -96,7 +96,7 @@
         <RelativeLayout
             android:id="@+id/tecrubeForeground"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:background="@drawable/ripplebackgorund"
             android:clickable="true"
             android:focusable="true">
@@ -161,7 +161,7 @@
         <RelativeLayout
             android:id="@+id/calismaSekliFore"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:background="@drawable/ripplebackgorund"
             android:clickable="true"
             android:focusable="true">
@@ -227,7 +227,7 @@
         <RelativeLayout
             android:id="@+id/ekstraFore"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="70dp"
             android:background="@drawable/ripplebackgorund"
             android:clickable="true"
             android:focusable="true">

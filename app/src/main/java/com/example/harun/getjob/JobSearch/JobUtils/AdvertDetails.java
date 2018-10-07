@@ -28,7 +28,7 @@ import com.example.harun.getjob.AddJobAdvert.ApplyAdvertModel;
 import com.example.harun.getjob.AddJobAdvert.HelperStaticMethods;
 import com.example.harun.getjob.R;
 import com.example.harun.getjob.UserIntro;
-import com.example.harun.getjob.viewpagercards.TagLayout;
+import com.example.harun.getjob.TagLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;

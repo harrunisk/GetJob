@@ -17,7 +17,7 @@ import android.widget.ViewSwitcher;
 
 import com.example.harun.getjob.JobSearch.JobUtils.JobAdvertModel2;
 import com.example.harun.getjob.R;
-import com.example.harun.getjob.viewpagercards.TagLayout;
+import com.example.harun.getjob.TagLayout;
 
 /**
  * Created by mayne on 23.05.2018.

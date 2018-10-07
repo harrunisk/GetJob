@@ -1,4 +1,4 @@
-package com.example.harun.getjob.viewpagercards;
+package com.example.harun.getjob;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -101,12 +101,13 @@ public class TagLayout extends ViewGroup {
                 continue;
 
             // Measure the child.
-         //   measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0);
-            measureChild(child, widthMeasureSpec,  heightMeasureSpec);
+            //   measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0);
+            measureChild(child, widthMeasureSpec, heightMeasureSpec);
             maxWidth += Math.max(maxWidth, child.getMeasuredWidth());
             mLeftWidth += child.getMeasuredWidth();
-
-            if ((mLeftWidth / (deviceWidth / 2)) > rowCount) {
+        //Burada deviceWidth/2 yazıyordu ozaman ekranın ortasına geldiği zaman bir alt satır atıyordu onu kaldırdım
+            //İş imkanlarını gösterirken fazla bir bosluk vardı onun için
+            if ((mLeftWidth / (deviceWidth*0.8)) > rowCount) {
 
                 //  Log.d(TAG, "onMeasure:mLeftWidth / deviceWidth) > rowCount ");
                 maxHeight += child.getMeasuredHeight();
