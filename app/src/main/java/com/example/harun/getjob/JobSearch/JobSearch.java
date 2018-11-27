@@ -102,6 +102,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
 
@@ -109,7 +111,7 @@ import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip;
  * Created by mayne on 22.03.2018.
  */
 
-public class JobSearch extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
+public class JobSearch extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener, FilterJobSearch.FilterCallbackInterface,
         LocationListener,
         DiscreteSeekBar.OnProgressChangeListener,
         View.OnClickListener,
@@ -1668,6 +1670,107 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback, 
         }
     }
 
+    /**
+     * Gelen Map String ve button İçeriyor String Filtrenini hangisinde uygulanacagı ->Egitim Tecrübe Çalışma Şekli ..
+     * Button ise Filtrenini ne oldugunu içeriyor . ->Üni.Mezunu ,Tecrübeli,Stajyer.
+     *
+     * @param filterContent
+     */
+    @Override
+    public void filterCallback(Set<Map.Entry<String, Button>> filterContent) {
+        mapProgress.setVisibility(View.VISIBLE);
+        Log.d(TAG, "filterCallback: " + filterContent);
+        //
+        for (Map.Entry<String, Button> filter : filterContent) {
+
+            String filtreTuru = filter.getKey();
+            String filtreIcerigi = filter.getValue().getText().toString();
+
+            for (NearJobAdvertModel model : myItemClusterManager.getAlgorithm().getItems()) {
+                Log.d(TAG, "runFilter: " + filtreIcerigi);
+                Log.d(TAG, "runFilter: " + filtreTuru);
+                if (!model.getEducationLevel().equalsIgnoreCase(filtreIcerigi) && filtreTuru.equalsIgnoreCase("Eğitim")) {
+
+                    Log.d(TAG, "runFilter:Egitim " + model.getEducationLevel());
+                    myItemClusterManager.removeItem(model);
+
+                }
+                if (!model.getExpLevel().contains(filtreIcerigi) && filtreTuru.equalsIgnoreCase("Tecrübe")) {
+
+                    Log.d(TAG, "runFilter: Tecrube" + model.getExpLevel());
+                    myItemClusterManager.removeItem(model);
+
+
+                }
+                if (!model.getEmployeeHour().equalsIgnoreCase(filtreIcerigi) && filtreTuru.equalsIgnoreCase("Çalışma Şekli")) {
+
+                    Log.d(TAG, "runFilter: Çalışma Şekli" + model.getExpLevel());
+                    myItemClusterManager.removeItem(model);
+
+
+                }
+                if (!model.getDrivingLicence().contains(filtreIcerigi) && filtreTuru.equalsIgnoreCase("Ehliyet")) {
+
+                    Log.d(TAG, "runFilter: Ehliyet" + model.getExpLevel());
+                    myItemClusterManager.removeItem(model);
+
+
+                }
+                if (!model.getGender().equalsIgnoreCase(filtreIcerigi) && filtreTuru.equalsIgnoreCase("Cinsiyet")) {
+
+                    Log.d(TAG, "runFilter: Cinsiyet" + model.getExpLevel());
+                    myItemClusterManager.removeItem(model);
+
+
+                }
+                if (!model.getMilitary().equalsIgnoreCase(filtreIcerigi) && filtreTuru.equalsIgnoreCase("Askerlik")) {
+
+                    Log.d(TAG, "runFilter: Askerlik" + model.getExpLevel());
+                    myItemClusterManager.removeItem(model);
+
+
+                }
+
+            }
+
+
+        }
+        checkfilteredAdverts();
+
+
+
+    }
+
+    /**
+     * İlanlar Filtre İşleminden gectikten sonra bu method calısıyor
+     * Bu method filtreden gecen ilanlardan uygun ilan bulunamaması durumunda
+     * kullanıcıya Bir Toast mesajı gösterecek
+     * Eger uygun ilan  var ise o ilanların koordinatlarını sınıra ekleyıp (includeBounds() )kamerayı o ilanlara göre ayarlama
+     * işlemini yapıyor .
+     */
+    private void checkfilteredAdverts() {
+        builder = LatLngBounds.builder();
+        if (myItemClusterManager.getAlgorithm().getItems().isEmpty()) {
+
+            MyCustomToast.showCustomToast(getApplicationContext(), "Filtrenize Uygun İlan Bulunamadı.");
+            myItemClusterManager.cluster();
+            mapProgress.setVisibility(View.GONE);
+            animateCameraWithBounds(includeBounds(mUserLocationInfo.getMyLocation())); //Kullanıcı lokasyonunu eklyorum
+
+        }
+        else {
+            for (NearJobAdvertModel model : myItemClusterManager.getAlgorithm().getItems()) {
+
+                Log.d(TAG, "eklenen sınırlar ");
+                includeBounds(model.getmPosition()); //Sınır bolgelerini ekliyorum
+                myItemClusterManager.cluster();
+            }
+            mapProgress.setVisibility(View.GONE);
+            animateCameraWithBounds(includeBounds(mUserLocationInfo.getMyLocation())); //Kullanıcı lokasyonunu eklyorum
+
+        }
+
+    }
 
     /**
      * Alınan koordinatları sınır bölgeleri olarak ekliyoruz.
@@ -1814,6 +1917,7 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback, 
 
             Log.d(TAG, "deviceLocationCallback: GPS VERİSİ ALINAMADI NULL ");
 
+
         }
 
 
@@ -1845,4 +1949,39 @@ public class JobSearch extends AppCompatActivity implements OnMapReadyCallback, 
     }
 
 
+//    private void switchFilterType(String filtreTuru, String filtreIcerigi) {
+//
+//        switch (filtreTuru) {
+//
+//            case "Eğitim":
+//
+//                runFilter(filtreIcerigi);
+//
+//                break;
+//
+//        }
+//
+//    }
+//
+//    private void runFilter(String filtreIcerigi) {
+//
+//        ClusterManager<NearJobAdvertModel> tempCluster = myItemClusterManager;
+//        for (NearJobAdvertModel model : myItemClusterManager.getAlgorithm().getItems()) {
+//
+//            Log.d(TAG, "runFilter: " + filtreIcerigi);
+//            Log.d(TAG, "runFilter: " + model.getEducationLevel());
+//
+//            if (!model.getEducationLevel().equalsIgnoreCase(filtreIcerigi)) {
+//
+//                myItemClusterManager.removeItem(model);
+//                Log.d(TAG, "runFilter: " + myItemClusterManager.getAlgorithm().getItems());
+//
+//            }
+//
+//
+//        }
+//
+//        myItemClusterManager.cluster();
+//
+//    }
 }

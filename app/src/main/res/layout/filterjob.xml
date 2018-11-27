@@ -115,20 +115,41 @@
 
         </RelativeLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:id="@+id/nestedScroll_step3"
-            android:layout_height="match_parent"
-            android:isScrollContainer="true"
             android:layout_below="@+id/filterDetails"
-           >
+            android:layout_height="match_parent">
 
-            <include layout="@layout/add_jobadvert_step2_content">
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:id="@+id/nestedScroll_step3"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:layout_above="@id/filterButton"
+                android:isScrollContainer="true"
+                >
 
-            </include>
+                <include
+                    layout="@layout/add_jobadvert_step2_content">
+
+                </include>
 
 
-        </android.support.v4.widget.NestedScrollView>
+            </android.support.v4.widget.NestedScrollView>
+
+
+            <Button
+                android:id="@+id/filterButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="FİLTERELE"
+                android:backgroundTint="@color/SkyBlue"
+                android:background="@drawable/card_top_radius_back"
+                android:layout_alignParentBottom="true"
+
+                />
+
+        </RelativeLayout>
 
 
     </RelativeLayout>

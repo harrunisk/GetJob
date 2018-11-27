@@ -52,7 +52,7 @@
             android:id="@+id/searchLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/retro6"
+            android:background="@color/retro7"
             android:visibility="gone">
 
             <LinearLayout
@@ -115,9 +115,9 @@
                     android:id="@+id/searchDetailImage"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/circleback"
                     android:scaleType="center"
-                    android:src="@drawable/big_filter" />
+                    android:src="@drawable/addfilter2" />
+                <!--android:background="@drawable/circleback"-->
 
             </LinearLayout>
 
@@ -132,7 +132,7 @@
                 android:cursorVisible="true"
                 android:fontFamily="serif"
                 android:gravity="center"
-                android:hint="Aradığınız Mesleği Yazın"
+                android:hint="Aradığınız Mesleği Yazın."
                 android:imeOptions="actionSearch"
                 android:inputType="textPostalAddress"
                 android:padding="3dp"

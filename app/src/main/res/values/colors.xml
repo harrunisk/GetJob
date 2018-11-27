@@ -5,6 +5,10 @@
 
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#a64c8e44</color>
+    <color name="myGreen">#45B649</color>
+    <color name="myYellow">#FDC75B</color>
+    <color name="myYellow3">#d4ccb9</color>
+    <color name="myYellow2">#fad68c</color>
     <color name="colorAccent">#FF4081</color>
     <color name="TransparentWhite">#40FFFFFF</color>
     <color name="primary">#E43F3F</color>

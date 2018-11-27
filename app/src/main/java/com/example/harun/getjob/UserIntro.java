@@ -102,7 +102,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
     public FirebaseUser currentUser;
     private Toolbar actionToolbar;
     private FirebaseAuth mAuth;
-  //  private FirebaseAuth.AuthStateListener mAuthStateListener;
+    //  private FirebaseAuth.AuthStateListener mAuthStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,17 +187,28 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
 
         Intent intent = new Intent(getApplicationContext(), profilPage.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
     }
 
     public void jobSearch(View view) {
 
+        if (myLocation != null) {
+            //Burda konum bilgisini yeniden isticez ..
 
-        Intent intent = new Intent(this, JobSearch.class);
-        startActivity(intent);
+            Intent intent = new Intent(this, JobSearch.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
 
-        overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+
+        } else {
+            new DeviceLocation(this, this).getDeviceLocation();
+            Permissions.showAlertdilaog(this,
+                    "Konum Bilginize Ulaşamadık",
+                    "Konum Bilginizin açık olduğundan emin olun ve tekrar deneyin",
+                    3000).show();
+
+
+        }
 
 
     }
@@ -352,7 +363,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
             } else {
                 //System.out.println("User not logged in");
                 finish();
-                overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
                 Log.d(TAG, "onAuthStateChanged:User not logged in ");
 
             }
@@ -393,9 +404,22 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
 
     @Override
     public void deviceLocationCallback(LatLng gps) {
-        myLocation = gps;
-        UserLocationInfo.getInstance().setMyLocation(gps);
-        getMyAppliedAdvert();
+        if (gps == null) {
+
+            Log.d(TAG, "deviceLocationCallback: Konum BİLGİSİNE ULASAMADIK " + gps);
+          // MyCustomToast.showCustomToast(getApplicationContext(), "Konum Bilginize Ulasamadık ");
+            emptyRecommendList.setVisibility(View.VISIBLE);
+            suggestListProgress.smoothToHide();
+            //Deneme Amaclı bu satır kaldırılabilir.
+           // new DeviceLocation(this, this).getDeviceLocation();
+        } else {
+            emptyRecommendList.setVisibility(View.GONE);
+
+            myLocation = gps;
+            UserLocationInfo.getInstance().setMyLocation(gps);
+            getMyAppliedAdvert();
+        }
+
     }
 
     private void getMyAppliedAdvert() {
@@ -673,7 +697,7 @@ public class UserIntro extends AppCompatActivity implements SuggestJobAdvert.Sug
         //  Log.d(TAG, "checkList: CAGRILDI ");
         callbackResultList2.addAll(fromCompanyJobList);
         for (NearJobAdvertModel asJob : fromCompanyJobList) {
-            for (Iterator<NearJobAdvertModel>iterator = fromJobSector.iterator(); iterator.hasNext(); ) {
+            for (Iterator<NearJobAdvertModel> iterator = fromJobSector.iterator(); iterator.hasNext(); ) {
                 NearJobAdvertModel model = iterator.next();
                 if (asJob.getJobAdvertModel2().getCompanyJob().equals(model.getJobAdvertModel2().getCompanyJob())) {
                     iterator.remove();

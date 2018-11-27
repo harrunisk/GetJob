@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/WhiteSmoke">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/filterAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/bottom_circle_shape"
+            android:elevation="0dp"
+            android:fitsSystemWindows="true"
+            app:elevation="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/filterToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?android:attr/actionBarSize">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+
+                        <View
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="15dp"
+                            android:background="@drawable/filter" />
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:id="@+id/backbutton"
+                            android:layout_height="30dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_arrow_back_black_24dp" />
+                        <TextView
+                            android:id="@+id/filterText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="FİLTRELE"
+                            android:fontFamily="monospace"
+                            android:textColor="@color/black"
+                            android:textSize="15dp" />
+
+                    </RelativeLayout>
+
+
+                </android.support.v7.widget.Toolbar>
+
+
+            </RelativeLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+
+        <RelativeLayout
+            android:id="@+id/filterDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/filterAppBar"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="-60dp"
+            android:background="@drawable/bottom_top_circle_shape"
+            android:padding="10dp">
+
+            <RelativeLayout
+                android:id="@+id/info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+
+                <TextView
+                    android:id="@+id/advertCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@drawable/placeholder__2_"
+                    android:text="32"
+                    android:textColor="@color/md_red_800"
+                    android:textSize="25dp" />
+
+                <TextView
+                    android:id="@+id/choosenSector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_toEndOf="@+id/advertCount"
+                    android:text="SEKTÖR İSMİ"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/choosenJob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/choosenSector"
+                    android:layout_marginStart="15dp"
+                    android:layout_toEndOf="@+id/advertCount"
+                    android:text="MESLEK İSMİ"
+                    android:textColor="@color/place_autocomplete_prediction_secondary_text"
+                    android:textSize="14dp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/info"
+                android:layout_marginTop="5dp">
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/transparan">
+
+                </View>
+
+                <ViewSwitcher
+                    android:id="@+id/filterViewSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawablePadding="15dp"
+                        android:drawableStart="@drawable/addfilter"
+                        android:padding="15dp"
+                        android:text="Filtre Uygulanmamış"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="17dp" />
+
+
+                    <com.example.harun.getjob.TagLayout
+                        android:id="@+id/filterContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" />
+                </ViewSwitcher>
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/filterDetails"
+            android:layout_marginTop="5dp">
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/nestedScroll_step3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/filterButton"
+                android:layout_marginBottom="5dp"
+                android:isScrollContainer="true">
+
+                <include
+                    layout="@layout/add_jobadvert_step2_content">
+                </include>
+
+
+            </android.support.v4.widget.NestedScrollView>
+
+
+            <Button
+                android:id="@+id/filterButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:foreground="?android:selectableItemBackground"
+                android:background="@drawable/card_top_radius_back"
+                android:backgroundTint="@color/navy2"
+                android:textSize="15dp"
+                android:text="Filtreyi Uygula"
+
+                />
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

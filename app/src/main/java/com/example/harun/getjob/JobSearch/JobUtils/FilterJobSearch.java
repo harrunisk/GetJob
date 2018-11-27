@@ -21,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,7 +46,8 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
             advertCount, advertCount1;
     private ViewSwitcher filterViewSwitch;
     private View filterTextView;
-
+    private ImageView backbutton;
+    private FilterCallbackInterface filterCallbackInterface;
     private TagLayout filterContent;
     private Button ilkbtn, lisebtn, unibtn, digerbtn, tecrubesizBtn, tecrubeliBtn,
             tecrubeFarketmezBtn, stajBtn, partTimeBtn, fullTimeBtn, freeTimeBtn,
@@ -69,9 +71,11 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
     private HashMap<String, Button> filteredButtonGroup = new HashMap<>();
 
 
-    private NestedScrollView nestedScroll_step2;
+    private NestedScrollView nestedScroll_step3;
+    private Button filterButton;
 
     public FilterJobSearch() {
+        //this.filterCallbackInterface = filterCallbackInterface;
     }
 
 //    @SuppressLint("ValidFragment")
@@ -79,6 +83,17 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
 //        Log.d(TAG, "FilterJobSearch: Construct" + sektorName);
 //    }
 
+    public interface FilterCallbackInterface {
+
+        void filterCallback(Set<Map.Entry<String, Button>> filterContent);
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        filterCallbackInterface = (FilterCallbackInterface) getContext();
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -111,10 +126,11 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
     public void setupDialog(Dialog dialog, int style) {
         super.setupDialog(dialog, style);
         Log.d(TAG, "setupDialog: ");
-        View contentView = View.inflate(getContext(), R.layout.filterjob, null);
+        View contentView = View.inflate(getContext(), R.layout.filterjob2, null);
         dialog.setContentView(contentView);
-
         DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
+        //  dialog.getWindow().getAttributes().windowAnimations = R.anim.alerter_pulse;
+        dialog.getWindow().setWindowAnimations(R.style.BottomSheetUptoBottomAnimation);
 
         int width = (displayMetrics.widthPixels);
         int height = (displayMetrics.heightPixels);
@@ -124,7 +140,6 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams)
                 ((View) contentView.getParent()).getLayoutParams();
         CoordinatorLayout.Behavior behavior = params.getBehavior();
-
 
         BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) contentView.getParent());
         mBehavior.setPeekHeight(maxHeight);
@@ -139,8 +154,10 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
 
         choosenSector = contentView.findViewById(R.id.choosenSector);
         choosenJob = contentView.findViewById(R.id.choosenJob);
+        backbutton = contentView.findViewById(R.id.backbutton);
         //  advertCount = contentView.findViewById(R.id.advertCount);
         filterViewSwitch = contentView.findViewById(R.id.filterViewSwitch);
+        nestedScroll_step3 = contentView.findViewById(R.id.nestedScroll_step3);
         filterContent = contentView.findViewById(R.id.filterContent);
         ilkbtn = contentView.findViewById(R.id.ilkbtn);
         lisebtn = contentView.findViewById(R.id.lisebtn);
@@ -173,6 +190,7 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
         ekstraFore = contentView.findViewById(R.id.ekstraFore);
         ekstraBack = contentView.findViewById(R.id.ekstraBack);
         advertCount = contentView.findViewById(R.id.advertCount);
+        filterButton = contentView.findViewById(R.id.filterButton);
         init();
 
     }
@@ -205,6 +223,8 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
         tecrubeForeground.setOnClickListener(this);
         calismaSekliFore.setOnClickListener(this);
         ekstraFore.setOnClickListener(this);
+        filterButton.setOnClickListener(this);
+        backbutton.setOnClickListener(this);
 
 
     }
@@ -241,7 +261,6 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
         public void onStateChanged(@NonNull View bottomSheet, int newState) {
 
             if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-
                 dismiss();
             }
         }
@@ -302,7 +321,7 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
                 lisebtn.setActivated(true);
                 clearOtherActiveButton(clickedEgitimList, lisebtn);
                 clickedEgitimList.add(lisebtn);
-                editFilterGroup(lisebtn, "Eğitim");
+                editFilterGroup(lisebtn, "Eğitim");//Burda butonları hashmape atıyorum daha sonra buttonların activve durumlarını kontrol edebilmek için
                 //  addFilter(lisebtn.getText().toString(), 1);
 
                 break;
@@ -434,7 +453,7 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
                 bayBtn.setActivated(true);
 
                 askerlikLayout.setVisibility(View.VISIBLE);
-                //    nestedSmoothScroll();
+                nestedSmoothScroll();
 
 //                nestedScroll_step2.smoothScrollBy(0,
 //                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
@@ -451,7 +470,7 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
 
 //                nestedScroll_step2.smoothScrollBy(0,
 //                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
-                //     nestedSmoothScroll();
+                nestedSmoothScroll();
 
                 clearOtherActiveButton(clickedCinsiyetList, cinsiyetFarketmezBtn);
                 clickedCinsiyetList.add(cinsiyetFarketmezBtn);
@@ -500,8 +519,8 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
             case R.id.ekstraFore:
                 Log.d(TAG, "onClick: ");
                 checkVisibilityLayout(ekstraBack);
-                //     nestedSmoothScroll();
-
+                nestedSmoothScroll();
+                // nestedScroll_step3.fullScroll(View.FOCUS_DOWN);
 //                nestedScroll_step2.smoothScrollBy(0,
 //                        nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount()).getBottom());
                 break;
@@ -536,7 +555,44 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
                 Log.d(TAG, "onClick: " + view.getId());
                 removeViewFilterContent(view);
                 break;
+
+
+            //Filtreleme İşlemi Yapacak olan button
+            //Önce Filtrelencek olan tagları alarak bunları işlemesi için JobSearche Göndericez.
+            case R.id.filterButton:
+
+                runFilter();
+
+                break;
+
+            case R.id.backbutton:
+
+                dismiss();
+
+                break;
         }
+
+    }
+
+
+    private void runFilter() {
+        Log.d(TAG, "runFilter: ");
+        filterCallbackInterface.filterCallback(filteredButtonGroup.entrySet());
+        dismiss();
+
+//        CountDownTimer downTimer = new CountDownTimer(5000, 1000) {
+//            @Override
+//            public void onTick(long l) {
+//                Log.d(TAG, "onTick: " + l / 1000);
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//                Log.d(TAG, "onFinish: ");
+//                dismiss();
+//            }
+//        };
+//        downTimer.start();
 
     }
 
@@ -572,26 +628,32 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
             case "Eğitim":
                 Log.d(TAG, "removeItemFilteredGroup: CLİCKED EGİTİM LİSTE TEMİZLENDİ ");
                 clickedEgitimList.clear();
+                checkEmptyView();
                 break;
             case "Tecrübe":
                 Log.d(TAG, "removeItemFilteredGroup: CLİCKED EGİTİM LİSTE TEMİZLENDİ ");
                 clickedTecrubeList.clear();
+                checkEmptyView();
                 break;
             case "Askerlik":
                 Log.d(TAG, "removeItemFilteredGroup: CLİCKED EGİTİM LİSTE TEMİZLENDİ ");
                 clickedAskerlikList.clear();
+                checkEmptyView();
                 break;
             case "Cinsiyet":
                 Log.d(TAG, "removeItemFilteredGroup: CLİCKED EGİTİM LİSTE TEMİZLENDİ ");
                 clickedCinsiyetList.clear();
+                checkEmptyView();
                 break;
             case "Çalışma Şekli":
                 Log.d(TAG, "removeItemFilteredGroup: CLİCKED EGİTİM LİSTE TEMİZLENDİ ");
                 clickedCalismaList.clear();
+                checkEmptyView();
                 break;
             case "Ehliyet":
                 Log.d(TAG, "removeItemFilteredGroup: CLİCKED EGİTİM LİSTE TEMİZLENDİ ");
                 clickedehliyetList.clear();
+                checkEmptyView();
                 break;
 
 
@@ -601,13 +663,29 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
 
     }
 
+    private void checkEmptyView() {
+
+        if (filteredButtonGroup.isEmpty()) {
+
+            filterViewSwitch.setDisplayedChild(0);
+
+        } else {
+
+            filterViewSwitch.setDisplayedChild(1);
+
+        }
+
+
+    }
+
     /**
      * Bu methodda kullanıcının ilanı filtrelemek için seçmiş oldugu
      * Örn(Üniversite Mezunu butonu veya Tecrübesiz Butonu ) butonu
      * türüne göre hashleme işlemi yapılıyor
      * Kullanıcı hangisine tıklarsa her type değeri için o buton aktif olmus oluyor filtrelemek için
+     * Buttonlar hash mape atılıyor Çnkü daha sonra filtre iptal edilmek istendiğinde bu butonuun aktifliğini kaldırmak gerekiyorç
      *
-     * @param filteredButton-->filtrelemek için kullanılan buton
+     * @param filteredButton-->filtrelemek için kullanılan buton (Çalışma Şekli/Staj butonu )
      * @param type                         --> Eğitim  Tecrübe  Çalışma Şekli Ehliyet  Cinsiyer  Askerlik
      */
     private void editFilterGroup(Button filteredButton, String type) {
@@ -622,9 +700,9 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
 
     /**
      * Bu metod her cagırıldıgında önce filterContent taglayoutunu temizilyor Ardından Hashmap İçerisindeki key ve value değerlerini
-     * Custom bir textview oluşturup manuel olarak taglayout içine ekliyor
+     * Custom bir textview oluşturup taglayout içine ekliyor
      *
-     * @param entries
+     * @param entries --> Eklenen Filtre bu hash içiersinde tutuluyor.
      */
     private void addFilters(Set<Map.Entry<String, Button>> entries) {
         Log.d(TAG, "addFilters: " + entries.toString());
@@ -632,14 +710,6 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         filterContent.removeAllViews();
         int i = 0;
-        //     filterContent.forceLayout();
-//        for (Iterator<Button> iterator = values.iterator(); iterator.hasNext(); ) {
-//            Log.d(TAG, "addFilters: "+iterator.next().getText().toString());
-//            filterText.setText(iterator.next().getText().toString());
-//            HelperStaticMethods.setMargins(filterText, 5, 5, 5, 0);
-//            filterContent.addView(filterTextView);
-//        }e
-
         for (Map.Entry<String, Button> text : entries) {
             Log.d(TAG, "addFilters: i Değeri--> " + i);
             filterTextView = layoutInflater.inflate(R.layout.filtertextview, null, false);
@@ -647,7 +717,7 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
             Log.d(TAG, "addFilters: " + text.getKey() + text.getValue().getText().toString());
             filterText.setText(text.getKey() + "/" + text.getValue().getText().toString());
             filterTextView.setId(i);
-            filterTextView.setTag(text.getKey());
+            filterTextView.setTag(text.getKey());//Textviewlere taglar ekliyoruz Örn Eğitim , Çalışma Şekli-> removeViewFilterContent()
             filterTextView.setOnClickListener(this);
             i++;
             Log.d(TAG, "addFilters: i değeri" + i);
@@ -657,24 +727,6 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
 
 
     }
-//
-//    private void addFilter(String text, int mode) {
-//
-//        Log.d(TAG, "addPossibility: ");
-//        filterViewSwitch.setDisplayedChild(1);
-//        LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        filterTextView = layoutInflater.inflate(R.layout.pos_textview, null, false);
-//        TextView filterText = filterTextView.findViewById(R.id.tagText);
-////        if (mode == 1) {
-////
-////
-////        }
-//        filterText.setText(text);
-//        HelperStaticMethods.setMargins(filterText, 5, 5, 5, 0);
-//        filterContent.addView(filterTextView);
-//
-//
-//    }
 
     /**
      * Bu methodda parametre olarak gelen layouta bir animasyon ekliypruz ve visibility ayarlarını yapıyoruz.
@@ -698,53 +750,10 @@ public class FilterJobSearch extends BottomSheetDialogFragment implements View.O
     }
 
     private void nestedSmoothScroll() {
-        nestedScroll_step2.smoothScrollBy(0,
-                nestedScroll_step2.getChildAt(nestedScroll_step2.getChildCount() - 1).getBottom());
+        //  nestedScroll_step3.scrollTo(0,0);
+        nestedScroll_step3.smoothScrollBy(0,
+                nestedScroll_step3.getChildAt(ekstraBack.getChildCount() - 1).getBottom());
     }
-
-
-/*
-    public class NestedScrollableViewHelper extends ScrollableViewHelper {
-        public int getScrollableViewScrollPosition(View scrollableView, boolean isSlidingUp) {
-            if (mScrollableView instanceof NestedScrollView) {
-                if(isSlidingUp){
-                    return mScrollableView.getScrollY();
-                } else {
-                    NestedScrollView nsv = ((NestedScrollView) mScrollableView);
-                    View child = nsv.getChildAt(0);
-                    return (child.getBottom() - (nsv.getHeight() + nsv.getScrollY()));
-                }
-            } else {
-                return 0;
-            }
-        }
-    }
-
-
-
-*/
-
-  /*  @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragmentjoblist, container, false);
-
-        DisplayMetrics displayMetrics = getActivity().getResources().getDisplayMetrics();
-
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
-
-        int maxHeight = (int) (height * 0.88);
-
-        // getDialog().getWindow().setDimAmount(height);
-//        BottomSheetBehavior mBehavior = BottomSheetBehavior.from((View) v.getParent());
-        //  mBehavior.setPeekHeight(maxHeight);
-
-        return v;
-
-
-    }*/
-
 
 }
 

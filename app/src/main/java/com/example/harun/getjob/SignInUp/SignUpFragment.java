@@ -388,6 +388,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener, De
             MyCustomToast.showCustomToast(getActivity(), "Konum Bilgisi Alınırken Hata Olustu Tekrar Deneyin ");
            // signUpgetLocation.setVisibility(View.VISIBLE);
             signUpgetLocation.setActivated(false);
+            locationProgress.smoothToHide();
 
 
         }
@@ -405,6 +406,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener, De
             } else {
 
                 MyCustomToast.showCustomToast(getActivity(), "Cihazının Konum Bilgisinin Açık oldugundan Emin Olun ");
+                locationProgress.smoothToHide();
 
             }
 
